@@ -2,6 +2,7 @@ package com.cobby.main.title.db.entity;
 
 import com.cobby.main.quest.db.entity.Quest;
 
+import com.cobby.main.title.api.dto.response.TitleGetResponse;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Title {
@@ -31,5 +32,8 @@ public class Title {
 	private String name;
 
 	private String explanation;
+
+	// Entity to Dto
+	public TitleGetResponse toDto() {return new TitleGetResponse(titleId, quest.getQuestId(), name, explanation);}
 
 }

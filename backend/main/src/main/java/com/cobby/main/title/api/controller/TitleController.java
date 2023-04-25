@@ -1,19 +1,17 @@
 package com.cobby.main.title.api.controller;
 
+import com.cobby.main.title.api.dto.request.TitlePostRequest;
+import com.cobby.main.title.api.dto.request.TitlePutRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cobby.main.common.response.BaseResponseBody;
 import com.cobby.main.title.api.service.TitleService;
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
@@ -28,17 +26,20 @@ public class TitleController {
 	}
 
 	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> createTitle() {
+	public ResponseEntity<? extends BaseResponseBody> createTitle(@RequestBody TitlePostRequest titleInfo) {
+		titleService.insertTitle(titleInfo);
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Created", "생성되었습니다."));
 	}
 
 	@PutMapping
-	public ResponseEntity<? extends BaseResponseBody> updateTitle() {
+	public ResponseEntity<? extends BaseResponseBody> updateTitle(@RequestBody TitlePutRequest titleInfo) {
+		titleService.updateTitle(titleInfo);
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Updated", "수정되었습니다."));
 	}
 
-	@DeleteMapping
-	public ResponseEntity<? extends BaseResponseBody> deleteTitle() {
+	@DeleteMapping("/{titleId}")
+	public ResponseEntity<? extends BaseResponseBody> deleteTitle(@PathVariable int titleId) {
+		titleService.deleteTitle(titleId);
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Deleted", "삭제되었습니다."));
 	}
 

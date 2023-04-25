@@ -1,33 +1,42 @@
 package com.cobby.main.quest.db.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.cobby.main.costume.db.entity.Costume;
+import com.cobby.main.quest.api.dto.response.QuestGetResponse;
+import com.cobby.main.title.db.entity.Title;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Quest {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, columnDefinition="INT UNSIGNED")
 	private int questId;
 
 	private String questName;
 
 	private char questType;	// ENUM?
 
+	@Column(nullable = false, columnDefinition="INT UNSIGNED")
 	private int questCode;
 
-	private int costumeId;
+//	@OneToMany(mappedBy = "quest")
+//	private List<Costume> costumes = new ArrayList<>();
 
-	private int aliasId;
+	@OneToMany(mappedBy = "quest")
+	private List<Title> titles = new ArrayList<>();
 
+	// Entity to Dto
+	public QuestGetResponse toDto() {return new QuestGetResponse(questId, questName, questType, questCode, titles);}
 }
