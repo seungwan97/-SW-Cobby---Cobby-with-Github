@@ -1,4 +1,4 @@
-package com.cobby.main.quest.api.controller;
+package com.cobby.main.title.api.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,35 +10,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cobby.main.common.response.BaseResponseBody;
-import com.cobby.main.quest.api.service.QuestService;
+import com.cobby.main.title.api.service.TitleService;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
-@RequestMapping("api/characters/quest")
-public class QuestController {
+@RequestMapping("api/characters/title")
+public class TitleController {
 
-	private final QuestService questService;
+	private final TitleService titleService;
 
 	@GetMapping
-	public ResponseEntity<? extends BaseResponseBody> getAllQuests() {
-		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", questService.selectAllQuest()));
+	public ResponseEntity<? extends BaseResponseBody> getAllTitles() {
+		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", titleService.selectAllTitle()));
 	}
 
 	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> createQuest() {
+	public ResponseEntity<? extends BaseResponseBody> createTitle() {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Created", "생성되었습니다."));
 	}
 
 	@PutMapping
-	public ResponseEntity<? extends BaseResponseBody> updateQuest() {
+	public ResponseEntity<? extends BaseResponseBody> updateTitle() {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Updated", "수정되었습니다."));
 	}
 
 	@DeleteMapping
-	public ResponseEntity<? extends BaseResponseBody> deleteQuest() {
+	public ResponseEntity<? extends BaseResponseBody> deleteTitle() {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Deleted", "삭제되었습니다."));
 	}
 

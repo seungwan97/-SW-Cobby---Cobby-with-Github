@@ -1,9 +1,13 @@
-package com.cobby.main.quest.db.entity;
+package com.cobby.main.title.db.entity;
+
+import com.cobby.main.quest.db.entity.Quest;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,20 +18,18 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Quest {
+public class Title {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int questId;
+	private int titleId;
 
-	private String questName;
+	@ManyToOne
+	@JoinColumn(name = "quest_id")
+	private Quest quest;
 
-	private char questType;	// ENUM?
+	private String name;
 
-	private int questCode;
-
-	private int costumeId;
-
-	private int aliasId;
+	private String explanation;
 
 }
