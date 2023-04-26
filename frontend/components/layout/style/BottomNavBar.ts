@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const NavWrapper = styled.div`
-  width: 50%;
+  width: 30%;
   height: auto;
   display: flex;
   background-color: #fafae7;
@@ -23,6 +23,7 @@ export const NavItemWrapper = styled.div`
     cursor: pointer;
     background-color: gray;
   }
+
   &:hover ${TextBox} {
     color: white;
   }
