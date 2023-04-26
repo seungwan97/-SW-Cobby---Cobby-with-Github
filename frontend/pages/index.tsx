@@ -3,10 +3,16 @@
 // import { Inter } from "next/font/google";
 
 import TextBox from "@/components/box/TextBox";
+import ItemBox from "@/components/box/ItemBox";
 import { Fragment } from "react";
 
 // const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  return <Fragment>{/* <TextBox size={150} content={"tt"} /> */}</Fragment>;
+  return (
+    <Fragment>
+      <TextBox size={50} content={"커피 먹고 싶드아"} />
+      <ItemBox />
+    </Fragment>
+  );
 }
