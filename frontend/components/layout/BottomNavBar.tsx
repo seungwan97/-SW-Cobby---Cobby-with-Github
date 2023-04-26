@@ -32,7 +32,7 @@ const BottomNavBar = () => {
       {elementList.map((element: NavElement, index: number) => (
         <style.NavItemWrapper key={index}>
           <style.NavItemIcon imgSrc={element.imgSrc} />
-          <TextBox size={20} content={element.name} />
+          <style.TextBox size={20}>{element.name}</style.TextBox>
         </style.NavItemWrapper>
       ))}
     </style.NavWrapper>

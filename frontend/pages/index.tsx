@@ -4,6 +4,8 @@
 
 import TextBox from "@/components/box/TextBox";
 import ItemBox from "@/components/box/ItemBox";
+import Cobby from "@/components/character/Cobby";
+import Modal from "@/components/modal/Modal";
 import BottomNavBar from "@/components/layout/BottomNavBar";
 import { Fragment } from "react";
 
@@ -14,6 +16,8 @@ export default function Home() {
     <Fragment>
       <TextBox size={50} content={"커피 먹고 싶드아"} />
       <ItemBox />
+      <Cobby />
+      <Modal name={"모달입니다"} name2={"모달입니다2"} yes={true} no={false} />
       <BottomNavBar />
     </Fragment>
   );

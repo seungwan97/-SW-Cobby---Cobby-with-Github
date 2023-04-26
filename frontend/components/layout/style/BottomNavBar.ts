@@ -1,10 +1,17 @@
 import styled from "styled-components";
 
 export const NavWrapper = styled.div`
-  width: 100%;
+  width: 50%;
   height: auto;
   display: flex;
   background-color: #fafae7;
+  position: fixed;
+  bottom: 0;
+`;
+export const TextBox = styled.div<{ size: number }>`
+  font-size: ${(props) => props.size}px;
+  font-family: "DungGeunMo";
+  color: #333333;
 `;
 
 export const NavItemWrapper = styled.div`
@@ -16,9 +23,13 @@ export const NavItemWrapper = styled.div`
     cursor: pointer;
     background-color: gray;
   }
+  &:hover ${TextBox} {
+    color: white;
+  }
 `;
 
 export const NavItemIcon = styled.img<{ imgSrc: string }>`
-  height: 70px;
+  padding-top: 10px;
+  height: 50px;
   content: url(${(props) => props.imgSrc});
 `;
