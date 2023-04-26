@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Contatiner = styled.div`
+  font-family: "DungGeunMo";
   position: absolute;
   z-index: 100;
   top: 27.5%;
@@ -12,12 +13,7 @@ export const Contatiner = styled.div`
 `;
 
 export const Modal = styled.div`
-  @font-face {
-    font-family: "DungGeunMo";
-    src: url("@/fonts/DungGeunMo.ttf");
-  }
   position: fixed;
-
   display: block;
   z-index: 15;
   width: 300px;
@@ -38,10 +34,7 @@ export const ModalInfo = styled.div`
 `;
 
 export const ModalButton = styled.button`
-  @font-face {
-    font-family: "DungGeunMo";
-    src: url("@/fonts/DungGeunMo.ttf");
-  }
+  font-family: "DungGeunMo";
   width: 70px;
   height: 35px;
   border: none;
