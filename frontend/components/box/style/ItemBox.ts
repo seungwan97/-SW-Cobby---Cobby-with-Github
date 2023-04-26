@@ -7,6 +7,11 @@ export const ItemWrapper = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 10px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: gray;
+  }
 `;
 
 export const ItemImage = styled.img`
