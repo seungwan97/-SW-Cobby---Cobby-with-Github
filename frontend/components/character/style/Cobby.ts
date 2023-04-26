@@ -5,6 +5,6 @@ export const CobbyWrapper = styled.div`
 `;
 
 export const Cobby = styled.img`
-  width: 200px;
-  height: 200px;
+  width: 125px;
+  height: 125px;
 `;
