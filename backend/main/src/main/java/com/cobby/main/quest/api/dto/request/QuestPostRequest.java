@@ -1,4 +1,4 @@
-package com.cobby.main.quest.api.dto.response;
+package com.cobby.main.quest.api.dto.request;
 
 import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.title.db.entity.Title;
@@ -8,13 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuestGetResponse {
-
-    private int questId;
+public class QuestPostRequest {
 
     private String questName;
 

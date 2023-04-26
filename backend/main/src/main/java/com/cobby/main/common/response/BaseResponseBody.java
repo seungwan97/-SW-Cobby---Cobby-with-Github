@@ -1,5 +1,9 @@
 package com.cobby.main.common.response;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 /**
  * 응답 컨텐츠에 상태값을 함께 담아서 주기 위해 ResponseBody 에 들어갈 공통 body 양식을 정의한 클래스입니다.
  * <p>
@@ -11,6 +15,9 @@ package com.cobby.main.common.response;
  * @param <T>
  */
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class BaseResponseBody<T> {
 
   private Integer status;
