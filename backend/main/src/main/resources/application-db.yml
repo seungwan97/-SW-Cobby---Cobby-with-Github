@@ -1,0 +1,17 @@
+spring:
+  # MariaDB
+  datasource:
+    url: ENC(+N4qK89M/Bp/lHDhMSzl4g7taZ+trG0K09bScNZl9SuE9xzX9aBbd/e3PfnhJPLgunxROm1AgEg=)
+    username: ENC(xwUvoLMvaq5fsU7C0N+GKQ==)
+    password: ENC(25nedi1bdaKfjjIz7tZolw==)
+    driver-class-name: org.mariadb.jdbc.Driver
+  # JPA Properties
+  jpa:
+    hibernate:
+      ddl-auto: create
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
