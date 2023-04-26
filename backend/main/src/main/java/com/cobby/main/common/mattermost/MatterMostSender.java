@@ -27,6 +27,7 @@ public class MatterMostSender {
 
 	private final MatterMostProperties mattermostProperties;
 
+
 	public void sendMessage(Exception exception, String uri, String params) {
 		if(!mattermostEnabled) return;
 

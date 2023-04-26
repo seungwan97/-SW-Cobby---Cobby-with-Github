@@ -19,6 +19,10 @@ repositories {
 }
 
 dependencies {
+    implementation 'io.github.ricall.junit5-wiremock:junit5-wiremock:2.0.0'
+    implementation 'com.github.tomakehurst:wiremock:2.27.2'
+    testImplementation 'junit:junit:4.13.1'
+    annotationProcessor 'io.github.ricall.junit5-wiremock:junit5-wiremock:2.0.0'
     compileOnly 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -41,6 +45,13 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
 
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    //guava
+    implementation 'com.google.guava:guava:31.1-jre'
+
+    //test
+    testImplementation 'io.rest-assured:rest-assured:5.2.1'
+
 }
 
 tasks.named('test') {
