@@ -1,7 +1,8 @@
-package com.cobby.main.costume.db.entity;
+package com.cobby.main.avatar.db.entity;
 
 import com.cobby.main.avatar.db.entity.Avatar;
 import com.cobby.main.common.entity.BaseTimeEntity;
+import com.cobby.main.costume.db.entity.Costume;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
