@@ -4,6 +4,7 @@
 
 import TextBox from "@/components/box/TextBox";
 import ItemBox from "@/components/box/ItemBox";
+import BottomNavBar from "@/components/layout/BottomNavBar";
 import { Fragment } from "react";
 
 // const inter = Inter({ subsets: ["latin"] });
@@ -13,6 +14,7 @@ export default function Home() {
     <Fragment>
       <TextBox size={50} content={"커피 먹고 싶드아"} />
       <ItemBox />
+      <BottomNavBar />
     </Fragment>
   );
 }
