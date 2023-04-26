@@ -1,9 +1,9 @@
 server:
-  port: 15030
+  port: ENC(y7L0BSydHapTOK3QO+guMg==)
 
 spring:
   profiles:
-    include: db
+    include: db, jasypt, notification
 
   servlet:
     multipart:
@@ -13,6 +13,6 @@ spring:
       max-request-size: 15MB
 
 # logger
-logging.level:
-  org.hibernate.SQL: info
-  org.hibernate.type: trace
+#logging.level:
+#  org.hibernate.SQL: info
+#  org.hibernate.type: trace
