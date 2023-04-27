@@ -47,16 +47,11 @@ public class User extends BaseTimeEntity{
 	private String githubUri;
 
 
-	@Override
-	public String toString() {
-		return "User{" +
-			"id='" + id + '\'' +
-			", stat=" + stat +
-			", activityLog=" + activityLog +
-			", nickname='" + nickname + '\'' +
-			", state=" + state +
-			", githubUri='" + githubUri + '\'' +
-			'}';
+	@Builder
+	public User(String id, String nickname, State state, String githubUri) {
+		this.id = id;
+		this.nickname = nickname;
+		this.state = state;
+		this.githubUri = githubUri;
 	}
-
 }

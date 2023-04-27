@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,12 +24,12 @@ import lombok.NoArgsConstructor;
 public class Stat {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "stat_id", updatable = false, columnDefinition = "INT UNSIGNED")
-	private Long id;
+	@Column(name = "user_id", nullable = false)
+	private String id;
 
-	@OneToOne
-	@JoinColumn(nullable = false, name = "user_id")
+	@MapsId
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
 	private User user;
 
 	@Column(nullable = false, columnDefinition = "INT UNSIGNED")

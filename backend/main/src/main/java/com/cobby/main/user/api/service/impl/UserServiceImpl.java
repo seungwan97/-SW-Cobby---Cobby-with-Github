@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	public UserMainResponse getUserInfo(String userId) {
 		Optional<User> oUser = userRepository.findById(userId);
 		User user = oUser.orElseThrow(() -> new IllegalArgumentException("user doesn't exist"));
-		Optional<Stat> oStats = statRepository.findByUser_Id(userId);
+		Optional<Stat> oStats = statRepository.findById(userId);
 		Stat stat = oStats.orElseThrow(() -> new IllegalArgumentException("stat doesn't exist"));
 
 		UserMainResponse userMainResponse =UserMainResponse.builder()
