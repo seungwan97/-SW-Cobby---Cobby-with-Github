@@ -16,12 +16,13 @@ export default function Home() {
     <Fragment>
       <page.PageWrapper>
         <style.LoginPageContent>
-          <TextBox size={50} content={"COBBY"} />
+          <TextBox size={50} content={"Cobby"} />
           <style.LogoMargin />
           <Cobby />
           <style.LogoMargin />
           <TextBox size={30} content={"Github with Cobby"} />
         </style.LoginPageContent>
+        <style.LoginBtnMargin />
         <GithubLoginButton />
       </page.PageWrapper>
       <BottomNavBar />
