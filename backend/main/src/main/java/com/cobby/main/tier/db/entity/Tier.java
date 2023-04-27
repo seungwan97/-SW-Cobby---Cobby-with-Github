@@ -1,15 +1,12 @@
-package com.cobby.main.title.db.entity;
+package com.cobby.main.tier.db.entity;
 
-import com.cobby.main.quest.db.entity.Quest;
-
+import com.cobby.main.tier.api.dto.response.TierGetResponse;
 import com.cobby.main.title.api.dto.response.TitleGetResponse;
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,21 +17,18 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Title {
+public class Tier {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer titleId;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "quest_id")
-	private Quest quest;
+	private Integer tierId;
 
 	private String name;
 
-	private String explanation;
+	private String emblemImgUrl;
 
 	// Entity to Dto
-	public TitleGetResponse toDto() {return new TitleGetResponse(titleId, quest.getQuestId(), name, explanation);}
+	public TierGetResponse toDto() {return new TierGetResponse(tierId, name, emblemImgUrl);}
+
 
 }

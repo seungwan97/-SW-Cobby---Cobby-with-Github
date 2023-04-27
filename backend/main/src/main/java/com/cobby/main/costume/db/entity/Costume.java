@@ -15,6 +15,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -34,8 +35,8 @@ public class Costume {
 	private Long costumeId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "quest_id", nullable = false)
 	@JsonBackReference
-	@Column(name = "quest_id", nullable = false)
 	private Quest quest;
 
 	@Column(name = "name", nullable = false)
