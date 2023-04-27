@@ -4,6 +4,7 @@ import com.cobby.main.quest.db.entity.Quest;
 
 import com.cobby.main.title.api.dto.response.TitleGetResponse;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,7 +26,7 @@ public class Title {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer titleId;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "quest_id")
 	private Quest quest;
 
