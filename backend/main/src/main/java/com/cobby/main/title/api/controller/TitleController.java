@@ -38,7 +38,7 @@ public class TitleController {
 	}
 
 	@DeleteMapping("/{titleId}")
-	public ResponseEntity<? extends BaseResponseBody> deleteTitle(@PathVariable int titleId) {
+	public ResponseEntity<? extends BaseResponseBody> deleteTitle(@PathVariable Integer titleId) {
 		titleService.deleteTitle(titleId);
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Deleted", "삭제되었습니다."));
 	}

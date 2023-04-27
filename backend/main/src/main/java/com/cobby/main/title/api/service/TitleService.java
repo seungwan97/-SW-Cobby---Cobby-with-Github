@@ -12,5 +12,5 @@ public interface TitleService {
 	List<TitleGetResponse> selectAllTitle();
 	void insertTitle(TitlePostRequest titleInfo);
 	void updateTitle(TitlePutRequest titleInfo);
-	void deleteTitle(int titleId);
+	void deleteTitle(Integer titleId);
 }

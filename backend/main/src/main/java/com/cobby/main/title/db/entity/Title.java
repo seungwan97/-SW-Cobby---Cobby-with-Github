@@ -23,7 +23,7 @@ public class Title {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int titleId;
+	private Integer titleId;
 
 	@ManyToOne
 	@JoinColumn(name = "quest_id")

@@ -22,7 +22,7 @@ public class QuestServiceImpl implements QuestService {
 	private final QuestRepository questRepository;
 
 	@Override
-	public QuestGetResponse selectQuest(int questId) {
+	public QuestGetResponse selectQuest(Integer questId) {
 		return questRepository.findById(questId).stream().map(Quest::toDto).findFirst().orElseThrow(NotFoundException::new);
 	}
 
@@ -37,6 +37,7 @@ public class QuestServiceImpl implements QuestService {
 				.questName(questInfo.getQuestName())
 				.questType(questInfo.getQuestType())
 				.questCode(questInfo.getQuestCode())
+				.costumes(questInfo.getCostumes())
 				.titles(questInfo.getTitles())
 				.build();
 
@@ -51,6 +52,7 @@ public class QuestServiceImpl implements QuestService {
 				.questType(questInfo.getQuestType())
 				.questCode(questInfo.getQuestCode())
 				.titles(questInfo.getTitles())
+				.costumes(questInfo.getCostumes())
 				.build();
 
 		questRepository.save(updateQuest);

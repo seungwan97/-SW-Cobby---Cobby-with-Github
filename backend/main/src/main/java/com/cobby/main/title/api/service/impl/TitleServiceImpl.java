@@ -59,7 +59,7 @@ public class TitleServiceImpl implements TitleService {
 	}
 
 	@Override
-	public void deleteTitle(int titleId) {
+	public void deleteTitle(Integer titleId) {
 		titleRepository.findById(titleId).orElseThrow(NotFoundException::new);
 		titleRepository.deleteById(titleId);
 	}

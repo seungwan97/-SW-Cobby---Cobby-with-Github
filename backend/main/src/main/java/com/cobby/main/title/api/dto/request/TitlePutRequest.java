@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TitlePutRequest {
 
-    private int titleId;
+    private Integer titleId;
 
-    private int questId;
+    private Integer questId;
 
     private String name;
 

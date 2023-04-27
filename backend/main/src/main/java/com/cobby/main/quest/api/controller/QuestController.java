@@ -36,7 +36,7 @@ public class QuestController {
 	}
 
 	@DeleteMapping("/{questId}")
-	public ResponseEntity<? extends BaseResponseBody> deleteQuest(int questId) {
+	public ResponseEntity<? extends BaseResponseBody> deleteQuest(@PathVariable Integer questId) {
 		questService.deleteQuest(questId);
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Deleted", "삭제되었습니다."));
 	}

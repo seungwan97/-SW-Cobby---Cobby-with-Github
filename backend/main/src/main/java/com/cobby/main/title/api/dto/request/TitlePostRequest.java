@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 public class TitlePostRequest {
 
-    private int questId;
+    private Integer questId;
 
     private String name;
 
