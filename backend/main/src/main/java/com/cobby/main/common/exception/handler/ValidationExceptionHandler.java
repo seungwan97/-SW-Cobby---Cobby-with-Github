@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
 
 	/**
-	 * &#064;Validated 으로 유효성 검사를 진행한 @RequestParam 이나 @PathVariable 의 Validation Error 를 핸들링하는
+	 * @Validated 으로 유효성 검사를 진행한 @RequestParam 이나 @PathVariable 의 Validation Error 를 핸들링하는
 	 * 메소드입니다.
 	 * <p>
 	 * 컨트롤러 중 발생한 위반 사항들에 대해 사전에 정의된 메시지 양식으로 정제하고, 그 결과를 List<String> 형태로 body 에 담아 클라이언트에게 보여줍니다.

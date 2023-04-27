@@ -27,7 +27,7 @@ public class AvatarCostume extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "avatar_costume_id", nullable = false, columnDefinition = "INT UNSIGNED")
-	private Integer characterCostumeId;
+	private Integer avatarCostumeId;
 
 	@JsonIgnore
 	@ManyToOne
