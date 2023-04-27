@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TitleGetResponse {
 
-    private int titleId;
+    private Integer titleId;
 
-    private int questId;
+    private Integer questId;
 
     private String name;
 

@@ -9,11 +9,9 @@ import com.cobby.main.quest.db.entity.Quest;
 
 public interface QuestService {
 
-	QuestGetResponse selectQuest(int questId);
+	QuestGetResponse selectQuest(Integer questId);
 	List<QuestGetResponse> selectAllQuest();
-
 	void insertQuest(QuestPostRequest questInfo);
-
 	void updateQuest(QuestPutRequest questInfo);
-	void deleteQuest(int questId);
+	void deleteQuest(Integer questId);
 }

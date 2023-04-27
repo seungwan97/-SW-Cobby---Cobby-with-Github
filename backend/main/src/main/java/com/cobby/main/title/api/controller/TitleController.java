@@ -15,14 +15,19 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
-@RequestMapping("api/characters/title")
+@RequestMapping("api/titles")
 public class TitleController {
 
 	private final TitleService titleService;
 
 	@GetMapping
 	public ResponseEntity<? extends BaseResponseBody> getAllTitles() {
-		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", titleService.selectAllTitle()));
+		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", titleService.selectAllTitles()));
+	}
+
+	@GetMapping("/{titleId}")
+	public ResponseEntity<? extends BaseResponseBody> getTitle(@PathVariable Integer titleId) {
+		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", titleService.selectTitle(titleId)));
 	}
 
 	@PostMapping
@@ -38,7 +43,7 @@ public class TitleController {
 	}
 
 	@DeleteMapping("/{titleId}")
-	public ResponseEntity<? extends BaseResponseBody> deleteTitle(@PathVariable int titleId) {
+	public ResponseEntity<? extends BaseResponseBody> deleteTitle(@PathVariable Integer titleId) {
 		titleService.deleteTitle(titleId);
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Deleted", "삭제되었습니다."));
 	}

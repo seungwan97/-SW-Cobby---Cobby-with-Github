@@ -2,6 +2,7 @@ package com.cobby.main.quest.db.entity;
 
 import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.quest.api.dto.response.QuestGetResponse;
+import com.cobby.main.quest.db.entity.enumtype.QuestCategory;
 import com.cobby.main.title.db.entity.Title;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,21 +23,22 @@ public class Quest {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, columnDefinition="INT UNSIGNED")
-	private int questId;
+	private Integer questId;
 
 	private String questName;
 
-	private char questType;	// ENUM?
+	@Enumerated(EnumType.STRING)
+	private QuestCategory questType;
 
 	@Column(nullable = false, columnDefinition="INT UNSIGNED")
-	private int questCode;
+	private Integer questCode;
 
-//	@OneToMany(mappedBy = "quest")
-//	private List<Costume> costumes = new ArrayList<>();
+	@OneToMany(mappedBy = "quest")
+	private List<Costume> costumes = new ArrayList<>();
 
 	@OneToMany(mappedBy = "quest")
 	private List<Title> titles = new ArrayList<>();
 
 	// Entity to Dto
-	public QuestGetResponse toDto() {return new QuestGetResponse(questId, questName, questType, questCode, titles);}
+	public QuestGetResponse toDto() {return new QuestGetResponse(questId, questName, questType, questCode, costumes, titles);}
 }

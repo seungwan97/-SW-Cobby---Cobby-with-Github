@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
-@RequestMapping("api/characters/quest")
+@RequestMapping("api/quests")
 public class QuestController {
 
 	private final QuestService questService;
@@ -21,6 +21,11 @@ public class QuestController {
 	@GetMapping
 	public ResponseEntity<? extends BaseResponseBody> getAllQuests() {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", questService.selectAllQuest()));
+	}
+
+	@GetMapping("/{questId}")
+	public ResponseEntity<? extends BaseResponseBody> getQuest(@PathVariable Integer questId) {
+		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", questService.selectQuest(questId)));
 	}
 
 	@PostMapping
@@ -36,7 +41,7 @@ public class QuestController {
 	}
 
 	@DeleteMapping("/{questId}")
-	public ResponseEntity<? extends BaseResponseBody> deleteQuest(int questId) {
+	public ResponseEntity<? extends BaseResponseBody> deleteQuest(@PathVariable Integer questId) {
 		questService.deleteQuest(questId);
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Deleted", "삭제되었습니다."));
 	}
