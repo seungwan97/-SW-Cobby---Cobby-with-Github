@@ -1,9 +1,6 @@
 package com.cobby.main.costume.db.entity;
 
-import org.hibernate.annotations.ColumnDefault;
-
 import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
-import com.cobby.main.common.entity.BaseTimeEntity;
 import com.cobby.main.quest.db.entity.Quest;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -20,9 +17,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter

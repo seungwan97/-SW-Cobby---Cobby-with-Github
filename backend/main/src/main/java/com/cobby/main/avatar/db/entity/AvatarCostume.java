@@ -1,7 +1,8 @@
-package com.cobby.main.costume.db.entity;
+package com.cobby.main.avatar.db.entity;
 
 import com.cobby.main.avatar.db.entity.Avatar;
 import com.cobby.main.common.entity.BaseTimeEntity;
+import com.cobby.main.costume.db.entity.Costume;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -27,7 +28,7 @@ public class AvatarCostume extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "avatar_costume_id", nullable = false, columnDefinition = "INT UNSIGNED")
-	private Integer characterCostumeId;
+	private Integer avatarCostumeId;
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
