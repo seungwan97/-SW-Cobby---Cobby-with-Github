@@ -29,7 +29,7 @@ public class GlobalExceptionController {
 	public ResponseEntity<?> mattermostSender(Exception e, HttpServletRequest request) {
 		e.printStackTrace();
 		notificationManager.sendNotification(e, request.getRequestURI(), getParams(request));
-		
+
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 

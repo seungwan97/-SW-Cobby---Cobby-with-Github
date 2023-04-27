@@ -1,5 +1,7 @@
 package com.cobby.main.user.api.controller;
 
+import java.util.UUID;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -30,23 +32,13 @@ public class UserController {
 			.body(new BaseResponseBody<>(200, "OK", info));
 	}
 
-	@PatchMapping("/{userId}") // 회원 정보 수정
-	public ResponseEntity<? extends BaseResponseBody> updateUserInfo(@PathVariable String userId) {
+	@PatchMapping("/signout/{userId}") // 회원 탈퇴
+	public ResponseEntity<? extends BaseResponseBody> signOutUserInfo(@PathVariable String userId) {
 
-		userService.updateUserInfo(userId);
-
-		return ResponseEntity
-			.ok()
-			.body(new BaseResponseBody<>(200, "OK", "정보가 수정되었습니다."));
-	}
-
-	@PatchMapping("/signout/{userId}") // 회원 상태 수정
-	public ResponseEntity<? extends BaseResponseBody> updateUserStatus(@PathVariable String userId) {
-
-		userService.updateUserStatus(userId);
+		userService.signOutUserInfo(userId);
 
 		return ResponseEntity
 			.ok()
-			.body(new BaseResponseBody<>(200, "OK", "상태가 수정되었습니다."));
+			.body(new BaseResponseBody<>(200, "OK", "탈퇴되었습니다."));
 	}
 }

@@ -11,11 +11,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @EntityListeners(value = AuditingEntityListener.class) // Auditing 기능 포함
-@MappedSuperclass                              // JPA Entity 클래스들이 이 클래스를 상속할 경우 필드들도 칼럼으로 인식하게 함.
+@MappedSuperclass // JPA Entity 클래스들이 이 클래스를 상속할 경우 필드들도 칼럼으로 인식하게 함.
 public class UpdateTimeEntity{
 
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
@@ -23,5 +28,10 @@ public class UpdateTimeEntity{
 	@Column(nullable = false)
 	private LocalDateTime lastModifiedAt; // 수정 시간
 
-
+	@Override
+	public String toString() {
+		return "UpdateTimeEntity{" +
+			"lastModifiedAt=" + lastModifiedAt +
+			'}';
+	}
 }

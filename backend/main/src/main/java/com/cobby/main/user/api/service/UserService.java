@@ -2,12 +2,11 @@ package com.cobby.main.user.api.service;
 
 import java.util.List;
 
-import com.cobby.main.user.api.dto.response.UserGetResponse;
+import com.cobby.main.user.api.dto.response.UserMainResponse;
 
 public interface UserService {
 
-	List<UserGetResponse> getUserInfo(String userId);
-	void updateUserInfo(String userId);
-	void updateUserStatus(String userId);
+	UserMainResponse getUserInfo(String userId);
+	void signOutUserInfo(String userId);
 
 }
