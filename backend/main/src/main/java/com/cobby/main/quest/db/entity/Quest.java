@@ -35,7 +35,7 @@ public class Quest {
 //	private List<Costume> costumes = new ArrayList<>();
 
 	@OneToMany(mappedBy = "quest")
-	private List<Title> titles = new ArrayList<>();
+	private List<Title> titles;
 
 	// Entity to Dto
 	public QuestGetResponse toDto() {return new QuestGetResponse(questId, questName, questType, questCode, titles);}
