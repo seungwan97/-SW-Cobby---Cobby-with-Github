@@ -2,8 +2,8 @@
 // 유저별 마이페이지
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import BottomNavBar from "@/components/layout/BottomNavBar";
-import * as page from "@/pages/style/Page";
+import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
+import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 
 //QuestPage
 const QuestPage = () => {

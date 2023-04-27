@@ -1,15 +1,15 @@
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import * as page from "@/pages/style/Page";
-import BottomNavBar from "@/components/layout/BottomNavBar";
+import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
+import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
+
 //main page
 const MainPage = () => {
   const router = useRouter();
   return (
     <Fragment>
       <page.PageWrapper>
-        <div>MainPage 입니다.</div>
-        <div>user명 : {router.query.userId}</div>
+        <div>메인페이지입니다. 테스트id명 : test</div>
       </page.PageWrapper>
       <BottomNavBar />
     </Fragment>
