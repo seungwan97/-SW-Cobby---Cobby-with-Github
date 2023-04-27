@@ -27,7 +27,12 @@ public class TitleServiceImpl implements TitleService {
 	private final QuestRepository questRepository;
 
 	@Override
-	public List<TitleGetResponse> selectAllTitle() {
+	public TitleGetResponse selectTitle(Integer titleId) {
+		return titleRepository.findById(titleId).stream().map(Title::toDto).findFirst().orElseThrow(NotFoundException::new);
+	}
+
+	@Override
+	public List<TitleGetResponse> selectAllTitles() {
 		return titleRepository.findAll().stream().map(Title::toDto).collect(Collectors.toList());
 	}
 

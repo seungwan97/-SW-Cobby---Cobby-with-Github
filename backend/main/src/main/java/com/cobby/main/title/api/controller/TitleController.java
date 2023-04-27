@@ -15,14 +15,19 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
-@RequestMapping("api/characters/title")
+@RequestMapping("api/titles")
 public class TitleController {
 
 	private final TitleService titleService;
 
 	@GetMapping
 	public ResponseEntity<? extends BaseResponseBody> getAllTitles() {
-		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", titleService.selectAllTitle()));
+		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", titleService.selectAllTitles()));
+	}
+
+	@GetMapping("/{titleId}")
+	public ResponseEntity<? extends BaseResponseBody> getTitle(@PathVariable Integer titleId) {
+		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", titleService.selectTitle(titleId)));
 	}
 
 	@PostMapping

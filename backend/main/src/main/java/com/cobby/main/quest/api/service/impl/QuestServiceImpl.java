@@ -59,7 +59,7 @@ public class QuestServiceImpl implements QuestService {
 	}
 
 	@Override
-	public void deleteQuest(int questId) {
+	public void deleteQuest(Integer questId) {
 		var quest = questRepository.findById(questId).orElseThrow(NotFoundException::new);
 
 		questRepository.deleteById(questId);
