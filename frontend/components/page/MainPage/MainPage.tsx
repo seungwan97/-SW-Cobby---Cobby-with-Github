@@ -3,14 +3,16 @@ import * as style from "@/components/page/MainPage/MainComponents/style/MainPage
 
 import CobbyInfo from "./MainComponents/CobbyInfo";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
-import ExpBar from "./MainComponents/ExpBar";
+import GithubStatus from "./MainComponents/GithubStatus";
+import CurrentCommit from "./MainComponents/CurrentCommit";
 
 const MainPage = () => {
   return (
     <Fragment>
       <style.MainPageContent>
         <CobbyInfo />
-        <ExpBar />
+        <GithubStatus />
+        <CurrentCommit />
       </style.MainPageContent>
       <style.MainPageMargin />
       <BottomNavBar />

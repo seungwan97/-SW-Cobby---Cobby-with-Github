@@ -2,9 +2,11 @@ import * as style from "@/components/page/MainPage/MainComponents/style/ExpProgr
 
 const ExpProgress = () => {
   return (
-    <style.FullDiv>
-      <style.RangeDiv></style.RangeDiv>
-    </style.FullDiv>
+    <>
+      <style.FullDiv>
+        <style.RangeDiv></style.RangeDiv>
+      </style.FullDiv>
+    </>
   );
 };
 export default ExpProgress;

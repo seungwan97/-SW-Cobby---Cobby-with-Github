@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const Margin = styled.div`
   display: inline-block;
-  margin-top: 8%;
+  margin-top: 5%;
 `;
 
 export const TextMargin = styled.div`
   display: inline-block;
-  margin-top: 5%;
+  margin-top: 3%;
 `;
