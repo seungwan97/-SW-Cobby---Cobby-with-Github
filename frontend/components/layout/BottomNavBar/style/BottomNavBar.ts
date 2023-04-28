@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const NavWrapper = styled.div`
   width: 100%;
-  height: 10%;
+  height: 9%;
   display: flex;
   justify-content: space-around;
   background-color: #fafae7;
