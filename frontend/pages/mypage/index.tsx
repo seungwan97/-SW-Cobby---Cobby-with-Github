@@ -1,21 +1,21 @@
-// 유저별 코스튬 페이지
+// 유저별 마이페이지
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
-import CostumePage from "@/components/page/CostumePage/CostumePage";
+import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
+import MyPage from "@/components/page/MyPage/MyPage";
 
-// Costumepage
-const CostumeFunc = () => {
+// MyPage
+const MyFunc = () => {
   const router = useRouter();
   return (
     <Fragment>
       <page.PageWrapper>
-        <CostumePage></CostumePage>
+        <MyPage />
       </page.PageWrapper>
       <BottomNavBar />
     </Fragment>
   );
 };
 
-export default CostumePage;
+export default MyFunc;
