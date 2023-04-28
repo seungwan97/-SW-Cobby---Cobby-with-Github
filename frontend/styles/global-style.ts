@@ -16,7 +16,6 @@ export const GlobalStyle = createGlobalStyle`
     -ms-overflow-style: none;
     height: 90%;
     background-color: #fffff8;
-    text-align: center;
     position: absolute;
     top: 50%;
     left: 50%;

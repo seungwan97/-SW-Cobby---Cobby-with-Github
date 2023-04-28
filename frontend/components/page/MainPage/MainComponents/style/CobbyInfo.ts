@@ -9,3 +9,7 @@ export const TextMargin = styled.div`
   display: inline-block;
   margin-top: 3%;
 `;
+
+export const CobbyInfoWrapper = styled.div`
+  text-align: center;
+`;

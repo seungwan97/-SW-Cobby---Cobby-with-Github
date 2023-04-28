@@ -6,6 +6,7 @@ export const StatusContainer = styled.div`
   border: 2px solid #333333;
   margin: 0 auto;
   margin-top: 5%;
+  text-align: center;
 `;
 
 export const StatusBar = styled.div`
