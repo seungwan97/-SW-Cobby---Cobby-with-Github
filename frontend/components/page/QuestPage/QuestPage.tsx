@@ -1,13 +1,12 @@
 import { Fragment } from "react";
+import QuestList from "./QuestComponents/QuestList";
 
-const QuestPage = () => {
+const QuestPage = (props: any) => {
   return (
     <Fragment>
-      <div>QuestPageComponent</div>
+      <QuestList QuestItemList={props.QuestItemList} />
     </Fragment>
   );
 };
-
-export const getStaticProps = () => {};
 
 export default QuestPage;

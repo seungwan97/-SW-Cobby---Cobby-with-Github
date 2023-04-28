@@ -6,17 +6,43 @@ import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import QuestPage from "@/components/page/QuestPage/QuestPage";
 
+const DUMMY_DATA = [
+  {
+    category: "Level",
+    title: "Reaching Level",
+    goal: 10,
+    progress: 70,
+    award: "/Character/Cobby.png",
+  },
+  {
+    category: "Level",
+    title: "Reaching Level",
+    goal: 20,
+    progress: 70,
+    award: "/Character/Cobby.png",
+  },
+];
+
 //QuestPage
-const QuestFunc = () => {
+const QuestFunc = (props: any) => {
   // const router = useRouter(); // router.query.userId
   return (
     <Fragment>
       <page.PageWrapper>
-        <QuestPage />
+        <QuestPage QuestItemList={props.QuestItemList} />
       </page.PageWrapper>
       <BottomNavBar />
     </Fragment>
   );
 };
+
+export async function getStaticProps() {
+  // fetch data for a single meetup
+  return {
+    props: {
+      QuestItemList: DUMMY_DATA,
+    },
+  };
+}
 
 export default QuestFunc;
