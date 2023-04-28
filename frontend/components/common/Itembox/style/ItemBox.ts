@@ -20,3 +20,16 @@ export const ItemImage = styled.img`
   height: 100%;
   border-radius: 10px;
 `;
+
+export const ImageWrapper = styled.div`
+  border: 2px solid ${colors.MainBlackColor};
+  border-radius: 10px;
+  display: flex;
+  background-color: #ededdb;
+  width: 70px;
+  height: 70px;
+  padding: 7px;
+  margin: auto 0;
+  justify-content: center;
+  align-items: center;
+`;

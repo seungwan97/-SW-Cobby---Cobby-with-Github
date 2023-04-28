@@ -9,19 +9,18 @@ import * as style from "./CostumeComponents/style/CostumePage";
 import Cobby from "@/components/common/Cobby/Cobby";
 
 // CostumePage
-const CostumePage = () => {
+const CostumePage = (props: any) => {
   const router = useRouter();
   return (
     <Fragment>
       <page.PageWrapper>
-        <style.CostumeTxt>
+        <style.CostumePageTextWrapper>
           <TextBox size={50} content={"COSTUME"} />
-        </style.CostumeTxt>
+        </style.CostumePageTextWrapper>
         <style.CostumedCobby>
           <Cobby />
-          <div>user명 : {router.query.userId}</div>
         </style.CostumedCobby>
-        <Inventory />
+        <Inventory itemList={props.itemList} />
       </page.PageWrapper>
       <BottomNavBar />
     </Fragment>

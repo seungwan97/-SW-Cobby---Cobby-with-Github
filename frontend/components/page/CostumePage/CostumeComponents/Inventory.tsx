@@ -21,29 +21,20 @@ const typeList: ItemType[] = [
   },
 ];
 
-const Inventory = () => {
+const Inventory = (props: any) => {
   return (
     <style.Inventory>
       <style.InventoryBar>
         {typeList.map((type, index) => (
           <style.InventoryType key={index}>
-            <style.InventoryTypeImg
-              src={type.imgSrc}
-              alt={type.name}
-            />
+            <style.InventoryTypeImg src={type.imgSrc} alt={type.name} />
           </style.InventoryType>
         ))}
       </style.InventoryBar>
       <style.InventoryBox>
-        <ItemBox />
-        <ItemBox />
-        <ItemBox />
-        <ItemBox />
-        <ItemBox />
-        <ItemBox />
-        <ItemBox />
-        <ItemBox />
-        <ItemBox />
+        {props.itemList.map((item: object, index: number) => (
+          <ItemBox item={item} key={index} />
+        ))}
       </style.InventoryBox>
     </style.Inventory>
   );
