@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { colors } from "@/styles/colors-style";
 
 export const ItemWrapper = styled.div`
-  border: 2px solid #333333;
-  background-color: #ededdb;
+  border: 2px solid ${colors.ItemBoxColor};
+  background-color: ${colors.ItemBoxColor};
   text-align: center;
   width: 100px;
   height: 100px;
@@ -19,8 +20,3 @@ export const ItemImage = styled.img`
   height: 100%;
   border-radius: 10px;
 `;
-
-// export const ItemLabel = styled.div<{ size: number }>`
-//   border: 1px solid green;
-//   width: 100%;
-// `;
