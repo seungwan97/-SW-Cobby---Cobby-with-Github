@@ -43,13 +43,13 @@ const elementList: NavElement[] = [
 // RedirectButton.displayName = "RedirectButton";
 
 const BottomNavBar = () => {
-  const userId = "test"; // 나중에 대체해야함 useRouter()
+  // const userId = "test"; // 나중에 대체해야함 useRouter()
 
   return (
     <style.NavWrapper>
       {elementList.map((element: NavElement, index: number) => (
         <style.CustomLink
-          href={`/${element.link}/${userId}`}
+          href={`/${element.link}`}
           key={index}
           passHref
           legacyBehavior
