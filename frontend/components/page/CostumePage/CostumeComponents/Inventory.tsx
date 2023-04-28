@@ -9,15 +9,15 @@ type ItemType = {
 const typeList: ItemType[] = [
   {
     name: "Head",
-    imgSrc: "@/public/navItems/home.png",
+    imgSrc: "/navItems/cobbyface.png",
   },
   {
     name: "Body",
-    imgSrc: "@/public/navItems/backpack.png",
+    imgSrc: "/navItems/cobbyface.png",
   },
   {
     name: "Effect",
-    imgSrc: "@/public/navItems/quest.png",
+    imgSrc: "/navItems/cobbyface.png",
   },
 ];
 
@@ -36,6 +36,15 @@ const Inventory = () => {
         ))}
       </style.InventoryBar>
       <style.InventoryBox>
+        <ItemBox />
+        <ItemBox />
+        <ItemBox />
+        <ItemBox />
+        <ItemBox />
+        <ItemBox />
+        <ItemBox />
+        <ItemBox />
+        <ItemBox />
         <ItemBox />
         <ItemBox />
         <ItemBox />
