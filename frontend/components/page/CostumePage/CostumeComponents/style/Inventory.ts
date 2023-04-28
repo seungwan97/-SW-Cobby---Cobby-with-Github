@@ -4,6 +4,8 @@ import { colors } from "@/styles/colors-style";
 export const Inventory = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: 60%;
   align-items: center;
 `;
 
@@ -11,7 +13,7 @@ export const InventoryBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 70%;
 `;
 
 export const InventoryType = styled.div`
@@ -32,14 +34,28 @@ export const InventoryTypeImg = styled.img`
   margin: 5px 10px;
 `;
 
+// export const InventoryBox = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(3, auto);
+//   gap: 15px;
+//   width: 70%;
+//   background-color: ${colors.NavBarCreamColor};
+//   overflow-y: scroll;
+//   padding: 15px;
+// `;
+
 export const InventoryBox = styled.div`
   display: grid;
-  justify-content: center;
-  align-content: center;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, auto);
   gap: 15px;
-  padding: 20px;
-  margin-bottom: 20px;
-  height: calc(100% - 50px);
+  width: 70%;
+  height: 100%;
   background-color: ${colors.NavBarCreamColor};
+  overflow-y: scroll;
+  padding: 15px;
+  justify-items: center;
+
+  & > * {
+    width: 100%;
+  }
 `;

@@ -5,17 +5,61 @@ import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import CostumePage from "@/components/page/CostumePage/CostumePage";
 
+const DUMMY_DATA = [
+  {
+    item: "/Character/Cobby.png",
+  },
+  {
+    item: "/Character/Cobby.png",
+  },
+  {
+    item: "/Character/Cobby.png",
+  },
+  {
+    item: "/Character/Cobby.png",
+  },
+  {
+    item: "/Character/Cobby.png",
+  },
+  {
+    item: "/Character/Cobby.png",
+  },
+  {
+    item: "/Character/Cobby.png",
+  },
+  {
+    item: "/Character/Cobby.png",
+  },
+  {
+    item: "/Character/Cobby.png",
+  },
+  {
+    item: "/Character/Cobby.png",
+  },
+  {
+    item: "/Character/Cobby.png",
+  },
+];
 // Costumepage
-const CostumeFunc = () => {
+const CostumeFunc = (props: any) => {
   const router = useRouter();
   return (
     <Fragment>
       <page.PageWrapper>
-        <CostumePage></CostumePage>
+        <CostumePage itemList={props.itemList} />
       </page.PageWrapper>
       <BottomNavBar />
     </Fragment>
   );
 };
+
+export async function getStaticProps() {
+  // fetch data for a single meetup
+  return {
+    props: {
+      itemList: DUMMY_DATA,
+    },
+  };
+}
 
 export default CostumePage;
