@@ -5,6 +5,8 @@ import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import TextBox from "@/components/common/TextBox/TextBox";
 import Inventory from "./CostumeComponents/Inventory";
+import * as style from "./CostumeComponents/style/CostumePage";
+import Cobby from "@/components/common/Cobby/Cobby";
 
 // CostumePage
 const CostumePage = () => {
@@ -12,11 +14,13 @@ const CostumePage = () => {
   return (
     <Fragment>
       <page.PageWrapper>
-        <TextBox size={50} content={"COSTUME"} />
-        <div>
-          로그인한 사용자의 저장된 코비 모습 불러와야한다잉
-        </div>
-        <div>user명 : {router.query.userId}</div>
+        <style.CustomeTxt>
+          <TextBox size={50} content={"COSTUME"} />
+        </style.CustomeTxt>
+        <style.CustomedCobby>
+          <Cobby />
+          <div>user명 : {router.query.userId}</div>
+        </style.CustomedCobby>
         <Inventory />
       </page.PageWrapper>
       <BottomNavBar />
