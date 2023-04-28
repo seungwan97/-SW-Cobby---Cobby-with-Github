@@ -4,24 +4,23 @@ import { Fragment } from "react";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import TextBox from "@/components/common/TextBox/TextBox";
+import * as style from "./MyComponents/style/MyPage";
+import MyCobby from "./MyComponents/MyCobby";
+import GithubBadge from "./MyComponents/GithubBadge";
 
 // MyPage
 const MyPage = () => {
   const router = useRouter();
+
   return (
     <Fragment>
       <page.PageWrapper>
-        <TextBox size={50} content={"MY PAGE"} />
-        <div>자기 코비가 배경뒤로 걸어가야한다잉</div>
+        <style.MyPageTxt>
+          <TextBox size={50} content={"MY PAGE"} />
+        </style.MyPageTxt>
+        <MyCobby />
         <div>user명 : {router.query.userId}</div>
-        <div>
-          뱃지 컴포넌트야
-          <TextBox
-            size={20}
-            content={"#Github 어쩌고 저쩌꼬"}
-          />
-          <button>Copy Btn</button>
-        </div>
+        <GithubBadge />
         <div>
           마이페이지 info
           <div>
