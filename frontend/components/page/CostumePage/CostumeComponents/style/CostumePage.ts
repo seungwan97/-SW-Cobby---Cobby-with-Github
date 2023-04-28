@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export const CustomeTxt = styled.div`
+export const CostumeTxt = styled.div`
   text-align: center;
 `;
 
-export const CustomedCobby = styled.div`
+export const CostumedCobby = styled.div`
   text-align: center;
 `;

@@ -14,13 +14,13 @@ const CostumePage = () => {
   return (
     <Fragment>
       <page.PageWrapper>
-        <style.CustomeTxt>
+        <style.CostumeTxt>
           <TextBox size={50} content={"COSTUME"} />
-        </style.CustomeTxt>
-        <style.CustomedCobby>
+        </style.CostumeTxt>
+        <style.CostumedCobby>
           <Cobby />
           <div>user명 : {router.query.userId}</div>
-        </style.CustomedCobby>
+        </style.CostumedCobby>
         <Inventory />
       </page.PageWrapper>
       <BottomNavBar />
