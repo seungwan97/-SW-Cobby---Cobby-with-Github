@@ -6,7 +6,7 @@ import ExpProgress from "./ExpProgress";
 const ExpBar = () => {
   return (
     <style.ExpContainer>
-      <TextBox size={10} content={"EXP"} />
+      <TextBox size={20} content={"EXP"} />
       <ExpProgress />
     </style.ExpContainer>
   );

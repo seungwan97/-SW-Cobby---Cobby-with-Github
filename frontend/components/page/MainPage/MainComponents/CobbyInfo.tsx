@@ -2,16 +2,17 @@ import * as style from "@/components/page/MainPage/MainComponents/style/CobbyInf
 
 import TextBox from "@/components/common/TextBox/TextBox";
 import Cobby from "@/components/common/Cobby/Cobby";
+import ExpBar from "./ExpBar";
 
 const CobbyInfo = () => {
   return (
     <>
-      <TextBox size={30} content={"Seungwan97's Cobby"} />
+      <TextBox size={37} content={"Seungwan97's Cobby"} />
       <style.TextMargin />
-      <TextBox size={20} content={"Lv. 10"} />
+      <TextBox size={25} content={"Lv. 10"} />
       <style.Margin />
       <Cobby />
-      <style.Margin />
+      <ExpBar />
     </>
   );
 };
