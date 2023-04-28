@@ -21,6 +21,20 @@ const DUMMY_DATA = [
     progress: 70,
     award: "/Character/Cobby.png",
   },
+  {
+    category: "Level",
+    title: "Reaching Level",
+    goal: 30,
+    progress: 70,
+    award: "/Character/Cobby.png",
+  },
+  {
+    category: "Level",
+    title: "Reaching Level",
+    goal: 40,
+    progress: 70,
+    award: "/Character/Cobby.png",
+  },
 ];
 
 //QuestPage

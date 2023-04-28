@@ -1,12 +1,13 @@
 import QuestItem from "./QuestItem";
+import * as style from "./style/QuestPage";
 
 const QuestList = (props: any) => {
   return (
-    <div>
+    <style.QuestListWrapper>
       {props.QuestItemList.map((item: object, index: number) => (
         <QuestItem key={index} item={item} />
       ))}
-    </div>
+    </style.QuestListWrapper>
   );
 };
 
