@@ -24,7 +24,6 @@ const typeList: ItemType[] = [
 const Inventory = () => {
   return (
     <style.Inventory>
-      여기는 인벤토리야
       <style.InventoryBar>
         {typeList.map((type, index) => (
           <style.InventoryType key={index}>
@@ -36,9 +35,6 @@ const Inventory = () => {
         ))}
       </style.InventoryBar>
       <style.InventoryBox>
-        <ItemBox />
-        <ItemBox />
-        <ItemBox />
         <ItemBox />
         <ItemBox />
         <ItemBox />

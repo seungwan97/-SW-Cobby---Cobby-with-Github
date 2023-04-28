@@ -11,6 +11,7 @@ export const InventoryBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 `;
 
 export const InventoryType = styled.div`
@@ -33,10 +34,9 @@ export const InventoryTypeImg = styled.img`
 
 export const InventoryBox = styled.div`
   display: grid;
-  grid-template-columns: repeat(
-    3,
-    1fr
-  ); /* 3개의 열을 가지는 그리드 */
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: repeat(3, 1fr);
   gap: 15px;
   padding: 20px;
   margin-bottom: 20px;
