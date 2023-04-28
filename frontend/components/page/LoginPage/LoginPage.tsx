@@ -13,7 +13,7 @@ import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 
 const LoginPage = () => {
   return (
-    <Fragment>
+    <style.LoginPageWrapper>
       <style.LoginPageContent>
         <TextBox size={50} content={"Cobby"} />
         <style.LogoMargin />
@@ -23,9 +23,8 @@ const LoginPage = () => {
       </style.LoginPageContent>
       <style.LoginBtnMargin />
       <GithubLoginButton />
-
       <BottomNavBar />
-    </Fragment>
+    </style.LoginPageWrapper>
   );
 };
 export default LoginPage;

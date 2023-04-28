@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+export const LoginPageWrapper = styled.div`
+  text-align: center;
+`;
 export const LoginPageContent = styled.div`
   /* 임시  CSS임 => 밑에 NavBar 표시하느라 잠시 넣었음 */
   margin-top: 30%;
