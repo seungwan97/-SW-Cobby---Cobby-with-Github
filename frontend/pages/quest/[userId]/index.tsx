@@ -6,7 +6,7 @@ import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 
 //QuestPage
-const QuestPage = () => {
+const QuestFunc = () => {
   const router = useRouter();
   return (
     <Fragment>
@@ -19,4 +19,4 @@ const QuestPage = () => {
   );
 };
 
-export default QuestPage;
+export default QuestFunc;

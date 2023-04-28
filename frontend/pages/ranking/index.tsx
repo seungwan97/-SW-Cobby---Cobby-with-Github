@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Fragment } from "react";
 
 //RankingPage
-const RankingPage = () => {
+const RankingFunc = () => {
   const router = useRouter();
   return (
     <Fragment>
@@ -13,4 +13,4 @@ const RankingPage = () => {
   );
 };
 
-export default RankingPage;
+export default RankingFunc;

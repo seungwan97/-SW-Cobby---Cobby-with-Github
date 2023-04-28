@@ -1,19 +1,20 @@
 import { useRouter } from "next/router";
 import { Fragment } from "react";
-import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
+import MainPage from "@/components/page/MainPage/MainPage";
+import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 
 //main page
-const MainPage = () => {
+const MainFunc = () => {
   const router = useRouter();
   return (
     <Fragment>
       <page.PageWrapper>
-        <div>메인페이지입니다. 테스트id명 : test</div>
+        <MainPage />
       </page.PageWrapper>
       <BottomNavBar />
     </Fragment>
   );
 };
 
-export default MainPage;
+export default MainFunc;
