@@ -7,4 +7,8 @@ export const CobbyWrapper = styled.div`
 export const Cobby = styled.img`
   width: 180px;
   height: 180px;
+  @media (max-height: 667px) {
+    width: 150px;
+    height: 150px;
+  }
 `;

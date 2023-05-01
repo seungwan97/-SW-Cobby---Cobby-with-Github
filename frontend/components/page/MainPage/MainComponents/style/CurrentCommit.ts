@@ -9,10 +9,14 @@ export const CommitContainer = styled.div`
   margin: 0 auto;
   margin-top: 3%;
   background-color: #fafae7;
+  text-align: center;
 
   @media (max-width: 767px) {
-    // 모바일
     width: 80%;
+    margin-top: 8%;
+    @media (max-width: 667px) {
+      margin-top: 5%;
+    }
   }
 
   @media (min-width: 768px) and (max-width: 991px) {
