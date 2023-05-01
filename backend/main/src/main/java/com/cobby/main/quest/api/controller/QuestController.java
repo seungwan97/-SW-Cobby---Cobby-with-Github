@@ -18,17 +18,17 @@ public class QuestController {
 
 	private final QuestService questService;
 
+	@GetMapping("/one/{questId}")
+	public ResponseEntity<? extends BaseResponseBody> getQuest(@PathVariable Integer questId) {
+		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", questService.selectQuest(questId)));
+	}
+
 	@GetMapping
 	public ResponseEntity<? extends BaseResponseBody> getAllQuests() {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", questService.selectAllQuest()));
 	}
 
-	@GetMapping("/{questId}")
-	public ResponseEntity<? extends BaseResponseBody> getQuest(@PathVariable Integer questId) {
-		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", questService.selectQuest(questId)));
-	}
-
-	@PostMapping
+	@PostMapping("/new")
 	public ResponseEntity<? extends BaseResponseBody> createQuest(@RequestBody QuestPostRequest questInfo) {
 		questService.insertQuest(questInfo);
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Created", "생성되었습니다."));

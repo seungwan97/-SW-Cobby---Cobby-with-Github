@@ -18,7 +18,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Quest {
+	public class Quest {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,5 +40,5 @@ public class Quest {
 	private List<Title> titles = new ArrayList<>();
 
 	// Entity to Dto
-	public QuestGetResponse toDto() {return new QuestGetResponse(questId, questName, questType, questCode, costumes, titles);}
+	// public QuestGetResponse toDto() {return new QuestGetResponse(questId, questName, questType, questCode, costumes, titles);}
 }

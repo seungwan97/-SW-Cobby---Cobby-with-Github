@@ -28,12 +28,17 @@ public class TitleServiceImpl implements TitleService {
 
 	@Override
 	public TitleGetResponse selectTitle(Integer titleId) {
-		return titleRepository.findById(titleId).stream().map(Title::toDto).findFirst().orElseThrow(NotFoundException::new);
+		return TitleGetResponse.builder()
+			.title(titleRepository.findById(titleId).orElseThrow(NotFoundException::new))
+			.build();
 	}
 
 	@Override
 	public List<TitleGetResponse> selectAllTitles() {
-		return titleRepository.findAll().stream().map(Title::toDto).collect(Collectors.toList());
+		return titleRepository.findAll()
+			.stream()
+			.map(title -> TitleGetResponse.builder().title(title).build())
+			.toList();
 	}
 
 	@Override

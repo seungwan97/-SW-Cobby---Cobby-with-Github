@@ -27,6 +27,7 @@ dependencies {
 //    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 //    implementation 'org.apache.kafka:kafka-streams'
 //    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'com.squareup.okhttp3:okhttp'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     annotationProcessor 'org.projectlombok:lombok'
