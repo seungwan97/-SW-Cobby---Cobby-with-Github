@@ -23,7 +23,7 @@ public class QuestGetResponse {
 
     private Integer questCode;
 
-   private List<Costume> costumes = new ArrayList<>();
+    private List<Costume> costumes = new ArrayList<>();
 
     private List<Title> titles = new ArrayList<>();
 }

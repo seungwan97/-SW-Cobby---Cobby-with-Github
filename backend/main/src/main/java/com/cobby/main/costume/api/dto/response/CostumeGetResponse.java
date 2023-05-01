@@ -16,7 +16,7 @@ public class CostumeGetResponse {
 
 	private CostumeCategory category;
 
-	private Quest quest;
+	private Integer questId;
 
 	private String imgUrl;
 
@@ -29,7 +29,7 @@ public class CostumeGetResponse {
 		this.costumeId = costume.getCostumeId();
 		this.name = costume.getName();
 		this.category = costume.getCategory();
-		this.quest = costume.getQuest();
+		this.questId = costume.getQuest().getQuestId();
 		this.imgUrl = costume.getImgUrl();
 		this.silhouetteImgUrl = costume.getSilhouetteImgUrl();
 		this.gifUrl = costume.getGifUrl();
