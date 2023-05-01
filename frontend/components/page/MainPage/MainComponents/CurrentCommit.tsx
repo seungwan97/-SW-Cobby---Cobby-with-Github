@@ -4,7 +4,7 @@ import TextBox from "@/components/common/TextBox/TextBox";
 const CurrentCommit = () => {
   return (
     <style.CommitContainer>
-      <TextBox size={23} content={"Seungwan97 made 5 commits today."} />
+      <TextBox size={17} content={"Seungwan97 made 5 commits today."} />
     </style.CommitContainer>
   );
 };

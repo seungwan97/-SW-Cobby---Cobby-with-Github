@@ -3,12 +3,11 @@ import Link from "next/link";
 
 export const NavWrapper = styled.div`
   width: 100%;
-  height: 9%;
+  position: absolute;
   display: flex;
   justify-content: space-around;
-  background-color: #fafae7;
-  position: fixed;
   bottom: 0;
+  background-color: #fafae7;
 `;
 export const TextBox = styled.div<{ size: number }>`
   font-size: ${(props) => props.size}px;
