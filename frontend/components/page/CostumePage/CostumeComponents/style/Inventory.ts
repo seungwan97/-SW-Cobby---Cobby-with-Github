@@ -22,6 +22,7 @@ export const InventoryType = styled.div`
   margin: 0 5px;
   background-color: ${colors.ItemBoxColor};
   border-radius: 10px 10px 0px 0px;
+  cursor: pointer;
 
   :hover {
     background-color: ${colors.NavBarCreamColor};
@@ -33,16 +34,6 @@ export const InventoryTypeImg = styled.img`
   max-height: 50%;
   margin: 5px 10px;
 `;
-
-// export const InventoryBox = styled.div`
-//   display: grid;
-//   grid-template-columns: repeat(3, auto);
-//   gap: 15px;
-//   width: 70%;
-//   background-color: ${colors.NavBarCreamColor};
-//   overflow-y: scroll;
-//   padding: 15px;
-// `;
 
 export const InventoryBox = styled.div`
   display: grid;
