@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const NavWrapper = styled.div`
   width: 100%;
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: space-around;
   bottom: 0;
@@ -18,6 +18,7 @@ export const TextBox = styled.div<{ size: number }>`
 export const NavItemWrapper = styled.div`
   width: 25%;
   height: auto;
+  padding: 5px;
   text-align: center;
 
   &:hover {

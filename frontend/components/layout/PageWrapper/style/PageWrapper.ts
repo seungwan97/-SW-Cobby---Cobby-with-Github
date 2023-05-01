@@ -8,6 +8,10 @@ export const PageWrapper = styled.div`
     // 모바일
     width: 100%;
     margin-top: 25px;
+
+    @media (max-height: 736px) {
+      /* margin: 0; */
+    }
   }
 
   @media (min-width: 768px) and (max-width: 991px) {
