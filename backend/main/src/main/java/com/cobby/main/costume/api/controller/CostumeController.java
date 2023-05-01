@@ -68,7 +68,7 @@ public class CostumeController {
 			.body(new BaseResponseBody<>(201, "created", successMessage));
 	}
 
-	@DeleteMapping
+	@DeleteMapping("/{costumeId}")
 	public ResponseEntity<? extends BaseResponseBody> deleteCostume(
 		@PathVariable
 		@Positive(message = "올바르지 않은 ID 양식입니다.") // 최대 상한 조건(Max)도 추가를 고려해야 함

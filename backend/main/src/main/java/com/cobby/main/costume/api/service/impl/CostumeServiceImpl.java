@@ -12,6 +12,7 @@ import com.cobby.main.costume.api.service.CostumeService;
 import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
 import com.cobby.main.costume.db.repository.CostumeRepository;
+import com.cobby.main.quest.db.repository.QuestRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 public class CostumeServiceImpl implements CostumeService {
 
 	private final CostumeRepository costumeRepository;
+
+	private final QuestRepository questRepository;
 
 	@Override
 	public List<CostumeGetResponse> selectAllCostumes() {
@@ -51,12 +54,16 @@ public class CostumeServiceImpl implements CostumeService {
 	@Override
 	public Long insertCostume(CostumePostRequest request) {
 
-		var category = CostumeCategory.valueOf(request.getCategory());
+		var category = CostumeCategory.valueOf(request.category());
 		// 이미지 url 획득 로직 추가해야 함
 
+		var quest = questRepository.findById(request.questId())
+			.orElseThrow(() -> new IllegalArgumentException("퀘스트 정보가 없습니다. (ID=" + request.questId() + ")"));
+
 		var costume = Costume.builder()
-			.name(request.getName())
+			.name(request.name())
 			.category(category)
+			.quest(quest)
 			.imgUrl(null)
 			.silhouetteImgUrl(null)
 			.gifUrl(null)

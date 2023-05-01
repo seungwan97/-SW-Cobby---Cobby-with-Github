@@ -84,7 +84,7 @@ public class AvatarServiceImpl implements AvatarService {
 		// BaseRuntimeException 으로 throw 해서 Interceptor 에서 처리하고 싶은데
 		// AOP 에서 먼저 처리가 되는 이슈가 있음
 		// 추후 해결해야 함
-		var defaultAvatar = costumeRepository.findAllByCategory(CostumeCategory.DEFAULT).stream()
+		var defaultAvatar = costumeRepository.findAllByCategory(CostumeCategory.AVATAR).stream()
 			.findFirst();
 			// .orElseThrow(() -> new IllegalArgumentException("DEFAULT 아바타 정보를 찾을 수 없습니다."));
 
