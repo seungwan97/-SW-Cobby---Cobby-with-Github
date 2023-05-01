@@ -27,8 +27,4 @@ public class Tier {
 
 	private String emblemImgUrl;
 
-	// Entity to Dto
-	public TierGetResponse toDto() {return new TierGetResponse(tierId, name, emblemImgUrl);}
-
-
 }

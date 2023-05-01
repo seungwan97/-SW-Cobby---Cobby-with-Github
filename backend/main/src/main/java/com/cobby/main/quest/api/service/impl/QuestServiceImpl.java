@@ -1,14 +1,15 @@
 package com.cobby.main.quest.api.service.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
+import com.cobby.main.avatar.db.repository.AvatarRepository;
 import com.cobby.main.common.exception.NotFoundException;
 import com.cobby.main.quest.api.dto.request.QuestPostRequest;
 import com.cobby.main.quest.api.dto.request.QuestPutRequest;
 import com.cobby.main.quest.api.dto.response.QuestGetResponse;
 import org.springframework.stereotype.Service;
 
+import com.cobby.main.avatar.api.dto.response.AvatarQuestGetResponse;
 import com.cobby.main.quest.api.service.QuestService;
 import com.cobby.main.quest.db.entity.Quest;
 import com.cobby.main.quest.db.repository.QuestRepository;
@@ -20,15 +21,28 @@ import lombok.RequiredArgsConstructor;
 public class QuestServiceImpl implements QuestService {
 
 	private final QuestRepository questRepository;
+	private final AvatarRepository avatarRepository;
 
 	@Override
 	public QuestGetResponse selectQuest(Integer questId) {
-		return questRepository.findById(questId).stream().map(Quest::toDto).findFirst().orElseThrow(NotFoundException::new);
+		return QuestGetResponse.builder()
+			.quest(questRepository.findById(questId).orElseThrow(NotFoundException::new))
+			.build();
+	}
+
+	@Override
+	public AvatarQuestGetResponse selectUserQuest(Integer userId) {
+
+
+		return null;
 	}
 
 	@Override
 	public List<QuestGetResponse> selectAllQuest( ) {
-		return questRepository.findAll().stream().map(Quest::toDto).collect(Collectors.toList());
+		return questRepository.findAll()
+			.stream()
+			.map(quest -> QuestGetResponse.builder().quest(quest).build())
+			.toList();
 	}
 
 	@Override
@@ -60,8 +74,7 @@ public class QuestServiceImpl implements QuestService {
 
 	@Override
 	public void deleteQuest(Integer questId) {
-		var quest = questRepository.findById(questId).orElseThrow(NotFoundException::new);
-
+		questRepository.findById(questId).orElseThrow(NotFoundException::new);
 		questRepository.deleteById(questId);
 	}
 }

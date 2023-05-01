@@ -33,8 +33,4 @@ public class Title {
 	private String name;
 
 	private String explanation;
-
-	// Entity to Dto
-	public TitleGetResponse toDto() {return new TitleGetResponse(titleId, quest.getQuestId(), name, explanation);}
-
 }
