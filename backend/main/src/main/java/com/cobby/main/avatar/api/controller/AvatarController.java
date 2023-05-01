@@ -3,21 +3,25 @@ package com.cobby.main.avatar.api.controller;
 import java.net.URI;
 import java.util.Map;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cobby.main.avatar.api.dto.request.AvatarItemPostRequest;
+import com.cobby.main.avatar.api.service.AvatarInventoryService;
 import com.cobby.main.avatar.api.service.AvatarService;
 import com.cobby.main.common.response.BaseResponseBody;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 
@@ -28,14 +32,12 @@ import lombok.RequiredArgsConstructor;
 public class AvatarController {
 
 	private final AvatarService avatarService;
+	private final AvatarInventoryService avatarCostumeService;
 
 	// PathVariable 과 경로는 추후 로그인 모듈이 완성되면 Header 를 통해 찾게 되면 변경할 예정입니다.
-	@GetMapping("/{userId}")
+	@GetMapping
 	public ResponseEntity<? extends BaseResponseBody> getAvatar(
-		// @RequestHeader("userId")
-		// @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
-		// String userId
-		@PathVariable
+		@RequestHeader("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) {
 
@@ -46,12 +48,9 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(200, "OK", costumes));
 	}
 
-	@PostMapping("/{userId}")
+	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> createAvatar(
-		// @RequestHeader("userId")
-		// @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
-		// String userId
-		@PathVariable
+		@RequestHeader("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId,
 		HttpServletRequest request) {
@@ -67,13 +66,10 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(201, "created", successMessage));
 	}
 
-	@PatchMapping("/{userId}")
+	@PatchMapping
 	public ResponseEntity<? extends BaseResponseBody> updateAvatar(
 		@RequestBody Map<String, Integer> avatarUpdateInfo,
-		// @RequestHeader("userId")
-		// @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
-		// String userId
-		@PathVariable
+		@RequestHeader("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) {
 
@@ -86,12 +82,9 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(200, "OK", successMessage));
 	}
 
-	@GetMapping("/{userId}/reset")
+	@GetMapping("/reset")
 	public ResponseEntity<? extends BaseResponseBody> resetAvatar(
-		// @RequestHeader("userId")
-		// @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
-		// String userId
-		@PathVariable
+		@RequestHeader("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) {
 
@@ -104,12 +97,9 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(200, "OK", successMessage));
 	}
 
-	@DeleteMapping("/{userId}")
+	@DeleteMapping
 	public ResponseEntity<? extends BaseResponseBody> deleteAvatar(
-		// @RequestHeader("userId")
-		// @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
-		// String userId
-		@PathVariable
+		@RequestHeader("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) {
 
@@ -120,5 +110,24 @@ public class AvatarController {
 		return ResponseEntity
 			.ok()
 			.body(new BaseResponseBody<>(200, "OK", successMessage));
+	}
+
+	@PostMapping(value = "/inventories", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<? extends BaseResponseBody> createAvatarInventoryItem(
+		@RequestHeader("userId")
+		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
+		String userId,
+		@RequestBody @Valid AvatarItemPostRequest itemInfo,
+		HttpServletRequest request) {
+
+		var avatarCostumeId = avatarCostumeService.insertAvatarInventoryItem(userId, itemInfo);
+
+		var location = URI.create(request.getRequestURI() + "/" + avatarCostumeId);
+
+		var successMessage = "아바타에 코스튬을 성공적으로 추가했습니다. (ID=" + avatarCostumeId + ")";
+
+		return ResponseEntity
+			.created(location)
+			.body(new BaseResponseBody(201, "created", successMessage));
 	}
 }

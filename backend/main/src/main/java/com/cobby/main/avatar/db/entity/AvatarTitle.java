@@ -1,7 +1,7 @@
 package com.cobby.main.avatar.db.entity;
 
 import com.cobby.main.common.entity.BaseTimeEntity;
-import com.cobby.main.costume.db.entity.Costume;
+import com.cobby.main.title.db.entity.Title;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -24,15 +24,15 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "avatar_costume")
+@Table(name = "avatar_title")
 @Entity
-public class AvatarCostume extends BaseTimeEntity {
+public class AvatarTitle extends BaseTimeEntity {
 
 	@Positive(message = "필수 입력 항목입니다. (양수)")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "avatar_costume_id", nullable = false, columnDefinition = "INT UNSIGNED")
-	private Integer avatarCostumeId;
+	@Column(name = "avatar_title_id", nullable = false, columnDefinition = "INT UNSIGNED")
+	private Integer avatarTitleId;
 
 	@NotNull(message = "필수 입력 항목입니다. (avatar)")
 	@JsonIgnore
@@ -40,10 +40,10 @@ public class AvatarCostume extends BaseTimeEntity {
 	@JoinColumn(name = "avatar_id")
 	private Avatar avatar;
 
-	@NotNull(message = "필수 입력 항목입니다. (costume)")
+	@NotNull(message = "필수 입력 항목입니다. (title)")
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "costume_id")
-	private Costume costume;
+	@JoinColumn(name = "title_id")
+	private Title title;
 
 }
