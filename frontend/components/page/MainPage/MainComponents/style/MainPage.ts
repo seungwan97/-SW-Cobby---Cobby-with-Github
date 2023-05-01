@@ -5,6 +5,23 @@ export const MainPageContent = styled.div`
   margin-top: 10%;
   margin-bottom: 10%;
   padding: 15px;
+
+  @media (max-width: 767px) {
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    // 테블릿 세로
+  }
+
+  @media (min-width: 992px) and (max-width: 1199px) {
+    // 테블릿 가로
+  }
+
+  @media (min-width: 1200px) {
+    // 데스크탑 일반
+  }
 `;
 
 export const MainPageMargin = styled.div`
