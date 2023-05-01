@@ -2,21 +2,26 @@ import styled from "styled-components";
 
 export const MainPageContent = styled.div`
   /* 임시  CSS임 => 밑에 NavBar 표시하느라 잠시 넣었음 */
-  margin-top: 10%;
+  margin-top: 5%;
   margin-bottom: 10%;
   padding: 15px;
 
-  @media (max-width: 767px) {
-    // 모바일
+  @media (max-height: 1180px) {
     margin-top: 15%;
-
-    @media (max-height: 736px) {
-      margin-top: 5%;
+    @media (max-height: 1024px) {
+      margin-top: 8%;
+      @media (max-width: 767px) {
+        // 모바일
+        margin-top: 15%;
+        @media (max-height: 736px) {
+          margin-top: 5%;
+        }
+      }
     }
   }
 
-  @media (min-width: 768px) and (max-width: 991px) {
-    // 테블릿 세로
+  @media (min-width: 711px) and (max-width: 713px) {
+    margin-top: 10%;
   }
 
   @media (min-width: 992px) and (max-width: 1199px) {

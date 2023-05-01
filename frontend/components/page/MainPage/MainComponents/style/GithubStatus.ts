@@ -7,15 +7,20 @@ export const StatusContainer = styled.div`
   margin: 0 auto;
   margin-top: 5%;
   text-align: center;
-  @media (max-width: 767px) {
-    width: 280px;
-    height: 160px;
-    border: 1px solid #333333;
-    margin-top: 8%;
-    @media (max-width: 667px) {
-      width: 243px;
+  @media (max-width: 1024px) {
+    width: 470px;
+    height: 250px;
+
+    @media (max-width: 711px) {
+      width: 280px;
       height: 160px;
-      margin-top: 5%;
+      border: 1px solid #333333;
+      margin-top: 8%;
+      @media (max-width: 667px) {
+        width: 243px;
+        height: 160px;
+        margin-top: 5%;
+      }
     }
   }
 
@@ -41,12 +46,18 @@ export const StatusBar = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  @media (max-width: 767px) {
-    width: 273px;
-    height: 10px;
-    margin-top: 1.5%;
-    @media (max-width: 667px) {
-      width: 237px;
+  @media (max-width: 1024px) {
+    width: 460px;
+    height: 20px;
+    margin-top: 1.3%;
+
+    @media (max-width: 711px) {
+      width: 273px;
+      height: 10px;
+      margin-top: 1.5%;
+      @media (max-width: 667px) {
+        width: 237px;
+      }
     }
   }
 
@@ -71,7 +82,7 @@ export const StatusBox1 = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  @media (max-width: 767px) {
+  @media (max-width: 711px) {
     width: 8px;
     height: 8px;
   }
@@ -97,7 +108,7 @@ export const StatusBox2 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  @media (max-width: 767px) {
+  @media (max-width: 711px) {
     width: 8px;
     height: 8px;
   }
@@ -123,7 +134,7 @@ export const StatusBox3 = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  @media (max-width: 767px) {
+  @media (max-width: 711px) {
     width: 8px;
     height: 8px;
   }
@@ -146,7 +157,7 @@ export const MinusIcon = styled.div`
   height: 2px;
   background-color: #333333;
   margin-bottom: 2px;
-  @media (max-width: 767px) {
+  @media (max-width: 711px) {
     width: 6px;
     height: 1px;
   }
@@ -167,7 +178,7 @@ export const SquareIcon = styled.div`
   width: 5px;
   height: 5px;
   border: 2px solid #333333;
-  @media (max-width: 767px) {
+  @media (max-width: 711px) {
     width: 4.7px;
     height: 3.5px;
     border: 1px solid #333333;
@@ -213,7 +224,7 @@ export const LineBox = styled.div`
     height: 0.1rem;
     background-color: #000;
   }
-  @media (max-width: 767px) {
+  @media (max-width: 711px) {
     span {
       height: 0.05rem;
     }
@@ -248,4 +259,7 @@ export const Line02 = styled.span`
 export const Margin = styled.div`
   display: inline-block;
   margin-top: 5%;
+  @media (max-width: 1024px) {
+    margin-top: 6%;
+  }
 `;

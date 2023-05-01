@@ -8,12 +8,21 @@ export const FullDiv = styled.div`
   margin-top: 0.5%;
   margin-left: 1%;
   border: 2px solid #333333;
-  @media (max-width: 767px) {
-    width: 257px;
-    border: 1px solid #333333;
-    @media (max-width: 667px) {
-      width: 220px;
+  @media (max-width: 1024px) {
+    margin-top: 0.7%;
+    width: 428px;
+    height: 15px;
+    @media (max-width: 711px) {
+      width: 257px;
       border: 1px solid #333333;
+      height: 10px;
+      margin-top: 0%;
+      @media (max-width: 667px) {
+        width: 220px;
+        border: 1px solid #333333;
+        height: 10px;
+        margin-top: 0.5%;
+      }
     }
   }
 
