@@ -24,7 +24,7 @@ export const GlobalStyle = createGlobalStyle`
     transform: translate(-50%,-50%);
     }
 
-    @media (max-width: 767px){
+    @media (max-width: 1300px){
         //모바일
           html{
           margin: 0;

@@ -25,7 +25,7 @@ export const MainPageContent = styled.div`
 
   @media (min-width: 1200px) {
     // 데스크탑 일반
-  }스크탑 일반
+  }
 `;
 
 export const MainPageMargin = styled.div`

@@ -8,7 +8,7 @@ const QuestItem = (props: any) => {
   return (
     <style.QuestItemWrapper>
       <TextBox
-        size={30}
+        size={25}
         content={`[${props.item.category}] ${props.item.title} ${props.item.goal}`}
       />
       <style.QuestInfoWrapper>
@@ -24,7 +24,12 @@ const QuestItem = (props: any) => {
           <QuestConfirmButton />
         </style.ColumContentWrapper>
         <style.ImageWrapper>
-          <Image src={props.item.award} alt="아이템" width={80} height={65} />
+          <style.CustomImage
+            src={props.item.award}
+            alt="아이템"
+            width={80}
+            height={65}
+          />
         </style.ImageWrapper>
       </style.QuestInfoWrapper>
     </style.QuestItemWrapper>

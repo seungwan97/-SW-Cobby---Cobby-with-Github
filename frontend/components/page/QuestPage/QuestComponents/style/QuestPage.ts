@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { colors } from "@/styles/colors-style";
 import ProgressBar from "@ramonak/react-progress-bar";
-import TextBox from "@/components/common/TextBox/TextBox";
+import Image from "next/image";
 
 export const QuestPageWrapper = styled.div`
   text-align: center;
@@ -25,10 +25,14 @@ export const QuestListWrapper = styled.div`
 
 export const QuestItemWrapper = styled.div`
   text-align: center;
-  width: 80%;
+  width: 90%;
   padding: 5px;
   background-color: ${colors.NavBarCreamColor};
   margin: 10px;
+
+  @media (min-width: 1300px) {
+    width: 100%;
+  }
 `;
 
 export const QuestInfoWrapper = styled.div`
@@ -55,8 +59,8 @@ export const ImageWrapper = styled.div`
   border-radius: 10px;
   display: flex;
   background-color: #ededdb;
-  width: 70px;
-  height: 70px;
+  width: auto;
+  height: auto;
   padding: 7px;
   margin: auto 0;
   justify-content: center;
@@ -78,4 +82,16 @@ export const ConfirmButton = styled.button`
 export const CustomProgressBar = styled(ProgressBar)`
   flex-grow: 2;
   margin-right: 20px;
+`;
+
+export const CustomImage = styled(Image)<{ width: number; height: number }>`
+  @media (max-width: 767px) {
+    width: ${(props) => props.width * 0.75}px;
+    height: ${(props) => props.height * 0.75}px;
+
+    @media (max-height: 667px) {
+      width: ${(props) => props.width * 0.5}px;
+      height: ${(props) => props.height * 0.5}px;
+    }
+  }
 `;
