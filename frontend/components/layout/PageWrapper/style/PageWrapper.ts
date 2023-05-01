@@ -4,14 +4,10 @@ export const PageWrapper = styled.div`
   height: 100%;
   width: 30vw;
 
-  @media (max-width: 767px) {
+  @media (max-width: 1300px) {
     // 모바일
     width: 100%;
     margin-top: 25px;
-
-    @media (max-height: 736px) {
-      /* margin: 0; */
-    }
   }
 
   @media (min-width: 768px) and (max-width: 991px) {
