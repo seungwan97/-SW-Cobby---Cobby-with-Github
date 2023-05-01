@@ -24,6 +24,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @Validated
 @RequiredArgsConstructor
@@ -129,5 +132,45 @@ public class AvatarController {
 		return ResponseEntity
 			.created(location)
 			.body(new BaseResponseBody(201, "created", successMessage));
+	}
+
+	@GetMapping(value = "/quests")
+	public ResponseEntity<? extends BaseResponseBody> getAvatarQuestList(
+		@RequestHeader("userId")
+		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
+		String userId
+	) {
+		try {
+			// 1. 연속 출석 일자, 연속 커밋 일자 서버통신 받아오기
+			// 추후 yml에 설정
+			String url = "";
+			OkHttpClient client = new OkHttpClient();
+
+			Request.Builder builder = new Request.Builder().url(url)
+				.addHeader("userId", userId);
+			Request request = builder.build();
+
+			Response response = client.newCall(request).execute();
+
+			String relayAttend;
+			String relayCommit;
+
+			// 2. 퀘스트 목록 불러옴(캐싱 가능할듯?)
+			
+
+
+			// 3. 유저퀘스트 목록 불러옴
+
+			// 4. 항목별 따로 세부조건 오름차순 정렬하여 유저퀘스트에 없는 것 1개 뽑아옴
+
+			// 5. 달성 조건, 현재 상황 따져서 progress
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return ResponseEntity
+			.ok()
+			.body(new BaseResponseBody(200, "get", "성공"));
 	}
 }
