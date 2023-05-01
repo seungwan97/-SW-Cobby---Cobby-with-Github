@@ -7,8 +7,12 @@ export const MainPageContent = styled.div`
   padding: 15px;
 
   @media (max-width: 767px) {
-    margin: 0;
-    padding: 0;
+    // 모바일
+    margin-top: 15%;
+
+    @media (max-height: 736px) {
+      /* margin: 0; */
+    }
   }
 
   @media (min-width: 768px) and (max-width: 991px) {
@@ -21,7 +25,7 @@ export const MainPageContent = styled.div`
 
   @media (min-width: 1200px) {
     // 데스크탑 일반
-  }
+  }스크탑 일반
 `;
 
 export const MainPageMargin = styled.div`
