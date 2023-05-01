@@ -27,14 +27,19 @@ const Inventory = (props: any) => {
       <style.InventoryBar>
         {typeList.map((type, index) => (
           <style.InventoryType key={index}>
-            <style.InventoryTypeImg src={type.imgSrc} alt={type.name} />
+            <style.InventoryTypeImg
+              src={type.imgSrc}
+              alt={type.name}
+            />
           </style.InventoryType>
         ))}
       </style.InventoryBar>
       <style.InventoryBox>
-        {props.itemList.map((item: object, index: number) => (
-          <ItemBox item={item} key={index} />
-        ))}
+        {props.itemList.map(
+          (item: object, index: number) => (
+            <ItemBox item={item} key={index} />
+          )
+        )}
       </style.InventoryBox>
     </style.Inventory>
   );

@@ -8,11 +8,6 @@ export const ItemWrapper = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 10px;
-
-  &:hover {
-    cursor: pointer;
-    background-color: gray;
-  }
 `;
 
 export const ItemImage = styled.img`
@@ -32,4 +27,9 @@ export const ImageWrapper = styled.div`
   margin: auto 0;
   justify-content: center;
   align-items: center;
+
+  &:hover {
+    cursor: pointer;
+    background-color: gray;
+  }
 `;

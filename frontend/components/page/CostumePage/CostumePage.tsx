@@ -1,6 +1,6 @@
 // 유저별 코스튬 페이지
 import { useRouter } from "next/router";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import TextBox from "@/components/common/TextBox/TextBox";
@@ -10,7 +10,8 @@ import Cobby from "@/components/common/Cobby/Cobby";
 
 // CostumePage
 const CostumePage = (props: any) => {
-  const router = useRouter();
+  // const router = useRouter();
+
   return (
     <Fragment>
       <page.PageWrapper>

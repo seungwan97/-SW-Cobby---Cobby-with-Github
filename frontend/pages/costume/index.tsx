@@ -7,37 +7,48 @@ import CostumePage from "@/components/page/CostumePage/CostumePage";
 
 const DUMMY_DATA = [
   {
-    item: "/Character/Cobby.png",
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
   },
   {
-    item: "/Character/Cobby.png",
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
   },
   {
-    item: "/Character/Cobby.png",
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
   },
   {
-    item: "/Character/Cobby.png",
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
   },
   {
-    item: "/Character/Cobby.png",
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
   },
   {
-    item: "/Character/Cobby.png",
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
   },
   {
-    item: "/Character/Cobby.png",
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
   },
   {
-    item: "/Character/Cobby.png",
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
   },
   {
-    item: "/Character/Cobby.png",
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
   },
   {
-    item: "/Character/Cobby.png",
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
   },
   {
-    item: "/Character/Cobby.png",
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
   },
 ];
 // Costumepage
