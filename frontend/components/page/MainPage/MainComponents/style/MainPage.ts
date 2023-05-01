@@ -11,7 +11,7 @@ export const MainPageContent = styled.div`
     margin-top: 15%;
 
     @media (max-height: 736px) {
-      /* margin: 0; */
+      margin-top: 5%;
     }
   }
 

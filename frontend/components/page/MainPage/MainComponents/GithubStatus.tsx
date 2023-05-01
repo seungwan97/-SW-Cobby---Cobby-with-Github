@@ -1,6 +1,4 @@
 import * as style from "@/components/page/MainPage/MainComponents/style/GithubStatus";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TextBox from "@/components/common/TextBox/TextBox";
 
 const GithubStatus = () => {
@@ -14,7 +12,12 @@ const GithubStatus = () => {
           <style.SquareIcon />
         </style.StatusBox2>
         <style.StatusBox3>
-          <FontAwesomeIcon icon={faXmark} size="xs" />
+          <style.Sect01>
+            <style.LineBox>
+              <style.Line01 />
+              <style.Line02 />
+            </style.LineBox>
+          </style.Sect01>
         </style.StatusBox3>
       </style.StatusBar>
       <style.Margin />

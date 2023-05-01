@@ -35,6 +35,9 @@ export const NavItemIcon = styled.img<{ imgSrc: string }>`
   padding-top: 10px;
   height: 30px;
   content: url(${(props) => props.imgSrc});
+  @media (max-width: 667px) {
+    height: 25px;
+  }
 `;
 
 export const CustomLink = styled(Link)``;
