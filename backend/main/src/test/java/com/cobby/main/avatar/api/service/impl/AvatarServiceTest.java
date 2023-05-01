@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.cobby.main.avatar.api.controller.AvatarController;
@@ -26,6 +27,7 @@ class AvatarServiceTest {
 	@Mock
 	private AvatarRepository avatarRepository;
 
+	@MockBean
 	private AvatarService avatarService;
 
 	@BeforeEach

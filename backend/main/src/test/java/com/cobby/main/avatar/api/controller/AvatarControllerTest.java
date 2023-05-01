@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.cobby.main.avatar.api.dto.response.AvatarGetResponse;
+import com.cobby.main.avatar.api.service.AvatarInventoryService;
 import com.cobby.main.avatar.api.service.AvatarService;
 import com.cobby.main.avatar.db.entity.Avatar;
 
@@ -43,9 +44,12 @@ class AvatarControllerTest {
 	@MockBean
 	private AvatarService avatarService;
 
+	@MockBean
+	private AvatarInventoryService avatarCostumeService;
+
 	@BeforeEach
 	public void setMvc() {
-		this.mvc = MockMvcBuilders.standaloneSetup(new AvatarController(avatarService))
+		this.mvc = MockMvcBuilders.standaloneSetup(new AvatarController(avatarService, avatarCostumeService))
 			.addFilters(new CharacterEncodingFilter("UTF-8", true))
 			.build();
 
