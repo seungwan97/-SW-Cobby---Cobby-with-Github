@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.cobby.main.avatar.api.dto.response.AvatarQuestGetResponse;
 import com.cobby.main.quest.api.service.QuestService;
 import com.cobby.main.quest.db.entity.Quest;
+import com.cobby.main.quest.db.entity.enumtype.QuestCategory;
 import com.cobby.main.quest.db.repository.QuestRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,20 +22,12 @@ import lombok.RequiredArgsConstructor;
 public class QuestServiceImpl implements QuestService {
 
 	private final QuestRepository questRepository;
-	private final AvatarRepository avatarRepository;
 
 	@Override
 	public QuestGetResponse selectQuest(Integer questId) {
 		return QuestGetResponse.builder()
 			.quest(questRepository.findById(questId).orElseThrow(NotFoundException::new))
 			.build();
-	}
-
-	@Override
-	public AvatarQuestGetResponse selectUserQuest(Integer userId) {
-
-
-		return null;
 	}
 
 	@Override
@@ -46,11 +39,19 @@ public class QuestServiceImpl implements QuestService {
 	}
 
 	@Override
+	public List<QuestGetResponse> selectAllQuestByQuestType(QuestCategory questCategory) {
+		return questRepository.findAllByQuestTypeOrderByQuestGoal(questCategory)
+			.stream()
+			.map(quest -> QuestGetResponse.builder().quest(quest).build())
+			.toList();
+	}
+
+	@Override
 	public void insertQuest(QuestPostRequest questInfo) {
 		var quest = Quest.builder()
 				.questName(questInfo.getQuestName())
 				.questType(questInfo.getQuestType())
-				.questCode(questInfo.getQuestCode())
+				.questGoal(questInfo.getQuestGoal())
 				.costumes(questInfo.getCostumes())
 				.titles(questInfo.getTitles())
 				.build();
@@ -64,7 +65,7 @@ public class QuestServiceImpl implements QuestService {
 		var updateQuest = quest.toBuilder()
 				.questName(questInfo.getQuestName())
 				.questType(questInfo.getQuestType())
-				.questCode(questInfo.getQuestCode())
+				.questGoal(questInfo.getQuestGoal())
 				.titles(questInfo.getTitles())
 				.costumes(questInfo.getCostumes())
 				.build();

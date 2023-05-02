@@ -63,16 +63,16 @@ public class Avatar {
 	@OneToMany(mappedBy = "avatar", cascade = CascadeType.ALL)
 	private List<AvatarQuest> quests = new ArrayList<>();
 
-	@Builder(toBuilder = true)
-	public Avatar(String avatarId, Integer level, Integer exp, String avatarImgUrl) {
-		Assert.isTrue(Pattern.matches("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", avatarId), "올바르지 않은 ID 양식입니다.");
-		Assert.isTrue(1 <= level && level <= 256, "범위를 벗어났습니다. ");
-		Assert.isTrue(0 <= exp && exp <= 167025, "범위를 벗어났습니다. ");
-		Assert.hasText(avatarImgUrl, "필수 항목힙니다.");
-
-		this.avatarId = avatarId;
-		this.level = level;
-		this.exp = exp;
-		this.avatarImgUrl = avatarImgUrl;
-	}
+	// @Builder(toBuilder = true)
+	// public Avatar(String avatarId, Integer level, Integer exp, String avatarImgUrl) {
+	// 	Assert.isTrue(Pattern.matches("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", avatarId), "올바르지 않은 ID 양식입니다.");
+	// 	Assert.isTrue(1 <= level && level <= 256, "범위를 벗어났습니다. ");
+	// 	Assert.isTrue(0 <= exp && exp <= 167025, "범위를 벗어났습니다. ");
+	// 	Assert.hasText(avatarImgUrl, "필수 항목힙니다.");
+	//
+	// 	this.avatarId = avatarId;
+	// 	this.level = level;
+	// 	this.exp = exp;
+	// 	this.avatarImgUrl = avatarImgUrl;
+	// }
 }
