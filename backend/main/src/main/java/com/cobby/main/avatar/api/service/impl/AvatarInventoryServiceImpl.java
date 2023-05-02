@@ -1,5 +1,7 @@
 package com.cobby.main.avatar.api.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.cobby.main.avatar.api.dto.request.AvatarItemPostRequest;
@@ -12,6 +14,7 @@ import com.cobby.main.avatar.db.repository.AvatarCostumeRepository;
 import com.cobby.main.avatar.db.repository.AvatarQuestRepository;
 import com.cobby.main.avatar.db.repository.AvatarRepository;
 import com.cobby.main.avatar.db.repository.AvatarTitleRepository;
+import com.cobby.main.common.exception.BaseRuntimeException;
 import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.costume.db.repository.CostumeRepository;
 import com.cobby.main.quest.db.entity.Quest;
@@ -41,17 +44,21 @@ public class AvatarInventoryServiceImpl implements AvatarInventoryService {
 		var avatar = avatarRepository.findById(userId)
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + userId + ")"));
 
-		return saveInventoryItem(avatar, itemInfo);
+
+		return Optional.of(saveInventoryItem(avatar, itemInfo))
+			.orElseThrow(() -> new IllegalArgumentException("아이템 정보가 없습니다. (type=" +
+				itemInfo.itemType() + ", ID=" + itemInfo.itemId() + ")"));
 	}
 
 	private Integer saveInventoryItem(Avatar avatar, AvatarItemPostRequest itemInfo) {
 		var optional = switch(itemInfo.itemType()) {
-			case "costume" -> costumeRepository.findById(itemInfo.itemId());
-			case "title" -> titleRepository.findById(itemInfo.itemId());
-			case "quest" ->  questRepository.findById(itemInfo.itemId());
+			case "costume" -> costumeRepository;
+			case "title" -> titleRepository;
+			case "quest" ->  questRepository;
+			default -> null;
 		};
 
-		var item = optional.orElseThrow(() ->
+		var item = optional.findById(itemInfo.itemId()).orElseThrow(() ->
 			new IllegalArgumentException("아이템 정보가 없습니다. (type=" +
 				itemInfo.itemType() + ", ID=" + itemInfo.itemId() + ")"));
 
@@ -65,6 +72,7 @@ public class AvatarInventoryServiceImpl implements AvatarInventoryService {
 			case "quest" -> this.avatarQuestRepository.save(
 				AvatarQuest.builder().avatar(avatar).quest((Quest)item).build()
 			).getAvatarQuestId();
+			default -> null;
 		};
 	}
 }

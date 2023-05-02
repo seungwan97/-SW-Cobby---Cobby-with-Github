@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.cobby.main.avatar.db.entity.Avatar;
 import com.cobby.main.avatar.db.entity.AvatarCostume;
+import com.cobby.main.avatar.db.entity.AvatarQuest;
+import com.cobby.main.avatar.db.entity.AvatarTitle;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -21,9 +23,9 @@ public class AvatarGetResponse {
 
 	private List<AvatarCostume> costumes;
 
-	// private List<AvatarTitle> titles;
+	private List<AvatarTitle> titles;
 
-	// private List<AvatarQuest> quests;
+	private List<AvatarQuest> quests;
 
 	@Builder
 	public AvatarGetResponse (Avatar avatar) {
@@ -31,7 +33,7 @@ public class AvatarGetResponse {
 		this.exp = avatar.getExp();
 		this.characterImgUrl = avatar.getAvatarImgUrl();
 		this.costumes = avatar.getCostumes();
-		// this.titles = avatar.getTitles();
-		// this.quests = avatar.getQuests();
+		this.titles = avatar.getTitles();
+		this.quests = avatar.getQuests();
 	}
 }
