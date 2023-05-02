@@ -49,6 +49,8 @@ public class AvatarController {
 
 	private final AvatarService avatarService;
 	private final AvatarInventoryService avatarInventoryService;
+	private final AvatarQuestService avatarQuestService;
+	private final QuestService questService;
 
 	// PathVariable 과 경로는 추후 로그인 모듈이 완성되면 Header 를 통해 찾게 되면 변경할 예정입니다.
 	@GetMapping
