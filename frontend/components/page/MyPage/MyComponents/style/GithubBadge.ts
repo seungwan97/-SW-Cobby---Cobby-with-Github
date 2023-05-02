@@ -9,33 +9,45 @@ export const GithubBadgeWrapper = styled.div`
 `;
 
 export const BadgeTxt = styled.div`
-  display: flex;
-  align-items: center;
+  width: auto;
 `;
 
 export const CodeCopyBox = styled.div`
   display: flex;
   align-items: center;
   background-color: ${colors.NavBarCreamColor};
-  padding: 10px 20px;
+  padding: 15px;
+  width: 80%;
 `;
 
 export const ReadmeCode = styled.div`
-  padding: 0 20px;
+  flex-grow: 8;
+  text-align: center;
+  overflow: hidden; // 여기 나중에 주소 길이통해서 수정해야할 수 있음.
 `;
 
-export const CopyBtn = styled.div`
-  text-align: center;
-  background-color: ${colors.ItemBoxColor};
-  border-radius: 5px;
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-`;
+// export const CopyBtn = styled.div`
+//   /* background-color: ${colors.ItemBoxColor};
+//   position: relative;
+//   width: 15%;
+//   text-align: center;
+//   border-radius: 5px;
+
+//   &:hover {
+//     background-color: ${colors.NavBarCreamColor};
+//     cursor: pointer;
+//   } */
+// `;
 
 export const CopyBtnImg = styled.img`
-  display: flex;
-  width: 20px;
-  height: 20px;
-  padding: 30px;
+  background-color: ${colors.ItemBoxColor};
+  padding: 2%;
+  width: 5%;
+
+  border-radius: 5px;
+
+  &:hover {
+    background-color: ${colors.NavBarCreamColor};
+    cursor: pointer;
+  }
 `;
