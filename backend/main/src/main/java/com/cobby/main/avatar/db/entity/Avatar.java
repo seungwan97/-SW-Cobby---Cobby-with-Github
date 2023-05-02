@@ -26,6 +26,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "avatar")
+// @Builder(toBuilder = true)
 @Entity
 public class Avatar {
 
@@ -46,17 +47,17 @@ public class Avatar {
 	@Column(name = "avatar_img_url")
 	private String avatarImgUrl;
 
-	@Builder.Default
+	// @Builder.Default
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@OneToMany(mappedBy = "avatar", cascade = CascadeType.ALL)
 	private List<AvatarCostume> costumes = new ArrayList<>();
 
-	@Builder.Default
+	// @Builder.Default
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@OneToMany(mappedBy = "avatar", cascade = CascadeType.ALL)
 	private List<AvatarTitle> titles = new ArrayList<>();
 
-	@Builder.Default
+	// @Builder.Default
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@OneToMany(mappedBy = "avatar", cascade = CascadeType.ALL)
 	private List<AvatarQuest> quests = new ArrayList<>();
