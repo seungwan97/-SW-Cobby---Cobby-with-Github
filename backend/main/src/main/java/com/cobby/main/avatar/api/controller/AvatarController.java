@@ -32,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 public class AvatarController {
 
 	private final AvatarService avatarService;
-	private final AvatarInventoryService avatarCostumeService;
+	private final AvatarInventoryService avatarInventoryService;
 
 	// PathVariable 과 경로는 추후 로그인 모듈이 완성되면 Header 를 통해 찾게 되면 변경할 예정입니다.
 	@GetMapping
@@ -120,7 +120,7 @@ public class AvatarController {
 		@RequestBody @Valid AvatarItemPostRequest itemInfo,
 		HttpServletRequest request) {
 
-		var avatarCostumeId = avatarCostumeService.insertAvatarInventoryItem(userId, itemInfo);
+		var avatarCostumeId = avatarInventoryService.insertAvatarInventoryItem(userId, itemInfo);
 
 		var location = URI.create(request.getRequestURI() + "/" + avatarCostumeId);
 
