@@ -23,7 +23,7 @@ public class QuestGetResponse {
 
     private QuestCategory questType;
 
-    private Integer questCode;
+    private Integer questGoal;
 
     private List<Costume> costumes = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class QuestGetResponse {
     QuestGetResponse(Quest quest) {
         this.questId = quest.getQuestId();
         this.questName = quest.getQuestName();
-        this.questCode = quest.getQuestCode();
+        this.questGoal = quest.getQuestGoal();
         this.costumes = quest.getCostumes();
         this.titles = quest.getTitles();
     }

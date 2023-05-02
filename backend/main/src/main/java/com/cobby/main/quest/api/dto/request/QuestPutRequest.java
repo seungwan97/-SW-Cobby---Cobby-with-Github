@@ -20,7 +20,7 @@ public class QuestPutRequest {
 
     private QuestCategory questType;
 
-    private Integer questCode;
+    private Integer questGoal;
 
    private List<Costume> costumes = new ArrayList<>();
 

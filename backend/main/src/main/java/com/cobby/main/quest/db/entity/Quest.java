@@ -31,7 +31,7 @@ import java.util.List;
 	private QuestCategory questType;
 
 	@Column(nullable = false, columnDefinition="INT UNSIGNED")
-	private Integer questCode;
+	private Integer questGoal;
 
 	@OneToMany(mappedBy = "quest")
 	private List<Costume> costumes = new ArrayList<>();
