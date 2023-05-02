@@ -5,23 +5,16 @@ const GithubBadge = () => {
   return (
     <style.GithubBadgeWrapper>
       <style.BadgeTxt>
-        <TextBox
-          size={20}
-          content={"# GITHUB README BADGE"}
-        />
+        <TextBox size={20} content={"# GITHUB README BADGE"} />
       </style.BadgeTxt>
       <style.CodeCopyBox>
         <style.ReadmeCode>
           <TextBox
             size={15}
-            content={
-              "https://cobby-play.com/baefrica/badge..."
-            }
+            content={"https://cobby-play.com/baefrica/badge..."}
           />
         </style.ReadmeCode>
-        <style.CopyBtn>
-          <style.CopyBtnImg src="/copybutton.png"></style.CopyBtnImg>
-        </style.CopyBtn>
+        <style.CopyBtnImg src="/copybutton.png" />
       </style.CodeCopyBox>
     </style.GithubBadgeWrapper>
   );

@@ -21,11 +21,12 @@ const MyPage = () => {
           <TextBox size={50} content={"MY PAGE"} />
         </style.MyPageTxt>
         <MyCobby />
-        <div>user명 : {router.query.userId}</div>
         <GithubBadge />
         <UserInformation />
         <LogoutBtn />
-        <div>Leave Our App</div>
+        <style.LeaveButton>
+          <TextBox size={20} content={"Leave Our App"} />
+        </style.LeaveButton>
       </page.PageWrapper>
       <BottomNavBar />
     </Fragment>
