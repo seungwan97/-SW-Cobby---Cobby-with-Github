@@ -15,3 +15,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
