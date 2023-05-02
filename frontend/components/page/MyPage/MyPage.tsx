@@ -26,6 +26,7 @@ const MyPage = () => {
         <LogoutBtn />
         <style.LeaveButton>
           <TextBox size={20} content={"Leave Our App"} />
+          {/* 이거 LeaveButton에 대해서 반응형 처리 해줘야함. */}
         </style.LeaveButton>
       </page.PageWrapper>
       <BottomNavBar />
