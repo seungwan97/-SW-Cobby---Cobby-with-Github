@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import org.springframework.util.Assert;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.CascadeType;
@@ -48,17 +49,17 @@ public class Avatar {
 	private String avatarImgUrl;
 
 	// @Builder.Default
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "avatar", cascade = CascadeType.ALL)
 	private List<AvatarCostume> costumes = new ArrayList<>();
 
 	// @Builder.Default
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "avatar", cascade = CascadeType.ALL)
 	private List<AvatarTitle> titles = new ArrayList<>();
 
 	// @Builder.Default
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@OneToMany(mappedBy = "avatar", cascade = CascadeType.ALL)
 	private List<AvatarQuest> quests = new ArrayList<>();
 
