@@ -42,7 +42,7 @@ export const InventoryBox = styled.div`
   width: 70%;
   height: 100%;
   background-color: ${colors.NavBarCreamColor};
-  overflow-y: scroll;
+  // overflow-y: hidden;
   padding: 15px;
   justify-items: center;
 
