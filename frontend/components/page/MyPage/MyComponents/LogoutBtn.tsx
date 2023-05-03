@@ -3,12 +3,14 @@ import * as style from "./style/LogoutBtn";
 
 const LogoutBtn = () => {
   return (
-    <style.LogoutBtnWrapper>
-      <style.LogoutIcon src="/logouticon.png" />
-      <style.LogoutTxt>
-        <TextBox size={30} content={"LOGOUT"} />
-      </style.LogoutTxt>
-    </style.LogoutBtnWrapper>
+    <style.LogoutWrapper>
+      <style.LogoutBtnWrapper>
+        <style.LogoutIcon src="/logouticon.png" />
+        <style.LogoutTxt>
+          <TextBox size={30} content={"LOGOUT"} />
+        </style.LogoutTxt>
+      </style.LogoutBtnWrapper>
+    </style.LogoutWrapper>
   );
 };
 export default LogoutBtn;
