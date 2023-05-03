@@ -8,52 +8,45 @@ import CostumePage from "@/components/page/CostumePage/CostumePage";
 const DUMMY_DATA = [
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Head/andae.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItem_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
 ];
 // Costumepage
 const CostumeFunc = (props: any) => {
-  const router = useRouter();
+  // const router = useRouter();
+
   return (
     <Fragment>
       <page.PageWrapper>
@@ -66,6 +59,7 @@ const CostumeFunc = (props: any) => {
 
 export async function getStaticProps() {
   // fetch data for a single meetup
+
   return {
     props: {
       itemList: DUMMY_DATA,
