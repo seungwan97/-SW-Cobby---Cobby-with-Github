@@ -20,7 +20,7 @@ const MyPage = () => {
         <style.MyPageTxt>
           <TextBox size={50} content={"MY PAGE"} />
         </style.MyPageTxt>
-        <MyCobby />
+        <style.Cobby />
         <GithubBadge />
         <UserInformation />
         <LogoutBtn />

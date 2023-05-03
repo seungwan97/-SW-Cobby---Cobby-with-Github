@@ -6,17 +6,23 @@ export const LogoutBtnWrapper = styled.div`
   align-items: center;
   justify-content: center;
   background-color: ${colors.NavBarCreamColor};
-  margin: 20px 120px;
-  padding: 10px 30px;
+  padding: 5px;
+  width: 45%;
   cursor: pointer;
 `;
 
 export const LogoutIcon = styled.img`
   padding: 0 4%;
-  width: 8%;
+  width: 30px;
 `;
 
 export const LogoutTxt = styled.div`
   display: flex;
   align-items: center;
+`;
+
+export const LogoutWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

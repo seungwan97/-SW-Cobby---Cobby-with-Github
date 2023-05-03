@@ -5,7 +5,7 @@ const GithubBadge = () => {
   return (
     <style.GithubBadgeWrapper>
       <style.BadgeTxt>
-        <TextBox size={20} content={"# GITHUB README BADGE"} />
+        <TextBox size={30} content={"# GITHUB README BADGE"} />
       </style.BadgeTxt>
       <style.CodeCopyBox>
         <style.ReadmeCode>
