@@ -26,19 +26,6 @@ export const ReadmeCode = styled.div`
   overflow: hidden; // 여기 나중에 주소 길이통해서 수정해야할 수 있음.
 `;
 
-// export const CopyBtn = styled.div`
-//   /* background-color: ${colors.ItemBoxColor};
-//   position: relative;
-//   width: 15%;
-//   text-align: center;
-//   border-radius: 5px;
-
-//   &:hover {
-//     background-color: ${colors.NavBarCreamColor};
-//     cursor: pointer;
-//   } */
-// `;
-
 export const CopyBtnImg = styled.img`
   background-color: ${colors.ItemBoxColor};
   padding: 2%;

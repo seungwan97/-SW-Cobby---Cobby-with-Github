@@ -13,5 +13,6 @@ export const CostumePageTextWrapper = styled.div`
 `;
 
 export const CostumedCobby = styled.div`
+  position: relative;
   text-align: center;
 `;

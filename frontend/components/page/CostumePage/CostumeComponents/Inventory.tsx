@@ -22,6 +22,12 @@ const typeList: ItemType[] = [
 ];
 
 const Inventory = (props: any) => {
+  const handleItemClick = (gifSrc: string) => {
+    // 클릭한 아이템의 gifSrc 값을 상위 컴포넌트로 전달
+    props.onItemClick(gifSrc);
+    // console.log("Clicked item:", gifSrc);
+  };
+
   return (
     <style.Inventory>
       <style.InventoryBar>
@@ -36,8 +42,12 @@ const Inventory = (props: any) => {
       </style.InventoryBar>
       <style.InventoryBox>
         {props.itemList.map(
-          (item: object, index: number) => (
-            <ItemBox item={item} key={index} />
+          (item: object, index: Number) => (
+            <ItemBox
+              item={item}
+              key={index}
+              onItemClick={handleItemClick}
+            />
           )
         )}
       </style.InventoryBox>

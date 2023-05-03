@@ -3,14 +3,12 @@ import Image from "next/image";
 
 // ItemBox
 const ItemBox = (props: any) => {
-  const handleItemClick = (gifSrc: String) => {
-    console.log(props.item.gifSrc);
+  const handleItemClick = () => {
+    props.onItemClick(props.item.gifSrc);
   };
 
   return (
-    <style.ImageWrapper
-      onClick={() => handleItemClick(props.item.gifSrc)}
-    >
+    <style.ImageWrapper onClick={() => handleItemClick()}>
       <Image
         src={props.item.item}
         alt="item"
