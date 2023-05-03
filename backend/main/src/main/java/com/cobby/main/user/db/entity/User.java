@@ -32,11 +32,11 @@ public class User extends BaseTimeEntity{
 	@Id
 	private String id;
 
-	@OneToOne(mappedBy = "user")
-	private Stat stat;
-
-	@OneToOne(mappedBy = "user")
-	private ActivityLog activityLog;
+	// @OneToOne(mappedBy = "user")
+	// private Stat stat;
+	//
+	// @OneToOne(mappedBy = "user")
+	// private ActivityLog activityLog;
 
 	@Column(nullable = false)
 	private String nickname;
@@ -44,14 +44,16 @@ public class User extends BaseTimeEntity{
 	@Enumerated(STRING)
 	private State state;
 	@Column(nullable = false)
-	private String githubUri;
+	private String githubUrl;
+	@Column(nullable = false)
+	private String githubToken;
 
 
 	@Builder
-	public User(String id, String nickname, State state, String githubUri) {
+	public User(String id, String nickname, State state, String githubUrl) {
 		this.id = id;
 		this.nickname = nickname;
 		this.state = state;
-		this.githubUri = githubUri;
+		this.githubUrl = githubUrl;
 	}
 }

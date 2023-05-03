@@ -13,13 +13,4 @@ public class StatResponse {
 	private int followerCnt;
 	private int issueCnt;
 
-	@Builder
-	public StatResponse(int commitCnt, int starCnt, int forkCnt, int prCnt, int followerCnt, int issueCnt) {
-		this.commitCnt = commitCnt;
-		this.starCnt = starCnt;
-		this.forkCnt = forkCnt;
-		this.prCnt = prCnt;
-		this.followerCnt = followerCnt;
-		this.issueCnt = issueCnt;
-	}
 }
