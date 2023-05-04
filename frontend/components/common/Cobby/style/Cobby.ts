@@ -5,6 +5,7 @@ export const CobbyWrapper = styled.div`
 `;
 
 export const Cobby = styled.img`
+  // position: absolute;
   width: 180px;
   height: 180px;
   zindex: 1;
@@ -19,5 +20,7 @@ export const CobbyCostumedItem = styled.img`
   position: absolute;
   width: 180px;
   height: 180px;
+  left: 50%;
+  transform: translate(-50%);
   zindex: 2;
 `;

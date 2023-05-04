@@ -8,39 +8,39 @@ import CostumePage from "@/components/page/CostumePage/CostumePage";
 const DUMMY_DATA = [
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
+  },
+  {
+    item: "/CostumeItems_IMG/Head/andae.png",
+    gifSrc: "/CostumeItems_GIF/Head/andae.png",
+  },
+  {
+    item: "/CostumeItems_IMG/Head/rudolf.png",
+    gifSrc: "/CostumeItems_GIF/Head/rudolf.png",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Head/andae.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
   },
 ];
 // Costumepage
