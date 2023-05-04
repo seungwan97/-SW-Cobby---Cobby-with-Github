@@ -1,0 +1,19 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/cobby
+      uuid-representation: standard
+
+  # JPA Properties
+  jpa:
+    properties:
+      hibernate:
+        ogm:
+          datastore:
+            create_database: true
+
+#request:
+#  url:
+#    #    user-server: http://j8b201.p.ssafy.io:9011/api/members
+#    user-server: http://localhost:8085/api/members
+#    front-login: https://j8b201.p.ssafy.io/redirect
