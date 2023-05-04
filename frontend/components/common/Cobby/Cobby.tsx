@@ -12,8 +12,6 @@ const Cobby = (props: PropsType) => {
   useEffect(() => {
     if (props.gifSrc) {
       setCobbyCostume(props.gifSrc);
-
-      console.log(props.gifSrc);
     }
   }, [props.gifSrc]);
 
@@ -21,7 +19,9 @@ const Cobby = (props: PropsType) => {
     <style.CobbyWrapper>
       <style.Cobby src="/Character/Cobby.gif" />
       {cobbyCostume && (
-        <style.CobbyCostumedItem src={props.gifSrc}></style.CobbyCostumedItem>
+        <style.CobbyCostumedItem
+          src={props.gifSrc}
+        ></style.CobbyCostumedItem>
       )}
     </style.CobbyWrapper>
   );
