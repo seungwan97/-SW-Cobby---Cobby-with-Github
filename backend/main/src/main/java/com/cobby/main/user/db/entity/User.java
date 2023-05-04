@@ -2,25 +2,16 @@ package com.cobby.main.user.db.entity;
 
 import static jakarta.persistence.EnumType.*;
 
-import java.time.LocalDateTime;
-
-import org.hibernate.annotations.GenericGenerator;
-
-import com.cobby.main.activitylog.db.entity.ActivityLog;
 import com.cobby.main.common.entity.BaseTimeEntity;
-import com.cobby.main.stat.db.entity.Stat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter

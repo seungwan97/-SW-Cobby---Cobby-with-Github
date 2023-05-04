@@ -21,8 +21,8 @@ public class StatServiceImpl implements StatService {
 
 	@Override
 	public void subscribeUserInfo(StatSubscribeRequest statSubscribeRequest) {
-		var stat = statRepository.findById(statSubscribeRequest.getUserId()).orElseThrow(NotFoundException::new);
-		StatPostRequest statPostRequest = statSubscribeRequest.getStatPostRequest();
+		var stat = statRepository.findById(statSubscribeRequest.userId()).orElseThrow(NotFoundException::new);
+		StatPostRequest statPostRequest = statSubscribeRequest.statPostRequest();
 
 		var updateStat = stat.toBuilder()
 			.commitCnt(statPostRequest.commitCnt())

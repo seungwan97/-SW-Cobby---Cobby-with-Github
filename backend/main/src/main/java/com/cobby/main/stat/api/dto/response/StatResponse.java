@@ -1,6 +1,5 @@
 package com.cobby.main.stat.api.dto.response;
 
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter

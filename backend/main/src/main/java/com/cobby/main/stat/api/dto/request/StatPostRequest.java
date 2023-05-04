@@ -1,7 +1,5 @@
 package com.cobby.main.stat.api.dto.request;
 
-import lombok.Getter;
-
 public record StatPostRequest (
 
 	Long commitCnt,

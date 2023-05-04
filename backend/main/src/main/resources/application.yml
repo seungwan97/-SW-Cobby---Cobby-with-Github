@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    include: db, jasypt, notification
+    include: db, jasypt, notification, cloud
 
   servlet:
     multipart:

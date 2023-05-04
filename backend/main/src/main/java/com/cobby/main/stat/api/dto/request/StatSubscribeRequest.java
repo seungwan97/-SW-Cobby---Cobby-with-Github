@@ -1,10 +1,7 @@
 package com.cobby.main.stat.api.dto.request;
 
-import lombok.Getter;
+public record StatSubscribeRequest(
 
-@Getter
-public class StatSubscribeRequest {
-
-	private String userId;
-	private StatPostRequest statPostRequest;
-}
+	String userId,
+	StatPostRequest statPostRequest
+){}

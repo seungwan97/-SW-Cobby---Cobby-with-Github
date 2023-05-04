@@ -1,10 +1,7 @@
 package com.cobby.main.user.api.service.impl;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.util.Optional;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.util.XMLResourceDescriptor;
@@ -25,6 +22,9 @@ import com.cobby.main.user.db.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @Slf4j
 @Service
@@ -53,63 +53,81 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void signOutUserInfo(String userId) {
 		var user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
-		log.info(user.toString());
-		log.info(String.valueOf(user.getLastModifiedAt()));
 
 		user = user.toBuilder()
 			.state(State.X)
 			.build();
-
-		log.info(user.toString());
 
 		userRepository.save(user);
 	}
 
 	@Override
 	public void logInUserInfo(UserPostRequest userPostRequest) {
+		// userId로 기존 사용자를 조회합니다.
+		var existingUser = userRepository.findById(userPostRequest.userId());
+		if (existingUser.isPresent()) {
+			var user1 = existingUser.orElseThrow(NotFoundException::new);
+			var user = user1.toBuilder()
+				.build();
 
-		// 유저는 일단 아마도 끝
-		var user = User.builder()
-			.id(userPostRequest.userId())
-			.nickname(userPostRequest.nickname())
-			.state(State.A)
-			.githubUrl(userPostRequest.githubUrl())
-			.githubToken(userPostRequest.githubToken())
-			.build();
+			user = user.toBuilder()
+				.state(State.X)
+				.githubToken(userPostRequest.githubToken())
+				.build();
 
-		// var stat = bulidStat(userPostRequest);
-		userRepository.save(user);
+			userRepository.save(user);
 
-		var user1 = userRepository.findById(userPostRequest.userId()).orElseThrow(NotFoundException::new);
+			var stat = statRepository.findById(userPostRequest.userId()).orElseThrow(NotFoundException::new);
+			// 새로운 사용자의 통계 정보를 생성합니다.
+			stat = stat.toBuilder()
+				.commitCnt(getStatList(userPostRequest, 5))
+				.starCnt(getStatList(userPostRequest, 3))
+				.forkCnt(getFork(userPostRequest))
+				.prCnt(getStatList(userPostRequest, 7))
+				.followerCnt(getFollower(userPostRequest))
+				.issueCnt(getStatList(userPostRequest, 9))
+				.build();
+			statRepository.save(stat);
+		} else {
+			// 기존 사용자가 존재하지 않는 경우, 새로운 사용자 정보를 생성합니다.
+			User user = User.builder()
+				.id(userPostRequest.userId())
+				.nickname(userPostRequest.nickname())
+				.state(State.A)
+				.githubUrl(userPostRequest.githubUrl())
+				.githubToken(userPostRequest.githubToken())
+				.build();
+			userRepository.save(user);
 
+			var user1 = userRepository.findById(userPostRequest.userId()).orElseThrow(NotFoundException::new);
 
-
-		var stat = Stat.builder()
-			.user(user1)
-			.commitCnt(getGitStatList(userPostRequest, 5))
-			.starCnt(getGitStatList(userPostRequest, 3))
-			.forkCnt(getFork(userPostRequest))
-			.prCnt(getGitStatList(userPostRequest, 7))
-			.followerCnt(getFollower(userPostRequest))
-			.issueCnt(getGitStatList(userPostRequest, 9))
-			.build();
-
-
-		statRepository.save(stat);
+			// 새로운 사용자의 통계 정보를 생성합니다.
+			Stat stat = Stat.builder()
+				.user(user1)
+				.commitCnt(getStatList(userPostRequest, 5))
+				.starCnt(getStatList(userPostRequest, 3))
+				.forkCnt(getFork(userPostRequest))
+				.prCnt(getStatList(userPostRequest, 7))
+				.followerCnt(getFollower(userPostRequest))
+				.issueCnt(getStatList(userPostRequest, 9))
+				.build();
+			statRepository.save(stat);
+		}
 	}
 
-	private Long getFork(UserPostRequest userPostRequest){
-		HttpClient client = HttpClient.newBuilder().build();
-		HttpRequest request = HttpRequest.newBuilder()
-			.uri(URI.create(GITHUB_API_URL + "/user" + "/repos"))
-			.header("Authorization", "token " + userPostRequest.githubToken())
-			.build();
+		private Long getFork(UserPostRequest userPostRequest){
+		OkHttpClient client = new OkHttpClient();
+		Request.Builder builder = new Request.Builder()
+			.url(GITHUB_API_URL + "/user" + "/repos")
+			.addHeader("Authorization", "token " + userPostRequest.githubToken());
+		Request request = builder.build();
+
 		try {
 			long beforeTime = System.currentTimeMillis();
-			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-			if (response.statusCode() == 200) {
+			Response response = client.newCall(request).execute();
+			if (response.code() == 200) {
 
-				JSONArray repositories = new JSONArray(response.body());
+				JSONArray repositories = new JSONArray(response.body().string());
 				Long forkCnt = 0L, sum = 0L;
 
 				for (int i = 0; i < repositories.length(); i++) {
@@ -133,17 +151,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	private Long getFollower(UserPostRequest userPostRequest){
-		HttpClient client = HttpClient.newBuilder().build();
-		HttpRequest request = HttpRequest.newBuilder()
-			.uri(URI.create(GITHUB_API_URL + "/user"))
-			.header("Authorization", "token " + userPostRequest.githubToken())
-			.build();
+		OkHttpClient client = new OkHttpClient();
+		Request.Builder builder = new Request.Builder()
+			.url(GITHUB_API_URL + "/user")
+			.addHeader("Authorization", "token " + userPostRequest.githubToken());
+		Request request = builder.build();
+
 		try {
-			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-			if (response.statusCode() == 200) {
+			Response response = client.newCall(request).execute();
+			if (response.code() == 200) {
 
 				long beforeTime = System.currentTimeMillis();
-				JSONObject jsonObject = new JSONObject(response.body());
+				JSONObject jsonObject = new JSONObject(response.body().string());
 				Long follower = 0L, sum = 0L;
 
 				follower = jsonObject.getLong("followers");
@@ -161,32 +180,30 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
-	private long getGitStatList(UserPostRequest userPostRequest, int crawling) {
+	private long getStatList(UserPostRequest userPostRequest, int crawling) {
 
 		StringBuilder gitStat = new StringBuilder();
 		gitStat.append("https://github-readme-stats.vercel.app/api?username=")
 			.append(userPostRequest.nickname())
 			.append("&count_private=true");
 		Document doc;
-		String commitsText = null;
+		String text = null;
 
 		try {
-			String userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36";
 			String url = String.valueOf(gitStat);
 			String parser = XMLResourceDescriptor.getXMLParserClassName();
 			SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory(parser);
 
 			doc = factory.createDocument(url);
 
-			commitsText = doc.getElementsByTagName("text").item(crawling).getTextContent();
-			System.out.println("Commits: " + commitsText);
+			text = doc.getElementsByTagName("text").item(crawling).getTextContent();
 
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return Long.parseLong(commitsText);
+		return Long.parseLong(text);
 	}
 
 }

@@ -1,5 +1,5 @@
 spring:
-  # MariaDB
+  # MysqlDB
   datasource:
     url: ENC(5aU26rvopds6JmpQlwnKoLS+5i847duy8xfoFWMoVFd0eauwtobRrpSI/br9ER9E) #    url: jdbc:mysql://localhost:3306/cobby_user
     username: ENC(IPgCgyTJy4ppIk29iI4ZtQ==)
