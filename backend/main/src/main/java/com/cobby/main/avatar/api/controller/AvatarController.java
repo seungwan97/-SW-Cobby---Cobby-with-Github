@@ -28,11 +28,13 @@ import com.cobby.main.avatar.api.service.AvatarQuestService;
 import com.cobby.main.avatar.api.service.AvatarService;
 import com.cobby.main.avatar.db.entity.Avatar;
 import com.cobby.main.common.response.BaseResponseBody;
+import com.cobby.main.common.util.ApiDocumentResponse;
 import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.quest.api.dto.response.QuestGetResponse;
 import com.cobby.main.quest.api.service.QuestService;
 import com.cobby.main.quest.db.entity.enumtype.QuestCategory;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
@@ -53,6 +55,8 @@ public class AvatarController {
 	private final QuestService questService;
 
 	// PathVariable 과 경로는 추후 로그인 모듈이 완성되면 Header 를 통해 찾게 되면 변경할 예정입니다.
+	@ApiDocumentResponse
+	@Operation(summary = "아바타 조회", description = "user ID로 아바타를 조회하는 메서드 입니다.")
 	@GetMapping
 	public ResponseEntity<? extends BaseResponseBody> getAvatar(
 		@RequestHeader("userId")
@@ -65,7 +69,9 @@ public class AvatarController {
 			.ok()
 			.body(new BaseResponseBody<>(200, "OK", costumes));
 	}
-
+	
+	@ApiDocumentResponse
+	@Operation(summary = "아바타 생성", description = "user ID로 고유한 아바타를 생성하는 메서드 입니다.")
 	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> createAvatar(
 		@RequestHeader("userId")
@@ -84,6 +90,8 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(201, "created", successMessage));
 	}
 
+	@ApiDocumentResponse
+	@Operation(summary = "아바타 정보 수정", description = "user ID에 해당하는 아바타 정보를 업데이트 하는 메서드입니다.")
 	@PatchMapping
 	public ResponseEntity<? extends BaseResponseBody> updateAvatar(
 		@RequestBody Map<String, Integer> avatarUpdateInfo,
@@ -100,6 +108,8 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(200, "OK", successMessage));
 	}
 
+	@ApiDocumentResponse
+	@Operation(summary = "아바타 정보 초기화", description = "user ID에 해당하는 아바타를 초기화하는 메서드 입니다.")
 	@GetMapping("/reset")
 	public ResponseEntity<? extends BaseResponseBody> resetAvatar(
 		@RequestHeader("userId")
@@ -115,6 +125,8 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(200, "OK", successMessage));
 	}
 
+	@ApiDocumentResponse
+	@Operation(summary = "아바타 정보 삭제", description = "user ID에 해당하는 아바타 정보를 삭제하는 메서드 입니다.")
 	@DeleteMapping
 	public ResponseEntity<? extends BaseResponseBody> deleteAvatar(
 		@RequestHeader("userId")
@@ -130,6 +142,8 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(200, "OK", successMessage));
 	}
 
+	@ApiDocumentResponse
+	@Operation(summary = "인벤토리 조회", description = "아바타가 갖고있는 코스튬을 조회하는 메서드 입니다.")
 	@PostMapping(value = "/inventories", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<? extends BaseResponseBody> createAvatarInventoryItem(
 		@RequestHeader("userId")
@@ -149,6 +163,8 @@ public class AvatarController {
 			.body(new BaseResponseBody(201, "created", successMessage));
 	}
 
+	@ApiDocumentResponse
+	@Operation(summary = "아바타 도전과제 목록 조회", description = "아바타의 현재 도전과제 목록을 조회합니다.")
 	@GetMapping(value = "/quests")
 	public ResponseEntity<? extends BaseResponseBody> getAvatarQuestList(
 		@RequestHeader("userId")

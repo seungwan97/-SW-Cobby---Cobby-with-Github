@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cobby.main.common.response.BaseResponseBody;
+import com.cobby.main.common.util.ApiDocumentResponse;
 import com.cobby.main.costume.api.dto.request.CostumePostRequest;
 import com.cobby.main.costume.api.service.CostumeService;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -30,6 +32,8 @@ import lombok.RequiredArgsConstructor;
 public class CostumeController {
 	private final CostumeService costumeService;
 
+	@ApiDocumentResponse
+	@Operation(summary = "코스튬 목록 전체 조회", description = "모든 코스튬을 조회합니다.")
 	@GetMapping
 	public ResponseEntity<? extends BaseResponseBody> getAllCostumes() {
 		var costumes = costumeService.selectAllCostumes();
@@ -39,6 +43,8 @@ public class CostumeController {
 			.body(new BaseResponseBody<>(200, "OK", costumes));
 	}
 
+	@ApiDocumentResponse
+	@Operation(summary = "코스튬 조회", description = "코스튬 ID에 해당하는 코스튬을 조회합니다.")
 	@GetMapping("/{costumeId}")
 	public ResponseEntity<? extends BaseResponseBody> getCostume(
 		@PathVariable
@@ -52,6 +58,8 @@ public class CostumeController {
 			.body(new BaseResponseBody<>(200, "OK", costume));
 	}
 
+	@ApiDocumentResponse
+	@Operation(summary = "코스튬 생성", description = "코스튬 이름, 종류, 관련 도전과제 ID에 해당하는 코스튬을 생성합니다.")
 	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> createCostume(
 		@RequestBody @Valid CostumePostRequest costumePostRequest,
@@ -68,6 +76,8 @@ public class CostumeController {
 			.body(new BaseResponseBody<>(201, "created", successMessage));
 	}
 
+	@ApiDocumentResponse
+	@Operation(summary = "코스튬 삭제", description = "코스튬 ID에 해당하는 코스튬을 삭제합니다.")
 	@DeleteMapping("/{costumeId}")
 	public ResponseEntity<? extends BaseResponseBody> deleteCostume(
 		@PathVariable

@@ -32,14 +32,14 @@ public class TitleController {
 	private final TitleService titleService;
 
 	@ApiDocumentResponse
-	@Operation(summary = "칭호 목록 전체 조회", description = "모든 칭호를 조회하는 메서드 입니다.")
+	@Operation(summary = "칭호 목록 전체 조회", description = "모든 칭호를 조회합니다.")
 	@GetMapping
 	public ResponseEntity<? extends BaseResponseBody> getAllTitles() {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", titleService.selectAllTitles()));
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "칭호 조회", description = "title ID로 칭호를 조회하는 메서드 입니다.")
+	@Operation(summary = "칭호 조회", description = "title ID로 칭호를 조회합니다.")
 	@GetMapping("/{titleId}")
 	public ResponseEntity<? extends BaseResponseBody> getTitle(
 		@Parameter(description = "조회할 칭호 ID", required = true)
@@ -48,7 +48,7 @@ public class TitleController {
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "칭호 생성", description = "칭호 이름, 설명, 보상이 되는 도전과제 ID로 생성할 수 있습니다.")
+	@Operation(summary = "칭호 생성", description = "칭호 이름, 설명, 보상이 되는 도전과제 ID로 생성합니다.")
 	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> createTitle(@RequestBody TitlePostRequest titleInfo) {
 		titleService.insertTitle(titleInfo);
