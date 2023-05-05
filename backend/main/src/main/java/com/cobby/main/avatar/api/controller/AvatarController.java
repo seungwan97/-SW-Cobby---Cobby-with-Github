@@ -219,7 +219,7 @@ public class AvatarController {
 						Object award;
 						if (Objects.isNull(quest.getCostumes().get(0))) award = quest.getTitles().get(0);
 						else award = quest.getCostumes().get(0);
-						// progress 추가 방안 검토
+
 						avatarQuestGetResponseList[idx] = AvatarQuestGetResponse.builder()
 							.questId(quest.getQuestId())
 							.questName(quest.getQuestName())

@@ -31,7 +31,7 @@ public class QuestServiceImpl implements QuestService {
 	}
 
 	@Override
-	public List<QuestGetResponse> selectAllQuest( ) {
+	public List<QuestGetResponse> selectAllQuest() {
 		return questRepository.findAll()
 			.stream()
 			.map(quest -> QuestGetResponse.builder().quest(quest).build())
@@ -49,11 +49,11 @@ public class QuestServiceImpl implements QuestService {
 	@Override
 	public void insertQuest(QuestPostRequest questInfo) {
 		var quest = Quest.builder()
-				.questName(questInfo.getQuestName())
-				.questType(questInfo.getQuestType())
-				.questGoal(questInfo.getQuestGoal())
-				.costumes(questInfo.getCostumes())
-				.titles(questInfo.getTitles())
+				.questName(questInfo.questName())
+				.questType(questInfo.questType())
+				.questGoal(questInfo.questGoal())
+				.costumes(questInfo.costumes())
+				.titles(questInfo.titles())
 				.build();
 
 		questRepository.save(quest);
@@ -61,13 +61,13 @@ public class QuestServiceImpl implements QuestService {
 
 	@Override
 	public void updateQuest(QuestPutRequest questInfo) {
-		var quest = questRepository.findById(questInfo.getQuestId()).orElseThrow(NotFoundException::new);
+		var quest = questRepository.findById(questInfo.questId()).orElseThrow(NotFoundException::new);
 		var updateQuest = quest.toBuilder()
-				.questName(questInfo.getQuestName())
-				.questType(questInfo.getQuestType())
-				.questGoal(questInfo.getQuestGoal())
-				.titles(questInfo.getTitles())
-				.costumes(questInfo.getCostumes())
+				.questName(questInfo.questName())
+				.questType(questInfo.questType())
+				.questGoal(questInfo.questGoal())
+				.titles(questInfo.titles())
+				.costumes(questInfo.costumes())
 				.build();
 
 		questRepository.save(updateQuest);
