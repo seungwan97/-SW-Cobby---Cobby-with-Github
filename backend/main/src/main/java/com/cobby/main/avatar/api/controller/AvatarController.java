@@ -52,7 +52,6 @@ public class AvatarController {
 	private final AvatarService avatarService;
 	private final AvatarInventoryService avatarInventoryService;
 	private final AvatarQuestService avatarQuestService;
-	private final QuestService questService;
 
 	// PathVariable 과 경로는 추후 로그인 모듈이 완성되면 Header 를 통해 찾게 되면 변경할 예정입니다.
 	@ApiDocumentResponse
@@ -168,96 +167,10 @@ public class AvatarController {
 	@GetMapping(value = "/quests")
 	public ResponseEntity<? extends BaseResponseBody> getAvatarQuestList(
 		@RequestHeader("userId")
-		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
+		// @Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId
 	) {
-		AvatarQuestGetResponse[] avatarQuestGetResponseList = new AvatarQuestGetResponse[4];
-
-		try {
-			// 1. 현재 달성 현황
-			// 1-1. 연속 출석 일자, 연속 커밋 일자 서버통신 받아오기
-
-			// 0 : 레벨, 1 : 커밋, 2 : 출석, 3 : 아이템 순서
-			int[] progressReq = new int[4];
-
-			// 추후 yml에 설정
-			String url = "";
-			OkHttpClient client = new OkHttpClient();
-
-			Request.Builder builder = new Request.Builder()
-				.url(url)
-				.addHeader("userId", userId);
-			Request request = builder.build();
-
-			Response response = client.newCall(request).execute();
-
-			JSONObject jsonObject = new JSONObject(response.body().string());
-
-			progressReq[1] = Integer.parseInt(jsonObject.getString("relayCommit"));
-			progressReq[2] = Integer.parseInt(jsonObject.getString("relayAttend"));
-
-			// 1-2. 레벨, 아이템 갯수
-			AvatarGetResponse avatar = avatarService.selectAvatar(userId);
-			progressReq[0] = avatar.getLevel();
-			progressReq[3] = avatar.getCostumes().size();
-
-			// 2. 퀘스트 목록 불러옴(추후 캐싱 가능할듯?)
-			// 0 : 레벨, 1 : 커밋, 2 : 출석, 3 : 아이템 순서
-			var questList = new List[4];
-
-			int idx = 0;
-			for (QuestCategory category : QuestCategory.values()) {
-				questList[idx++] = questService.selectAllQuestByQuestType(category);
-			}
-
-			// 3. 아바타퀘스트 목록 불러옴
-			var avatarQuestList = avatarQuestService.selectAllAvatarQuests(userId);
-
-			// 4. 항목별 완료한 도전과제의 달성 조건 받아옴
-			// 0 : 레벨, 1 : 커밋, 2 : 출석, 3 : 아이템 순서
-			int[] goal = new int[4];
-			for (var aqList : avatarQuestList) {
-				int aqGoal = aqList.getQuest().getQuestGoal();
-				switch(aqList.getQuest().getQuestType()) {
-					case LEVEL: goal[0] = Math.max(goal[0], aqGoal); break;
-					case COMMIT: goal[1] = Math.max(goal[1], aqGoal); break;
-					case ATTENDANCE: goal[2] = Math.max(goal[2], aqGoal); break;
-					case ITEM: goal[3] = Math.max(goal[3], aqGoal); break;
-				}
-			}
-
-			// 5. 완료한 도전과제의 다음 달성 조건 탐색하여 반환
-			idx = 0;
-			for (List<QuestGetResponse> qList : questList) {
-				for (QuestGetResponse quest : qList) {
-					if (goal[idx] < quest.getQuestGoal()) {
-						int progress = Math.round(((float)progressReq[idx] / goal[idx]) * 100);
-						Object award;
-						if (Objects.isNull(quest.getCostumes().get(0))) award = quest.getTitles().get(0);
-						else award = quest.getCostumes().get(0);
-
-						avatarQuestGetResponseList[idx] = AvatarQuestGetResponse.builder()
-							.questId(quest.getQuestId())
-							.questName(quest.getQuestName())
-							.questType(quest.getQuestType())
-							.questGoal(quest.getQuestGoal())
-							.progress(progress)
-							.award(award)
-						.build();
-						break;
-					}
-				}
-
-				// Null이라면 마지막 단계까지 달성한 것이므로 빈 객체
-				if (Objects.isNull(avatarQuestGetResponseList[idx])) {
-					avatarQuestGetResponseList[idx] = new AvatarQuestGetResponse();
-				}
-				idx++;
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		var avatarQuestGetResponseList = avatarQuestService.selectAvatarQuests(userId);
 
 		return ResponseEntity
 			.ok()
