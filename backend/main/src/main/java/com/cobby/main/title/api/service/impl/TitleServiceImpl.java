@@ -43,12 +43,12 @@ public class TitleServiceImpl implements TitleService {
 
 	@Override
 	public void insertTitle(TitlePostRequest titleInfo) {
-		var quest = questRepository.findById(titleInfo.getQuestId()).orElseThrow(NotFoundException::new);
+		var quest = questRepository.findById(titleInfo.questId()).orElseThrow(NotFoundException::new);
 
 		var title = Title.builder()
 				.quest(quest)
-				.name(titleInfo.getName())
-				.explanation(titleInfo.getExplanation())
+				.name(titleInfo.name())
+				.explanation(titleInfo.explanation())
 				.build();
 
 		titleRepository.save(title);
@@ -56,13 +56,13 @@ public class TitleServiceImpl implements TitleService {
 
 	@Override
 	public void updateTitle(TitlePutRequest titleInfo) {
-		var title = titleRepository.findById(titleInfo.getTitleId()).orElseThrow(NotFoundException::new);
-		var quest = questRepository.findById(titleInfo.getQuestId()).orElseThrow(NotFoundException::new);
+		var title = titleRepository.findById(titleInfo.titleId()).orElseThrow(NotFoundException::new);
+		var quest = questRepository.findById(titleInfo.questId()).orElseThrow(NotFoundException::new);
 
 		var updateTitle = title.toBuilder()
 				.quest(quest)
-				.name(titleInfo.getName())
-				.explanation(titleInfo.getExplanation())
+				.name(titleInfo.name())
+				.explanation(titleInfo.explanation())
 				.build();
 
 		titleRepository.save(updateTitle);

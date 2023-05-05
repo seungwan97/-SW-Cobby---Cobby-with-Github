@@ -38,7 +38,4 @@ import java.util.List;
 
 	@OneToMany(mappedBy = "quest")
 	private List<Title> titles = new ArrayList<>();
-
-	// Entity to Dto
-	// public QuestGetResponse toDto() {return new QuestGetResponse(questId, questName, questType, questCode, costumes, titles);}
 }

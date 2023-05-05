@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    include: db, encrypt
+    include: db, encrypt, swagger
 
   servlet:
     multipart:
