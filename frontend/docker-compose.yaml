@@ -1,0 +1,9 @@
+services:
+  cobby-front:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: docker.io/duduking/cobby-repo:latest
+    ports:
+      - "33000:3000"

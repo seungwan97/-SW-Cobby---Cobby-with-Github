@@ -6,7 +6,7 @@ type PropsType = {
   gifSrc: string;
 };
 
-const Cobby = (props: PropsType) => {
+const Cobby = (props: any) => {
   const [cobbyCostume, setCobbyCostume] = useState("");
 
   useEffect(() => {
