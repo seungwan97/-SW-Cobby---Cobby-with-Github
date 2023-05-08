@@ -1,0 +1,21 @@
+server:
+  port: ENC(ZeWmP4hv7PH0gjufw63uag==)
+
+spring:
+  profiles:
+    include: db, cloud, jasypt
+
+  # multipart file setting
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 10MB
+      max-request-size: 15MB
+
+logging:
+  level:
+    com.cobby: TRACE
+
+request:
+  url: ENC(9ETH90icS4OJj7u8SXns+CJUnM/05K2cNL4tgNhirwgXB+jRLA7XLxJGhgjf7Srq6NpYh6dFdcM=)

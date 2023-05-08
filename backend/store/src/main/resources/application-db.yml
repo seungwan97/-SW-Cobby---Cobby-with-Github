@@ -1,0 +1,14 @@
+spring:
+  # mongodb setting
+  data:
+    mongodb:
+      uri: ENC(TYx57fXzA0P88n3l47HfOjGLjjgWUYhPeEQh/V4WTjxkS5iEXtEjEA==)
+      uuid_representation: standard
+
+  # mongodb database auto create
+  jpa:
+    properties:
+      hibernate:
+        ogm:
+          datastore:
+            create_database: true
