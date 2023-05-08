@@ -2,17 +2,19 @@ package com.cobby.main.avatar.api.service;
 
 import java.util.Map;
 
+import com.cobby.main.avatar.api.dto.request.AvatarUpdateRequest;
 import com.cobby.main.avatar.api.dto.response.AvatarGetResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface AvatarService {
 
-	AvatarGetResponse selectAvatar(String userId);
+	AvatarGetResponse selectAvatar(String avatarId) throws JsonProcessingException;
 
-	String insertDefaultAvatar(String userId);
+	String insertDefaultAvatar(String avatarId);
 
-	String updateAvatar(String userId, Map<String, Integer> avatarUpdateInfo);
+	String updateAvatar(String avatarId, AvatarUpdateRequest avatarUpdateInfo) throws JsonProcessingException;
 
-	String resetAvatar(String userId);
+	String resetAvatar(String avatarId);
 
-	String deleteAvatar(String userId);
+	String deleteAvatar(String avatarId);
 }
