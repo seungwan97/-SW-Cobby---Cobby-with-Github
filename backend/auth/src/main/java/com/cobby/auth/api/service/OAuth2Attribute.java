@@ -20,13 +20,15 @@ public class OAuth2Attribute {
     private String id;
     private String attributeKey;
     private String nickname;
+    private String htmlUrl;
 
     static OAuth2Attribute of(String provider, String attributeKey, Map<String, Object> attributes) {
 
         switch (provider) {
             case "github":
-                System.out.println("attributeKey : " + attributeKey); // 1. attributeKey 가 "id" 인지 확인하기
-                return ofGithub("id", attributes);
+//                System.out.println("attributeKey : " + attributeKey);
+//                1. attributeKey 가 "id" 인지 확인
+                return ofGithub(attributeKey, attributes);
             default:
                 throw new RuntimeException();
         }
@@ -37,6 +39,7 @@ public class OAuth2Attribute {
         return OAuth2Attribute.builder()
                 .id(String.valueOf(attributes.get("id")))
                 .nickname((String) attributes.get("login"))
+                .htmlUrl((String) attributes.get("html_url"))
                 .attributes(attributes)
                 .attributeKey(attributeKey)
                 .build();
@@ -47,7 +50,7 @@ public class OAuth2Attribute {
         map.put("id", id);
         map.put("key", attributeKey);
         map.put("nickname", nickname);
-
+        map.put("html_url", htmlUrl);
         return map;
     }
 }
