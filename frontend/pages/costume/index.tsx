@@ -8,39 +8,51 @@ import CostumePage from "@/components/page/CostumePage/CostumePage";
 const DUMMY_DATA = [
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
   {
     item: "/CostumeItems_IMG/Head/andae.png",
-    gifSrc: "/CostumeItems_GIF/Head/andae.png",
+    gifSrc: "/CostumeItems_GIF/Head/andae.gif",
   },
   {
     item: "/CostumeItems_IMG/Head/rudolf.png",
-    gifSrc: "/CostumeItems_GIF/Head/rudolf.png",
+    gifSrc: "/CostumeItems_GIF/Head/rudolf.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
   {
     item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
+  },
+  {
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
+  },
+  {
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
+  },
+  {
+    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
+    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
 ];
 // Costumepage
