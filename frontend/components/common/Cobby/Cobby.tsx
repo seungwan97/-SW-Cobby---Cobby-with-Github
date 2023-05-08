@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 type PropsType = {
   gifSrc: string;
 };
+const COBBY_BASE = "/Character/Cobby.gif";
 
 const Cobby = (props: any) => {
   const [cobbyCostume, setCobbyCostume] = useState("");
@@ -17,11 +18,9 @@ const Cobby = (props: any) => {
 
   return (
     <style.CobbyWrapper>
-      <style.Cobby src="/Character/Cobby.gif" />
+      <style.Cobby src={COBBY_BASE} />
       {cobbyCostume && (
-        <style.CobbyCostumedItem
-          src={props.gifSrc}
-        ></style.CobbyCostumedItem>
+        <style.CobbyCostumedItem src={props.gifSrc}></style.CobbyCostumedItem>
       )}
     </style.CobbyWrapper>
   );
