@@ -41,6 +41,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         var memberAttribute = oAuth2Attribute.convertToMap();
         log.info("memberAttribute = {}", memberAttribute);
 
+        memberAttribute.put("githubToken", userRequest.getAccessToken().getTokenValue());
+
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(Role.USER.getKey())),
                 memberAttribute, "id");
