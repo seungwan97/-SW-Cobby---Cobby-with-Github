@@ -11,6 +11,7 @@ import Cobby from "@/components/common/Cobby/Cobby";
 // CostumePage
 const CostumePage = (props: any) => {
   // const router = useRouter();
+
   const [costumeGifSrc, setCostumeGifSrc] = useState("");
 
   const handleInventoryItem = (gifSrc: string) => {

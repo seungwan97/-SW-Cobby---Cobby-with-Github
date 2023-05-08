@@ -8,7 +8,7 @@ export const Cobby = styled.img`
   // position: absolute;
   width: 180px;
   height: 180px;
-  zindex: 1;
+  z-index: 1;
 
   @media (max-height: 667px) {
     width: 150px;
@@ -22,5 +22,5 @@ export const CobbyCostumedItem = styled.img`
   height: 180px;
   left: 50%;
   transform: translate(-50%);
-  zindex: 2;
+  z-index: 2;
 `;
