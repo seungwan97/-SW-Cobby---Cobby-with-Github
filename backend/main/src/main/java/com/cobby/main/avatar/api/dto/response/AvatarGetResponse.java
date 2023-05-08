@@ -6,6 +6,7 @@ import com.cobby.main.avatar.db.entity.Avatar;
 import com.cobby.main.avatar.db.entity.AvatarCostume;
 import com.cobby.main.avatar.db.entity.AvatarQuest;
 import com.cobby.main.avatar.db.entity.AvatarTitle;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
@@ -19,7 +20,7 @@ public class AvatarGetResponse {
 
 	private Integer exp;
 
-	private String characterImgUrl;
+	private List<String> outfits;
 
 	private List<AvatarCostume> costumes;
 
@@ -28,12 +29,13 @@ public class AvatarGetResponse {
 	private List<AvatarQuest> quests;
 
 	@Builder
-	public AvatarGetResponse (Avatar avatar) {
+	public AvatarGetResponse (Avatar avatar, List<String> outfits) {
 		this.level = avatar.getLevel();
 		this.exp = avatar.getExp();
-		this.characterImgUrl = avatar.getAvatarImgUrl();
+		this.outfits = outfits;
 		this.costumes = avatar.getCostumes();
 		this.titles = avatar.getTitles();
 		this.quests = avatar.getQuests();
+
 	}
 }
