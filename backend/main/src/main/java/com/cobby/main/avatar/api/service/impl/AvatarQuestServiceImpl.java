@@ -1,49 +1,96 @@
 package com.cobby.main.avatar.api.service.impl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.cobby.main.avatar.api.dto.request.AvatarItemPostRequest;
 import com.cobby.main.avatar.api.dto.response.AvatarGetResponse;
 import com.cobby.main.avatar.api.dto.response.AvatarQuestGetResponse;
+import com.cobby.main.avatar.api.dto.response.CurrentQuest;
 import com.cobby.main.avatar.api.service.AvatarQuestService;
 import com.cobby.main.avatar.api.service.AvatarService;
-import com.cobby.main.avatar.db.entity.Avatar;
 import com.cobby.main.avatar.db.entity.AvatarQuest;
 import com.cobby.main.avatar.db.repository.AvatarQuestRepository;
 import com.cobby.main.avatar.db.repository.AvatarRepository;
-import com.cobby.main.common.exception.NotFoundException;
+import com.cobby.main.common.exception.BaseRuntimeException;
 import com.cobby.main.quest.api.dto.response.QuestGetResponse;
 import com.cobby.main.quest.api.service.QuestService;
 import com.cobby.main.quest.db.entity.enumtype.QuestCategory;
 import com.cobby.main.quest.db.repository.QuestRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
-@Service
+@Transactional
 @RequiredArgsConstructor
+@Service
 public class AvatarQuestServiceImpl implements AvatarQuestService {
 
 	private final AvatarQuestRepository avatarQuestRepository;
 	private final AvatarService avatarService;
 	private final QuestService questService;
+	private final QuestRepository questRepository;
+	private final AvatarRepository avatarRepository;
 
 	@Override
-	public List<AvatarQuest> selectAllAvatarQuests(String userId) {
-		return avatarQuestRepository.findAllByAvatar_AvatarId(userId);
+	public Long insertItem(String avatarId, AvatarItemPostRequest itemInfo) {
+		var avatar = avatarRepository.findById(avatarId)
+			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + avatarId + ")"));
+
+		var quest = questRepository.findById(itemInfo.itemId())
+			.orElseThrow(() -> new IllegalArgumentException("아이템 정보가 없습니다. (type=" +
+				itemInfo.itemType() + ", ID=" + itemInfo.itemId() + ")"));
+
+		var avatarQuest = AvatarQuest.builder()
+			.avatar(avatar)
+			.quest(quest)
+			.build();
+
+		return avatarQuestRepository.save(avatarQuest).getAvatarQuestId();
 	}
 
 	@Override
-	public List<AvatarQuestGetResponse> selectAvatarQuests(String userId) {
+	public List<AvatarQuestGetResponse> selectAllItems(String userId) {
+		var avatar = avatarRepository.findById(userId)
+			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + userId + ")"));
 
-		AvatarQuestGetResponse[] avatarQuestGetResponseList = new AvatarQuestGetResponse[4];
+		var avatarQuests = avatarQuestRepository.findAllByAvatar_AvatarId(userId);
+
+		if(avatarQuests.isEmpty()) {
+			throw new BaseRuntimeException(HttpStatus.NOT_FOUND, "사용자가 보유한 코스튬이 없습니다.");
+		}
+
+		return avatarQuests.stream()
+			.map(quest ->
+				AvatarQuestGetResponse.builder()
+					.avatarQuestId(quest.getAvatarQuestId())
+					.quest(quest.getQuest())
+					.build())
+			.toList();
+	}
+
+	@Override
+	public AvatarQuestGetResponse selectItem(String userId, Long itemId) {
+		var avatar = avatarRepository.findById(userId)
+			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + userId + ")"));
+
+		var avatarQuest = avatarQuestRepository.findById(itemId)
+			.orElseThrow(() -> new IllegalArgumentException("코스튬 정보가 없습니다. (ID=" + itemId + ")"));
+
+		return AvatarQuestGetResponse.builder()
+			.avatarQuestId(avatarQuest.getAvatarQuestId())
+			.quest(avatarQuest.getQuest())
+			.build();
+	}
+
+	@Override
+	public List<CurrentQuest> selectAvatarCurrentQuests(String userId) {
+
+		CurrentQuest[] currentQuests = new CurrentQuest[4];
 		try {
 			// 1. 현재 달성 현황
 			// 1-1. 연속 출석 일자, 연속 커밋 일자 서버통신 받아오기
@@ -51,6 +98,7 @@ public class AvatarQuestServiceImpl implements AvatarQuestService {
 			// 0 : 레벨, 1 : 커밋, 2 : 출석, 3 : 아이템 순서
 			int[] progressReq = new int[4];
 
+			// user서버 연동 후 설정
 			// 추후 yml에 설정l
 			// String url = "";
 			// OkHttpClient client = new OkHttpClient();
@@ -66,8 +114,9 @@ public class AvatarQuestServiceImpl implements AvatarQuestService {
 			//
 			// // progressReq[1] = Integer.parseInt(jsonObject.getString("relayCommit"));
 			// // progressReq[2] = Integer.parseInt(jsonObject.getString("relayAttend"));
-			// progressReq[1] = 1;
-			// progressReq[2] = 1;
+
+			progressReq[1] = 1;
+			progressReq[2] = 1;
 
 			// 1-2. 레벨, 아이템 갯수
 			AvatarGetResponse avatar = avatarService.selectAvatar(userId);
@@ -83,27 +132,19 @@ public class AvatarQuestServiceImpl implements AvatarQuestService {
 				questList[idx++] = questService.selectAllQuestByQuestType(category);
 			}
 
-			for (List<QuestGetResponse> qList : questList) {
-				for (QuestGetResponse quest : qList) {
-					System.out.println(quest.getQuestName());
-					System.out.println(quest.getCostumes().size());
-					// System.out.println(Objects.isNull(quest.getCostumes().get(0)));
-				}
-			}
-
 			// 3. 아바타퀘스트 목록 불러옴
-			var avatarQuestList = selectAllAvatarQuests(userId);
+			var avatarQuestList = selectAllItems(userId);
 
 			// 4. 항목별 완료한 도전과제의 달성 조건 받아옴
 			// 0 : 레벨, 1 : 커밋, 2 : 출석, 3 : 아이템 순서
 			int[] goal = new int[4];
 			for (var aqList : avatarQuestList) {
 				int aqGoal = aqList.getQuest().getQuestGoal();
-				switch(aqList.getQuest().getQuestType()) {
-					case LEVEL: goal[0] = Math.max(goal[0], aqGoal); break;
-					case COMMIT: goal[1] = Math.max(goal[1], aqGoal); break;
-					case ATTENDANCE: goal[2] = Math.max(goal[2], aqGoal); break;
-					case ITEM: goal[3] = Math.max(goal[3], aqGoal); break;
+				switch (aqList.getQuest().getQuestType()) {
+					case LEVEL -> goal[0] = Math.max(goal[0], aqGoal);
+					case COMMIT -> goal[1] = Math.max(goal[1], aqGoal);
+					case ATTENDANCE -> goal[2] = Math.max(goal[2], aqGoal);
+					case ITEM -> goal[3] = Math.max(goal[3], aqGoal);
 				}
 			}
 
@@ -112,19 +153,18 @@ public class AvatarQuestServiceImpl implements AvatarQuestService {
 			for (List<QuestGetResponse> qList : questList) {
 				for (QuestGetResponse quest : qList) {
 					if (goal[idx] < quest.getQuestGoal()) {
-						int progress = Math.round(((float)progressReq[idx] / goal[idx]) * 100);
+						int progress = Math.min(Math.round(((float)progressReq[idx] / quest.getQuestGoal()) * 100), 100);
 
-						Object award;
+						Object award = "";
+
 						if (quest.getCostumes().size() == 0 && quest.getTitles().size() == 0)
 							award = "none";
 						else if (quest.getCostumes().size() > 0)
 							award = quest.getCostumes().get(0);
-						else if (quest.getTitles().size() > 0)
-							award = quest.getTitles().get(0);
 						else
-							award = "";
+							award = quest.getTitles().get(0);
 
-						avatarQuestGetResponseList[idx] = AvatarQuestGetResponse.builder()
+						currentQuests[idx] = CurrentQuest.builder()
 							.questId(quest.getQuestId())
 							.questName(quest.getQuestName())
 							.questType(quest.getQuestType())
@@ -136,9 +176,13 @@ public class AvatarQuestServiceImpl implements AvatarQuestService {
 					}
 				}
 
-				// Null이라면 마지막 단계까지 달성한 것이므로 빈 객체
-				if (Objects.isNull(avatarQuestGetResponseList[idx])) {
-					avatarQuestGetResponseList[idx] = new AvatarQuestGetResponse();
+				// Null이라면 마지막 단계까지 달성한 것이므로 -1
+				if (Objects.isNull(currentQuests[idx])) {
+					// currentQuests[idx] = new AvatarQuestGetResponse().builder().questId(0).build();
+					currentQuests[idx] = CurrentQuest.builder()
+						.questId(-1L)
+						.questName("달성 완료")
+						.build();
 				}
 				idx++;
 			}
@@ -147,7 +191,7 @@ public class AvatarQuestServiceImpl implements AvatarQuestService {
 			e.printStackTrace();
 		}
 
-		return Arrays.asList(avatarQuestGetResponseList);
+		return Arrays.asList(currentQuests);
 	}
 
 }
