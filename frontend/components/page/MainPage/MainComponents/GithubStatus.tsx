@@ -1,7 +1,14 @@
 import * as style from "@/components/page/MainPage/MainComponents/style/GithubStatus";
 import TextBox from "@/components/common/TextBox/TextBox";
-
-const GithubStatus = () => {
+interface Props {
+  statusData: {
+    commitCnt: number;
+    starCnt: number;
+    forkCnt: number;
+  };
+}
+const GithubStatus = (props: Props) => {
+  const { statusData } = props;
   return (
     <style.StatusContainer>
       <style.StatusBar>
@@ -21,11 +28,11 @@ const GithubStatus = () => {
         </style.StatusBox3>
       </style.StatusBar>
       <style.Margin />
-      <TextBox size={25} content={"Total Commits : 365"} />
+      <TextBox size={25} content={`Total Commits : ${statusData.commitCnt}`} />
       <style.Margin />
-      <TextBox size={25} content={"Total Stars : 100"} />
+      <TextBox size={25} content={`Total Stars : ${statusData.starCnt}`} />
       <style.Margin />
-      <TextBox size={25} content={"Total Forks : 100"} />
+      <TextBox size={25} content={`Total Forks : ${statusData.forkCnt}`} />
     </style.StatusContainer>
   );
 };

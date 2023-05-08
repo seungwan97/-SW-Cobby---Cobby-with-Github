@@ -3,11 +3,16 @@ import * as style from "@/components/page/MainPage/MainComponents/style/CobbyInf
 import TextBox from "@/components/common/TextBox/TextBox";
 import Cobby from "@/components/common/Cobby/Cobby";
 import ExpBar from "./ExpBar";
-
-const CobbyInfo = () => {
+interface Props {
+  nicknameData: {
+    nickname: string;
+  };
+}
+const CobbyInfo = (props: Props) => {
+  const { nicknameData } = props;
   return (
     <style.CobbyInfoWrapper>
-      <TextBox size={37} content={"Seungwan97's Cobby"} />
+      <TextBox size={37} content={`${nicknameData.nickname}'s Cobby`} />
       <style.TextMargin />
       <TextBox size={25} content={"Lv. 10"} />
       <style.Margin />
