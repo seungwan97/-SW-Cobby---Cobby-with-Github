@@ -5,15 +5,14 @@ import java.util.List;
 import com.cobby.main.quest.api.dto.request.QuestPostRequest;
 import com.cobby.main.quest.api.dto.request.QuestPutRequest;
 import com.cobby.main.quest.api.dto.response.QuestGetResponse;
-import com.cobby.main.avatar.api.dto.response.AvatarQuestGetResponse;
 import com.cobby.main.quest.db.entity.enumtype.QuestCategory;
 
 public interface QuestService {
 
-	QuestGetResponse selectQuest(Integer questId);
+	QuestGetResponse selectQuest(Long questId);
 	List<QuestGetResponse> selectAllQuest();
 	List<QuestGetResponse> selectAllQuestByQuestType(QuestCategory questCategory);
 	void insertQuest(QuestPostRequest questInfo);
-	void updateQuest(QuestPutRequest questInfo);
-	void deleteQuest(Integer questId);
+	Long updateQuest(QuestPutRequest questInfo);
+	Long deleteQuest(Long questId);
 }

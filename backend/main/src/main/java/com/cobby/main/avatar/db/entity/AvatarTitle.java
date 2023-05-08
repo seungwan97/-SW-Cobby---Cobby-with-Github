@@ -20,7 +20,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Builder(toBuilder = true)
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,7 +31,7 @@ public class AvatarTitle extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "avatar_title_id", nullable = false, columnDefinition = "INT UNSIGNED")
-	private Integer avatarTitleId;
+	private Long avatarTitleId;
 
 	@NotNull(message = "필수 입력 항목입니다. (avatar)")
 	@JsonIgnore
@@ -46,4 +45,9 @@ public class AvatarTitle extends BaseTimeEntity {
 	@JoinColumn(name = "title_id")
 	private Title title;
 
+	@Builder
+	public AvatarTitle(Avatar avatar, Title title) {
+		this.avatar = avatar;
+		this.title = title;
+	}
 }

@@ -43,7 +43,7 @@ public class TitleController {
 	@GetMapping("/{titleId}")
 	public ResponseEntity<? extends BaseResponseBody> getTitle(
 		@Parameter(description = "조회할 칭호 ID", required = true)
-		@PathVariable Integer titleId) {
+		@PathVariable Long titleId) {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", titleService.selectTitle(titleId)));
 	}
 
@@ -68,7 +68,7 @@ public class TitleController {
 	@DeleteMapping("/{titleId}")
 	public ResponseEntity<? extends BaseResponseBody> deleteTitle(
 		@Parameter(description = "조회할 칭호 ID", required = true)
-		@PathVariable Integer titleId) {
+		@PathVariable Long titleId) {
 		titleService.deleteTitle(titleId);
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Deleted", "삭제되었습니다."));
 	}

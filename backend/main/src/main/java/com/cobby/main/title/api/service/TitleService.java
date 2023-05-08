@@ -9,9 +9,9 @@ import com.cobby.main.title.db.entity.Title;
 
 public interface TitleService {
 
-	TitleGetResponse selectTitle(Integer titleId);
+	TitleGetResponse selectTitle(Long titleId);
 	List<TitleGetResponse> selectAllTitles();
-	void insertTitle(TitlePostRequest titleInfo);
-	void updateTitle(TitlePutRequest titleInfo);
-	void deleteTitle(Integer titleId);
+	Long insertTitle(TitlePostRequest titleInfo);
+	Long updateTitle(TitlePutRequest titleInfo);
+	Long deleteTitle(Long titleId);
 }

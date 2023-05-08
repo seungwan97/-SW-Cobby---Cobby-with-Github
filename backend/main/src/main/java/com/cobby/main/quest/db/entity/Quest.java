@@ -23,7 +23,7 @@ import java.util.List;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, columnDefinition="INT UNSIGNED")
-	private Integer questId;
+	private Long questId;
 
 	private String questName;
 

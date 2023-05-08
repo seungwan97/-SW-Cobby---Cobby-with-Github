@@ -13,14 +13,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
-@Builder(toBuilder = true)
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,7 +33,7 @@ public class AvatarQuest extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "avatar_quest_id", nullable = false, columnDefinition = "INT UNSIGNED")
-	private Integer avatarQuestId;
+	private Long avatarQuestId;
 
 	@NotNull(message = "필수 입력 항목입니다. (avatar)")
 	@JsonIgnore
@@ -46,4 +47,9 @@ public class AvatarQuest extends BaseTimeEntity {
 	@JoinColumn(name = "quest_id")
 	private Quest quest;
 
+	@Builder
+	public AvatarQuest(Avatar avatar, Quest quest) {
+		this.avatar = avatar;
+		this.quest = quest;
+	}
 }

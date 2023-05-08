@@ -9,9 +9,9 @@ public interface CostumeService {
 
 	List<CostumeGetResponse> selectAllCostumes();
 
-	CostumeGetResponse selectCostume(Integer costumeId);
+	CostumeGetResponse selectCostume(Long costumeId);
 
 	Long insertCostume(CostumePostRequest costumePostRequest);
 
-	Long deleteCostume(Integer costumeId);
+	Long deleteCostume(Long costumeId);
 }

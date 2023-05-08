@@ -16,7 +16,7 @@ public class CostumeGetResponse {
 
 	private CostumeCategory category;
 
-	private Integer questId;
+	private Long questId;
 
 	private String imgUrl;
 

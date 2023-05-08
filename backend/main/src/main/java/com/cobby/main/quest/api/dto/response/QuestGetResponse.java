@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class QuestGetResponse {
 
-    private Integer questId;
+    private Long questId;
 
     private String questName;
 

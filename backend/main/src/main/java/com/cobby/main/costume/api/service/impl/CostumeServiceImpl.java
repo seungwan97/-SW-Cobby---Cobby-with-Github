@@ -41,7 +41,7 @@ public class CostumeServiceImpl implements CostumeService {
 	}
 
 	@Override
-	public CostumeGetResponse selectCostume(Integer costumeId) {
+	public CostumeGetResponse selectCostume(Long costumeId) {
 
 		var costume = costumeRepository.findById(costumeId)
 			.orElseThrow(() -> new IllegalArgumentException("코스튬 정보가 없습니다. (ID=" + costumeId + ")"));
@@ -73,7 +73,7 @@ public class CostumeServiceImpl implements CostumeService {
 	}
 
 	@Override
-	public Long deleteCostume(Integer costumeId) {
+	public Long deleteCostume(Long costumeId) {
 
 		var costume = costumeRepository.findById(costumeId)
 			.orElseThrow(() -> new IllegalArgumentException("코스튬 정보가 없습니다. (ID=" + costumeId + ")"));

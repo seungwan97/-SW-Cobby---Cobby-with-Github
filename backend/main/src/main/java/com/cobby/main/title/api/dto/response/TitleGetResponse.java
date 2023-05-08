@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 public class TitleGetResponse {
 
     @Schema(description = "칭호 ID", example = "1")
-    private Integer titleId;
+    private Long titleId;
 
     @Schema(description = "관련된 도전과제 ID", example = "1")
-    private Integer questId;
+    private Long questId;
 
     @Schema(description = "칭호 이름", example = "핫이슈")
     private String name;
@@ -27,7 +27,7 @@ public class TitleGetResponse {
     private String explanation;
 
     @Builder
-    TitleGetResponse(Title title) {
+    public TitleGetResponse(Title title) {
         this.titleId = title.getTitleId();
         this.questId = title.getQuest().getQuestId();
         this.name = title.getName();

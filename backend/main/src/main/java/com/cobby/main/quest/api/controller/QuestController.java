@@ -25,7 +25,7 @@ public class QuestController {
 	@ApiDocumentResponse
 	@Operation(summary = "도전과제 조회", description = "quest ID로 도전과제를 조회합니다.")
 	@GetMapping("/one/{questId}")
-	public ResponseEntity<? extends BaseResponseBody> getQuest(@PathVariable Integer questId) {
+	public ResponseEntity<? extends BaseResponseBody> getQuest(@PathVariable Long questId) {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", questService.selectQuest(questId)));
 	}
 
@@ -55,7 +55,7 @@ public class QuestController {
 	@ApiDocumentResponse
 	@Operation(summary = "도전과제 삭제", description = "도전과제 ID에 해당하는 도전과제를 삭제합니다.")
 	@DeleteMapping("/{questId}")
-	public ResponseEntity<? extends BaseResponseBody> deleteQuest(@PathVariable Integer questId) {
+	public ResponseEntity<? extends BaseResponseBody> deleteQuest(@PathVariable Long questId) {
 		questService.deleteQuest(questId);
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Deleted", "삭제되었습니다."));
 	}

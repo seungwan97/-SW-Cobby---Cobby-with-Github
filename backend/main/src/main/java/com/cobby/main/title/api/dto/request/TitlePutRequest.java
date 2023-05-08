@@ -4,10 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public record TitlePutRequest(
     @Schema(description = "칭호 ID", example = "1")
-    Integer titleId,
+    Long titleId,
 
     @Schema(description = "관련된 도전과제 ID", example = "1")
-    Integer questId,
+    Long questId,
 
     @Schema(description = "칭호 이름", example = "핫이슈")
     String name,

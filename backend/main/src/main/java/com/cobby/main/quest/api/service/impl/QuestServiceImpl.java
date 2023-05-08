@@ -2,14 +2,12 @@ package com.cobby.main.quest.api.service.impl;
 
 import java.util.List;
 
-import com.cobby.main.avatar.db.repository.AvatarRepository;
 import com.cobby.main.common.exception.NotFoundException;
 import com.cobby.main.quest.api.dto.request.QuestPostRequest;
 import com.cobby.main.quest.api.dto.request.QuestPutRequest;
 import com.cobby.main.quest.api.dto.response.QuestGetResponse;
 import org.springframework.stereotype.Service;
 
-import com.cobby.main.avatar.api.dto.response.AvatarQuestGetResponse;
 import com.cobby.main.quest.api.service.QuestService;
 import com.cobby.main.quest.db.entity.Quest;
 import com.cobby.main.quest.db.entity.enumtype.QuestCategory;
@@ -24,7 +22,7 @@ public class QuestServiceImpl implements QuestService {
 	private final QuestRepository questRepository;
 
 	@Override
-	public QuestGetResponse selectQuest(Integer questId) {
+	public QuestGetResponse selectQuest(Long questId) {
 		return QuestGetResponse.builder()
 			.quest(questRepository.findById(questId).orElseThrow(NotFoundException::new))
 			.build();
@@ -60,7 +58,7 @@ public class QuestServiceImpl implements QuestService {
 	}
 
 	@Override
-	public void updateQuest(QuestPutRequest questInfo) {
+	public Long updateQuest(QuestPutRequest questInfo) {
 		var quest = questRepository.findById(questInfo.questId()).orElseThrow(NotFoundException::new);
 		var updateQuest = quest.toBuilder()
 				.questName(questInfo.questName())
@@ -70,12 +68,14 @@ public class QuestServiceImpl implements QuestService {
 				.costumes(questInfo.costumes())
 				.build();
 
-		questRepository.save(updateQuest);
+		questRepository.save(updateQuest).getQuestId();
+		return null;
 	}
 
 	@Override
-	public void deleteQuest(Integer questId) {
+	public Long deleteQuest(Long questId) {
 		questRepository.findById(questId).orElseThrow(NotFoundException::new);
 		questRepository.deleteById(questId);
+		return questId;
 	}
 }
