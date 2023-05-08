@@ -10,18 +10,8 @@ export const CommitContainer = styled.div`
   margin-top: 3%;
   background-color: #fafae7;
   text-align: center;
-  @media (max-width: 1180px) {
-    margin-top: 10%;
-    @media (max-width: 1024px) {
-      margin-top: 5%;
-    }
-    @media (max-width: 711px) {
-      width: 80%;
-      margin-top: 8%;
-      @media (max-width: 667px) {
-        margin-top: 5%;
-      }
-    }
+  @media (max-width: 1300px) {
+    width: 50%;
   }
 
   @media (min-width: 768px) and (max-width: 991px) {
