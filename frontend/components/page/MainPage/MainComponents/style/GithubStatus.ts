@@ -11,18 +11,7 @@ export const StatusContainer = styled.div`
   @media (max-width: 1300px) {
     width: 50%;
     height: 250px;
-
-    @media (max-width: 711px) {
-      width: 50%;
-      height: 160px;
-      border: 1px solid #333333;
-      margin-top: 8%;
-      @media (max-width: 667px) {
-        width: 243px;
-        height: 160px;
-        margin-top: 5%;
-      }
-    }
+    margin-top: 2%;
   }
 
   @media (min-width: 768px) and (max-width: 991px) {
@@ -47,20 +36,9 @@ export const StatusBar = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  /* @media (max-width: 1024px) {
-    width: 460px;
-    height: 20px;
-    margin-top: 1.3%;
-
-    @media (max-width: 711px) {
-      width: 273px;
-      height: 10px;
-      margin-top: 1.5%;
-      @media (max-width: 667px) {
-        width: 237px;
-      }
-    }
-  } */
+  @media (max-width: 1300px) {
+    margin-top: 1.5%;
+  }
 
   @media (min-width: 768px) and (max-width: 991px) {
     // 테블릿 세로
