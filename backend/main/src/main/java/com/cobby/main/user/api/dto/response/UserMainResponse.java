@@ -12,15 +12,9 @@ import lombok.Getter;
 public class UserMainResponse {
 
 	private String nickname;
-	private int commitCnt;
-	private int starCnt;
-	private int forkCnt;
 
 	@Builder
-	public UserMainResponse(String nickname, int commitCnt, int starCnt, int forkCnt) {
+	public UserMainResponse(String nickname) {
 		this.nickname = nickname;
-		this.commitCnt = commitCnt;
-		this.starCnt = starCnt;
-		this.forkCnt = forkCnt;
 	}
 }

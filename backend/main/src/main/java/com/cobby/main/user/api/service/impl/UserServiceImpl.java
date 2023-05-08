@@ -38,14 +38,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserMainResponse getUserInfo(String userId) {
 		var user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
-		var stat = statRepository.findById(userId).orElseThrow(NotFoundException::new);
 
 
 		var userMainResponse =UserMainResponse.builder()
 			.nickname(user.getNickname())
-			.commitCnt(stat.getCommitCnt().intValue())
-			.starCnt(stat.getStarCnt().intValue())
-			.forkCnt(stat.getForkCnt().intValue())
 			.build();
 		return userMainResponse;
 	}
