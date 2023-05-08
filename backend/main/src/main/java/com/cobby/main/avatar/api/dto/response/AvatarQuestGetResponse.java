@@ -31,18 +31,6 @@ public class AvatarQuestGetResponse {
 	// 진행도
 	private Integer progress;
 
-	// private Costume awardCostume;
-	//
-	// private Title awardTitle;
-
 	// costume or title
 	private Object award;
-
-	// @Builder
-	// public AvatarQuestGetResponse(AvatarQuest avatarQuest) {
-	// 	this.questId = avatarQuest.getAvatarQuestId();
-	// 	this.questName = avatarQuest.getQuest().getQuestName();
-	// 	this.questGoal = avatarQuest.getQuest().getQuestGoal();
-	// }
-
 }
