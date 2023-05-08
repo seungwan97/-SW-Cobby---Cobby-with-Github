@@ -226,7 +226,7 @@ export const LineBox = styled.div`
   }
   @media (max-width: 711px) {
     span {
-      height: 0.05rem;
+      height: 0.1rem;
     }
     @media (max-width: 667px) {
       span {
