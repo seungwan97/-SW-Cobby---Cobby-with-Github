@@ -23,8 +23,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import com.cobby.main.avatar.api.dto.request.AvatarUpdateRequest;
 import com.cobby.main.avatar.api.dto.response.AvatarGetResponse;
-import com.cobby.main.avatar.api.service.AvatarInventoryService;
+import com.cobby.main.avatar.api.service.AvatarItemService;
 import com.cobby.main.avatar.api.service.AvatarService;
 import com.cobby.main.avatar.db.entity.Avatar;
 
@@ -45,11 +46,11 @@ class AvatarControllerTest {
 	private AvatarService avatarService;
 
 	@MockBean
-	private AvatarInventoryService avatarCostumeService;
+	private AvatarItemService avatarCostumeService;
 
 	@BeforeEach
 	public void setMvc() {
-		this.mvc = MockMvcBuilders.standaloneSetup(new AvatarController(avatarService, avatarCostumeService))
+		this.mvc = MockMvcBuilders.standaloneSetup(new AvatarController(avatarService))
 			.addFilters(new CharacterEncodingFilter("UTF-8", true))
 			.build();
 
@@ -57,7 +58,7 @@ class AvatarControllerTest {
 			.avatarId(testUserId)
 			.level(1)
 			.exp(0)
-			.avatarImgUrl("sample")
+			.currentCostumes("[1, 2, 3]")
 			.build();
 	}
 
@@ -71,8 +72,9 @@ class AvatarControllerTest {
 
 		// when
 		final ResultActions actions = mvc.perform(
-			post("/api/avatars/" + testUserId)
+			post("/api/avatars/")
 				.contentType(MediaType.APPLICATION_JSON)
+				.header("userId", testUserId)
 				.accept(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8"));
 
@@ -95,8 +97,9 @@ class AvatarControllerTest {
 					.build());
 
 		final ResultActions actions = mvc.perform(
-			get("/api/avatars/" + testUserId)
+			get("/api/avatars/")
 				.contentType(MediaType.APPLICATION_JSON)
+				.header("userId", testUserId)
 				.accept(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8"));
 
@@ -113,19 +116,21 @@ class AvatarControllerTest {
 		// given
 		var testAvatarUpdateInfo = Map.of("level", 35, "exp", 12345);
 
-		given(avatarService.updateAvatar(testUserId, testAvatarUpdateInfo))
+		given(avatarService.updateAvatar(testUserId, null))
 			.willReturn(
 				Avatar.builder()
 					.avatarId(testUserId)
 					.level(35)
 					.exp(12345)
+					.currentCostumes("[1,2,3]")
 					.build()
 					.getAvatarId());
 
 		// when
 		final ResultActions actions = mvc.perform(
-			get("/api/avatars/" + testUserId)
+			get("/api/avatars")
 				.contentType(MediaType.APPLICATION_JSON)
+				.header("userId", testUserId)
 				.accept(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8")
 				.content("{" +
@@ -145,7 +150,12 @@ class AvatarControllerTest {
 	void Avatar_level_만_수정_테스트() throws Exception {
 
 		// given
-		var testAvatarUpdateInfo = Map.of("level", 35);
+		var testAvatarUpdateInfo = AvatarUpdateRequest.builder()
+			.level(35)
+			.exp(12345)
+			.face(2L)
+			.body(3L)
+			.build();
 
 		given(avatarService.updateAvatar(testUserId, testAvatarUpdateInfo))
 			.willReturn(
@@ -153,17 +163,19 @@ class AvatarControllerTest {
 					.avatarId(testUserId)
 					.level(35)
 					.exp(12345)
+					.currentCostumes("[1,2,3]")
 					.build()
 					.getAvatarId());
 
 		// when
 		final ResultActions actions = mvc.perform(
-			get("/api/avatars/" + testUserId)
+			get("/api/avatars")
 				.contentType(MediaType.APPLICATION_JSON)
+				.header("userId", testUserId)
 				.accept(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8")
 				.content("{" +
-					"  \"level\" : 35, " +
+					"  \"level\" : 35 " +
 					"}"
 				));
 
@@ -178,7 +190,9 @@ class AvatarControllerTest {
 	void Avatar_exp_만_수정_테스트() throws Exception {
 
 		// given
-		var testAvatarUpdateInfo = Map.of("exp", 12345);
+		var testAvatarUpdateInfo = AvatarUpdateRequest.builder()
+			.exp(12345)
+			.build();
 
 		given(avatarService.updateAvatar(testUserId, testAvatarUpdateInfo))
 			.willReturn(
@@ -186,13 +200,15 @@ class AvatarControllerTest {
 					.avatarId(testUserId)
 					.level(35)
 					.exp(12345)
+					.currentCostumes("[1,2,3]")
 					.build()
 					.getAvatarId());
 
 		// when
 		final ResultActions actions = mvc.perform(
-			get("/api/avatars/" + testUserId)
+			get("/api/avatars")
 				.contentType(MediaType.APPLICATION_JSON)
+				.header("userId", testUserId)
 				.accept(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8")
 				.content("{" +
@@ -216,8 +232,9 @@ class AvatarControllerTest {
 
 		// when
 		final ResultActions actions = mvc.perform(
-			get("/api/avatars/" + testUserId + "/reset")
+			get("/api/avatars/reset")
 				.contentType(MediaType.APPLICATION_JSON)
+				.header("userId", testUserId)
 				.accept(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8"));
 
@@ -237,8 +254,9 @@ class AvatarControllerTest {
 
 		// when
 		final ResultActions actions = mvc.perform(
-			delete("/api/avatars/" + testUserId)
+			delete("/api/avatars")
 				.contentType(MediaType.APPLICATION_JSON)
+				.header("userId", testUserId)
 				.accept(MediaType.APPLICATION_JSON)
 				.characterEncoding("UTF-8"));
 
