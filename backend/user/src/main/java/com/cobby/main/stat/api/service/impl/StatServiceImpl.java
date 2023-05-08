@@ -29,7 +29,6 @@ public class StatServiceImpl implements StatService {
 		var updateStat = stat.toBuilder()
 			.commitCnt(statPostRequest.commitCnt())
 			.starCnt(statPostRequest.starCnt())
-			.forkCnt(statPostRequest.forkCnt())
 			.prCnt(stat.getPrCnt())
 			.issueCnt(stat.getIssueCnt())
 			.build();
@@ -43,7 +42,9 @@ public class StatServiceImpl implements StatService {
 		var statResponse = StatResponse.builder()
 			.commitCnt(stat.getCommitCnt().intValue())
 			.starCnt(stat.getStarCnt().intValue())
-			.forkCnt(stat.getForkCnt().intValue())
+			.prCnt(stat.getPrCnt().intValue())
+			.followerCnt(stat.getFollowerCnt().intValue())
+			.issueCnt(stat.getIssueCnt().intValue())
 			.build();
 
 		return statResponse;

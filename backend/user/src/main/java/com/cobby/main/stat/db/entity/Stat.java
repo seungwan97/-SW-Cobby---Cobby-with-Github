@@ -37,8 +37,6 @@ public class Stat {
 	@Column(nullable = false, columnDefinition = "INT UNSIGNED")
 	private Long starCnt;
 	@Column(nullable = false, columnDefinition = "INT UNSIGNED")
-	private Long forkCnt;
-	@Column(nullable = false, columnDefinition = "INT UNSIGNED")
 	private Long prCnt;
 	@Column(nullable = false, columnDefinition = "INT UNSIGNED")
 	private Long followerCnt;

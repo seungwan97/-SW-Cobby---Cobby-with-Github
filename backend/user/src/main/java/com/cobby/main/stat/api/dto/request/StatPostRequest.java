@@ -4,7 +4,6 @@ public record StatPostRequest (
 
 	Long commitCnt,
 	Long starCnt,
-	Long forkCnt,
 	Long prCnt,
 	Long followerCnt,
 	Long issueCnt

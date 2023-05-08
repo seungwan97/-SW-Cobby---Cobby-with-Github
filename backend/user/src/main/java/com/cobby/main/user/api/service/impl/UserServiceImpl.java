@@ -78,7 +78,6 @@ public class UserServiceImpl implements UserService {
 			stat = stat.toBuilder()
 				.commitCnt(getStatList(userPostRequest, 5))
 				.starCnt(getStatList(userPostRequest, 3))
-				.forkCnt(getFork(userPostRequest))
 				.prCnt(getStatList(userPostRequest, 7))
 				.followerCnt(getFollower(userPostRequest))
 				.issueCnt(getStatList(userPostRequest, 9))
@@ -102,48 +101,12 @@ public class UserServiceImpl implements UserService {
 				.user(user1)
 				.commitCnt(getStatList(userPostRequest, 5))
 				.starCnt(getStatList(userPostRequest, 3))
-				.forkCnt(getFork(userPostRequest))
 				.prCnt(getStatList(userPostRequest, 7))
 				.followerCnt(getFollower(userPostRequest))
 				.issueCnt(getStatList(userPostRequest, 9))
 				.build();
 			statRepository.save(stat);
 		}
-	}
-
-		private Long getFork(UserPostRequest userPostRequest){
-		OkHttpClient client = new OkHttpClient();
-		Request.Builder builder = new Request.Builder()
-			.url(GITHUB_API_URL + "/user" + "/repos")
-			.addHeader("Authorization", "token " + userPostRequest.githubToken());
-		Request request = builder.build();
-
-		try {
-			long beforeTime = System.currentTimeMillis();
-			Response response = client.newCall(request).execute();
-			if (response.code() == 200) {
-
-				JSONArray repositories = new JSONArray(response.body().string());
-				Long forkCnt = 0L, sum = 0L;
-
-				for (int i = 0; i < repositories.length(); i++) {
-					JSONObject repo = repositories.getJSONObject(i);
-					forkCnt = repo.getLong("forks_count");
-					sum += forkCnt;
-				}
-				long afterTime = System.currentTimeMillis();
-				long secDiffTime = (afterTime - beforeTime)/1000;
-				log.info("시간차이(m) : {}", secDiffTime);
-
-				return sum;
-
-			} else {
-				System.out.println("API 요청이 실패했습니다.");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 
 	private Long getFollower(UserPostRequest userPostRequest){
