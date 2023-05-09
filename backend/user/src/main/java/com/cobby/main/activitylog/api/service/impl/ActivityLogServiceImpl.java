@@ -1,14 +1,17 @@
 package com.cobby.main.activitylog.api.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.cobby.main.activitylog.api.dto.response.ActivityLogResponse;
 import com.cobby.main.activitylog.api.service.ActivityLogService;
 import com.cobby.main.activitylog.db.entity.ActivityLog;
 import com.cobby.main.activitylog.db.entity.ActivityType;
 import com.cobby.main.activitylog.db.repository.ActivityLogRepository;
 import com.cobby.main.common.exception.NotFoundException;
+import com.cobby.main.user.api.dto.response.UserMainResponse;
 import com.cobby.main.user.db.entity.User;
 import com.cobby.main.user.db.repository.UserRepository;
 import com.google.gson.Gson;
@@ -29,15 +32,12 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 	public void webhookCreate(Map<String, String> headers, String payload) {
 
 		for (Map.Entry<String, String> entry : headers.entrySet()) {
-			// System.out.println("key: " + entry.getKey());
 
 			Gson gson = new Gson();
 			JsonObject jsonObject = gson.fromJson(payload, JsonObject.class);
 			if(entry.getValue().equals("push")){ // commit push면
 				// ( commit: pusher )
 				String name = jsonObject.getAsJsonObject("pusher").get("name").getAsString();
-
-
 				var activityLog = ActivityLog.builder()
 					.activityType(ActivityType.COMMIT)
 					.user(findUser(name))
@@ -48,18 +48,59 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 			}
 		}
 
+	}
 
+	@Override
+	public ActivityLogResponse getactivityLogInfo(String userId) {
+		var existingActivityLog = activityLogRepository.findTopByUserIdOrderByIdDesc(userId);
+		ActivityLogResponse activityLogResponse;
+		if (existingActivityLog.isPresent()) {
+			var activityLog = existingActivityLog.orElseThrow(NotFoundException::new);
 
+			activityLogResponse = ActivityLogResponse.builder()
+				.activityType(ActivityType.ATTENDANCE)
+				.relayCnt(findDate(activityLog.getUser().getNickname()))
+				.userId(userId)
+				.build();
+		}else {
+			activityLogResponse = ActivityLogResponse.builder()
+				.activityType(ActivityType.ATTENDANCE)
+				.relayCnt(1L)
+				.userId(userId)
+				.build();
+		}
+		var user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
 
-		// log 쌓기 생성하면됩니다.
+		var activityLog = ActivityLog.builder()
+			.activityType(activityLogResponse.getActivityType())
+			.relayCnt(activityLogResponse.getRelayCnt())
+			.user(user)
+			.build();
+		activityLogRepository.save(activityLog);
+
+		return activityLogResponse;
 	}
 
 	public Long findDate(String name){
-		var yesterday = activityLogRepository.findByUserIdOrderByRelayCntDesc(findUser(name).getId());
-		System.out.println(yesterday);
+		var existingActivityLog = activityLogRepository.findTopByUserIdOrderByIdDesc(findUser(name).getId());
+		if (existingActivityLog.isPresent()) {
+			var lastUpdateDay = existingActivityLog.orElseThrow(NotFoundException::new);
+			var yesterday = lastUpdateDay.getLastModifiedAt().getDayOfMonth();
+			var today = LocalDateTime.now().getDayOfMonth();
 
-		// date time에서 날 확인해서 검사하는 거 해야합니다.
-		return 0L;
+			var activityLog = lastUpdateDay;
+			// 결과
+			if(yesterday == today) {
+				log.info("같아서 : " + activityLog.getRelayCnt());
+				return activityLog.getRelayCnt();
+			}
+			else if (yesterday + 1 == today) {
+				log.info("하나 차이가 나서 : " + String.valueOf(activityLog.getRelayCnt()+1));
+				return activityLog.getRelayCnt()+1;
+			}
+		}
+
+		return 1L;
 	}
 
 	public User findUser(String name){
