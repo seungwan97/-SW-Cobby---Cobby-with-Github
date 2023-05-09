@@ -10,18 +10,23 @@ export const FullDiv = styled.div`
   border: 2px solid #333333;
   @media (max-width: 1300px) {
     width: 46.5%;
+    margin-top: 0.3%;
   }
-
-  @media (min-width: 768px) and (max-width: 991px) {
-    // 테블릿 세로
+  @media (max-width: 1200px) {
+    width: 46.5%;
+    margin-top: 0.5%;
   }
-
-  @media (min-width: 992px) and (max-width: 1199px) {
-    // 테블릿 가로
+  @media (max-width: 1100px) {
+    width: 46.5%;
+    margin-top: 0.6%;
   }
-
-  @media (min-width: 1200px) {
-    // 데스크탑 일반
+  @media (max-width: 1100px) {
+    width: 46.5%;
+    margin-top: 0.7%;
+  }
+  @media (max-width: 711px) {
+    width: 46.5%;
+    margin-top: 0.1%;
   }
 `;
 
