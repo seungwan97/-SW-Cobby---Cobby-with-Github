@@ -2,8 +2,10 @@ spring:
   # mongodb setting
   data:
     mongodb:
-      uri: ENC(TYx57fXzA0P88n3l47HfOjGLjjgWUYhPeEQh/V4WTjxkS5iEXtEjEA==)
+      uri: ENC(es+S/14D3HgJAfa3+Cjvz6BcF+2VBm6IrHjhiCuLJDxzkgg27kSsP5ZDtcg+yXqXCPRrzsDDcTE=)
       uuid_representation: standard
+      username: ENC(ySBkqn7rc0rzhCnJx1aNtMcQdtGI7IRQ)
+      password: ENC(i7j46L3hTWPdOmMe3uGWug==)
 
   # mongodb database auto create
   jpa:
