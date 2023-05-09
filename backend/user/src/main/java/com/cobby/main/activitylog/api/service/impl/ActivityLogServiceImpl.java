@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.cobby.main.activitylog.api.dto.response.ActivityLogCommitResponse;
 import com.cobby.main.activitylog.api.dto.response.ActivityLogResponse;
 import com.cobby.main.activitylog.api.service.ActivityLogService;
 import com.cobby.main.activitylog.db.entity.ActivityLog;
@@ -79,6 +80,26 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 		activityLogRepository.save(activityLog);
 
 		return activityLogResponse;
+	}
+
+	@Override
+	public ActivityLogCommitResponse getactivityLogCommit(String userId) {
+		var existingActivityLog = activityLogRepository.findTopByUserIdOrderByIdDesc(userId).orElseThrow(NotFoundException::new);
+		var activityLogList = activityLogRepository.findByUserIdOrderByIdDesc(userId);
+		Long count = 0L;
+		for(ActivityLog activityLog : activityLogList){
+			if(activityLog.getLastModifiedAt().getDayOfMonth() == LocalDateTime.now().getDayOfMonth()) {
+				if(activityLog.getActivityType() == ActivityType.COMMIT) count++;
+			}
+		}
+
+		var activityLogCommitResponse = ActivityLogCommitResponse.builder()
+			.activityType(ActivityType.COMMIT)
+			.relayCnt(existingActivityLog.getRelayCnt())
+			.userId(userId)
+			.todayCnt(count)
+			.build();
+		return activityLogCommitResponse;
 	}
 
 	public Long findDate(String name){

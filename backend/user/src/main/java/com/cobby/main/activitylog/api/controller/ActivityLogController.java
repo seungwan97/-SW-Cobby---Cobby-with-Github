@@ -42,10 +42,20 @@ public class ActivityLogController {
 			.body(new BaseResponseBody<>(200, "OK", "감지되었습니다."));
 	}
 
-	@GetMapping("/{userId}") // 회원 연속 출석 조회
+	@GetMapping("/attendance/{userId}") // 회원 연속 출석 조회
 	public ResponseEntity<? extends BaseResponseBody> getactivityLogInfo(@PathVariable String userId) {
 
 		var info = activityLogService.getactivityLogInfo(userId);
+
+		return ResponseEntity
+			.ok()
+			.body(new BaseResponseBody<>(200, "OK", info));
+	}
+
+	@GetMapping("/commit/{userId}") // 회원 연속 출석 조회
+	public ResponseEntity<? extends BaseResponseBody> getactivityLogCommit(@PathVariable String userId) {
+
+		var info = activityLogService.getactivityLogCommit(userId);
 
 		return ResponseEntity
 			.ok()

@@ -1,5 +1,6 @@
 package com.cobby.main.activitylog.db.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.cobby.main.activitylog.db.entity.ActivityLog;
@@ -10,4 +11,5 @@ import org.springframework.stereotype.Repository;
 public interface ActivityLogRepository extends JpaRepository<ActivityLog, Integer> {
 
 	Optional<ActivityLog> findTopByUserIdOrderByIdDesc(String userId);
+	List<ActivityLog> findByUserIdOrderByIdDesc(String userId);
 }
