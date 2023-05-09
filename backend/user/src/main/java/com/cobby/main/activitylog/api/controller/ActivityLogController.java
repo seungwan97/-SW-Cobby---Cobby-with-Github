@@ -1,9 +1,7 @@
 package com.cobby.main.activitylog.api.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,13 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cobby.main.activitylog.api.dto.request.ActivityLogPostRequest;
 import com.cobby.main.activitylog.api.service.ActivityLogService;
 import com.cobby.main.common.response.BaseResponseBody;
-import com.cobby.main.stat.api.dto.request.StatSubscribeRequest;
 
 import lombok.RequiredArgsConstructor;
 

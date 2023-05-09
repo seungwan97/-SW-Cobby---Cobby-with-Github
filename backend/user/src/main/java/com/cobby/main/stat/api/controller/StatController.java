@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cobby.main.common.response.BaseResponseBody;
 import com.cobby.main.stat.api.dto.request.StatSubscribeRequest;
 import com.cobby.main.stat.api.service.StatService;
-import com.cobby.main.user.api.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 

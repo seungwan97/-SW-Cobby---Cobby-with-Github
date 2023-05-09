@@ -1,11 +1,9 @@
 package com.cobby.main.user.api.service.impl;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.util.XMLResourceDescriptor;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -38,7 +36,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserMainResponse getUserInfo(String userId) {
 		var user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
-
 
 		var userMainResponse =UserMainResponse.builder()
 			.nickname(user.getNickname())
@@ -120,14 +117,10 @@ public class UserServiceImpl implements UserService {
 			Response response = client.newCall(request).execute();
 			if (response.code() == 200) {
 
-				long beforeTime = System.currentTimeMillis();
 				JSONObject jsonObject = new JSONObject(response.body().string());
 				Long follower = 0L, sum = 0L;
 
 				follower = jsonObject.getLong("followers");
-				long afterTime = System.currentTimeMillis();
-				long secDiffTime = (afterTime - beforeTime)/1000;
-				log.info("시간차이(m) : {}", secDiffTime);
 				return follower;
 
 			} else {

@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -2,14 +2,12 @@ package com.cobby.main.stat.api.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import com.cobby.main.common.exception.NotFoundException;
 import com.cobby.main.stat.api.dto.request.StatPostRequest;
 import com.cobby.main.stat.api.dto.request.StatSubscribeRequest;
 import com.cobby.main.stat.api.dto.response.StatResponse;
 import com.cobby.main.stat.api.service.StatService;
-import com.cobby.main.stat.db.entity.Stat;
 import com.cobby.main.stat.db.repository.StatRepository;
-import com.cobby.main.common.exception.NotFoundException;
-import com.cobby.main.user.api.dto.response.UserMainResponse;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

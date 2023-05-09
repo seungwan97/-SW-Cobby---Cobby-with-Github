@@ -1,6 +1,5 @@
 package com.cobby.main.stat.api.service;
 
-import com.cobby.main.stat.api.dto.request.StatPostRequest;
 import com.cobby.main.stat.api.dto.request.StatSubscribeRequest;
 import com.cobby.main.stat.api.dto.response.StatResponse;
 

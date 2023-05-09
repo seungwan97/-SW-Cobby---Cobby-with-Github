@@ -12,7 +12,6 @@ import com.cobby.main.activitylog.db.entity.ActivityLog;
 import com.cobby.main.activitylog.db.entity.ActivityType;
 import com.cobby.main.activitylog.db.repository.ActivityLogRepository;
 import com.cobby.main.common.exception.NotFoundException;
-import com.cobby.main.user.api.dto.response.UserMainResponse;
 import com.cobby.main.user.db.entity.User;
 import com.cobby.main.user.db.repository.UserRepository;
 import com.google.gson.Gson;
@@ -112,11 +111,9 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 			var activityLog = lastUpdateDay;
 			// 결과
 			if(yesterday == today) {
-				log.info("같아서 : " + activityLog.getRelayCnt());
 				return activityLog.getRelayCnt();
 			}
 			else if (yesterday + 1 == today) {
-				log.info("하나 차이가 나서 : " + String.valueOf(activityLog.getRelayCnt()+1));
 				return activityLog.getRelayCnt()+1;
 			}
 		}

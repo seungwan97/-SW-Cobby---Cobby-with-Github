@@ -23,12 +23,6 @@ public class User extends BaseTimeEntity{
 	@Id
 	private String id;
 
-	// @OneToOne(mappedBy = "user")
-	// private Stat stat;
-	//
-	// @OneToOne(mappedBy = "user")
-	// private ActivityLog activityLog;
-
 	@Column(nullable = false)
 	private String nickname;
 	@Column(nullable = false)
