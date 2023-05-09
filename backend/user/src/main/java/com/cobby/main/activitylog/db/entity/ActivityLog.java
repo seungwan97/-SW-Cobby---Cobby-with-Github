@@ -1,10 +1,13 @@
 package com.cobby.main.activitylog.db.entity;
 
+import static jakarta.persistence.EnumType.*;
+
 import com.cobby.main.common.entity.UpdateTimeEntity;
 import com.cobby.main.user.db.entity.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,6 +37,7 @@ public class ActivityLog extends UpdateTimeEntity {
 	private User user;
 
 	@Column(nullable = false)
+	@Enumerated(STRING)
 	private ActivityType activityType;
 
 	@Column(nullable = false, columnDefinition = "INT UNSIGNED")

@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ActivityLogRepository extends JpaRepository<ActivityLog, Integer> {
 
-	Optional<ActivityLog> findByUserIdOrderByRelayCntDesc(String userId);
+	Optional<ActivityLog> findTopByUserIdOrderByIdDesc(String userId);
 }
