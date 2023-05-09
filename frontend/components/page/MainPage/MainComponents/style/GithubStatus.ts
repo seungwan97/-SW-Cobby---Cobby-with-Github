@@ -14,16 +14,8 @@ export const StatusContainer = styled.div`
     margin-top: 2%;
   }
 
-  @media (min-width: 768px) and (max-width: 991px) {
-    // 테블릿 세로
-  }
-
-  @media (min-width: 992px) and (max-width: 1199px) {
-    // 테블릿 가로
-  }
-
-  @media (min-width: 1200px) {
-    // 데스크탑 일반
+  @media (max-width: 711px) {
+    height: 180px;
   }
 `;
 

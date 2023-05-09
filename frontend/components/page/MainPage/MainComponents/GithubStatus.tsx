@@ -4,7 +4,6 @@ interface Props {
   statusData: {
     commitCnt: number;
     starCnt: number;
-    forkCnt: number;
   };
 }
 const GithubStatus = (props: Props) => {
@@ -32,7 +31,7 @@ const GithubStatus = (props: Props) => {
       <style.Margin />
       <TextBox size={25} content={`Total Stars : ${statusData.starCnt}`} />
       <style.Margin />
-      <TextBox size={25} content={`Total Forks : ${statusData.forkCnt}`} />
+      <TextBox size={25} content={`Total Forks : 125`} />
     </style.StatusContainer>
   );
 };

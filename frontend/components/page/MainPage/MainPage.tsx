@@ -12,7 +12,6 @@ interface Props {
   statusData: {
     commitCnt: number;
     starCnt: number;
-    forkCnt: number;
   };
 }
 const MainPage = (props: Props) => {
