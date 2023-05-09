@@ -1,14 +1,14 @@
 spring:
   # MysqlDB
   datasource:
-    url: ENC(5aU26rvopds6JmpQlwnKoLS+5i847duy8xfoFWMoVFd0eauwtobRrpSI/br9ER9E) #    url: jdbc:mysql://localhost:3306/cobby_user
-    username: ENC(IPgCgyTJy4ppIk29iI4ZtQ==)
-    password: ENC(RxvZ2uV26b8mNcoGdRj5JQ==)
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ENC(PaoYUCo2AMIchkpEizHVZyVIVYMs6dsvmBatVrWQY8YnJAQfIjK0JbSCVcUBQW7GUgYih2brEpe3yDtst0NvSw==)
+    username: ENC(ySBkqn7rc0rzhCnJx1aNtMcQdtGI7IRQ)
+    password: ENC(i7j46L3hTWPdOmMe3uGWug==)
+    driver-class-name: org.mariadb.jdbc.Driver
   # JPA Properties
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       naming:
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
 #    show-sql: true
