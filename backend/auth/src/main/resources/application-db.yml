@@ -1,9 +1,10 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://localhost:27017/cobby
+      uri: ENC(DebMT298nVSlzfI01wpkrrtyYv8X94bkMzwAGjrGsL7xilgEgx0xaZljvzfZnxR+yG4Mco4tank=)
       uuid-representation: standard
-
+      username: ENC(ySBkqn7rc0rzhCnJx1aNtMcQdtGI7IRQ)
+      password: ENC(i7j46L3hTWPdOmMe3uGWug==)
   # JPA Properties
   jpa:
     properties:
