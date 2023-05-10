@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/stat")
+@RequestMapping("/api/user/stat")
 @Tag(name = "회원 깃헙 정보", description = "회원 깃헙 정보 관련 API 문서입니다.")
 public class StatController {
 

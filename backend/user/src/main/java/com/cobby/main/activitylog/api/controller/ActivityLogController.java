@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/activityLog")
+@RequestMapping("/api/user/activityLog")
 @Tag(name = "회원 활동 정보", description = "회원 활동 정보 관련 API 문서입니다.")
 public class ActivityLogController {
 
