@@ -13,17 +13,29 @@ interface Props {
     commitCnt: number;
     starCnt: number;
   };
+  commitData: {
+    relayCnt: number;
+    todayCnt: number;
+  };
+  attendanceData: {
+    relayCnt: number;
+  };
 }
 const MainPage = (props: Props) => {
   const { nicknameData } = props;
   const { statusData } = props;
+  const { commitData } = props;
+  const { attendanceData } = props;
 
   return (
     <Fragment>
       <style.MainPageContent>
         <CobbyInfo nicknameData={nicknameData} />
-        <GithubStatus statusData={statusData} />
-        <CurrentCommit />
+        <GithubStatus statusData={statusData} commitData={commitData} />
+        <CurrentCommit
+          nicknameData={nicknameData}
+          attendanceData={attendanceData}
+        />
       </style.MainPageContent>
       <style.MainPageMargin />
       <BottomNavBar />

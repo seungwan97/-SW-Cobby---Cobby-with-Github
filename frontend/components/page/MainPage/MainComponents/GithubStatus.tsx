@@ -3,11 +3,15 @@ import TextBox from "@/components/common/TextBox/TextBox";
 interface Props {
   statusData: {
     commitCnt: number;
-    starCnt: number;
+  };
+  commitData: {
+    relayCnt: number;
+    todayCnt: number;
   };
 }
 const GithubStatus = (props: Props) => {
   const { statusData } = props;
+  const { commitData } = props;
   return (
     <style.StatusContainer>
       <style.StatusBar>
@@ -29,9 +33,12 @@ const GithubStatus = (props: Props) => {
       <style.Margin />
       <TextBox size={25} content={`Total Commits : ${statusData.commitCnt}`} />
       <style.Margin />
-      <TextBox size={25} content={`Total Stars : ${statusData.starCnt}`} />
+      <TextBox size={25} content={`Today Commits : ${commitData.todayCnt}`} />
       <style.Margin />
-      <TextBox size={25} content={`Total Forks : 125`} />
+      <TextBox
+        size={23}
+        content={`Consecutive Commits : ${commitData.relayCnt}`}
+      />
     </style.StatusContainer>
   );
 };
