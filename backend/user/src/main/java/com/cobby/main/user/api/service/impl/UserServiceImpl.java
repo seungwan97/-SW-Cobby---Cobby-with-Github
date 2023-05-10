@@ -59,12 +59,10 @@ public class UserServiceImpl implements UserService {
 		// userId로 기존 사용자를 조회합니다.
 		var existingUser = userRepository.findById(userPostRequest.userId());
 		if (existingUser.isPresent()) {
-			var user1 = existingUser.orElseThrow(NotFoundException::new);
-			var user = user1.toBuilder()
-				.build();
+			var user = existingUser.orElseThrow(NotFoundException::new);
 
 			user = user.toBuilder()
-				.state(State.X)
+				.state(State.A)
 				.githubToken(userPostRequest.githubToken())
 				.build();
 

@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.cobby.main.common.mattermost.NotificationManager;
@@ -19,6 +20,7 @@ import com.cobby.main.common.mattermost.NotificationManager;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
+@CrossOrigin
 @ControllerAdvice
 @RequiredArgsConstructor
 public class GlobalExceptionController {
