@@ -5,7 +5,7 @@ import com.cobby.main.stat.api.dto.response.StatResponse;
 
 public interface StatService {
 
-	void subscribeUserInfo(StatSubscribeRequest statSubscribeRequest);
+	void subscribeStatInfo(StatSubscribeRequest statSubscribeRequest);
 
-	StatResponse getUserInfo(String userId);
+	StatResponse getStatInfo(String userId);
 }

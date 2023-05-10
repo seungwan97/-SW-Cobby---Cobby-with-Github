@@ -20,7 +20,7 @@ public class StatServiceImpl implements StatService {
 	private final StatRepository statRepository;
 
 	@Override
-	public void subscribeUserInfo(StatSubscribeRequest statSubscribeRequest) {
+	public void subscribeStatInfo(StatSubscribeRequest statSubscribeRequest) {
 		var stat = statRepository.findById(statSubscribeRequest.userId()).orElseThrow(NotFoundException::new);
 		StatPostRequest statPostRequest = statSubscribeRequest.statPostRequest();
 
@@ -34,18 +34,16 @@ public class StatServiceImpl implements StatService {
 	}
 
 	@Override
-	public StatResponse getUserInfo(String userId) {
+	public StatResponse getStatInfo(String userId) {
 		var stat = statRepository.findById(userId).orElseThrow(NotFoundException::new);
 
-		var statResponse = StatResponse.builder()
+		return StatResponse.builder()
 			.commitCnt(stat.getCommitCnt().intValue())
 			.starCnt(stat.getStarCnt().intValue())
 			.prCnt(stat.getPrCnt().intValue())
 			.followerCnt(stat.getFollowerCnt().intValue())
 			.issueCnt(stat.getIssueCnt().intValue())
 			.build();
-
-		return statResponse;
 	}
 
 }

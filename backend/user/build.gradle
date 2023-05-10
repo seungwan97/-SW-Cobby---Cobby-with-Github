@@ -58,6 +58,9 @@ dependencies {
 
     // okhttp3
     implementation 'com.squareup.okhttp3:okhttp'
+
+    // swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
 }
 
 tasks.named('test') {
