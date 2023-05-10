@@ -32,7 +32,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/avatars")
+@RequestMapping("api/main/avatars")
 public class AvatarController {
 
 	private final AvatarService avatarService;
@@ -123,5 +123,4 @@ public class AvatarController {
 			.ok()
 			.body(new BaseResponseBody<>(200, "OK", successMessage));
 	}
-
 }

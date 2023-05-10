@@ -34,7 +34,7 @@ import lombok.RequiredArgsConstructor;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/avatars/inventories")
+@RequestMapping("api/main/avatars/inventories")
 public class AvatarItemController {
 	private final AvatarCostumeService avatarCostumeService;
 	private final AvatarTitleService avatarTitleService;

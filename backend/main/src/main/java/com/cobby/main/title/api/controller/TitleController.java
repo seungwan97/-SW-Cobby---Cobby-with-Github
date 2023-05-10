@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/titles")
+@RequestMapping("api/main/titles")
 @Tag(name = "칭호", description = "칭호 관련 API 문서입니다.")
 public class TitleController {
 

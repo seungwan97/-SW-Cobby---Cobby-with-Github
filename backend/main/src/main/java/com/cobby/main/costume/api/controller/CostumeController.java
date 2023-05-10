@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/costumes")
+@RequestMapping("api/main/costumes")
 public class CostumeController {
 	private final CostumeService costumeService;
 
