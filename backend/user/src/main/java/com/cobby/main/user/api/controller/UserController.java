@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +15,7 @@ import com.cobby.main.common.response.BaseResponseBody;
 import com.cobby.main.user.api.dto.request.UserPostRequest;
 import com.cobby.main.user.api.service.UserService;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 
 @CrossOrigin
@@ -24,8 +26,11 @@ public class UserController {
 
 	private final UserService userService;
 
-	@GetMapping("/{userId}") // 회원 정보 조회
-	public ResponseEntity<? extends BaseResponseBody> getUserInfo(@PathVariable String userId) {
+	@GetMapping // 회원 정보 조회
+	public ResponseEntity<? extends BaseResponseBody> getUserInfo(
+		@RequestHeader("userId")
+		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
+		String userId) {
 
 		var info = userService.getUserInfo(userId);
 
@@ -34,8 +39,11 @@ public class UserController {
 			.body(new BaseResponseBody<>(200, "OK", info));
 	}
 
-	@PatchMapping("/signout/{userId}") // 회원 탈퇴
-	public ResponseEntity<? extends BaseResponseBody> signOutUserInfo(@PathVariable String userId) {
+	@PatchMapping("/signout") // 회원 탈퇴
+	public ResponseEntity<? extends BaseResponseBody> signOutUserInfo(
+		@RequestHeader("userId")
+		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
+		String userId) {
 
 		userService.signOutUserInfo(userId);
 

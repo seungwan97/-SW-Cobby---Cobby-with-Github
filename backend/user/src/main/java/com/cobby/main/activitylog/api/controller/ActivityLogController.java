@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cobby.main.activitylog.api.service.ActivityLogService;
 import com.cobby.main.common.response.BaseResponseBody;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 
 @CrossOrigin
@@ -39,8 +40,11 @@ public class ActivityLogController {
 			.body(new BaseResponseBody<>(200, "OK", "감지되었습니다."));
 	}
 
-	@GetMapping("/attendance/{userId}") // 회원 연속 출석 조회
-	public ResponseEntity<? extends BaseResponseBody> getactivityLogInfo(@PathVariable String userId) {
+	@GetMapping("/attendance") // 회원 연속 출석 조회
+	public ResponseEntity<? extends BaseResponseBody> getactivityLogInfo(
+		@RequestHeader("userId")
+		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
+		String userId) {
 
 		var info = activityLogService.getactivityLogInfo(userId);
 
@@ -49,8 +53,11 @@ public class ActivityLogController {
 			.body(new BaseResponseBody<>(200, "OK", info));
 	}
 
-	@GetMapping("/commit/{userId}") // 회원 연속 출석 조회
-	public ResponseEntity<? extends BaseResponseBody> getactivityLogCommit(@PathVariable String userId) {
+	@GetMapping("/commit") // 회원 연속 출석 조회
+	public ResponseEntity<? extends BaseResponseBody> getactivityLogCommit(
+		@RequestHeader("userId")
+		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
+		String userId) {
 
 		var info = activityLogService.getactivityLogCommit(userId);
 
