@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -28,9 +29,11 @@ import lombok.RequiredArgsConstructor;
 
 @Tag(name = "캐릭터", description = "Cobby 캐릭터 관련 API 문서입니다.")
 @Validated
-@RequiredArgsConstructor
+@CrossOrigin
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/avatars")
+@Tag(name = "아바타", description = "아바타과제 관련 API 문서입니다.")
 public class AvatarController {
 
 	private final AvatarService avatarService;

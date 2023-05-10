@@ -15,11 +15,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "도전과제", description = "도전과제 관련 API 문서입니다.")
-@RestController
 @CrossOrigin
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("api/quests")
+@Tag(name = "도전과제", description = "도전과제 관련 API 문서입니다.")
 public class QuestController {
 
 	private final QuestService questService;
