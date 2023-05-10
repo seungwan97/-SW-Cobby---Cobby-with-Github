@@ -4,6 +4,9 @@ import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.quest.api.dto.response.QuestGetResponse;
 import com.cobby.main.quest.db.entity.enumtype.QuestCategory;
 import com.cobby.main.title.db.entity.Title;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,9 +36,11 @@ import java.util.List;
 	@Column(nullable = false, columnDefinition="INT UNSIGNED")
 	private Integer questGoal;
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "quest")
 	private List<Costume> costumes = new ArrayList<>();
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "quest")
 	private List<Title> titles = new ArrayList<>();
 }

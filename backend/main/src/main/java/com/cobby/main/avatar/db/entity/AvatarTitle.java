@@ -3,6 +3,7 @@ package com.cobby.main.avatar.db.entity;
 import com.cobby.main.common.entity.BaseTimeEntity;
 import com.cobby.main.title.db.entity.Title;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,7 +41,7 @@ public class AvatarTitle extends BaseTimeEntity {
 	private Avatar avatar;
 
 	@NotNull(message = "필수 입력 항목입니다. (title)")
-	@JsonIgnore
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "title_id")
 	private Title title;

@@ -3,6 +3,7 @@ package com.cobby.main.title.db.entity;
 import com.cobby.main.quest.db.entity.Quest;
 
 import com.cobby.main.title.api.dto.response.TitleGetResponse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,6 +31,7 @@ public class Title {
 	private Long titleId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	@JoinColumn(name = "quest_id")
 	private Quest quest;
 
