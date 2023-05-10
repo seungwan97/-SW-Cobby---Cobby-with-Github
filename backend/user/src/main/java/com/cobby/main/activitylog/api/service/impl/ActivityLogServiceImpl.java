@@ -85,11 +85,11 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 	public ActivityLogCommitResponse getactivityLogCommit(String userId) {
 		var existingActivityLog = activityLogRepository.findTopByUserIdOrderByIdDesc(userId).orElseThrow(NotFoundException::new);
 		var activityLogList = activityLogRepository.findByUserIdOrderByIdDesc(userId);
-		Long count = 0L;
+		Long count = 1L;
 		for(ActivityLog activityLog : activityLogList){
 			if(activityLog.getLastModifiedAt().getDayOfMonth() == LocalDateTime.now().getDayOfMonth()) {
 				if(activityLog.getActivityType() == ActivityType.COMMIT) count++;
-			}
+			}else break;
 		}
 
 		var activityLogCommitResponse = ActivityLogCommitResponse.builder()
