@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "user-profile-client", url = "${request.url.user-server}")
 public interface UserProfileClient {
     @PostMapping
-    ResponseEntity<? extends BaseResponseBody> insertProfile(@RequestBody UserInfoDto userInfoDto);
+    ResponseEntity<? extends BaseResponseBody> logInUserInfo(@RequestBody UserInfoDto userInfoDto);
 }
