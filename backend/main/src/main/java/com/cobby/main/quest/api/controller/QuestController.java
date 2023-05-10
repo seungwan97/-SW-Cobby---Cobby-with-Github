@@ -1,5 +1,6 @@
 package com.cobby.main.quest.api.controller;
 
+import com.cobby.main.avatar.api.service.AvatarQuestService;
 import com.cobby.main.common.util.ApiDocumentResponse;
 import com.cobby.main.quest.api.dto.request.QuestPostRequest;
 import com.cobby.main.quest.api.dto.request.QuestPutRequest;
@@ -11,6 +12,7 @@ import com.cobby.main.quest.api.service.QuestService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 
 @Tag(name = "도전과제", description = "도전과제 관련 API 문서입니다.")
@@ -21,6 +23,8 @@ import lombok.RequiredArgsConstructor;
 public class QuestController {
 
 	private final QuestService questService;
+
+	private final AvatarQuestService avatarQuestService;
 
 	@ApiDocumentResponse
 	@Operation(summary = "도전과제 조회", description = "quest ID로 도전과제를 조회합니다.")
@@ -58,6 +62,21 @@ public class QuestController {
 	public ResponseEntity<? extends BaseResponseBody> deleteQuest(@PathVariable Long questId) {
 		questService.deleteQuest(questId);
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Deleted", "삭제되었습니다."));
+	}
+
+	@ApiDocumentResponse
+	@Operation(summary = "아바타 도전과제 목록 조회", description = "아바타의 현재 도전과제 목록을 조회합니다.")
+	@GetMapping(value = "/current")
+	public ResponseEntity<? extends BaseResponseBody> getAvatarCurrentQuests(
+		@RequestHeader("userId")
+		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
+		String userId
+	) {
+		var currentQuests = questService.selectCurrentQuests(userId);
+
+		return ResponseEntity
+			.ok()
+			.body(new BaseResponseBody<>(200, "ok", currentQuests));
 	}
 
 }

@@ -22,6 +22,7 @@ import com.cobby.main.common.response.BaseResponseBody;
 import com.cobby.main.common.util.ApiDocumentResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -29,6 +30,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "캐릭터가 보유한 아이템", description = "Cobby 캐릭터가 가진 코스튬, 칭호, 도전 과제와 관련된 API 문서입니다.")
 @Validated
 @RequiredArgsConstructor
 @RestController
@@ -38,6 +40,8 @@ public class AvatarItemController {
 	private final AvatarTitleService avatarTitleService;
 	private final AvatarQuestService avatarQuestService;
 
+	@ApiDocumentResponse
+	@Operation(summary = "아바타가 가진 특정 타입 아이템 하나 조회", description = "아이템 종류(코스튬 = costume, 칭호 = title, 도전 과제 = quest)와 종류별 ID 정보를 입력해 아이템을 조회합니다.")
 	@GetMapping("/{itemType}/{itemId}")
 	public ResponseEntity<? extends BaseResponseBody> getAvatarItem(
 		@RequestHeader("userId")
@@ -57,6 +61,8 @@ public class AvatarItemController {
 			.body(new BaseResponseBody<>(200, "OK", item));
 	}
 
+	@ApiDocumentResponse
+	@Operation(summary = "아바타가 가진 특정 타입 아이템 전체 조회", description = "아이템 종류(코스튬 = costume, 칭호 = title, 도전 과제 = quest)를 입력하면 해당 유저가 가진 특정 타입 아이템을 조회합니다.")
 	@GetMapping("/{itemType}")
 	public ResponseEntity<? extends BaseResponseBody> getAllAvatarItems(
 		@RequestHeader("userId")
@@ -75,8 +81,6 @@ public class AvatarItemController {
 			.body(new BaseResponseBody<>(200, "OK", items));
 	}
 
-	@ApiDocumentResponse
-	@Operation(summary = "인벤토리 아이템 추가", description = "아바타의 인벤토리에 아이템을 추가합니다.")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<? extends BaseResponseBody> createAvatarItem(
 		@RequestHeader("userId")
@@ -97,22 +101,6 @@ public class AvatarItemController {
 			.created(location)
 			.body(new BaseResponseBody<>(201, "created", successMessage));
 	}
-
-	@ApiDocumentResponse
-	@Operation(summary = "아바타 도전과제 목록 조회", description = "아바타의 현재 도전과제 목록을 조회합니다.")
-	@GetMapping(value = "/quests/current")
-	public ResponseEntity<? extends BaseResponseBody> getAvatarCurrentQuests(
-		@RequestHeader("userId")
-		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
-		String userId
-	) {
-		var currentQuests = avatarQuestService.selectAvatarCurrentQuests(userId);
-
-		return ResponseEntity
-			.ok()
-			.body(new BaseResponseBody<>(200, "ok", currentQuests));
-	}
-
 
 	private AvatarItemService pickServiceByItemType(String type) {
 		return switch (type) {

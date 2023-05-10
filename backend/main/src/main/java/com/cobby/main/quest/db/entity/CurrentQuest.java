@@ -1,4 +1,4 @@
-package com.cobby.main.avatar.api.dto.response;
+package com.cobby.main.quest.db.entity;
 
 import com.cobby.main.quest.db.entity.enumtype.QuestCategory;
 
