@@ -1,5 +1,6 @@
 package com.cobby.main.stat.api.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +45,7 @@ public class StatController {
 			.body(new BaseResponseBody<>(200, "OK", info));
 	}
 
+	@Hidden
 	@ApiDocumentResponse
 	@PostMapping("/subscribe")
 	@Operation(summary = "*무얼까요?", description = "대은이도 몰라요")

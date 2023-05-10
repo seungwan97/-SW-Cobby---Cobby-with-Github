@@ -2,6 +2,7 @@ package com.cobby.main.activitylog.api.controller;
 
 import java.util.Map;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ public class ActivityLogController {
 	private final ActivityLogService activityLogService;
 
 	// webhook을 통해 받아오는 정보들
+	@Hidden
 	@PostMapping("/webhooks")
 	@ApiDocumentResponse
 	@Operation(summary = "*웹훅 감지", description = "사용자의 깃헙 커밋 활동이 감지되면 해당 요청을 받습니다.")

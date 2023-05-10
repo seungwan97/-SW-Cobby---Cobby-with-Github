@@ -1,5 +1,6 @@
 package com.cobby.main.user.api.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,6 +46,7 @@ public class UserController {
 			.body(new BaseResponseBody<>(200, "OK", info));
 	}
 
+	@Hidden
 	@PatchMapping("/signout") // 회원 탈퇴
 	@ApiDocumentResponse
 	@Operation(summary = "*회원 탈퇴", description = "미구현")
@@ -60,6 +62,7 @@ public class UserController {
 			.body(new BaseResponseBody<>(200, "OK", "탈퇴되었습니다."));
 	}
 
+	@Hidden
 	@PostMapping // 로그인
 	@ApiDocumentResponse
 	@Operation(summary = "*유저정보 전달", description = "로그인 시 사용자의 정보를 인증서버로부터 전달받습니다.")
