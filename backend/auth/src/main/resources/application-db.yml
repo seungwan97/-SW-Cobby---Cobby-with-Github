@@ -13,8 +13,7 @@ spring:
           datastore:
             create_database: true
 
-#request:
-#  url:
-#    #    user-server: http://j8b201.p.ssafy.io:9011/api/members
-#    user-server: http://localhost:8085/api/members
-#    front-login: https://j8b201.p.ssafy.io/redirect
+request:
+  url:
+    user-server: http://k8b201.p.ssafy.io:15010/api/users
+    front-login: https://cobby-play.com
