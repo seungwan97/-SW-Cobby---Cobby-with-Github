@@ -16,9 +16,10 @@ const CobbyInfo = (props: Props) => {
       <style.TextMargin />
       <TextBox size={25} content={"Lv. 10"} />
       <style.Margin />
-      <Cobby />
+      <Cobby gifSrc="" />
       <ExpBar />
     </style.CobbyInfoWrapper>
   );
 };
+
 export default CobbyInfo;
