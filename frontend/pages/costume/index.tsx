@@ -55,6 +55,7 @@ const DUMMY_DATA = [
     gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
   },
 ];
+
 // Costumepage
 const CostumeFunc = (props: any) => {
   // const router = useRouter();
@@ -80,3 +81,16 @@ export async function getStaticProps() {
 }
 
 export default CostumePage;
+
+export const getServerSideProps: GetServerSideProps =
+  async (context) => {
+    const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+    const token = "token";
+
+    return {
+      props: {
+        nicknameData: nicknameData.content,
+        statusData: statusData.content,
+      },
+    };
+  };

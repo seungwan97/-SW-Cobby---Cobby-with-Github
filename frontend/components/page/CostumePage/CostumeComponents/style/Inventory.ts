@@ -19,7 +19,7 @@ export const InventoryBar = styled.div`
 export const InventoryType = styled.div`
   flex: 1; /* 각각의 칸이 동일한 너비를 가지도록 설정 */
   text-align: center;
-  margin: 0 5px;
+  margin: 10px 5px 0 5px;
   background-color: ${colors.ItemBoxColor};
   border-radius: 10px 10px 0px 0px;
   cursor: pointer;
@@ -30,9 +30,9 @@ export const InventoryType = styled.div`
 `;
 
 export const InventoryTypeImg = styled.img`
-  max-width: 50%;
-  max-height: 50%;
-  margin: 5px 10px;
+  max-width: 40%;
+  max-height: 40%;
+  margin: 5px 10px 0 10px;
 `;
 
 export const InventoryBox = styled.div`

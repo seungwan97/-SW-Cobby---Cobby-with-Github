@@ -9,15 +9,15 @@ type ItemType = {
 const typeList: ItemType[] = [
   {
     name: "Head",
-    imgSrc: "/navItems/cobbyface.png",
+    imgSrc: "/InventoryType/head.png",
   },
   {
     name: "Body",
-    imgSrc: "/navItems/cobbyface.png",
+    imgSrc: "/InventoryType/body.png",
   },
   {
     name: "Effect",
-    imgSrc: "/navItems/cobbyface.png",
+    imgSrc: "/InventoryType/effect.png",
   },
 ];
 
@@ -33,14 +33,23 @@ const Inventory = (props: any) => {
       <style.InventoryBar>
         {typeList.map((type, index) => (
           <style.InventoryType key={index}>
-            <style.InventoryTypeImg src={type.imgSrc} alt={type.name} />
+            <style.InventoryTypeImg
+              src={type.imgSrc}
+              alt={type.name}
+            />
           </style.InventoryType>
         ))}
       </style.InventoryBar>
       <style.InventoryBox>
-        {props.itemList.map((item: object, index: Number) => (
-          <ItemBox item={item} key={index} onItemClick={handleItemClick} />
-        ))}
+        {props.itemList.map(
+          (item: object, index: Number) => (
+            <ItemBox
+              item={item}
+              key={index}
+              onItemClick={handleItemClick}
+            />
+          )
+        )}
       </style.InventoryBox>
     </style.Inventory>
   );
