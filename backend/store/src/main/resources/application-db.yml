@@ -2,8 +2,9 @@ spring:
   # mongodb setting
   data:
     mongodb:
-      uri: ENC(es+S/14D3HgJAfa3+Cjvz6BcF+2VBm6IrHjhiCuLJDxzkgg27kSsP5ZDtcg+yXqXCPRrzsDDcTE=)
-      uuid_representation: standard
+      host: ENC(e6Uv5RpXd/fm/4vz63QuFU+f7RsbBc4vH9JdYF0FVRs=)
+      port: ENC(V95UBnfXEUarkvxGYRliCg==)
+      database: ENC(fjNWJ4zrp1F8WkmN4l2+ajFqYA7GR4Gd)
       username: ENC(ySBkqn7rc0rzhCnJx1aNtMcQdtGI7IRQ)
       password: ENC(i7j46L3hTWPdOmMe3uGWug==)
 
