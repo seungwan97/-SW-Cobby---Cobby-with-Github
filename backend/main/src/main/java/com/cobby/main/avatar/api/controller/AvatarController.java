@@ -3,6 +3,7 @@ package com.cobby.main.avatar.api.controller;
 import java.net.URI;
 import java.util.Map;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -52,6 +53,7 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(200, "OK", costumes));
 	}
 
+	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####아바타 생성#####", description = "최초 로그인 시점에 기본 아바타를 생성하는 메소드입니다.")
 	@PostMapping
@@ -90,6 +92,7 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(200, "OK", successMessage));
 	}
 
+	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####아바타 정보 초기화#####", description = "user ID에 해당하는 아바타를 초기화하는 메서드 입니다.")
 	@GetMapping("/reset")
@@ -107,6 +110,7 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(200, "OK", successMessage));
 	}
 
+	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####아바타 정보 삭제#####", description = "user ID에 해당하는 아바타를 삭제하는 메서드 입니다.")
 	@DeleteMapping

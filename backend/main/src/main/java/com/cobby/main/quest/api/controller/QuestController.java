@@ -4,6 +4,7 @@ import com.cobby.main.avatar.api.service.AvatarQuestService;
 import com.cobby.main.common.util.ApiDocumentResponse;
 import com.cobby.main.quest.api.dto.request.QuestPostRequest;
 import com.cobby.main.quest.api.dto.request.QuestPutRequest;
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ public class QuestController {
 
 	private final AvatarQuestService avatarQuestService;
 
+	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####도전과제 조회#####", description = "quest ID로 도전과제를 조회합니다.")
 	@GetMapping("/one/{questId}")
@@ -33,6 +35,7 @@ public class QuestController {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", questService.selectQuest(questId)));
 	}
 
+	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####도전과제 목록 전체 조회#####", description = "모든 도전과제를 조회합니다.")
 	@GetMapping
@@ -40,6 +43,7 @@ public class QuestController {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", questService.selectAllQuest()));
 	}
 
+	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####도전과제 생성#####", description = "도전과제 이름, 종류, 달성 조건, 보상으로 이루어진 도전과제를 생성합니다.")
 	@PostMapping("/new")
@@ -48,6 +52,7 @@ public class QuestController {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Created", "생성되었습니다."));
 	}
 
+	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####도전과제 수정#####", description = "도전과제 ID에 해당하는 도전과제 이름, 종류, 달성 조건, 보상으로 이루어진 도전과제를 수정합니다.")
 	@PutMapping
@@ -56,6 +61,7 @@ public class QuestController {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Updated", "수정되었습니다."));
 	}
 
+	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####도전과제 삭제#####", description = "도전과제 ID에 해당하는 도전과제를 삭제합니다.")
 	@DeleteMapping("/{questId}")

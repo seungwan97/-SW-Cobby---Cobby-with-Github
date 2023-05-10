@@ -2,6 +2,7 @@ package com.cobby.main.costume.api.controller;
 
 import java.net.URI;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -45,6 +46,7 @@ public class CostumeController {
 			.body(new BaseResponseBody<>(200, "OK", costumes));
 	}
 
+	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####코스튬 하나 조회#####", description = "코스튬 ID에 해당하는 코스튬을 조회합니다.")
 	@GetMapping("/{costumeId}")
@@ -60,6 +62,7 @@ public class CostumeController {
 			.body(new BaseResponseBody<>(200, "OK", costume));
 	}
 
+	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####코스튬 생성#####", description = "코스튬 이름, 종류, 관련 도전과제 ID에 해당하는 코스튬을 생성합니다.")
 	@PostMapping
@@ -78,6 +81,7 @@ public class CostumeController {
 			.body(new BaseResponseBody<>(201, "created", successMessage));
 	}
 
+	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####코스튬 삭제#####", description = "코스튬 ID에 해당하는 코스튬을 삭제합니다.")
 	@DeleteMapping("/{costumeId}")

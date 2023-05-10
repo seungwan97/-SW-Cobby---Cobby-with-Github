@@ -2,6 +2,7 @@ package com.cobby.main.avatar.api.controller;
 
 import java.net.URI;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -40,6 +41,7 @@ public class AvatarItemController {
 	private final AvatarTitleService avatarTitleService;
 	private final AvatarQuestService avatarQuestService;
 
+	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####아바타가 가진 특정 타입 아이템 하나 조회#####", description = "아이템 종류(코스튬 = costume, 칭호 = title, 도전 과제 = quest)와 종류별 ID 정보를 입력해 아이템을 조회합니다.")
 	@GetMapping("/{itemType}/{itemId}")
@@ -81,6 +83,7 @@ public class AvatarItemController {
 			.body(new BaseResponseBody<>(200, "OK", items));
 	}
 
+	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####인벤토리에 아이템(코스튬/칭호/도전 과제) 추가#####", description = "아이템 종류(코스튬 = costume, 칭호 = title, 도전 과제 = quest)와 그 아이템의 ID를 입력하면 해당 유저의 인벤토리에 추가합니다.")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
