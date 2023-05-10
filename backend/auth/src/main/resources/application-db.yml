@@ -17,5 +17,5 @@ spring:
 
 request:
   url:
-    user-server: ENC(UjRDHZe29WDvMtjx5Qiv//KK+OQG114xIC1/AtgWV3DoExTvLKgYRJxhGE95CSx+vFby/0xRQcE=)
+    user-server: http://k8b201.p.ssafy.io:15010/api/users
     front-login: https://cobby-play.com
