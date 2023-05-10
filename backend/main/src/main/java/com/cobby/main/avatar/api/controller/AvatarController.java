@@ -21,10 +21,12 @@ import com.cobby.main.common.util.ApiDocumentResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "캐릭터", description = "Cobby 캐릭터 관련 API 문서입니다.")
 @Validated
 @RequiredArgsConstructor
 @RestController
@@ -49,14 +51,12 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(200, "OK", costumes));
 	}
 	
-	@ApiDocumentResponse
-	@Operation(summary = "아바타 생성", description = "user ID로 고유한 아바타를 생성하는 메서드 입니다.")
 	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> createAvatar(
 		@RequestHeader("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId,
-		HttpServletRequest request) {
+		HttpServletRequest request) throws JsonProcessingException {
 
 		var avatarId = avatarService.insertDefaultAvatar(userId);
 
@@ -93,7 +93,7 @@ public class AvatarController {
 	public ResponseEntity<? extends BaseResponseBody> resetAvatar(
 		@RequestHeader("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
-		String userId) {
+		String userId) throws JsonProcessingException {
 
 		var avatarId = avatarService.resetAvatar(userId);
 
@@ -104,8 +104,6 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(200, "OK", successMessage));
 	}
 
-	@ApiDocumentResponse
-	@Operation(summary = "아바타 정보 삭제", description = "user ID에 해당하는 아바타 정보를 삭제하는 메서드 입니다.")
 	@DeleteMapping
 	public ResponseEntity<? extends BaseResponseBody> deleteAvatar(
 		@RequestHeader("userId")

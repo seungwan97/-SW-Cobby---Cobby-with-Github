@@ -10,11 +10,11 @@ public interface AvatarService {
 
 	AvatarGetResponse selectAvatar(String avatarId) throws JsonProcessingException;
 
-	String insertDefaultAvatar(String avatarId);
+	String insertDefaultAvatar(String avatarId) throws JsonProcessingException;
 
 	String updateAvatar(String avatarId, AvatarUpdateRequest avatarUpdateInfo) throws JsonProcessingException;
 
-	String resetAvatar(String avatarId);
+	String resetAvatar(String avatarId) throws JsonProcessingException;
 
 	String deleteAvatar(String avatarId);
 }

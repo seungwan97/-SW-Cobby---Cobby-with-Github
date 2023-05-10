@@ -1,6 +1,7 @@
 package com.cobby.main.avatar.api.dto.response;
 
 import java.util.List;
+import java.util.Map;
 
 import com.cobby.main.avatar.db.entity.Avatar;
 import com.cobby.main.avatar.db.entity.AvatarCostume;
@@ -20,7 +21,7 @@ public class AvatarGetResponse {
 
 	private Integer exp;
 
-	private List<String> outfits;
+	private Map<String, String> outfits;
 
 	private List<AvatarCostume> costumes;
 
@@ -29,7 +30,7 @@ public class AvatarGetResponse {
 	private List<AvatarQuest> quests;
 
 	@Builder
-	public AvatarGetResponse (Avatar avatar, List<String> outfits) {
+	public AvatarGetResponse (Avatar avatar, Map<String, String> outfits) {
 		this.level = avatar.getLevel();
 		this.exp = avatar.getExp();
 		this.outfits = outfits;

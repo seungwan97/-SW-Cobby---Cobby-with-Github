@@ -17,13 +17,13 @@ public record AvatarUpdateRequest(
 	@Max(value = 167025, message = "범위를 벗어났습니다.")
 	Integer exp,
 
-	@Schema(description = "머리 부분 코스튬 ID", example = "12")
+	@Schema(description = "수정하고자 하는 코스튬 ID 정보", example = "0")
 	Long head,
 
-	@Schema(description = "얼굴 부분 코스튬 ID", example = "2")
+	@Schema(description = "얼굴 부분 코스튬 ID", example = "0")
 	Long face,
 
-	@Schema(description = "몸통 부분 코스튬 ID", example = "7")
+	@Schema(description = "몸통 부분 코스튬 ID", example = "0")
 	Long body
 ) {
 }

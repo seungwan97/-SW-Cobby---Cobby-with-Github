@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.AccessLevel;
@@ -35,12 +36,12 @@ public class Avatar {
 	@Column(name = "avatar_id", nullable = false)
 	private String avatarId;
 
-	@Positive(message = "필수 입력 항목입니다. (양수)")
+	@Positive(message = "level은 필수 입력 항목입니다. (양수)")
 	@Max(value = 256, message = "범위를 벗어났습니다. ")
 	@Column(name = "level", nullable = false, columnDefinition = "TINYINT UNSIGNED")
 	private Integer level;
 
-	@Positive(message = "필수 입력 항목입니다. (양수)")
+	@Min(value = 0, message = "exp는 필수 입력 항목입니다. (0 이상)")
 	@Max(value = 167025, message = "범위를 벗어났습니다. ")
 	@Column(name = "exp", nullable = false, columnDefinition = "INT UNSIGNED")
 	private Integer exp;

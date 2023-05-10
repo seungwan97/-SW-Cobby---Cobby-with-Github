@@ -1,6 +1,9 @@
 package com.cobby.main.avatar.api.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import com.cobby.main.avatar.api.dto.request.AvatarUpdateRequest;
 import com.cobby.main.avatar.api.dto.response.AvatarGetResponse;
 import com.cobby.main.avatar.api.service.AvatarService;
 import com.cobby.main.avatar.db.entity.Avatar;
+import com.cobby.main.avatar.db.repository.AvatarCostumeRepository;
 import com.cobby.main.avatar.db.repository.AvatarRepository;
 import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
@@ -27,21 +31,27 @@ public class AvatarServiceImpl implements AvatarService {
 	private final CostumeRepository costumeRepository;
 
 	private final ObjectMapper objectMapper;
+	private final AvatarCostumeRepository avatarCostumeRepository;
 
 	@Override
 	public AvatarGetResponse selectAvatar(String avatarId) throws JsonProcessingException {
 		var avatar = avatarRepository.findById(avatarId)
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + avatarId + ")"));
 
-		List<Long> currentCostumes = objectMapper.readValue(
+		Map<String, String> currentCostumeIds = objectMapper.readValue(
 			avatar.getCurrentCostumes(),
-			objectMapper.getTypeFactory().constructParametricType(List.class, Long.class));
+			objectMapper.getTypeFactory().constructParametricType(Map.class, String.class, String.class));
 
-		List<String> outfits = currentCostumes.stream()
-			.map(costumeId -> costumeRepository.findById(costumeId)
-				.map((Costume::getGifUrl))
-				.orElse(null))
-			.toList();
+		var outfits = new HashMap<String, String>();
+
+		currentCostumeIds.forEach((part, costumeId) ->
+			outfits.put(part,
+					(CostumeCategory.NO_COSTUME.ordinal() == Integer.parseInt(costumeId))
+						? CostumeCategory.NO_COSTUME.name()
+						: avatarCostumeRepository.findByCostume_CostumeId(Long.parseUnsignedLong(costumeId))
+					.orElseThrow(() -> new IllegalArgumentException("보유하고 있지 않은 코스튬입니다. (PART=" + part + ", ID=" + costumeId + ")"))
+				.getCostume()
+				.getGifUrl()));
 
 		return AvatarGetResponse.builder()
 			.avatar(avatar)
@@ -50,7 +60,7 @@ public class AvatarServiceImpl implements AvatarService {
 	}
 
 	@Override
-	public String insertDefaultAvatar(String avatarId) {
+	public String insertDefaultAvatar(String avatarId) throws JsonProcessingException {
 		avatarRepository.findById(avatarId)
 			.ifPresent((x) -> {
 				throw new IllegalArgumentException("이미 존재하는 아바타입니다.");
@@ -67,32 +77,32 @@ public class AvatarServiceImpl implements AvatarService {
 		var avatar = avatarRepository.findById(avatarId)
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + avatarId + ")"));
 
-		List<Long> currentCostumes = objectMapper.readValue(
+		Map<String, Long> currentCostumeIds = objectMapper.readValue(
 			avatar.getCurrentCostumes(),
-			objectMapper.getTypeFactory().constructParametricType(List.class, Long.class));
+			objectMapper.getTypeFactory().constructParametricType(Map.class, String.class, Long.class));
 
-		var level = Optional.of(avatarUpdateInfo.level())
+		var level = Optional.ofNullable(avatarUpdateInfo.level())
 			.orElse(avatar.getLevel());
-		var exp = Optional.of(avatarUpdateInfo.exp())
+		var exp = Optional.ofNullable(avatarUpdateInfo.exp())
 			.orElse(avatar.getExp());
-		var head = Optional.of(avatarUpdateInfo.head())
-			.orElse(currentCostumes.get(CostumeCategory.HEAD.ordinal()));
-		var face = Optional.of(avatarUpdateInfo.face())
-			.orElse(currentCostumes.get(CostumeCategory.FACE.ordinal()));
-		var body = Optional.of(avatarUpdateInfo.body())
-			.orElse(currentCostumes.get(CostumeCategory.BODY.ordinal()));
+		var head = Optional.ofNullable(avatarUpdateInfo.head())
+			.orElse(currentCostumeIds.get("head"));
+		var body = Optional.ofNullable(avatarUpdateInfo.face())
+			.orElse(currentCostumeIds.get("body"));
+		var effect = Optional.ofNullable(avatarUpdateInfo.body())
+			.orElse(currentCostumeIds.get("effect"));
 
 		avatar = avatar.toBuilder()
 			.level(level)
 			.exp(exp)
-			.currentCostumes(objectMapper.writeValueAsString(List.of(head, face, body)))
+			.currentCostumes(objectMapper.writeValueAsString(Map.of("head", head, "body", body, "effect", effect)))
 			.build();
 
 		return avatarRepository.save(avatar).getAvatarId();
 	}
 
 	@Override
-	public String resetAvatar(String avatarId) {
+	public String resetAvatar(String avatarId) throws JsonProcessingException {
 		var avatar = avatarRepository.findById(avatarId)
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + avatarId + ")"));
 
@@ -109,13 +119,15 @@ public class AvatarServiceImpl implements AvatarService {
 		return avatar.getAvatarId();
 	}
 
-	private Avatar getDefaultAvatar(String userId) {
+	private Avatar getDefaultAvatar(String userId) throws JsonProcessingException {
+
+		var currentCostumes = Map.of("head", 0L, "body", 0L, "effect", 0L);
 
 		return Avatar.builder()
 			.avatarId(userId)
 			.level(1)
 			.exp(0)
-			.currentCostumes("[]")
+			.currentCostumes(objectMapper.writeValueAsString(currentCostumes))
 			.build();
 	}
 }
