@@ -1,10 +1,12 @@
 spring:
   data:
     mongodb:
-      uri: ENC(DebMT298nVSlzfI01wpkrrtyYv8X94bkMzwAGjrGsL7xilgEgx0xaZljvzfZnxR+yG4Mco4tank=)
-      uuid-representation: standard
+      host: ENC(e6Uv5RpXd/fm/4vz63QuFU+f7RsbBc4vH9JdYF0FVRs=)
+      port: ENC(V95UBnfXEUarkvxGYRliCg==)
+      database: ENC(X3Db90LZ/lGUb8kI5nyQxBABbCjWceaR)
       username: ENC(ySBkqn7rc0rzhCnJx1aNtMcQdtGI7IRQ)
       password: ENC(i7j46L3hTWPdOmMe3uGWug==)
+      uuid-representation: standard
   # JPA Properties
   jpa:
     properties:
@@ -15,5 +17,5 @@ spring:
 
 request:
   url:
-    user-server: http://k8b201.p.ssafy.io:15010/api/users
+    user-server: ENC(UjRDHZe29WDvMtjx5Qiv//KK+OQG114xIC1/AtgWV3DoExTvLKgYRJxhGE95CSx+vFby/0xRQcE=)
     front-login: https://cobby-play.com
