@@ -1,5 +1,6 @@
 package com.cobby.auth.api.service;
 
+import com.cobby.auth.api.client.UserProfileClient;
 import com.cobby.auth.api.customenum.Role;
 import com.cobby.auth.api.customenum.TokenKey;
 import com.cobby.auth.api.dto.Token;
@@ -32,6 +33,7 @@ import java.util.Optional;
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final MongoTemplate mongoTemplate;
     private final TokenProvider tokenProvider;
+    private final UserProfileClient userProfileClient;
 
     private String REDIRECT_URI = "http://localhost:3000/login";
 
@@ -73,6 +75,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
             // 2-4. 토큰 발행
             tokens = tokenProvider.generateToken(userInfoDto.getUserId(), Role.USER.getKey());
+
         }
         else {
             System.out.println("기존 회원 로그인");
@@ -83,12 +86,21 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             String access = tokenProvider.generateAccess(userInfoDto.getUserId(), Role.USER.getKey());
 
             tokens = tokenProvider.generateToken(userInfoDto.getUserId(), Role.USER.getKey());
+
         }
+
+
+        // 2-5. 프로필 DB에 저장
+        var userinfo = userProfileClient.logInUserInfo(userInfoDto);
+
+        log.info("UserInfo Body = {}", userinfo.getBody());
+        log.info("UserInfo Status = {}", userinfo.getStatusCode());
 
         String targetUrl;
         targetUrl = UriComponentsBuilder.fromUriString(REDIRECT_URI)
                 .queryParam(TokenKey.ACCESS.getKey(), "Bearer-" + tokens.getAccessToken())
                 .build().toUriString();
+        // * 프런트에서 리다이렉트 할때, 파싱해서 access token 빼서 쓰고 진행하는걸로..
 
         // 3. Front Page로 리다이렉트 수행
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
