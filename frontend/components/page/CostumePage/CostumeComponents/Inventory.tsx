@@ -9,15 +9,15 @@ type ItemType = {
 const typeList: ItemType[] = [
   {
     name: "Head",
-    imgSrc: "/InventoryType/head.png",
+    imgSrc: "/navItems/cobbyface.png",
   },
   {
     name: "Body",
-    imgSrc: "/InventoryType/body.png",
+    imgSrc: "/navItems/cobbyface.png",
   },
   {
     name: "Effect",
-    imgSrc: "/InventoryType/effect.png",
+    imgSrc: "/navItems/cobbyface.png",
   },
 ];
 
