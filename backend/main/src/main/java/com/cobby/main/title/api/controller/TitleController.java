@@ -21,12 +21,12 @@ import com.cobby.main.title.api.service.TitleService;
 
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "칭호", description = "칭호 관련 API 문서입니다.")
 @Slf4j
-@RestController
 @CrossOrigin
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("api/titles")
+@Tag(name = "칭호", description = "칭호 관련 API 문서입니다.")
 public class TitleController {
 
 	private final TitleService titleService;

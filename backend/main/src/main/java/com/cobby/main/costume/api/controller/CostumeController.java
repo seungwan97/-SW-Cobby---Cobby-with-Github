@@ -4,6 +4,7 @@ import java.net.URI;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import com.cobby.main.costume.api.dto.request.CostumePostRequest;
 import com.cobby.main.costume.api.service.CostumeService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -25,10 +27,12 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Validated
+@CrossOrigin
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/costumes")
+@Tag(name = "코스튬", description = "코스튬 관련 API 문서입니다.")
 public class CostumeController {
 	private final CostumeService costumeService;
 

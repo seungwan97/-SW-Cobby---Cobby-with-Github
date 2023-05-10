@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -35,6 +36,7 @@ import com.cobby.main.quest.api.service.QuestService;
 import com.cobby.main.quest.db.entity.enumtype.QuestCategory;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
@@ -44,9 +46,11 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 @Validated
-@RequiredArgsConstructor
+@CrossOrigin
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/avatars")
+@Tag(name = "아바타", description = "아바타과제 관련 API 문서입니다.")
 public class AvatarController {
 
 	private final AvatarService avatarService;
