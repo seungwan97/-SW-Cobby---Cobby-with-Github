@@ -89,11 +89,9 @@ public class UserServiceImpl implements UserService {
 				.build();
 			userRepository.save(user);
 
-			var user1 = userRepository.findById(userPostRequest.userId()).orElseThrow(NotFoundException::new);
-
 			// 새로운 사용자의 통계 정보를 생성합니다.
 			Stat stat = Stat.builder()
-				.user(user1)
+				.user(user)
 				.commitCnt(getStatList(userPostRequest, 5))
 				.starCnt(getStatList(userPostRequest, 3))
 				.prCnt(getStatList(userPostRequest, 7))
