@@ -4,9 +4,9 @@ import java.io.IOException;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.util.XMLResourceDescriptor;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import org.json.JSONObject;
 
 import com.cobby.main.common.exception.NotFoundException;
 import com.cobby.main.stat.db.entity.Stat;
