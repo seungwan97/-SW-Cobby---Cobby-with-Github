@@ -4,6 +4,8 @@ import { Fragment } from "react";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import CostumePage from "@/components/page/CostumePage/CostumePage";
+import { GetServerSideProps } from "next";
+import { showCobbyInfo } from "../api/avatars";
 
 const DUMMY_DATA = [
   {
@@ -82,15 +84,18 @@ export async function getStaticProps() {
 
 export default CostumePage;
 
-export const getServerSideProps: GetServerSideProps =
-  async (context) => {
-    const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
-    const token = "token";
+// export const getServerSideProps: GetServerSideProps =
+//   async (context) => {
+//     const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+//     const token = "token";
 
-    return {
-      props: {
-        nicknameData: nicknameData.content,
-        statusData: statusData.content,
-      },
-    };
-  };
+//     const res = await showCobbyInfo(token, userId);
+//     console.log(res.data);
+//     console.log(res.data.content);
+
+//     return {
+//       props: {
+//         content: res.data.content,
+//       },
+//     };
+//   };
