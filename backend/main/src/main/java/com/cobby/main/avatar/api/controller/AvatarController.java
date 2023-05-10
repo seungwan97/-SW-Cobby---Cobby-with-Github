@@ -27,18 +27,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 
-@Tag(name = "캐릭터", description = "Cobby 캐릭터 관련 API 문서입니다.")
+@Tag(name = "Cobby 캐릭터 관련", description = "Cobby 캐릭터 관련 API 문서입니다.")
 @Validated
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/avatars")
-@Tag(name = "아바타", description = "아바타과제 관련 API 문서입니다.")
 public class AvatarController {
 
 	private final AvatarService avatarService;
 
-	// PathVariable 과 경로는 추후 로그인 모듈이 완성되면 Header 를 통해 찾게 되면 변경할 예정입니다.
 	@ApiDocumentResponse
 	@Operation(summary = "아바타 조회", description = "user ID로 아바타를 조회하는 메서드 입니다.")
 	@GetMapping
@@ -53,7 +51,9 @@ public class AvatarController {
 			.ok()
 			.body(new BaseResponseBody<>(200, "OK", costumes));
 	}
-	
+
+	@ApiDocumentResponse
+	@Operation(summary = "#####아바타 생성#####", description = "최초 로그인 시점에 기본 아바타를 생성하는 메소드입니다.")
 	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> createAvatar(
 		@RequestHeader("userId")
@@ -91,7 +91,7 @@ public class AvatarController {
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "아바타 정보 초기화", description = "user ID에 해당하는 아바타를 초기화하는 메서드 입니다.")
+	@Operation(summary = "#####아바타 정보 초기화#####", description = "user ID에 해당하는 아바타를 초기화하는 메서드 입니다.")
 	@GetMapping("/reset")
 	public ResponseEntity<? extends BaseResponseBody> resetAvatar(
 		@RequestHeader("userId")
@@ -107,6 +107,8 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(200, "OK", successMessage));
 	}
 
+	@ApiDocumentResponse
+	@Operation(summary = "#####아바타 정보 삭제#####", description = "user ID에 해당하는 아바타를 삭제하는 메서드 입니다.")
 	@DeleteMapping
 	public ResponseEntity<? extends BaseResponseBody> deleteAvatar(
 		@RequestHeader("userId")

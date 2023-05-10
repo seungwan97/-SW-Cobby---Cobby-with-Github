@@ -31,7 +31,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/costumes")
-@Tag(name = "코스튬", description = "코스튬 관련 API 문서입니다.")
 public class CostumeController {
 	private final CostumeService costumeService;
 
@@ -47,7 +46,7 @@ public class CostumeController {
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "코스튬 조회", description = "코스튬 ID에 해당하는 코스튬을 조회합니다.")
+	@Operation(summary = "#####코스튬 하나 조회#####", description = "코스튬 ID에 해당하는 코스튬을 조회합니다.")
 	@GetMapping("/{costumeId}")
 	public ResponseEntity<? extends BaseResponseBody> getCostume(
 		@PathVariable
@@ -62,7 +61,7 @@ public class CostumeController {
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "코스튬 생성", description = "코스튬 이름, 종류, 관련 도전과제 ID에 해당하는 코스튬을 생성합니다.")
+	@Operation(summary = "#####코스튬 생성#####", description = "코스튬 이름, 종류, 관련 도전과제 ID에 해당하는 코스튬을 생성합니다.")
 	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> createCostume(
 		@RequestBody @Valid CostumePostRequest costumePostRequest,
@@ -80,7 +79,7 @@ public class CostumeController {
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "코스튬 삭제", description = "코스튬 ID에 해당하는 코스튬을 삭제합니다.")
+	@Operation(summary = "#####코스튬 삭제#####", description = "코스튬 ID에 해당하는 코스튬을 삭제합니다.")
 	@DeleteMapping("/{costumeId}")
 	public ResponseEntity<? extends BaseResponseBody> deleteCostume(
 		@PathVariable

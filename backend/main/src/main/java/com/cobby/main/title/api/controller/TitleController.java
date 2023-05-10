@@ -39,7 +39,7 @@ public class TitleController {
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "칭호 조회", description = "title ID로 칭호를 조회합니다.")
+	@Operation(summary = "#####칭호 하나 조회#####", description = "title ID로 칭호를 조회합니다.")
 	@GetMapping("/{titleId}")
 	public ResponseEntity<? extends BaseResponseBody> getTitle(
 		@Parameter(description = "조회할 칭호 ID", required = true)
@@ -48,7 +48,7 @@ public class TitleController {
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "칭호 생성", description = "칭호 이름, 설명, 보상이 되는 도전과제 ID로 생성합니다.")
+	@Operation(summary = "#####칭호 생성#####", description = "칭호 이름, 설명, 보상이 되는 도전과제 ID로 생성합니다.")
 	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> createTitle(@RequestBody TitlePostRequest titleInfo) {
 		titleService.insertTitle(titleInfo);
@@ -56,7 +56,7 @@ public class TitleController {
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "칭호 수정", description = "칭호 ID에 해당하는 칭호의 이름, 설명, 보상이 되는 도전과제 ID를 수정합니다.")
+	@Operation(summary = "#####칭호 수정#####", description = "칭호 ID에 해당하는 칭호의 이름, 설명, 보상이 되는 도전과제 ID를 수정합니다.")
 	@PutMapping
 	public ResponseEntity<? extends BaseResponseBody> updateTitle(@RequestBody TitlePutRequest titleInfo) {
 		titleService.updateTitle(titleInfo);
@@ -64,7 +64,7 @@ public class TitleController {
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "칭호 삭제", description = "칭호 ID에 해당하는 칭호를 삭제합니다.")
+	@Operation(summary = "#####칭호 삭제#####", description = "칭호 ID에 해당하는 칭호를 삭제합니다.")
 	@DeleteMapping("/{titleId}")
 	public ResponseEntity<? extends BaseResponseBody> deleteTitle(
 		@Parameter(description = "조회할 칭호 ID", required = true)

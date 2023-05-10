@@ -27,21 +27,21 @@ public class QuestController {
 	private final AvatarQuestService avatarQuestService;
 
 	@ApiDocumentResponse
-	@Operation(summary = "도전과제 조회", description = "quest ID로 도전과제를 조회합니다.")
+	@Operation(summary = "#####도전과제 조회#####", description = "quest ID로 도전과제를 조회합니다.")
 	@GetMapping("/one/{questId}")
 	public ResponseEntity<? extends BaseResponseBody> getQuest(@PathVariable Long questId) {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", questService.selectQuest(questId)));
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "도전과제 목록 전체 조회", description = "모든 도전과제를 조회합니다.")
+	@Operation(summary = "#####도전과제 목록 전체 조회#####", description = "모든 도전과제를 조회합니다.")
 	@GetMapping
 	public ResponseEntity<? extends BaseResponseBody> getAllQuests() {
 		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", questService.selectAllQuest()));
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "도전과제 생성", description = "도전과제 이름, 종류, 달성 조건, 보상으로 이루어진 도전과제를 생성합니다.")
+	@Operation(summary = "#####도전과제 생성#####", description = "도전과제 이름, 종류, 달성 조건, 보상으로 이루어진 도전과제를 생성합니다.")
 	@PostMapping("/new")
 	public ResponseEntity<? extends BaseResponseBody> createQuest(@RequestBody QuestPostRequest questInfo) {
 		questService.insertQuest(questInfo);
@@ -49,7 +49,7 @@ public class QuestController {
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "도전과제 수정", description = "도전과제 ID에 해당하는 도전과제 이름, 종류, 달성 조건, 보상으로 이루어진 도전과제를 수정합니다.")
+	@Operation(summary = "#####도전과제 수정#####", description = "도전과제 ID에 해당하는 도전과제 이름, 종류, 달성 조건, 보상으로 이루어진 도전과제를 수정합니다.")
 	@PutMapping
 	public ResponseEntity<? extends BaseResponseBody> updateQuest(@RequestBody QuestPutRequest questInfo) {
 		questService.updateQuest(questInfo);
@@ -57,7 +57,7 @@ public class QuestController {
 	}
 
 	@ApiDocumentResponse
-	@Operation(summary = "도전과제 삭제", description = "도전과제 ID에 해당하는 도전과제를 삭제합니다.")
+	@Operation(summary = "#####도전과제 삭제#####", description = "도전과제 ID에 해당하는 도전과제를 삭제합니다.")
 	@DeleteMapping("/{questId}")
 	public ResponseEntity<? extends BaseResponseBody> deleteQuest(@PathVariable Long questId) {
 		questService.deleteQuest(questId);
