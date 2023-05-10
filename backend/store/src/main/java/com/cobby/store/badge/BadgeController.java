@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("")
+@RequestMapping("/api/store/badge")
 public class BadgeController {
 }

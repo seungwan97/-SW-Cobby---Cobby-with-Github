@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @Validated
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/resources")
+@RequestMapping("/api/store/resources")
 public class AssetController {
 
 	@Value("${request.url}")
