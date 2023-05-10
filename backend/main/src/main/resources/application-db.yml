@@ -1,9 +1,9 @@
 spring:
   # MariaDB
   datasource:
-    url: ENC(+N4qK89M/Bp/lHDhMSzl4g7taZ+trG0K09bScNZl9SuE9xzX9aBbd/e3PfnhJPLgunxROm1AgEg=)
-    username: ENC(xwUvoLMvaq5fsU7C0N+GKQ==)
-    password: ENC(25nedi1bdaKfjjIz7tZolw==)
+    url: ENC(tq3IL4VLVsnulAL6J785QYgbOSyMRA0VEyJYtkr3pLaaJ7bUA4Cu14a9P6iwWBUifwdFN8PID3J7LaoMMYGHhw==)
+    username: ENC(ySBkqn7rc0rzhCnJx1aNtMcQdtGI7IRQ)
+    password: ENC(i7j46L3hTWPdOmMe3uGWug==)
     driver-class-name: org.mariadb.jdbc.Driver
   # JPA Properties
   jpa:

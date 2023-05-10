@@ -22,7 +22,7 @@ public record CostumePostRequest (
 	@Schema(description = "관련된 도전과제 ID", example = "1")
 	@Positive(message = "필수 입력 항목입니다. (양수)")
 	@Max(value = Integer.MAX_VALUE, message = "범위를 벗어났습니다.")
-	Integer questId
+	Long questId
 ){
 
 }

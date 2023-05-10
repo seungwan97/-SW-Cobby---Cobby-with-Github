@@ -3,7 +3,9 @@ package com.cobby.main.avatar.api.dto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Positive;
+import lombok.Builder;
 
+@Builder
 public record AvatarUpdateRequest(
 	@Schema(description = "아바타 레벨", example = "10")
 	@Positive(message = "필수 입력 항목입니다. (양수)")
@@ -13,6 +15,15 @@ public record AvatarUpdateRequest(
 	@Schema(description = "아바타 경험치", example = "1026")
 	@Positive(message = "필수 입력 항목입니다. (양수)")
 	@Max(value = 167025, message = "범위를 벗어났습니다.")
-	Integer exp
+	Integer exp,
+
+	@Schema(description = "머리 부분 코스튬 ID", example = "12")
+	Long head,
+
+	@Schema(description = "얼굴 부분 코스튬 ID", example = "2")
+	Long face,
+
+	@Schema(description = "몸통 부분 코스튬 ID", example = "7")
+	Long body
 ) {
 }

@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 public record QuestPutRequest(
     @Schema(description = "도전과제 ID", example = "1")
-    Integer questId,
+    Long questId,
 
     @Schema(description = "도전과제 이름", example = "출석 연속 10회 달성")
     String questName,

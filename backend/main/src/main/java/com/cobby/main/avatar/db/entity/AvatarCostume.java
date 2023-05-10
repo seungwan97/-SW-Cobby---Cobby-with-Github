@@ -2,6 +2,7 @@ package com.cobby.main.avatar.db.entity;
 
 import com.cobby.main.common.entity.BaseTimeEntity;
 import com.cobby.main.costume.db.entity.Costume;
+import com.cobby.main.quest.db.entity.Quest;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -21,7 +22,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Builder(toBuilder = true)
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,7 +33,7 @@ public class AvatarCostume extends BaseTimeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "avatar_costume_id", nullable = false, columnDefinition = "INT UNSIGNED")
-	private Integer avatarCostumeId;
+	private Long avatarCostumeId;
 
 	@NotNull(message = "필수 입력 항목입니다. (avatar)")
 	@JsonIgnore
@@ -47,4 +47,9 @@ public class AvatarCostume extends BaseTimeEntity {
 	@JoinColumn(name = "costume_id")
 	private Costume costume;
 
+	@Builder
+	public AvatarCostume(Avatar avatar, Costume costume) {
+		this.avatar = avatar;
+		this.costume = costume;
+	}
 }

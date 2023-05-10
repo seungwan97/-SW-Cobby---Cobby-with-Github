@@ -1,36 +1,24 @@
 package com.cobby.main.avatar.api.dto.response;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.cobby.main.quest.api.dto.response.QuestGetResponse;
+import com.cobby.main.quest.db.entity.Quest;
 
-import com.cobby.main.avatar.db.entity.AvatarQuest;
-import com.cobby.main.costume.db.entity.Costume;
-import com.cobby.main.quest.db.entity.enumtype.QuestCategory;
-import com.cobby.main.title.db.entity.Title;
-
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 
-@Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class AvatarQuestGetResponse {
 
-	private Integer questId;
+	private Long avatarQuestId;
 
-	private String questName;
+	private QuestGetResponse quest;
 
-	private QuestCategory questType;
+	@Builder
+	public AvatarQuestGetResponse(Long avatarQuestId, Quest quest) {
+		this.avatarQuestId = avatarQuestId;
+		this.quest = QuestGetResponse.builder()
+			.quest(quest)
+			.build();
+	}
 
-	// quest code
-	private Integer questGoal;
-
-	// 진행도
-	private Integer progress;
-
-	// costume or title
-	private Object award;
 }

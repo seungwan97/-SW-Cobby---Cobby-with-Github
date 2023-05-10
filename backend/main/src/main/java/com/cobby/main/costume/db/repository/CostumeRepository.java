@@ -9,6 +9,6 @@ import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
 
 @Repository
-public interface CostumeRepository extends JpaRepository<Costume, Integer> {
+public interface CostumeRepository extends JpaRepository<Costume, Long> {
 	List<Costume> findAllByCategory(CostumeCategory costumeCategory);
 }

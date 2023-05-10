@@ -27,7 +27,7 @@ public class TitleServiceImpl implements TitleService {
 	private final QuestRepository questRepository;
 
 	@Override
-	public TitleGetResponse selectTitle(Integer titleId) {
+	public TitleGetResponse selectTitle(Long titleId) {
 		return TitleGetResponse.builder()
 			.title(titleRepository.findById(titleId).orElseThrow(NotFoundException::new))
 			.build();
@@ -42,7 +42,7 @@ public class TitleServiceImpl implements TitleService {
 	}
 
 	@Override
-	public void insertTitle(TitlePostRequest titleInfo) {
+	public Long insertTitle(TitlePostRequest titleInfo) {
 		var quest = questRepository.findById(titleInfo.questId()).orElseThrow(NotFoundException::new);
 
 		var title = Title.builder()
@@ -51,11 +51,11 @@ public class TitleServiceImpl implements TitleService {
 				.explanation(titleInfo.explanation())
 				.build();
 
-		titleRepository.save(title);
+		return titleRepository.save(title).getTitleId();
 	}
 
 	@Override
-	public void updateTitle(TitlePutRequest titleInfo) {
+	public Long updateTitle(TitlePutRequest titleInfo) {
 		var title = titleRepository.findById(titleInfo.titleId()).orElseThrow(NotFoundException::new);
 		var quest = questRepository.findById(titleInfo.questId()).orElseThrow(NotFoundException::new);
 
@@ -65,12 +65,13 @@ public class TitleServiceImpl implements TitleService {
 				.explanation(titleInfo.explanation())
 				.build();
 
-		titleRepository.save(updateTitle);
+		return titleRepository.save(updateTitle).getTitleId();
 	}
 
 	@Override
-	public void deleteTitle(Integer titleId) {
+	public Long deleteTitle(Long titleId) {
 		titleRepository.findById(titleId).orElseThrow(NotFoundException::new);
 		titleRepository.deleteById(titleId);
+		return titleId;
 	}
 }

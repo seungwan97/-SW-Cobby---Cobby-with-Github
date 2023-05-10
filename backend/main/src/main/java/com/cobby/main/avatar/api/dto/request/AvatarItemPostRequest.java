@@ -11,6 +11,6 @@ public record AvatarItemPostRequest(
 
 	@Schema(description = "아이템 ID", example = "1")
 	@Positive(message = "필수 입력 항목입니다. (양수)")
-	Integer itemId
+	Long itemId
 ) {
 }

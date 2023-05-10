@@ -53,7 +53,7 @@ public class CostumeController {
 	public ResponseEntity<? extends BaseResponseBody> getCostume(
 		@PathVariable
 		@Positive(message = "올바르지 않은 ID 양식입니다.") // 최대 상한 조건(Max)도 추가를 고려해야 함
-		Integer costumeId) {
+		Long costumeId) {
 
 		var costume = costumeService.selectCostume(costumeId);
 
@@ -86,7 +86,7 @@ public class CostumeController {
 	public ResponseEntity<? extends BaseResponseBody> deleteCostume(
 		@PathVariable
 		@Positive(message = "올바르지 않은 ID 양식입니다.") // 최대 상한 조건(Max)도 추가를 고려해야 함
-		Integer costumeId) {
+		Long costumeId) {
 
 		var deletedId = costumeService.deleteCostume(costumeId);
 
