@@ -18,6 +18,7 @@ import com.cobby.main.costume.api.dto.request.CostumePostRequest;
 import com.cobby.main.costume.api.service.CostumeService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -25,6 +26,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 
+@Tag(name = "코스튬", description = "코스튬 관련 API 문서입니다.")
 @RequiredArgsConstructor
 @Validated
 @RestController
