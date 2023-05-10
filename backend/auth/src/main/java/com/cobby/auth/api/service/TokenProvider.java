@@ -19,13 +19,17 @@ public class TokenProvider {
 
     private final String secret;
     private final long tokenValidityInMilliseconds;
+    private final RedisService redisService;
 
     @Autowired
-    public TokenProvider(@Value("${jwt.secret}") String secret,
-        @Value("${jwt.token-validity-in-seconds}") long tokenValidityInMilliseconds
+    public TokenProvider(
+            @Value("${jwt.secret}") String secret,
+            @Value("${jwt.token-validity-in-seconds}") long tokenValidityInMilliseconds,
+            RedisService redisService
     ) {
         this.secret = Base64.getEncoder().encodeToString(secret.getBytes());
         this.tokenValidityInMilliseconds = tokenValidityInMilliseconds * 1000;
+        this.redisService = redisService;
     }
 
     public String createToken(String userId, String role, TokenKey tokenKey) {
@@ -61,7 +65,7 @@ public class TokenProvider {
         return JwtCode.DENIED;
     }
 
-    private long getExpiration(TokenKey tokenKey) {
+    public long getExpiration(TokenKey tokenKey) {
 
         String delimiter = tokenKey.getKey();
         if(delimiter.equals(TokenKey.ACCESS.getKey())) {
@@ -71,6 +75,14 @@ public class TokenProvider {
         } else {
             throw new RuntimeException();
         }
+    }
+
+    public String getSavedRefresh(String key) {
+        return redisService.getData(key);
+    }
+
+    public void setSaveRefresh(String key, String value, Long time) {
+        redisService.setDataWithExpiration(key, value, time);
     }
 
     public String generateAccess(String userId, String role) {
