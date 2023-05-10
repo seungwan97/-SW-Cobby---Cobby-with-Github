@@ -29,7 +29,7 @@ const MainFunc = ({
 export default MainFunc;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const userId = "test";
+  const userId = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
   const token = "token";
 
   const nicknameRes = await getNickname(token, userId);
