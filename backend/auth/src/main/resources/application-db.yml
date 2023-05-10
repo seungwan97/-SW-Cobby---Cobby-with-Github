@@ -17,5 +17,5 @@ spring:
 
 request:
   url:
-    user-server: http://k8b201.p.ssafy.io:15010/api/users
+    user-server: http://k8b201.p.ssafy.io:15020/api/users
     front-login: https://cobby-play.com
