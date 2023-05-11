@@ -41,22 +41,17 @@ public class AvatarItemController {
 	private final AvatarTitleService avatarTitleService;
 	private final AvatarQuestService avatarQuestService;
 
-	@Hidden
 	@ApiDocumentResponse
-	@Operation(summary = "#####아바타가 가진 특정 타입 아이템 하나 조회#####", description = "아이템 종류(코스튬 = costume, 칭호 = title, 도전 과제 = quest)와 종류별 ID 정보를 입력해 아이템을 조회합니다.")
-	@GetMapping("/{itemType}/{itemId}")
-	public ResponseEntity<? extends BaseResponseBody> getAvatarItem(
+	@Operation(summary = "아바타가 가진 코스튬 카테고리 별 조회", description = "코스튬의 특정 카테고리(머리 = HEAD, 몸통 = BODY, 효과 = EFFECT) 목록을 조회합니다.")
+	@GetMapping("/costumes/{itemType}")
+	public ResponseEntity<? extends BaseResponseBody> getAvatarCostumeByCategory(
 		@RequestHeader("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId,
-		@PathVariable @NotBlank(message = "필수 입력 항목입니다. (costume / title / quest)")
-		String itemType,
-		@PathVariable @Positive(message = "필수 입력 항목입니다. (양수)")
-		Long itemId) {
+		@PathVariable @NotBlank(message = "필수 입력 항목입니다. (HEAD / BODY / EFFECT)")
+		String itemType) {
 
-		var avatarItemService = pickServiceByItemType(itemType);
-
-		var item = avatarItemService.selectItem(userId, itemId);
+		var item = avatarCostumeService.selectAllCostumesByType(userId, itemType);
 
 		return ResponseEntity
 			.ok()
