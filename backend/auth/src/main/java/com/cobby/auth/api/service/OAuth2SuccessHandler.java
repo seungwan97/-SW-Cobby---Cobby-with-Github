@@ -56,6 +56,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         Token tokens = new Token();
 
+        String init = "";
+
         // 1. ( Git token ) 을 기준으로 회원 정보를 받아온다.
         User user = Optional.ofNullable(mongoTemplate.findOne(new Query(Criteria.where("oauthId").is(userDto.getOauthId())),
                 User.class,"user_info")).orElse(guest);
@@ -84,6 +86,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             // 2-4. 토큰 발행
             tokens = tokenProvider.generateToken(userInfoDto.getUserId(), Role.USER.getKey());
 
+            // 최초 로그인 일때, true < 헤더에 저장 >
+            init = "true";
+            response.setHeader("Initial", init);
+
         }
         else {
             System.out.println("===================================================================== 기존 회원 로그인");
@@ -100,6 +106,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
             tokens = tokenProvider.generateToken(userInfoDto.getUserId(), Role.USER.getKey());
 
+            // 기존 로그인 일때, false < 헤더에 저장 >
+            init = "false";
+            response.setHeader("Initial", init);
+
         }
 
         // 2-5. 프로필 DB에 저장
@@ -107,10 +117,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 //        log.info("UserInfo Body = {}", userinfo.getBody());
 //        log.info("UserInfo Status = {}", userinfo.getStatusCode());
 
-
         // 3. FE 에 요청할 targetUrl 생성
         String targetUrl;
         targetUrl = UriComponentsBuilder.fromUriString(REDIRECT_URI)
+                .queryParam("Initial", init)
                 .build().toUriString();
 
         // 3-1. 쿠키 생성 및 Refresh Token 저장
