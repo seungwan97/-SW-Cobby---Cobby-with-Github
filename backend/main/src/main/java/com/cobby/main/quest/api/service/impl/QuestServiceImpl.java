@@ -152,8 +152,10 @@ public class QuestServiceImpl implements QuestService {
 							award = "none";
 						else if (quest.getCostume() != null)
 							award = quest.getCostume();
-						else
+						else if (quest.getTitle() != null)
 							award = quest.getTitle();
+						else
+							award = "none";
 
 						currentQuests[idx] = CurrentQuest.builder()
 							.questId(quest.getQuestId())
