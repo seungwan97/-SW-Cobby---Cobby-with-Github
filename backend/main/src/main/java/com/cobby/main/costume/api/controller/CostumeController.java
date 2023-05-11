@@ -1,5 +1,6 @@
 package com.cobby.main.costume.api.controller;
 
+import java.io.IOException;
 import java.net.URI;
 
 import io.swagger.v3.oas.annotations.Hidden;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cobby.main.common.response.BaseResponseBody;
 import com.cobby.main.common.util.ApiDocumentResponse;
@@ -67,10 +70,12 @@ public class CostumeController {
 	@Operation(summary = "#####코스튬 생성#####", description = "코스튬 이름, 종류, 관련 도전과제 ID에 해당하는 코스튬을 생성합니다.")
 	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> createCostume(
-		@RequestBody @Valid CostumePostRequest costumePostRequest,
-		HttpServletRequest request) {
+		@RequestPart @Valid CostumePostRequest costumePostRequest,
+		@RequestPart(value = "pngFile", required = true) MultipartFile pngFile,
+		@RequestPart(value = "gifFile", required = true) MultipartFile gifFile,
+		HttpServletRequest request) throws IOException {
 
-		var costumeId = costumeService.insertCostume(costumePostRequest);
+		var costumeId = costumeService.insertCostume(costumePostRequest, pngFile, gifFile);
 
 		var location = URI.create(request.getRequestURI() + "/" + costumeId);
 

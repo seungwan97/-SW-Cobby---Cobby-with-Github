@@ -19,3 +19,7 @@ spring:
   jackson:
     serialization:
       FAIL_ON_EMPTY_BEANS: false
+
+# okhttp request url to store-service
+request:
+  url: ENC(CvV1QHfQ5kdVK2p2q3bHCX8l4WDtD1IMPSmD9Ltxo3gRdUF92NZI243fvfzD3qgD57ZmL)

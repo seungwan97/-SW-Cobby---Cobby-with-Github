@@ -50,9 +50,6 @@ public class Costume {
 	@Column(name = "img_url")
 	private String imgUrl;
 
-	@Column(name = "silhouette_img_url")
-	private String silhouetteImgUrl;
-
 	@Column(name = "gif_url")
 	private String gifUrl;
 }
