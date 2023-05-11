@@ -13,6 +13,6 @@ spring:
       max-request-size: 15MB
 
 # logger
-#logging.level:
-#  org.hibernate.SQL: info
-#  org.hibernate.type: trace
+logging.level:
+  org.hibernate.SQL: info
+  org.hibernate.type: trace
