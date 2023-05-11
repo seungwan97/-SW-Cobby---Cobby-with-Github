@@ -40,8 +40,8 @@ public class QuestGetResponse {
         this.costume = CostumeGetResponse.builder()
             .costume(quest.getCostume())
             .build();
-        this.title = TitleGetResponse.builder()
-            .title(quest.getTitle())
-            .build();
+//        this.title = TitleGetResponse.builder()
+//            .title(quest.getTitle())
+//            .build();
     }
 }
