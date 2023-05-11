@@ -20,17 +20,27 @@ interface Props {
   attendanceData: {
     relayCnt: number;
   };
+  avatarData: {
+    level: number;
+    exp: number;
+    outfits: {
+      head: string;
+      effect: string;
+      body: string;
+    };
+  };
 }
 const MainPage = (props: Props) => {
   const { nicknameData } = props;
   const { statusData } = props;
   const { commitData } = props;
   const { attendanceData } = props;
+  const { avatarData } = props;
 
   return (
     <Fragment>
       <style.MainPageContent>
-        <CobbyInfo nicknameData={nicknameData} />
+        <CobbyInfo nicknameData={nicknameData} avatarData={avatarData} />
         <GithubStatus statusData={statusData} commitData={commitData} />
         <CurrentCommit
           nicknameData={nicknameData}

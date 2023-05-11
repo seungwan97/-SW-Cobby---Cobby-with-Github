@@ -7,17 +7,27 @@ interface Props {
   nicknameData: {
     nickname: string;
   };
+  avatarData: {
+    level: number;
+    exp: number;
+    outfits: {
+      head: string;
+      effect: string;
+      body: string;
+    };
+  };
 }
 const CobbyInfo = (props: Props) => {
   const { nicknameData } = props;
+  const { avatarData } = props;
   return (
     <style.CobbyInfoWrapper>
       <TextBox size={37} content={`${nicknameData.nickname}'s Cobby`} />
       <style.TextMargin />
-      <TextBox size={25} content={"Lv. 10"} />
+      <TextBox size={25} content={`Lv. ${avatarData.level}`} />
       <style.Margin />
       <Cobby gifSrc="" />
-      <ExpBar />
+      <ExpBar avatarData={avatarData} />
     </style.CobbyInfoWrapper>
   );
 };

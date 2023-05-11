@@ -1,16 +1,16 @@
 import * as style from "./style/GithubLoginButton";
+import { useEffect } from "react";
+import client from "@/pages/api/client";
 
 const GithubLoginButton = () => {
   const Login = () => {
-    console.log("깃허브로그인!");
+    window.location.href = `${client.defaults.baseURL}/oauth2/authorization/github`;
+    // window.location.href = `http://cobby-play.com/oauth2/authorization/github`;
   };
+  useEffect(() => {}, []);
   return (
-    <style.LoginButton>
-      <style.GithubLogo
-        src="/logo/GithubLogo.png"
-        alt="github"
-        onClick={Login}
-      />
+    <style.LoginButton onClick={Login}>
+      <style.GithubLogo src="/logo/GithubLogo.png" alt="github" />
       Login with Github
     </style.LoginButton>
   );
