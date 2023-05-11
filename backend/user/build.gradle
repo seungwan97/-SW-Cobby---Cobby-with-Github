@@ -20,49 +20,35 @@ repositories {
 }
 
 dependencies {
+    compileOnly 'org.projectlombok:lombok'
+
     implementation 'io.github.ricall.junit5-wiremock:junit5-wiremock:2.0.0'
     implementation 'com.github.tomakehurst:wiremock:2.27.2'
-    testImplementation 'junit:junit:4.13.1'
-    annotationProcessor 'io.github.ricall.junit5-wiremock:junit5-wiremock:2.0.0'
-    compileOnly 'org.projectlombok:lombok'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-//    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
-//    implementation 'org.apache.kafka:kafka-streams'
-//    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'org.springframework.boot:spring-boot-starter-web' // mvc
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-validation' // validation
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5' // Jasypt
+    implementation 'com.google.code.gson:gson:2.8.5' // gson
+    implementation 'com.google.guava:guava:31.1-jre' // guava
+    implementation 'org.apache.xmlgraphics:batik-all:1.14' // basik
+    implementation 'com.squareup.okhttp3:okhttp' // okhttp3
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4' // swagger
+    implementation 'org.json:json:20200518'
+    implementation 'org.springframework.kafka:spring-kafka' // kafka
+
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-//    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client' // mariadb
+
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'io.projectreactor:reactor-test'
-//    testImplementation 'org.springframework.kafka:spring-kafka-test'
-
-    //Jasypt
-    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
-
-    //gson
-    implementation 'com.google.code.gson:gson:2.8.5'
-
+    annotationProcessor 'io.github.ricall.junit5-wiremock:junit5-wiremock:2.0.0'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    //guava
-    implementation 'com.google.guava:guava:31.1-jre'
-
-    //test
-    testImplementation 'io.rest-assured:rest-assured:5.2.1'
-
-    //basik
-    implementation 'org.apache.xmlgraphics:batik-all:1.14'
-
-    // okhttp3
-    implementation 'com.squareup.okhttp3:okhttp'
-
-    // swagger
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
-
-    implementation 'org.json:json:20200518'
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'io.rest-assured:rest-assured:5.2.1' // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
 }
 
 tasks.named('test') {
