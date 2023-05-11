@@ -62,7 +62,6 @@ public class AvatarQuestServiceImpl implements AvatarQuestService {
 		return avatarQuests.stream()
 			.map(quest ->
 				AvatarQuestGetResponse.builder()
-					.avatarQuestId(quest.getAvatarQuestId())
 					.quest(quest.getQuest())
 					.build())
 			.toList();
@@ -79,7 +78,6 @@ public class AvatarQuestServiceImpl implements AvatarQuestService {
 			.orElseThrow(() -> new IllegalArgumentException("코스튬 정보가 없습니다. (ID=" + itemId + ")"));
 
 		return AvatarQuestGetResponse.builder()
-			.avatarQuestId(avatarQuest.getAvatarQuestId())
 			.quest(avatarQuest.getQuest())
 			.build();
 	}

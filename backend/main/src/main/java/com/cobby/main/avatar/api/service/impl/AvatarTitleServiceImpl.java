@@ -57,7 +57,6 @@ public class AvatarTitleServiceImpl implements AvatarTitleService {
 		return avatarTitles.stream()
 			.map(title ->
 				AvatarTitleGetResponse.builder()
-					.avatarTitleId(title.getAvatarTitleId())
 					.title(title.getTitle())
 					.build())
 			.toList();
@@ -72,7 +71,6 @@ public class AvatarTitleServiceImpl implements AvatarTitleService {
 			.orElseThrow(() -> new IllegalArgumentException("칭호 정보가 없습니다. (ID=" + itemId + ")"));
 
 		return AvatarTitleGetResponse.builder()
-			.avatarTitleId(avatarTitle.getAvatarTitleId())
 			.title(avatarTitle.getTitle())
 			.build();
 	}
