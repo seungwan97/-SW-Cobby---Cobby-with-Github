@@ -36,7 +36,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final TokenProvider tokenProvider;
     private final UserProfileClient userProfileClient;
 
-    private String REDIRECT_URI = "http://localhost:3000";
+//    private String REDIRECT_URI = "http://localhost:3000";
+    private String REDIRECT_URI = "https://cobby-play.com";
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
