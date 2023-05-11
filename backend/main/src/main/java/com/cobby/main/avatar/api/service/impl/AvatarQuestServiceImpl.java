@@ -3,7 +3,6 @@ package com.cobby.main.avatar.api.service.impl;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import com.cobby.main.avatar.api.dto.request.AvatarItemPostRequest;

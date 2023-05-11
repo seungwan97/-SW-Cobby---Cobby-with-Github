@@ -147,13 +147,16 @@ public class QuestServiceImpl implements QuestService {
 						// 퀘스트가 가지고 있는 보상의 유형(코스튬/칭호) 파악
 						Object award = "";
 
-						// null이 아니면 보상임
-						if (quest.getCostume() == null && quest.getTitle() == null)
-							award = "none";
-						else if (quest.getCostume() != null)
-							award = quest.getCostume();
-						else
-							award = quest.getTitle();
+						award = quest.getCostume();
+//						// null이 아니면 보상임
+//						if (quest.getCostume() == null && quest.getTitle() == null)
+//							award = "none";
+//						else if (quest.getCostume() != null)
+//							award = quest.getCostume();
+//						else if (quest.getTitle() != null)
+//							award = quest.getTitle();
+//						else
+//							award = "none";
 
 						currentQuests[idx] = CurrentQuest.builder()
 							.questId(quest.getQuestId())
