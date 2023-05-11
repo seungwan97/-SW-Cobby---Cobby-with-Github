@@ -2,6 +2,8 @@ package com.cobby.main.avatar.api.dto.response;
 
 import com.cobby.main.costume.api.dto.response.CostumeGetResponse;
 import com.cobby.main.costume.db.entity.Costume;
+import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
+import com.cobby.main.quest.api.dto.response.QuestGetResponse;
 
 import lombok.Builder;
 import lombok.Data;
@@ -9,15 +11,25 @@ import lombok.Data;
 @Data
 public class AvatarCostumeGetResponse {
 
-	private Long avatarCostumeId;
+	private Long costumeId;
 
-	private CostumeGetResponse costume;
+	private String name;
+
+	private CostumeCategory category;
+
+	private Long questId;
+
+	private String imgUrl;
+
+	private String gifUrl;
 
 	@Builder
-	public AvatarCostumeGetResponse(Long avatarCostumeId, Costume costume) {
-		this.avatarCostumeId = avatarCostumeId;
-		this.costume = CostumeGetResponse.builder()
-			.costume(costume)
-			.build();
+	public AvatarCostumeGetResponse(Costume costume) {
+		this.costumeId = costume.getCostumeId();
+		this.name = costume.getName();
+		this.category = costume.getCategory();
+		this.questId = costume.getQuest().getQuestId();
+		this.imgUrl = costume.getImgUrl();
+		this.gifUrl = costume.getGifUrl();
 	}
 }
