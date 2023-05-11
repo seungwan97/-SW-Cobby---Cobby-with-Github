@@ -12,10 +12,26 @@ import Cobby from "@/components/common/Cobby/Cobby";
 const CostumePage = (props: any) => {
   // const router = useRouter();
 
-  const [costumeGifUrl, setCostumeGifUrl] = useState("");
+  const [outfits, setOutfits] = useState(
+    props.myCobbyOutfits
+  );
 
-  const handleInventoryItem = (gifUrl: string) => {
-    setCostumeGifUrl(gifUrl);
+  const handleInventoryItem = (itemInfo: any) => {
+    // console.log(itemInfo);
+
+    setOutfits((prevOutfits: any) => {
+      let updatedOutfits = { ...prevOutfits };
+
+      if (itemInfo.category === "HEAD") {
+        updatedOutfits.head = itemInfo.gifUrl;
+      } else if (itemInfo.category === "BODY") {
+        updatedOutfits.body = itemInfo.gifUrl;
+      } else if (itemInfo.category === "EFFECT") {
+        updatedOutfits.effect = itemInfo.gifUrl;
+      }
+
+      return updatedOutfits;
+    });
   };
 
   return (
@@ -25,7 +41,7 @@ const CostumePage = (props: any) => {
           <TextBox size={50} content={"COSTUME"} />
         </style.CostumePageTextWrapper>
         <style.CostumedCobby>
-          <Cobby gifUrl={costumeGifUrl} />
+          <Cobby outfits={outfits} />
         </style.CostumedCobby>
         <Inventory
           headItemList={props.HEAD_ITEMS}

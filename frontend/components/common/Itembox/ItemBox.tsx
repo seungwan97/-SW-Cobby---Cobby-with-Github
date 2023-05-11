@@ -4,7 +4,7 @@ import Image from "next/image";
 // ItemBox
 const ItemBox = (props: any) => {
   const handleItemClick = () => {
-    props.onItemClick(props.item.gifUrl);
+    props.onItemClick(props.item);
   };
 
   return (
