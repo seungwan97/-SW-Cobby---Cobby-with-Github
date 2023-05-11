@@ -6,13 +6,12 @@ import java.util.Objects;
 
 import com.cobby.main.avatar.api.dto.response.AvatarGetResponse;
 import com.cobby.main.avatar.db.repository.AvatarQuestRepository;
-import com.cobby.main.quest.db.entity.CurrentQuest;
-import com.cobby.main.avatar.api.service.AvatarQuestService;
+import com.cobby.main.quest.api.dto.response.CurrentQuest;
 import com.cobby.main.avatar.api.service.AvatarService;
 import com.cobby.main.common.exception.NotFoundException;
 import com.cobby.main.quest.api.dto.request.QuestPostRequest;
-import com.cobby.main.quest.api.dto.request.QuestPutRequest;
 import com.cobby.main.quest.api.dto.response.QuestGetResponse;
+
 import org.springframework.stereotype.Service;
 
 import com.cobby.main.quest.api.service.QuestService;
@@ -20,10 +19,12 @@ import com.cobby.main.quest.db.entity.Quest;
 import com.cobby.main.quest.db.entity.enumtype.QuestCategory;
 import com.cobby.main.quest.db.repository.QuestRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
-@Service
 @RequiredArgsConstructor
+@Transactional
+@Service
 public class QuestServiceImpl implements QuestService {
 
 	private final AvatarService avatarService;
@@ -34,7 +35,8 @@ public class QuestServiceImpl implements QuestService {
 	@Override
 	public QuestGetResponse selectQuest(Long questId) {
 		return QuestGetResponse.builder()
-			.quest(questRepository.findById(questId).orElseThrow(NotFoundException::new))
+			.quest(questRepository.findById(questId)
+				.orElseThrow(NotFoundException::new))
 			.build();
 	}
 
@@ -55,31 +57,14 @@ public class QuestServiceImpl implements QuestService {
 	}
 
 	@Override
-	public void insertQuest(QuestPostRequest questInfo) {
+	public Long insertQuest(QuestPostRequest questInfo) {
 		var quest = Quest.builder()
-				.questName(questInfo.questName())
-				.questType(questInfo.questType())
-				.questGoal(questInfo.questGoal())
-				.costumes(questInfo.costumes())
-				.titles(questInfo.titles())
-				.build();
+			.questName(questInfo.questName())
+			.questType(questInfo.questType())
+			.questGoal(questInfo.questGoal())
+			.build();
 
-		questRepository.save(quest);
-	}
-
-	@Override
-	public Long updateQuest(QuestPutRequest questInfo) {
-		var quest = questRepository.findById(questInfo.questId()).orElseThrow(NotFoundException::new);
-		var updateQuest = quest.toBuilder()
-				.questName(questInfo.questName())
-				.questType(questInfo.questType())
-				.questGoal(questInfo.questGoal())
-				.titles(questInfo.titles())
-				.costumes(questInfo.costumes())
-				.build();
-
-		questRepository.save(updateQuest).getQuestId();
-		return null;
+		return questRepository.save(quest).getQuestId();
 	}
 
 	@Override
@@ -140,9 +125,10 @@ public class QuestServiceImpl implements QuestService {
 			// 4. 항목별 완료한 도전과제의 달성 조건 받아옴
 			// 0 : 레벨, 1 : 커밋, 2 : 출석, 3 : 아이템 순서
 			int[] goal = new int[4];
-			for (var aqList : avatarQuestList) {
-				int aqGoal = aqList.getQuest().getQuestGoal();
-				switch (aqList.getQuest().getQuestType()) {
+			// 아바타가 달성한 각 유형별 퀘스트의 가장 큰 달성 조건을 산출
+			for (var avatarQuest : avatarQuestList) {
+				int aqGoal = avatarQuest.getQuest().getQuestGoal();
+				switch (avatarQuest.getQuest().getQuestType()) {
 					case LEVEL -> goal[0] = Math.max(goal[0], aqGoal);
 					case COMMIT -> goal[1] = Math.max(goal[1], aqGoal);
 					case ATTENDANCE -> goal[2] = Math.max(goal[2], aqGoal);
@@ -155,16 +141,19 @@ public class QuestServiceImpl implements QuestService {
 			for (List<QuestGetResponse> qList : questList) {
 				for (QuestGetResponse quest : qList) {
 					if (goal[idx] < quest.getQuestGoal()) {
-						int progress = Math.min(Math.round(((float)progressReq[idx] / quest.getQuestGoal()) * 100), 100);
+						int progress = Math.min(Math.round(((float)progressReq[idx] / quest.getQuestGoal()) * 100),
+							100);
 
+						// 퀘스트가 가지고 있는 보상의 유형(코스튬/칭호) 파악
 						Object award = "";
 
-						if (quest.getCostumes().size() == 0 && quest.getTitles().size() == 0)
+						// null이 아니면 보상임
+						if (quest.getCostume() == null && quest.getTitle() == null)
 							award = "none";
-						else if (quest.getCostumes().size() > 0)
-							award = quest.getCostumes().get(0);
+						else if (quest.getCostume() != null)
+							award = quest.getCostume();
 						else
-							award = quest.getTitles().get(0);
+							award = quest.getTitle();
 
 						currentQuests[idx] = CurrentQuest.builder()
 							.questId(quest.getQuestId())
