@@ -7,7 +7,7 @@ spring:
           github:
             client-id: ENC(gDE0T0N7wd+acpzThjIWB9KyfLA1fsd3bJnVQEko8PQ=)
             client-secret: ENC(wXfDuKyMOAF+tYYM/Vb3DhQMX1E5ciDZdU5JVMLeU9JQKC+9qlZQ4DpDSuii3C2I7wl6oFAnxyg=)
-            redirect-uri: ENC(jM67tnBzG50S2Ji+/Q8kzKHp3JrI+AiRH9TrhdRBpYlxpEZyslXW/kpuklrovtRxqrfBQoBhgLI=)
+            redirect-uri: https://cobby-play.com/api/auth/login/oauth2/code/github
 
 jwt:
   header: Authorization
