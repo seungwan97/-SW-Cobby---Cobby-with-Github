@@ -30,13 +30,14 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     //s3 05-25 추가
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+      
     // aspectJ
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     // https://mvnrepository.com/artifact/org.apache.tika/tika-core
     implementation 'org.apache.tika:tika-core:1.24.1'
     //gson
     implementation 'com.google.code.gson:gson:2.8.5'
-    
+
     //basik
     implementation 'org.apache.xmlgraphics:batik-all:1.14'
 
