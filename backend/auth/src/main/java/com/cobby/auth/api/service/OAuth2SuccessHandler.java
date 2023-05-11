@@ -8,6 +8,7 @@ import com.cobby.auth.api.dto.UserDto;
 import com.cobby.auth.api.dto.UserInfoDto;
 import com.cobby.auth.api.entity.User;
 import com.cobby.auth.common.exception.NotFoundException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -101,16 +102,21 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         }
 
         // 2-5. 프로필 DB에 저장
-        var userinfo = userProfileClient.logInUserInfo(userInfoDto);
-
-        log.info("UserInfo Body = {}", userinfo.getBody());
-        log.info("UserInfo Status = {}", userinfo.getStatusCode());
+//        var userinfo = userProfileClient.logInUserInfo(userInfoDto);
+//        log.info("UserInfo Body = {}", userinfo.getBody());
+//        log.info("UserInfo Status = {}", userinfo.getStatusCode());
 
         String targetUrl;
         targetUrl = UriComponentsBuilder.fromUriString(REDIRECT_URI)
                 .queryParam(TokenKey.ACCESS.getKey(), "Bearer-" + tokens.getAccessToken())
                 .build().toUriString();
         // * 프런트에서 리다이렉트 할때, 파싱해서 access token 빼서 쓰고 진행하는걸로..
+
+//        Cookie cookie = new Cookie("refreshToken", key); // refresh token
+//        cookie.setPath("/"); // Cookie의 유효 경로 설정 (루트 경로로 설정하면 전체 사이트에서 접근 가능)
+//        cookie.setMaxAge(30 * 24 * 60 * 60); // Cookie의 유효 기간 설정 (예: 30일)
+//        cookie.setHttpOnly(true); // JavaScript에서 접근할 수 없도록 설정
+//        cookie.setSecure(true); // HTTPS에서만 전송하도록 설정 (필요한 경우)
 
         // 3. Front Page로 리다이렉트 수행
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
