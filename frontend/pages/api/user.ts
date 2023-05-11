@@ -1,14 +1,14 @@
+import axios from "axios";
 import client from "./client";
 
-const req = "/api/user";
+const req = "http://k8b201.p.ssafy.io:15020/api/user";
 
-// 메인페이지 닉네임 정보 불러오기
-export const getNickname = async (userId: string) => {
-  const response = await client.get(`${req}/users`, {
+// 메인페이지 닉네임, 깃허브url 정보 불러오기
+export const getNicknameAndGithubURL = async (userId: string) => {
+  const response = await axios.get(`${req}/users`, {
     headers: {
       // Authorization: `Bearer ${accessToken}`,
       userId: `${userId}`,
-      "Content-Type": "application/json",
     },
   });
 
@@ -21,7 +21,6 @@ export const getStatus = async (userId: string) => {
     headers: {
       // Authorization: `Bearer ${accessToken}`,
       userId: `${userId}`,
-      "Content-Type": "application/json",
     },
   });
 
@@ -34,7 +33,6 @@ export const getCommitInfo = async (userId: string) => {
     headers: {
       // Authorization: `Bearer ${accessToken}`,
       userId: `${userId}`,
-      "Content-Type": "application/json",
     },
   });
 
@@ -47,7 +45,6 @@ export const getAttendanceInfo = async (userId: string) => {
     headers: {
       // Authorization: `Bearer ${accessToken}`,
       userId: `${userId}`,
-      "Content-Type": "application/json",
     },
   });
 

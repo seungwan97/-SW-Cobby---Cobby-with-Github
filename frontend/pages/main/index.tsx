@@ -5,7 +5,7 @@ import MainPage from "@/components/page/MainPage/MainPage";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 
 import {
-  getNickname,
+  getNicknameAndGithubURL,
   getStatus,
   getCommitInfo,
   getAttendanceInfo,
@@ -50,7 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
   const token = "token";
 
-  const nicknameRes = await getNickname(userId);
+  const nicknameRes = await getNicknameAndGithubURL(userId);
   const nicknameData = nicknameRes.data;
   console.log(nicknameData.content);
 
@@ -66,7 +66,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const attendanceData = attendanceRes.data;
   console.log(attendanceData.content);
 
-  const avatarRes = await getAttendanceInfo(userId);
+  const avatarRes = await getAvatarInfo(userId);
   const avatarData = avatarRes.data;
 
   console.log(avatarData.content);

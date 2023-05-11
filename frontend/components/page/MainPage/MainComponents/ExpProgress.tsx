@@ -3,6 +3,7 @@ interface Props {
   avatarData: {
     level: number;
     exp: number;
+    nextExp: number;
     outfits: {
       head: string;
       effect: string;
@@ -15,7 +16,7 @@ const ExpProgress = (props: Props) => {
   return (
     <>
       <style.FullDiv>
-        <style.RangeDiv level={avatarData.exp} fullLevel={100} />
+        <style.RangeDiv level={avatarData.exp} fullLevel={avatarData.nextExp} />
       </style.FullDiv>
     </>
   );
