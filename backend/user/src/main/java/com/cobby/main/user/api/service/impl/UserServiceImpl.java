@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
 	private final StatRepository statRepository;
 
-	private final KafkaTemplate<String, String> kafkaTemplate;
+	// private final KafkaTemplate<String, String> kafkaTemplate;
 
 	@Override
 	public UserMainResponse getUserInfo(String userId) {
