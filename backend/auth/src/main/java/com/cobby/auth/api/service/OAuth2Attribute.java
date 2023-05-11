@@ -50,7 +50,7 @@ public class OAuth2Attribute {
         map.put("id", id);
         map.put("key", attributeKey);
         map.put("nickname", nickname);
-        map.put("html_url", htmlUrl);
+        map.put("githubUrl", htmlUrl);
         return map;
     }
 }
