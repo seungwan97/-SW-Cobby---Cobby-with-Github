@@ -5,58 +5,7 @@ import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import CostumePage from "@/components/page/CostumePage/CostumePage";
 import { GetServerSideProps } from "next";
-import { showCobbyInfo } from "../api/avatars";
-
-const DUMMY_DATA = [
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Head/andae.png",
-    gifSrc: "/CostumeItems_GIF/Head/andae.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Head/rudolf.png",
-    gifSrc: "/CostumeItems_GIF/Head/rudolf.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
-  },
-  {
-    item: "/CostumeItems_IMG/Cloth/soccerplayer.png",
-    gifSrc: "/CostumeItems_GIF/Cloth/soccerplayer.gif",
-  },
-];
+import { getAllItemList } from "../api/main";
 
 // Costumepage
 const CostumeFunc = (props: any) => {
@@ -65,21 +14,38 @@ const CostumeFunc = (props: any) => {
   return (
     <Fragment>
       <page.PageWrapper>
-        <CostumePage itemList={props.itemList} />
+        <CostumePage
+          headItemList={props.HEAD_ITEMS}
+          bodyItemList={props.BODY_ITEMS}
+        />
       </page.PageWrapper>
       <BottomNavBar />
     </Fragment>
   );
 };
 
-export async function getStaticProps() {
-  // fetch data for a single meetup
+export const getServerSideProps: GetServerSideProps =
+  async (context) => {
+    // const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
 
-  return {
-    props: {
-      itemList: DUMMY_DATA,
-    },
+    // HEAD 코스튬 목록 불러오기
+    const resHEAD = await getAllItemList("HEAD");
+    // BODY 코스튬 목록 불러오기
+    const resBODY = await getAllItemList("BODY");
+    // // EFFECT 코스튬 목록 불러오기
+    const resEFFECT = await getAllItemList("EFFECT");
+
+    const HEAD_ITEMS = resHEAD.data.content;
+    const BODY_ITEMS = resBODY.data.content;
+    const EFFECT_ITEMS = resEFFECT.data.content;
+
+    return {
+      props: {
+        HEAD_ITEMS,
+        BODY_ITEMS,
+        EFFECT_ITEMS,
+      },
+    };
   };
-}
 
 export default CostumePage;

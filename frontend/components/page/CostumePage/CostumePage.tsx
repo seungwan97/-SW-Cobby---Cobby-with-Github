@@ -12,10 +12,10 @@ import Cobby from "@/components/common/Cobby/Cobby";
 const CostumePage = (props: any) => {
   // const router = useRouter();
 
-  const [costumeGifSrc, setCostumeGifSrc] = useState("");
+  const [costumeGifUrl, setCostumeGifUrl] = useState("");
 
-  const handleInventoryItem = (gifSrc: string) => {
-    setCostumeGifSrc(gifSrc);
+  const handleInventoryItem = (gifUrl: string) => {
+    setCostumeGifUrl(gifUrl);
   };
 
   return (
@@ -25,10 +25,12 @@ const CostumePage = (props: any) => {
           <TextBox size={50} content={"COSTUME"} />
         </style.CostumePageTextWrapper>
         <style.CostumedCobby>
-          <Cobby gifSrc={costumeGifSrc} />
+          <Cobby gifUrl={costumeGifUrl} />
         </style.CostumedCobby>
         <Inventory
-          itemList={props.itemList}
+          headItemList={props.HEAD_ITEMS}
+          bodyItemList={props.BODY_ITEMS}
+          effectItemList={props.EFFECT_ITEMS}
           onItemClick={handleInventoryItem}
         />
       </page.PageWrapper>

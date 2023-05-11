@@ -20,7 +20,10 @@ export const InventoryType = styled.div`
   flex: 1; /* 각각의 칸이 동일한 너비를 가지도록 설정 */
   text-align: center;
   margin: 10px 5px 0 5px;
-  background-color: ${colors.ItemBoxColor};
+  background-color: ${({ selected }: any) =>
+    selected
+      ? colors.NavBarCreamColor
+      : colors.ItemBoxColor};
   border-radius: 10px 10px 0px 0px;
   cursor: pointer;
 
