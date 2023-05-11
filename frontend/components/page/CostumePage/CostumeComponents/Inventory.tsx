@@ -23,9 +23,9 @@ const typeList: ItemType[] = [
 ];
 
 const Inventory = (props: any) => {
-  const handleItemClick = (gifUrl: string) => {
-    // 클릭한 아이템의 gifSrc 값을 상위 컴포넌트로 전달
-    props.onItemClick(gifUrl);
+  const handleItemClick = (itemInfo: {}) => {
+    // 클릭한 아이템의 정보를 상위 컴포넌트로 전달
+    props.onItemClick(itemInfo);
   };
 
   const handleTypeClick = (typeName: string) => {

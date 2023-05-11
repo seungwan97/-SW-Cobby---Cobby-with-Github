@@ -5,7 +5,7 @@ import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import CostumePage from "@/components/page/CostumePage/CostumePage";
 import { GetServerSideProps } from "next";
-import { getAllItemList } from "../api/main";
+import { getAvatarInfo, getAllItemList } from "../api/main";
 
 // Costumepage
 const CostumeFunc = (props: any) => {
@@ -17,6 +17,7 @@ const CostumeFunc = (props: any) => {
         <CostumePage
           headItemList={props.HEAD_ITEMS}
           bodyItemList={props.BODY_ITEMS}
+          effectItemList={props.EFFECT_ITEMS}
         />
       </page.PageWrapper>
       <BottomNavBar />
@@ -26,7 +27,7 @@ const CostumeFunc = (props: any) => {
 
 export const getServerSideProps: GetServerSideProps =
   async (context) => {
-    // const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+    const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
 
     // HEAD 코스튬 목록 불러오기
     const resHEAD = await getAllItemList("HEAD");
@@ -39,11 +40,18 @@ export const getServerSideProps: GetServerSideProps =
     const BODY_ITEMS = resBODY.data.content;
     const EFFECT_ITEMS = resEFFECT.data.content;
 
+    // 현재 나의 코비 모습
+    const resMyCobbyInfo = await getAvatarInfo(userId);
+
+    const myCobbyOutfits =
+      resMyCobbyInfo.data.content.outfits;
+
     return {
       props: {
         HEAD_ITEMS,
         BODY_ITEMS,
         EFFECT_ITEMS,
+        myCobbyOutfits,
       },
     };
   };

@@ -16,7 +16,7 @@ export const InventoryBar = styled.div`
   width: 70%;
 `;
 
-export const InventoryType = styled.div`
+export const InventoryType: any = styled.div`
   flex: 1; /* 각각의 칸이 동일한 너비를 가지도록 설정 */
   text-align: center;
   margin: 10px 5px 0 5px;
