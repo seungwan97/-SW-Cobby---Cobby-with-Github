@@ -14,7 +14,7 @@ export const getNickname = async (userId: string) => {
   return response;
 };
 
-// 메인페이지 github status 정보 불러오기
+// 메인페이지 총 커밋 정보 불러오기
 export const getStatus = async (userId: string) => {
   const response = await client.get(`${req}/stat`, {
     headers: {
@@ -26,7 +26,7 @@ export const getStatus = async (userId: string) => {
   return response;
 };
 
-// 메인페이지 github status 정보 불러오기
+// 메인페이지 연속 커밋, 오늘자 커밋 정보 불러오기
 export const getCommitInfo = async (userId: string) => {
   const response = await client.get(`${req}/activityLog/commit`, {
     headers: {
@@ -38,7 +38,7 @@ export const getCommitInfo = async (userId: string) => {
   return response;
 };
 
-// 메인페이지 github status 정보 불러오기
+// 메인페이지 연속 출석일수 정보 불러오기
 export const getAttendanceInfo = async (userId: string) => {
   const response = await client.get(`${req}/activityLog/attendance`, {
     headers: {
