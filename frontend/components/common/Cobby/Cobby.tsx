@@ -3,37 +3,79 @@ import * as style from "./style/Cobby";
 import { useState, useEffect } from "react";
 
 type PropsType = {
-  gifSrc: string;
+  outfits: {
+    head: string;
+    body: string;
+    effect: string;
+  };
 };
 
-const Cobby = ({ gifSrc } : PropsType) => {
+const Cobby = (props: PropsType) => {
+  const { outfits } = props;
   const [cobby, setCobby] = useState("/Character/Cobby2.gif");
-  const [cobbyCostume, setCobbyCostume] = useState("");
+  const [cobbyHead, setCobbyHead] = useState(outfits.head);
+  const [cobbyBody, setCobbyBody] = useState(outfits.body);
+  const [cobbyEffect, setCobbyEffect] = useState(outfits.effect);
 
+  //머리 장착
   useEffect(() => {
-    if (gifSrc) {
-      setCobbyCostume(gifSrc);
+    if (outfits.head !== "") {
+      setCobbyHead(outfits.head);
       setCobby("/Character/Cobby1.gif");
 
       if (cobby === "/Character/Cobby1.gif") {
         setCobby("/Character/Cobby2.gif");
       } else setCobby("/Character/Cobby1.gif");
     }
-  }, [gifSrc]); // 이방법말고는 도저히 불가능한가?
+  }, [outfits.head]); // 이방법말고는 도저히 불가능한가?
+
+  //바디 장착
+  useEffect(() => {
+    if (outfits.body !== "") {
+      setCobbyBody(outfits.body);
+      setCobby("/Character/Cobby1.gif");
+
+      if (cobby === "/Character/Cobby1.gif") {
+        setCobby("/Character/Cobby2.gif");
+      } else setCobby("/Character/Cobby1.gif");
+    }
+  }, [outfits.body]); // 이방법말고는 도저히 불가능한가?
+
+  //효과 장착
+  useEffect(() => {
+    if (outfits.effect !== "") {
+      setCobbyEffect(outfits.effect);
+      setCobby("/Character/Cobby1.gif");
+
+      if (cobby === "/Character/Cobby1.gif") {
+        setCobby("/Character/Cobby2.gif");
+      } else setCobby("/Character/Cobby1.gif");
+    }
+  }, [outfits.effect]); // 이방법말고는 도저히 불가능한가?
 
   return (
     <style.CobbyWrapper>
-      <style.Cobby src={cobby} alt={cobbyCostume} />
+      <style.Cobby src={cobby} alt={cobby} />
 
-      {cobbyCostume && (
-        <style.CobbyCostumedItem src={gifSrc}></style.CobbyCostumedItem>
+      {cobbyHead !== "NO_COSTUME" && (
+        <style.CobbyHeadItem src={outfits.head}></style.CobbyHeadItem>
+      )}
+      {cobbyBody !== "NO_COSTUME" && (
+        <style.CobbyBodyItem src={outfits.body}></style.CobbyBodyItem>
+      )}
+      {cobbyEffect !== "NO_COSTUME" && (
+        <style.CobbyEffectItem src={outfits.effect}></style.CobbyEffectItem>
       )}
     </style.CobbyWrapper>
   );
 };
 
 Cobby.defaultProps = {
-  gifSrc : ""
+  outfits: {
+    head: "",
+    body: "",
+    effect: "",
+  },
 };
 
 export default Cobby;
