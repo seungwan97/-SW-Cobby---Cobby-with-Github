@@ -22,5 +22,5 @@ redis:
 
 request:
   url:
-    user-server: https://cobby-play.com/api/user/users
+    user-server: http://k8b201.p.ssafy.io:15020/api/user/users
     front-login: https://cobby-play.com
