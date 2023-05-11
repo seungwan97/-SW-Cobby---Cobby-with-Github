@@ -57,13 +57,13 @@ const Cobby = (props: PropsType) => {
     <style.CobbyWrapper>
       <style.Cobby src={cobby} alt={cobby} />
 
-      {cobbyHead !== "NO_COSTUME" && (
+      {cobbyHead !== "" && (
         <style.CobbyHeadItem src={outfits.head}></style.CobbyHeadItem>
       )}
-      {cobbyBody !== "NO_COSTUME" && (
+      {cobbyBody !== "" && (
         <style.CobbyBodyItem src={outfits.body}></style.CobbyBodyItem>
       )}
-      {cobbyEffect !== "NO_COSTUME" && (
+      {cobbyEffect !== "" && (
         <style.CobbyEffectItem src={outfits.effect}></style.CobbyEffectItem>
       )}
     </style.CobbyWrapper>
