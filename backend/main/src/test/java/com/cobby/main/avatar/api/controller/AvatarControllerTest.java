@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import com.cobby.main.avatar.api.dto.request.AvatarUpdateRequest;
+import com.cobby.main.avatar.api.dto.request.AvatarPatchRequest;
 import com.cobby.main.avatar.api.dto.response.AvatarGetResponse;
 import com.cobby.main.avatar.api.service.AvatarItemService;
 import com.cobby.main.avatar.api.service.AvatarService;
@@ -150,7 +150,7 @@ class AvatarControllerTest {
 	void Avatar_level_만_수정_테스트() throws Exception {
 
 		// given
-		var testAvatarUpdateInfo = AvatarUpdateRequest.builder()
+		var testAvatarUpdateInfo = AvatarPatchRequest.builder()
 			.level(35)
 			.exp(12345)
 			.face(2L)
@@ -190,7 +190,7 @@ class AvatarControllerTest {
 	void Avatar_exp_만_수정_테스트() throws Exception {
 
 		// given
-		var testAvatarUpdateInfo = AvatarUpdateRequest.builder()
+		var testAvatarUpdateInfo = AvatarPatchRequest.builder()
 			.exp(12345)
 			.build();
 
