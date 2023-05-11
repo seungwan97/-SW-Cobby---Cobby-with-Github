@@ -11,19 +11,21 @@ import UserInformation from "./MyComponents/UserInformation";
 import LogoutBtn from "./MyComponents/LogoutBtn";
 
 interface MyFuncProps {
+  nickname: string;
+  githubUrl: string;
   myLevel: number;
   cntCostumes: number;
   cntQuests: number;
-  // myNickName: string;
 }
 
 // MyPage
 const MyPage = ({
+  nickname,
+  githubUrl,
   myLevel,
   cntCostumes,
   cntQuests,
-}: // myNickName,
-MyFuncProps) => {
+}: MyFuncProps) => {
   const router = useRouter();
 
   return (
@@ -35,10 +37,11 @@ MyFuncProps) => {
         <style.Cobby />
         <GithubBadge />
         <UserInformation
+          nickname={nickname}
+          githubUrl={githubUrl}
           myLevel={myLevel}
           cntCostumes={cntCostumes}
           cntQuests={cntQuests}
-          // myNickName={myNickName}
         />
         <LogoutBtn />
         <style.LeaveButton>

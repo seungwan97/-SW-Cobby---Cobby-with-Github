@@ -10,7 +10,7 @@ const GithubBadge = () => {
       <style.CodeCopyBox>
         <style.ReadmeCode>
           <TextBox
-            size={15}
+            size={20}
             content={"https://cobby-play.com/baefrica/badge..."}
           />
         </style.ReadmeCode>

@@ -6,9 +6,11 @@ import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import MyPage from "@/components/page/MyPage/MyPage";
 import { GetServerSideProps } from "next";
 import { getAvatarInfo } from "../api/main";
-import { getNickname } from "../api/user";
+import { getNicknameAndGithubURL } from "../api/user";
 
 interface MyFuncProps {
+  nickname: string;
+  githubUrl: string;
   myLevel: number;
   cntCostumes: number;
   cntQuests: number;
@@ -16,6 +18,8 @@ interface MyFuncProps {
 }
 
 const MyFunc = ({
+  nickname,
+  githubUrl,
   myLevel,
   cntCostumes,
   cntQuests,
@@ -27,6 +31,8 @@ MyFuncProps) => {
     <Fragment>
       <page.PageWrapper>
         <MyPage
+          nickname={nickname}
+          githubUrl={githubUrl}
           myLevel={myLevel}
           cntCostumes={cntCostumes}
           cntQuests={cntQuests}
@@ -40,42 +46,32 @@ MyFuncProps) => {
 
 export default MyFunc;
 
-export const getServerSideProps: GetServerSideProps<
-  MyFuncProps
-> = async (context) => {
+export const getServerSideProps: GetServerSideProps<MyFuncProps> = async (
+  context
+) => {
   const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+
+  // 닉네임, 깃허브url
+  const res = await getNicknameAndGithubURL(userId);
 
   // 코비 정보 : 레벨, 갖고있는 코스튬 수, 달성한 퀘스트 수
   const cobbyInfo = await getAvatarInfo(userId);
 
-  // 깃허브 주소
-  // const githubUrl = await getNickname(userId);
-  // console.log(githubUrl);
-
-  // const nickNameRes = await getNickname(userId);
-  // console.log(nickNameRes);
-
+  let nickname = "";
+  let githubUrl = "";
   let myLevel = 0;
   let cntCostumes = 0;
   let cntQuests = 0;
-  // let myNickName = "닉네임 없음";
 
   if (cobbyInfo.status === 200) {
+    nickname = res.data.content.nickname;
+    githubUrl = res.data.content.githubUrl;
     myLevel = cobbyInfo.data.content.level;
     cntCostumes = cobbyInfo.data.content.costumes.length;
     cntQuests = cobbyInfo.data.content.quests.length;
   }
 
-  // if (nickNameRes.status === 200) {
-  //   myNickName = nickNameRes.data.content.nickname;
-  // }
-
   return {
-    props: {
-      myLevel,
-      cntCostumes,
-      cntQuests,
-      // myNickName,
-    },
+    props: { nickname, githubUrl, myLevel, cntCostumes, cntQuests },
   };
 };

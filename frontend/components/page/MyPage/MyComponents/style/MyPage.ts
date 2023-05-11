@@ -14,10 +14,10 @@ export const Cobby = styled(MyCobby)`
 
 export const LeaveButton = styled.div`
   width: auto;
-  position: absolute;
+  float: right;
+  margin-top: 0.5%;
+  margin-right: 7%;
   text-decoration: underline;
-  right: 5%;
-  bottom: 12%;
 
   &:hover {
     cursor: pointer;

@@ -1,11 +1,79 @@
 import QuestItem from "./QuestItem";
 import * as style from "./style/QuestPage";
-
-const QuestList = (props: any) => {
+interface Props {
+  questData: [
+    {
+      questId: number;
+      questName: string;
+      questType: string;
+      questGoal: number;
+      progress: number;
+      award: {
+        costumeId: number;
+        name: string;
+        category: string;
+        questId: number;
+        imgUrl: string;
+        gifUrl: string;
+      };
+    },
+    {
+      questId: number;
+      questName: string;
+      questType: string;
+      questGoal: number;
+      progress: number;
+      award: {
+        costumeId: number;
+        name: string;
+        category: string;
+        questId: number;
+        imgUrl: string;
+        gifUrl: string;
+      };
+    },
+    {
+      questId: number;
+      questName: string;
+      questType: string;
+      questGoal: number;
+      progress: number;
+      award: {
+        costumeId: number;
+        name: string;
+        category: string;
+        questId: number;
+        imgUrl: string;
+        gifUrl: string;
+      };
+    },
+    {
+      questId: number;
+      questName: string;
+      questType: string;
+      questGoal: number;
+      progress: number;
+      award: {
+        costumeId: number;
+        name: string;
+        category: string;
+        questId: number;
+        imgUrl: string;
+        gifUrl: string;
+      };
+    }
+  ];
+}
+const QuestList = (props: Props) => {
+  const { questData } = props;
+  const arr = [];
+  for (let i = 0; i < questData.length; i++) {
+    arr.push(questData[i]);
+  }
   return (
     <style.QuestListWrapper>
-      {props.QuestItemList.map((item: object, index: number) => (
-        <QuestItem key={index} item={item} />
+      {arr.map((item) => (
+        <QuestItem questData={item} />
       ))}
     </style.QuestListWrapper>
   );
