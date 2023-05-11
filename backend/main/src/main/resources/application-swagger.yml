@@ -1,3 +1,4 @@
 springdoc:
   swagger-ui:
     doc-expansion: none
+    path: /api/main/swagger

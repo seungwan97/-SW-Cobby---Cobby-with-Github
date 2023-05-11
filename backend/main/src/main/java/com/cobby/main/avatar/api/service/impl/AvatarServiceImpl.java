@@ -71,20 +71,20 @@ public class AvatarServiceImpl implements AvatarService {
 		return avatarRepository.save(newAvatar).getAvatarId();
 	}
 
-	@KafkaListener(topics = "make-avatar")
-	public String saveDefaultAvatar(String avatarId) throws JsonProcessingException {
-		log.info("Massage received ===> " + avatarId);
-
-		// 아바타가 존재하면 예외 발생
-		avatarRepository.findById(avatarId)
-			.ifPresent((x) -> {
-				throw new IllegalArgumentException("이미 존재하는 아바타입니다.");
-			});
-
-		var newAvatar = getDefaultAvatar(avatarId);
-
-		return avatarRepository.save(newAvatar).getAvatarId();
-	}
+	// @KafkaListener(topics = "make-avatar")
+	// public String saveDefaultAvatar(String avatarId) throws JsonProcessingException {
+	// 	log.info("Massage received ===> " + avatarId);
+	//
+	// 	// 아바타가 존재하면 예외 발생
+	// 	avatarRepository.findById(avatarId)
+	// 		.ifPresent((x) -> {
+	// 			throw new IllegalArgumentException("이미 존재하는 아바타입니다.");
+	// 		});
+	//
+	// 	var newAvatar = getDefaultAvatar(avatarId);
+	//
+	// 	return avatarRepository.save(newAvatar).getAvatarId();
+	// }
 
 	@Override
 	public String updateAvatar(String avatarId, AvatarPatchRequest avatarUpdateInfo) throws JsonProcessingException {
