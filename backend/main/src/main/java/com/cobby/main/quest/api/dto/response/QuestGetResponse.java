@@ -1,8 +1,10 @@
 package com.cobby.main.quest.api.dto.response;
 
+import com.cobby.main.costume.api.dto.response.CostumeGetResponse;
 import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.quest.db.entity.Quest;
 import com.cobby.main.quest.db.entity.enumtype.QuestCategory;
+import com.cobby.main.title.api.dto.response.TitleGetResponse;
 import com.cobby.main.title.db.entity.Title;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,17 +27,21 @@ public class QuestGetResponse {
 
     private Integer questGoal;
 
-    private List<Costume> costumes = new ArrayList<>();
+    private CostumeGetResponse costume;
 
-    private List<Title> titles = new ArrayList<>();
+    private TitleGetResponse title;
 
     @Builder
-    QuestGetResponse(Quest quest) {
+    public QuestGetResponse(Quest quest) {
         this.questId = quest.getQuestId();
         this.questName = quest.getQuestName();
         this.questType = quest.getQuestType();
         this.questGoal = quest.getQuestGoal();
-        this.costumes = quest.getCostumes();
-        this.titles = quest.getTitles();
+        this.costume = CostumeGetResponse.builder()
+            .costume(quest.getCostume())
+            .build();
+        this.title = TitleGetResponse.builder()
+            .title(quest.getTitle())
+            .build();
     }
 }

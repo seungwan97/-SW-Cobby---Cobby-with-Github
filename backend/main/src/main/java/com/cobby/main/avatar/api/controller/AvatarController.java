@@ -1,7 +1,6 @@
 package com.cobby.main.avatar.api.controller;
 
 import java.net.URI;
-import java.util.Map;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cobby.main.avatar.api.dto.request.AvatarUpdateRequest;
+import com.cobby.main.avatar.api.dto.request.AvatarPatchRequest;
 import com.cobby.main.avatar.api.service.AvatarService;
 import com.cobby.main.common.response.BaseResponseBody;
 import com.cobby.main.common.util.ApiDocumentResponse;
@@ -78,7 +77,7 @@ public class AvatarController {
 	@Operation(summary = "아바타 정보 수정", description = "user ID에 해당하는 아바타 정보를 업데이트 하는 메서드입니다.")
 	@PatchMapping
 	public ResponseEntity<? extends BaseResponseBody> updateAvatar(
-		@RequestBody AvatarUpdateRequest avatarUpdateInfo,
+		@RequestBody AvatarPatchRequest avatarUpdateInfo,
 		@RequestHeader("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) throws JsonProcessingException {
