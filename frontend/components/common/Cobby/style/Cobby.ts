@@ -8,7 +8,7 @@ export const Cobby = styled.img`
   // position: absolute;
   width: 180px;
   height: 180px;
-  z-index: 1;
+  z-index: 2;
 
   @media (max-height: 667px) {
     width: 150px;
@@ -16,11 +16,29 @@ export const Cobby = styled.img`
   }
 `;
 
-export const CobbyCostumedItem = styled.img`
+export const CobbyHeadItem = styled.img`
   position: absolute;
   width: 180px;
   height: 180px;
   left: 50%;
   transform: translate(-50%);
-  z-index: 2;
+  z-index: 4;
+`;
+
+export const CobbyBodyItem = styled.img`
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 3;
+`;
+
+export const CobbyEffectItem = styled.img`
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 1;
 `;
