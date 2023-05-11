@@ -70,7 +70,7 @@ public class CostumeController {
 	@Operation(summary = "#####코스튬 생성#####", description = "코스튬 이름, 종류, 관련 도전과제 ID에 해당하는 코스튬을 생성합니다.")
 	@PostMapping
 	public ResponseEntity<? extends BaseResponseBody> createCostume(
-		@RequestPart @Valid CostumePostRequest costumePostRequest,
+		@RequestPart(value = "info") @Valid CostumePostRequest costumePostRequest,
 		@RequestPart(value = "pngFile", required = true) MultipartFile pngFile,
 		@RequestPart(value = "gifFile", required = true) MultipartFile gifFile,
 		HttpServletRequest request) throws IOException {
