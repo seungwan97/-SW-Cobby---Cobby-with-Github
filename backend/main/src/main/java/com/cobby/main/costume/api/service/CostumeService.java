@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cobby.main.costume.api.dto.request.CostumePostRequest;
 import com.cobby.main.costume.api.dto.response.CostumeGetResponse;
+import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
 
 public interface CostumeService {
 
@@ -18,4 +19,6 @@ public interface CostumeService {
 		IOException;
 
 	Long deleteCostume(Long costumeId);
+
+	List<CostumeGetResponse> selectAllCostumesByCategoryType(CostumeCategory category);
 }

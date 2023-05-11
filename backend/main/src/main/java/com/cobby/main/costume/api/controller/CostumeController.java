@@ -21,11 +21,13 @@ import com.cobby.main.common.response.BaseResponseBody;
 import com.cobby.main.common.util.ApiDocumentResponse;
 import com.cobby.main.costume.api.dto.request.CostumePostRequest;
 import com.cobby.main.costume.api.service.CostumeService;
+import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 
@@ -49,21 +51,35 @@ public class CostumeController {
 			.body(new BaseResponseBody<>(200, "OK", costumes));
 	}
 
-	@Hidden
 	@ApiDocumentResponse
-	@Operation(summary = "#####코스튬 하나 조회#####", description = "코스튬 ID에 해당하는 코스튬을 조회합니다.")
-	@GetMapping("/{costumeId}")
-	public ResponseEntity<? extends BaseResponseBody> getCostume(
-		@PathVariable
-		@Positive(message = "올바르지 않은 ID 양식입니다.") // 최대 상한 조건(Max)도 추가를 고려해야 함
-		Long costumeId) {
-
-		var costume = costumeService.selectCostume(costumeId);
+	@Operation(summary = "카테고리별 코스튬 목록 조회", description = "코스튬의 카테고리(HEAD/BODY/EFFECT)별로 코스튬 목록을 조회합니다.")
+	@GetMapping("/{category}")
+	public ResponseEntity<? extends BaseResponseBody> getAllCostumesByCategory(
+		@PathVariable @NotBlank(message = "필수 입력 항목입니다. ")
+		String category
+	) {
+		var costumes = costumeService.selectAllCostumesByCategoryType(CostumeCategory.valueOf(category));
 
 		return ResponseEntity
 			.ok()
-			.body(new BaseResponseBody<>(200, "OK", costume));
+			.body(new BaseResponseBody<>(200, "OK", costumes));
 	}
+
+	// @Hidden
+	// @ApiDocumentResponse
+	// @Operation(summary = "#####코스튬 하나 조회#####", description = "코스튬 ID에 해당하는 코스튬을 조회합니다.")
+	// @GetMapping("/{costumeId}")
+	// public ResponseEntity<? extends BaseResponseBody> getCostume(
+	// 	@PathVariable
+	// 	@Positive(message = "올바르지 않은 ID 양식입니다.") // 최대 상한 조건(Max)도 추가를 고려해야 함
+	// 	Long costumeId) {
+	//
+	// 	var costume = costumeService.selectCostume(costumeId);
+	//
+	// 	return ResponseEntity
+	// 		.ok()
+	// 		.body(new BaseResponseBody<>(200, "OK", costume));
+	// }
 
 	@Hidden
 	@ApiDocumentResponse
