@@ -103,9 +103,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         }
 
         // 2-5. 프로필 DB에 저장
-        var userinfo = userProfileClient.logInUserInfo(userInfoDto);
-        log.info("UserInfo Body = {}", userinfo.getBody());
-        log.info("UserInfo Status = {}", userinfo.getStatusCode());
+//        var userinfo = userProfileClient.logInUserInfo(userInfoDto);
+//        log.info("UserInfo Body = {}", userinfo.getBody());
+//        log.info("UserInfo Status = {}", userinfo.getStatusCode());
 
 
         // 3. FE 에 요청할 targetUrl 생성
