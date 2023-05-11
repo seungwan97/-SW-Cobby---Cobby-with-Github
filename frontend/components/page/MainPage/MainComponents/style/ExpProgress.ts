@@ -32,7 +32,7 @@ export const FullDiv = styled.div`
 
 export const RangeDiv = styled.div<{ level: number; fullLevel: number }>`
   //   display: inline-block;
-  width: ${(props) => (props.fullLevel / 100) * props.level}%;
+  width: ${(props) => (props.level / props.fullLevel) * 100}%;
   height: 100%;
   background-color: #333333;
 `;

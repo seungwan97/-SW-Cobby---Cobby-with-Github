@@ -10,6 +10,7 @@ interface Props {
   avatarData: {
     level: number;
     exp: number;
+    nextExp: number;
     outfits: {
       head: string;
       effect: string;
@@ -26,7 +27,7 @@ const CobbyInfo = (props: Props) => {
       <style.TextMargin />
       <TextBox size={25} content={`Lv. ${avatarData.level}`} />
       <style.Margin />
-      <Cobby gifSrc="" />
+      <Cobby outfits={avatarData.outfits} />
       <ExpBar avatarData={avatarData} />
     </style.CobbyInfoWrapper>
   );
