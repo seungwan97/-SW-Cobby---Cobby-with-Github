@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.util.XMLResourceDescriptor;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.json.JSONObject;
@@ -29,15 +31,17 @@ import okhttp3.Response;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
+	private static final String GITHUB_API_URL = "https://api.github.com";
 	private final UserRepository userRepository;
 	private final StatRepository statRepository;
-	private static final String GITHUB_API_URL = "https://api.github.com";
+
+	private final KafkaTemplate<String, String> kafkaTemplate;
 
 	@Override
 	public UserMainResponse getUserInfo(String userId) {
 		var user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
 
-		var userMainResponse =UserMainResponse.builder()
+		var userMainResponse = UserMainResponse.builder()
 			.nickname(user.getNickname())
 			.build();
 		return userMainResponse;
@@ -57,54 +61,67 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void logInUserInfo(UserPostRequest userPostRequest) {
 		// userId로 기존 사용자를 조회합니다.
-		var existingUser = userRepository.findById(userPostRequest.userId());
-		if (existingUser.isPresent()) {
-			var user = existingUser.orElseThrow(NotFoundException::new);
+		userRepository.findById(userPostRequest.userId()).ifPresentOrElse(
+			// 존재하는 사용자일 경우
+			existingUser -> {
+				// 이미 존재하는 사용자의 state 를 활설화(A) 상태로 변경하고 다시 받은 github 토큰값과 함꼐 업데이트합니다.
+				existingUser = existingUser.toBuilder()
+					.state(State.A)
+					.githubToken(userPostRequest.githubToken())
+					.build();
 
-			user = user.toBuilder()
-				.state(State.A)
-				.githubToken(userPostRequest.githubToken())
-				.build();
+				userRepository.save(existingUser);
 
-			userRepository.save(user);
+				var stat = statRepository.findById(userPostRequest.userId())
+					.orElseThrow(NotFoundException::new);
 
-			var stat = statRepository.findById(userPostRequest.userId()).orElseThrow(NotFoundException::new);
-			// 새로운 사용자의 통계 정보를 생성합니다.
-			stat = stat.toBuilder()
-				.commitCnt(getStatList(userPostRequest, 5))
-				.starCnt(getStatList(userPostRequest, 3))
-				.prCnt(getStatList(userPostRequest, 7))
-				.followerCnt(getFollower(userPostRequest))
-				.issueCnt(getStatList(userPostRequest, 9))
-				.build();
-			statRepository.save(stat);
-		} else {
-			// 기존 사용자가 존재하지 않는 경우, 새로운 사용자 정보를 생성합니다.
-			User user = User.builder()
-				.id(userPostRequest.userId())
-				.nickname(userPostRequest.nickname())
-				.state(State.A)
-				.githubUrl(userPostRequest.githubUrl())
-				.githubToken(userPostRequest.githubToken())
-				.build();
-			userRepository.save(user);
+				// 새로운 사용자의 통계 정보를 생성합니다.
+				stat = stat.toBuilder()
+					.commitCnt(getStatList(userPostRequest, 5))
+					.starCnt(getStatList(userPostRequest, 3))
+					.prCnt(getStatList(userPostRequest, 7))
+					.followerCnt(getFollower(userPostRequest))
+					.issueCnt(getStatList(userPostRequest, 9))
+					.build();
+				statRepository.save(stat);
+			},
 
-			var user1 = userRepository.findById(userPostRequest.userId()).orElseThrow(NotFoundException::new);
+			// 기존 사용자가 존재하지 않는 경우
+			() -> {
+				// 새로운 사용자 정보를 생성합니다.
+				var user = User.builder()
+					.id(userPostRequest.userId())
+					.nickname(userPostRequest.nickname())
+					.state(State.A)
+					.githubUrl(userPostRequest.githubUrl())
+					.githubToken(userPostRequest.githubToken())
+					.build();
+				userRepository.save(user);
 
-			// 새로운 사용자의 통계 정보를 생성합니다.
-			Stat stat = Stat.builder()
-				.user(user1)
-				.commitCnt(getStatList(userPostRequest, 5))
-				.starCnt(getStatList(userPostRequest, 3))
-				.prCnt(getStatList(userPostRequest, 7))
-				.followerCnt(getFollower(userPostRequest))
-				.issueCnt(getStatList(userPostRequest, 9))
-				.build();
-			statRepository.save(stat);
-		}
+				// 새로운 사용자의 통계 정보를 생성합니다.
+				var stat = Stat.builder()
+					.user(user)
+					.commitCnt(getStatList(userPostRequest, 5))
+					.starCnt(getStatList(userPostRequest, 3))
+					.prCnt(getStatList(userPostRequest, 7))
+					.followerCnt(getFollower(userPostRequest))
+					.issueCnt(getStatList(userPostRequest, 9))
+					.build();
+
+				statRepository.save(stat);
+
+				// 이후 user 정보를 메시지 큐에 보냅니다.
+				var res = send("make-avatar", user.getId());
+				log.info("Sending message: " + res);
+			});
 	}
 
-	private Long getFollower(UserPostRequest userPostRequest){
+	private String send(String topic, String id) {
+		kafkaTemplate.send(topic, id);
+		return id;
+	}
+
+	private Long getFollower(UserPostRequest userPostRequest) {
 		OkHttpClient client = new OkHttpClient();
 		Request.Builder builder = new Request.Builder()
 			.url(GITHUB_API_URL + "/user")
@@ -147,7 +164,6 @@ public class UserServiceImpl implements UserService {
 			doc = factory.createDocument(url);
 
 			text = doc.getElementsByTagName("text").item(crawling).getTextContent();
-
 
 		} catch (IOException e) {
 			e.printStackTrace();

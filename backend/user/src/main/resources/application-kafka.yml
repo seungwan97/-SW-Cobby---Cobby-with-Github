@@ -1,0 +1,16 @@
+spring:
+  kafka:
+    # kafka-server url
+    bootstrap-servers: ENC(eQwwjBNyQ7P5A8XyR/I8IemXHLQH/57PDcvopoIlbWs=)
+
+    # kafka-producer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+    # kafka-consumer
+    consumer:
+      group-id: consumerGroupId
+      auto-offset-reset: earliest # 가장 오래 전에 생산된 메시지 offset reset
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer

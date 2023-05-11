@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.cobby.main.user.db.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer> {
-	Optional<User> findById(String userId);
-
+public interface UserRepository extends JpaRepository<User, String> {
 	Optional<User> findByNickname(String name);
 }
