@@ -43,7 +43,7 @@ const MainFunc = ({
 export default MainFunc;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const userId = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
+  const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
   const token = "token";
 
   const nicknameRes = await getNickname(userId);
@@ -61,6 +61,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const attendanceRes = await getAttendanceInfo(userId);
   const attendanceData = attendanceRes.data;
   console.log(attendanceData.content);
+
   return {
     props: {
       nicknameData: nicknameData.content,

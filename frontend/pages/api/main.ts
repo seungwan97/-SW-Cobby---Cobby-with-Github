@@ -52,11 +52,11 @@ export const getQuests = async (userId: string) => {
 };
 
 // 칭호 목록 전체조회
-export const getTitles = async (userId: string) => {
-  const response = await client.get(`${req}/quests/current`, {
+export const getTitles = async () => {
+  const response = await client.get(`${req}/titles`, {
     headers: {
       //   Authorization: `Bearer ${accessToken}`,
-      userId: `${userId}`,
+      //   userId: `${userId}`,
     },
   });
 
