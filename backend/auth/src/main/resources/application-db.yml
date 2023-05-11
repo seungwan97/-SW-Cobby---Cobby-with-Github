@@ -15,7 +15,12 @@ spring:
           datastore:
             create_database: true
 
+redis:
+  host: k8b201.p.ssafy.io
+  port: 6379
+#  password: k8b201
+
 request:
   url:
-    user-server: http://k8b201.p.ssafy.io:15020/api/users
+    user-server: https://cobby-play.com/api/user/users
     front-login: https://cobby-play.com
