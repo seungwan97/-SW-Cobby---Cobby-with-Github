@@ -83,19 +83,3 @@ export async function getStaticProps() {
 }
 
 export default CostumePage;
-
-// export const getServerSideProps: GetServerSideProps =
-//   async (context) => {
-//     const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
-//     const token = "token";
-
-//     const res = await showCobbyInfo(token, userId);
-//     console.log(res.data);
-//     console.log(res.data.content);
-
-//     return {
-//       props: {
-//         content: res.data.content,
-//       },
-//     };
-//   };
