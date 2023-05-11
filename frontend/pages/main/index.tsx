@@ -4,11 +4,13 @@ import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import MainPage from "@/components/page/MainPage/MainPage";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 
-import { getNickname } from "../api/users";
+import {
+  getNickname,
+  getStatus,
+  getCommitInfo,
+  getAttendanceInfo,
+} from "../api/user";
 
-import { getStatus } from "../api/stat";
-
-import { getAttendanceInfo, getCommitInfo } from "../api/activityLog";
 import { GetServerSideProps } from "next";
 import { InferGetServerSidePropsType } from "next";
 
@@ -44,19 +46,19 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const userId = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
   const token = "token";
 
-  const nicknameRes = await getNickname(token, userId);
+  const nicknameRes = await getNickname(userId);
   const nicknameData = nicknameRes.data;
   console.log(nicknameData.content);
 
-  const statusRes = await getStatus(token, userId);
+  const statusRes = await getStatus(userId);
   const statusData = statusRes.data;
   console.log(statusData.content);
 
-  const commitRes = await getCommitInfo(token, userId);
+  const commitRes = await getCommitInfo(userId);
   const commitData = commitRes.data;
   console.log(commitData.content);
 
-  const attendanceRes = await getAttendanceInfo(token, userId);
+  const attendanceRes = await getAttendanceInfo(userId);
   const attendanceData = attendanceRes.data;
   console.log(attendanceData.content);
   return {
