@@ -51,7 +51,7 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 	}
 
 	@Override
-	public ActivityLogResponse getactivityLogInfo(String userId) {
+	public ActivityLogResponse getActivityLogInfo(String userId) {
 		var existingActivityLog = activityLogRepository.findTopByUserIdOrderByIdDesc(userId);
 		ActivityLogResponse activityLogResponse;
 		if (existingActivityLog.isPresent()) {
@@ -82,7 +82,7 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 	}
 
 	@Override
-	public ActivityLogCommitResponse getactivityLogCommit(String userId) {
+	public ActivityLogCommitResponse getActivityLogCommit(String userId) {
 		var existingActivityLog = activityLogRepository.findTopByUserIdOrderByIdDesc(userId).orElseThrow(NotFoundException::new);
 		var activityLogList = activityLogRepository.findByUserIdOrderByIdDesc(userId);
 		Long count = 1L, relayCnt = 0L;

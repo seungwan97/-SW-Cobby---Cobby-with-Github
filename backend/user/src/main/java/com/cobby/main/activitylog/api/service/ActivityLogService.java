@@ -9,7 +9,7 @@ public interface ActivityLogService {
 
 	void webhookCreate(Map<String, String> headers, String payload);
 
-	ActivityLogResponse getactivityLogInfo(String userId);
+	ActivityLogResponse getActivityLogInfo(String userId);
 
-	ActivityLogCommitResponse getactivityLogCommit(String userId);
+	ActivityLogCommitResponse getActivityLogCommit(String userId);
 }

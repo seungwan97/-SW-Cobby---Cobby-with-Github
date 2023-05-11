@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 import com.cobby.main.stat.db.entity.Stat;
 
 @Repository
-public interface StatRepository extends JpaRepository<Stat, Integer> {
-	Optional<Stat> findById(String userId);
+public interface StatRepository extends JpaRepository<Stat, String> {
 }
