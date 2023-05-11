@@ -20,8 +20,6 @@ public class CostumeGetResponse {
 
 	private String imgUrl;
 
-	private String silhouetteImgUrl;
-
 	private String gifUrl;
 
 	@Builder
@@ -31,7 +29,6 @@ public class CostumeGetResponse {
 		this.category = costume.getCategory();
 		this.questId = costume.getQuest().getQuestId();
 		this.imgUrl = costume.getImgUrl();
-		this.silhouetteImgUrl = costume.getSilhouetteImgUrl();
 		this.gifUrl = costume.getGifUrl();
 	}
 

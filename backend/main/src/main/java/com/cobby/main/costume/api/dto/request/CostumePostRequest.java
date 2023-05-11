@@ -15,7 +15,7 @@ public record CostumePostRequest (
 	@NotBlank(message = "필수 입력 항목입니다. (String)")
 	String name,
 
-	@Schema(description = "코스튬 종류 (DEFAULT / HEAD / BODY / FACE)", example = "HEAD")
+	@Schema(description = "코스튬 종류 (DEFAULT / HEAD / BODY / FACE)", example = "BODY")
 	@NotBlank(message = "필수 입력 항목입니다. (DEFAULT / HEAD / BODY / FACE)")
 	String category,
 
