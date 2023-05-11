@@ -14,10 +14,12 @@ public class RedisService {
 
     private final RedisTemplate redisTemplate;
 
+    // Redis 에서 Refresh 토큰 조회
     public String getData(String key) {
         return (String) redisTemplate.opsForValue().get(key);
     }
 
+    // Redis 에 새로운 토큰 저장
     public void setDataWithExpiration(String key, String value, Long time) {
         if (this.getData(key) != null)
             this.deleteData(key);
@@ -25,6 +27,7 @@ public class RedisService {
         redisTemplate.opsForValue().set(key, value, expireDuration);
     }
 
+    // 기존 토큰 삭제
     private void deleteData(String key) {
         redisTemplate.delete(key);
     }
