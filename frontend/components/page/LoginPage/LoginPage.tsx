@@ -12,7 +12,7 @@ import GithubLoginButton from "@/components/page/LoginPage/LoginComponents/Githu
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 
 const LoginPage = () => {
-  const outfit = {
+  const outfits = {
     head: "",
     body: "",
     effect: "",
@@ -22,7 +22,7 @@ const LoginPage = () => {
       <style.LoginPageContent>
         <TextBox size={50} content={"Cobby"} />
         <style.LogoMargin />
-        <Cobby outfits={outfit} />
+        <Cobby outfits={outfits} />
         <style.LogoMargin />
         <TextBox size={30} content={"Github with Cobby"} />
       </style.LoginPageContent>

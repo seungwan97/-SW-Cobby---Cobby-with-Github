@@ -1,15 +1,31 @@
-import Image from "next/image";
 import * as style from "./style/QuestPage";
 import TextBox from "@/components/common/TextBox/TextBox";
 import QuestConfirmButton from "./QuestConfirmButton";
-import ProgressBar from "@ramonak/react-progress-bar";
 
-const QuestItem = (props: any) => {
+interface Props {
+  questData: {
+    questId: number;
+    questName: string;
+    questType: string;
+    questGoal: number;
+    progress: number;
+    award: {
+      costumeId: number;
+      name: string;
+      category: string;
+      questId: number;
+      imgUrl: string;
+      gifUrl: string;
+    };
+  };
+}
+const QuestItem = (props: Props) => {
+  const { questData } = props;
   return (
     <style.QuestItemWrapper>
       <TextBox
-        size={25}
-        content={`[${props.item.category}] ${props.item.title} ${props.item.goal}`}
+        size={18}
+        content={`[${questData.questType}] ${questData.questName} ${questData.questGoal}`}
       />
       <style.QuestInfoWrapper>
         <style.ColumContentWrapper>
@@ -17,15 +33,15 @@ const QuestItem = (props: any) => {
             <style.CustomProgressBar
               bgColor={"#333333"}
               borderRadius={"0px"}
-              completed={`${props.item.progress}`}
+              completed={`${questData.progress}`}
             />
-            <TextBox size={20} content={`${props.item.progress}%`} />
+            <TextBox size={20} content={`${questData.progress}%`} />
           </style.ProgressWrapper>
           <QuestConfirmButton />
         </style.ColumContentWrapper>
         <style.ImageWrapper>
           <style.CustomImage
-            src={props.item.award}
+            src={questData.award.imgUrl}
             alt="아이템"
             width={80}
             height={65}
