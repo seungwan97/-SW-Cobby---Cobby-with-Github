@@ -46,6 +46,22 @@ public class CostumeServiceImpl implements CostumeService {
 	}
 
 	@Override
+	public List<CostumeGetResponse> selectAllCostumesByCategoryType(CostumeCategory category) {
+
+		var costumes = costumeRepository.findAllByCategory(category);
+
+		if(costumes.isEmpty()) {
+			throw new BaseRuntimeException(HttpStatus.NOT_FOUND, "조회할 수 있는 코스튬이 없습니다.");
+		}
+
+		return costumes.stream()
+			.map(costume -> CostumeGetResponse.builder()
+				.costume(costume)
+				.build())
+			.toList();
+	}
+
+	@Override
 	public CostumeGetResponse selectCostume(Long costumeId) {
 
 		var costume = costumeRepository.findById(costumeId)
@@ -90,4 +106,5 @@ public class CostumeServiceImpl implements CostumeService {
 
 		return costume.getCostumeId();
 	}
+
 }
