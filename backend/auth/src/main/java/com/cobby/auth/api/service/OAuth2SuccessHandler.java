@@ -42,6 +42,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
         log.info("깃헙 토큰띠 = {}", attributes.get("githubToken"));
+        log.info("깃헙 URL띠 = {}", attributes.get("githubUrl"));
 
         UserDto userDto = UserDto.builder()
                 .oauthId(String.valueOf(attributes.get("id")))
@@ -59,7 +60,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
         // 2. 최초 로그인일때, 회원가입( UUID 생성 )을 진행한다.
         if (user.equals(guest)) {
-            System.out.println("최초 로그인");
+            System.out.println("===================================================================== 최초 로그인");
             
             // 2-1. 회원 정보 저장 ( userDto 의 oauthId 에 해당하는 userId 생성  )
             mongoTemplate.save(userDto.initUser(userDto));
@@ -73,22 +74,31 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                     String.valueOf(user.getUserId()), (String) attributes.get("nickname"), (String) attributes.get("githubUrl"), (String) attributes.get("githubToken")
             );
 
+            log.info("UserInfoDto Id check = {}", userInfoDto.getUserId());
+            log.info("UserInfoDto Nick check = {}", userInfoDto.getNickname());
+            log.info("UserInfoDto Git Token check = {}", userInfoDto.getGithubToken());
+            log.info("UserInfoDto Git Url check = {}", userInfoDto.getGithubUrl());
+
             // 2-4. 토큰 발행
             tokens = tokenProvider.generateToken(userInfoDto.getUserId(), Role.USER.getKey());
 
         }
         else {
-            System.out.println("기존 회원 로그인");
+            System.out.println("===================================================================== 기존 회원 로그인");
             userInfoDto = new UserInfoDto(
                     String.valueOf(user.getUserId()), (String) attributes.get("nickname"), (String) attributes.get("githubUrl"), (String) attributes.get("githubToken")
             );
+
+            log.info("UserInfoDto Id check = {}", userInfoDto.getUserId());
+            log.info("UserInfoDto Nick check = {}", userInfoDto.getNickname());
+            log.info("UserInfoDto Git Token check = {}", userInfoDto.getGithubToken());
+            log.info("UserInfoDto Git Url check = {}", userInfoDto.getGithubUrl());
 
             String access = tokenProvider.generateAccess(userInfoDto.getUserId(), Role.USER.getKey());
 
             tokens = tokenProvider.generateToken(userInfoDto.getUserId(), Role.USER.getKey());
 
         }
-
 
         // 2-5. 프로필 DB에 저장
         var userinfo = userProfileClient.logInUserInfo(userInfoDto);
