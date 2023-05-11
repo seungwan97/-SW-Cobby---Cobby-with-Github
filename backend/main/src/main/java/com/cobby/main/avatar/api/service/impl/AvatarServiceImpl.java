@@ -40,20 +40,22 @@ public class AvatarServiceImpl implements AvatarService {
 		var avatar = avatarRepository.findById(avatarId)
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + avatarId + ")"));
 
-		Map<String, String> currentCostumeIds = objectMapper.readValue(
-			avatar.getCurrentCostumes(),
-			objectMapper.getTypeFactory().constructParametricType(Map.class, String.class, String.class));
+		// String 을 Map 으로 변환
+		Map<String, Long> map = objectMapper.readValue(
+			avatar.getOutfits(),
+			objectMapper.getTypeFactory().constructParametricType(Map.class, String.class, Long.class)
+		);
 
+		var NO_COSTUME = "";
 		var outfits = new HashMap<String, String>();
 
-		currentCostumeIds.forEach((part, costumeId) ->
-			outfits.put(part,
-					(CostumeCategory.NO_COSTUME.ordinal() == Integer.parseInt(costumeId))
-						? CostumeCategory.NO_COSTUME.name()
-						: avatarCostumeRepository.findByCostume_CostumeId(Long.parseUnsignedLong(costumeId))
-					.orElseThrow(() -> new IllegalArgumentException("보유하고 있지 않은 코스튬입니다. (PART=" + part + ", ID=" + costumeId + ")"))
-				.getCostume()
-				.getGifUrl()));
+		map.forEach((costumeCategory, costumeId) ->
+			outfits.put(costumeCategory, costumeId == 0L ? NO_COSTUME :
+				avatarCostumeRepository.findByCostume_CostumeId(costumeId)
+					.orElseThrow(() -> new IllegalArgumentException(
+						"보유하고 있지 않은 코스튬입니다. (category=" + costumeCategory + ", ID=" + costumeId + ")"))
+					.getCostume()
+					.getGifUrl()));
 
 		var levelTable = levelTableRepository.findById(avatar.getLevel())
 			.orElseThrow(() -> new IllegalArgumentException("레벨 정보가 없습니다. (Level=" + avatar.getLevel() + ")"));
@@ -99,7 +101,7 @@ public class AvatarServiceImpl implements AvatarService {
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + avatarId + ")"));
 
 		Map<String, Long> currentCostumeIds = objectMapper.readValue(
-			avatar.getCurrentCostumes(),
+			avatar.getOutfits(),
 			objectMapper.getTypeFactory().constructParametricType(Map.class, String.class, Long.class));
 
 		var head = Optional.ofNullable(avatarUpdateInfo.head())
@@ -110,7 +112,7 @@ public class AvatarServiceImpl implements AvatarService {
 			.orElse(currentCostumeIds.get("effect"));
 
 		avatar = avatar.toBuilder()
-			.currentCostumes(objectMapper.writeValueAsString(
+			.outfits(objectMapper.writeValueAsString(
 				Map.of("head", head, "body", body, "effect", effect)))
 			.build();
 
@@ -137,13 +139,17 @@ public class AvatarServiceImpl implements AvatarService {
 
 	private Avatar getDefaultAvatar(String userId) throws JsonProcessingException {
 
-		var currentCostumes = Map.of("head", 0L, "body", 0L, "effect", 0L);
+		var deafaultOutfits = Map.of(
+			"head", CostumeCategory.NO_COSTUME.ordinal(),
+			"body", CostumeCategory.NO_COSTUME.ordinal(),
+			"effect", CostumeCategory.NO_COSTUME.ordinal()
+		);
 
 		return Avatar.builder()
 			.avatarId(userId)
 			.level(1)
 			.exp(0)
-			.currentCostumes(objectMapper.writeValueAsString(currentCostumes))
+			.outfits(objectMapper.writeValueAsString(deafaultOutfits))
 			.build();
 	}
 }

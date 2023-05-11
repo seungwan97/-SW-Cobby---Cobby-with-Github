@@ -62,7 +62,6 @@ public class AvatarCostumeServiceImpl implements AvatarCostumeService {
 		return avatarCostumes.stream()
 			.map(costume ->
 				AvatarCostumeGetResponse.builder()
-					.avatarCostumeId(costume.getAvatarCostumeId())
 					.costume(costume.getCostume())
 					.build())
 			.toList();
@@ -77,7 +76,6 @@ public class AvatarCostumeServiceImpl implements AvatarCostumeService {
 			.orElseThrow(() -> new IllegalArgumentException("코스튬 정보가 없습니다. (ID=" + itemId + ")"));
 
 		return AvatarCostumeGetResponse.builder()
-			.avatarCostumeId(avatarCostume.getAvatarCostumeId())
 			.costume(avatarCostume.getCostume())
 			.build();
 	}
@@ -97,7 +95,6 @@ public class AvatarCostumeServiceImpl implements AvatarCostumeService {
 		return avatarCostumes.stream()
 			.map(costume ->
 				AvatarCostumeGetResponse.builder()
-					.avatarCostumeId(costume.getAvatarCostumeId())
 					.costume(costume.getCostume())
 					.build())
 			.toList();
