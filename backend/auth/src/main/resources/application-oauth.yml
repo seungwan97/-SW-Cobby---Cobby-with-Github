@@ -4,18 +4,12 @@ spring:
     oauth2:
       client:
         registration:
-          # 요청 http://k8b201.p.ssafy.io:15010/oauth2/authorization/github
-          # 로컬요청 http://localhost:15010/oauth2/authorization/github
           github:
             client-id: ENC(gDE0T0N7wd+acpzThjIWB9KyfLA1fsd3bJnVQEko8PQ=)
             client-secret: ENC(wXfDuKyMOAF+tYYM/Vb3DhQMX1E5ciDZdU5JVMLeU9JQKC+9qlZQ4DpDSuii3C2I7wl6oFAnxyg=)
-            redirect-uri: http://localhost:15010/login/oauth2/code/github
-
-# jwt
-# secret : TheCobby-With-Github-앙기모띠
+            redirect-uri: ENC(jM67tnBzG50S2Ji+/Q8kzKHp3JrI+AiRH9TrhdRBpYlxpEZyslXW/kpuklrovtRxqrfBQoBhgLI=)
 
 jwt:
   header: Authorization
   secret: ENC(NYP5wOkr9mRy0MU0wLCCH3RyUzXPW7y8kdV6ulRnAl5tqFmibQvOwfgP4F4ddRIW)
   token-validity-in-seconds: ENC(LGbwoiwuT+A+flqW0uw1Aw==)
-  # 3600
