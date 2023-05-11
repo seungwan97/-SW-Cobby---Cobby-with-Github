@@ -106,23 +106,25 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 //        log.info("UserInfo Body = {}", userinfo.getBody());
 //        log.info("UserInfo Status = {}", userinfo.getStatusCode());
 
+
+        // 3. FE 에 요청할 targetUrl 생성
         String targetUrl;
         targetUrl = UriComponentsBuilder.fromUriString(REDIRECT_URI)
-                .queryParam(TokenKey.ACCESS.getKey(), "Bearer-" + tokens.getAccessToken())
                 .build().toUriString();
-        // * 프런트에서 리다이렉트 할때, 파싱해서 access token 빼서 쓰고 진행하는걸로.. => 리다이렉트 두번 진행
 
-        // 쿠키 생성
-//        Cookie cookie = new Cookie("refreshToken", key); // refresh token
-//        cookie.setPath("/"); // Cookie의 유효 경로 설정 (루트 경로로 설정하면 전체 사이트에서 접근 가능)
-//        cookie.setMaxAge(30 * 24 * 60 * 60); // Cookie의 유효 기간 설정 (예: 30일)
-//        cookie.setHttpOnly(true); // JavaScript에서 접근할 수 없도록 설정
-//        cookie.setSecure(true); // HTTPS에서만 전송하도록 설정 (필요한 경우)
+        // 3-1. 쿠키 생성 및 Refresh Token 저장
+        Cookie cookie = new Cookie("refreshToken", tokens.getRefreshToken());
+        cookie.setPath("/"); // Cookie의 유효 경로 설정 (루트 경로로 설정하면 전체 사이트에서 접근 가능)
+        cookie.setMaxAge(30 * 24 * 60 * 60); // Cookie의 유효 기간 설정 (예: 30일)
+        cookie.setHttpOnly(true); // JavaScript에서 접근할 수 없도록 설정
+        cookie.setSecure(true); // HTTPS에서만 전송하도록 설정 (필요한 경우)
 
-        // 헤더에 access token 저장
+        response.addCookie(cookie);
+
+        // 3-2. 헤더에 access token 저장
         response.setHeader(TokenKey.ACCESS.getKey(), "Bearer " + tokens.getAccessToken());
 
-        // 3. Front Page로 리다이렉트 수행
+        // 3-3. Front Page로 리다이렉트 수행
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
 
     }
