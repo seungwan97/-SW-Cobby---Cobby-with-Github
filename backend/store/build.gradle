@@ -36,6 +36,15 @@ dependencies {
     implementation 'org.apache.tika:tika-core:1.24.1'
     //gson
     implementation 'com.google.code.gson:gson:2.8.5'
+    //basik
+    implementation 'org.apache.xmlgraphics:batik-all:1.14'
+    // https://mvnrepository.com/artifact/sax/sax
+    implementation 'sax:sax:2.0.1'
+
+    // okhttp3
+    implementation 'com.squareup.okhttp3:okhttp'
+
+    implementation 'org.json:json:20200518'
 
 }
 

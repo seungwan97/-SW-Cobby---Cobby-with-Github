@@ -47,12 +47,14 @@ public class AssetController {
 			.body(asset.resource());
 	}
 
-	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@PostMapping(value = "/upload")
 	public ResponseEntity<String> createAsset(
-		@RequestParam("asset") MultipartFile asset,
+		@RequestParam("pngFile") MultipartFile pngFile,
+		@RequestParam("gifFile") MultipartFile gifFile,
 		HttpServletRequest request) {
-		System.out.println("asset : " + asset);
-		var assetId = assetService.insertAsset(asset);
+		System.out.println("asset : " + pngFile);
+		System.out.println("asset : " + gifFile);
+		var assetId = assetService.insertAsset(pngFile);
 
 		// 생성된 자원을 조회할 수 있는 uri 경로 생성 (201 응답 양식)
 		var location = URI.create(request.getRequestURI() + "/assets/" + assetId);

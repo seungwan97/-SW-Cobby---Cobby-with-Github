@@ -48,9 +48,6 @@ public class AssetServiceImpl implements AssetService {
 			.orElseThrow(() -> new IllegalArgumentException("해당 이미지가 없습니다. (ID=" + assetId + ")"));
 
 		var fileExtension = asset.getExtensionType();
-		System.out.println("assetid : " + asset.getAssetId());
-		System.out.println("extension : " + asset.getExtensionType());
-		System.out.println("url : " + asset.getUrl());
 
 		String contentType = null;
 		if (fileExtension.equalsIgnoreCase("png")) {
@@ -89,11 +86,8 @@ public class AssetServiceImpl implements AssetService {
 			// 	new PutObjectRequest(bucketName, "head/" + originFilename, inputStream, objectMetadata));
 
 			// S3에 업로드한 폴더 및 파일 URL
-
 			uploadFileUrl = amazonS3Client.getUrl(bucketName, "body/" + originFilename).toString();
-			System.out.println("bucketName : " + bucketName);
-			System.out.println("originFilename : " + originFilename);
-			System.out.println("uploadFileUrl : " + uploadFileUrl);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			log.error("Filed upload failed", e);
