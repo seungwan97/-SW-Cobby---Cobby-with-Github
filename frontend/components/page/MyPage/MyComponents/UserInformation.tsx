@@ -1,7 +1,19 @@
 import TextBox from "@/components/common/TextBox/TextBox";
 import * as style from "./style/UserInformation";
 
-const UserInformation = () => {
+interface MyFuncProps {
+  myLevel: number;
+  cntCostumes: number;
+  cntQuests: number;
+  // myNickName: string;
+}
+
+const UserInformation = ({
+  myLevel,
+  cntCostumes,
+  cntQuests,
+}: // myNickName,
+MyFuncProps) => {
   return (
     <style.UserInfoWrapper>
       <style.InformationTxt>
@@ -16,14 +28,14 @@ const UserInformation = () => {
           size={20}
           content={"Nickname : baefrica"}
         />
-        <TextBox size={20} content={"Level : 89274"} />
+        <TextBox size={20} content={`Level : ${myLevel}`} />
         <TextBox
           size={20}
-          content={"Number of Costumes : 500"}
+          content={`Number of Costumes : ${cntCostumes}`}
         />
         <TextBox
           size={20}
-          content={"Number of Quests Completed : 500"}
+          content={`Number of Quests Completed : ${cntQuests}`}
         />
       </style.InfoContent>
     </style.UserInfoWrapper>

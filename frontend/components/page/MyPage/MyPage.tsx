@@ -10,8 +10,20 @@ import GithubBadge from "./MyComponents/GithubBadge";
 import UserInformation from "./MyComponents/UserInformation";
 import LogoutBtn from "./MyComponents/LogoutBtn";
 
+interface MyFuncProps {
+  myLevel: number;
+  cntCostumes: number;
+  cntQuests: number;
+  // myNickName: string;
+}
+
 // MyPage
-const MyPage = () => {
+const MyPage = ({
+  myLevel,
+  cntCostumes,
+  cntQuests,
+}: // myNickName,
+MyFuncProps) => {
   const router = useRouter();
 
   return (
@@ -22,7 +34,12 @@ const MyPage = () => {
         </style.MyPageTxt>
         <style.Cobby />
         <GithubBadge />
-        <UserInformation />
+        <UserInformation
+          myLevel={myLevel}
+          cntCostumes={cntCostumes}
+          cntQuests={cntQuests}
+          // myNickName={myNickName}
+        />
         <LogoutBtn />
         <style.LeaveButton>
           <TextBox size={20} content={"Leave Our App"} />
