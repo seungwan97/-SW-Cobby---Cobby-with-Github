@@ -4,14 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.cobby.main.avatar.db.entity.Avatar;
-import com.cobby.main.avatar.db.entity.AvatarCostume;
-import com.cobby.main.avatar.db.entity.AvatarQuest;
-import com.cobby.main.avatar.db.entity.AvatarTitle;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.cobby.main.costume.api.dto.response.CostumeGetResponse;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.Data;
 
@@ -23,20 +17,31 @@ public class AvatarGetResponse {
 
 	private Map<String, String> outfits;
 
-	private List<AvatarCostume> costumes;
+	private List<AvatarCostumeGetResponse> costumes;
 
-	private List<AvatarTitle> titles;
+	private List<AvatarTitleGetResponse> titles;
 
-	private List<AvatarQuest> quests;
+	private List<AvatarQuestGetResponse> quests;
 
 	@Builder
 	public AvatarGetResponse (Avatar avatar, Map<String, String> outfits) {
 		this.level = avatar.getLevel();
 		this.exp = avatar.getExp();
 		this.outfits = outfits;
-		this.costumes = avatar.getCostumes();
-		this.titles = avatar.getTitles();
-		this.quests = avatar.getQuests();
-
+		this.costumes = avatar.getCostumes().stream()
+			.map(avatarCostume -> AvatarCostumeGetResponse.builder()
+				.costume(avatarCostume.getCostume())
+				.build())
+			.toList();
+		this.titles = avatar.getTitles().stream()
+			.map(avatarTitle -> AvatarTitleGetResponse.builder()
+				.title(avatarTitle.getTitle())
+				.build())
+			.toList();
+		this.quests = avatar.getQuests().stream()
+			.map(avatarQuest -> AvatarQuestGetResponse.builder()
+				.quest(avatarQuest.getQuest())
+				.build())
+			.toList();
 	}
 }
