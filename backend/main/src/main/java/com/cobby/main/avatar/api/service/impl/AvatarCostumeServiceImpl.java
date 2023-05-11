@@ -12,6 +12,8 @@ import com.cobby.main.avatar.db.entity.AvatarCostume;
 import com.cobby.main.avatar.db.repository.AvatarCostumeRepository;
 import com.cobby.main.avatar.db.repository.AvatarRepository;
 import com.cobby.main.common.exception.BaseRuntimeException;
+import com.cobby.main.common.exception.NotFoundException;
+import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
 import com.cobby.main.costume.db.repository.CostumeRepository;
 
 import jakarta.transaction.Transactional;
@@ -80,4 +82,24 @@ public class AvatarCostumeServiceImpl implements AvatarCostumeService {
 			.build();
 	}
 
+	@Override
+	public List<AvatarCostumeGetResponse> selectAllCostumesByType(String userId, String category) {
+
+		var avatar = avatarRepository.findById(userId)
+			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + userId + ")"));
+
+		var avatarCostumes = avatarCostumeRepository.findAllByAvatar_AvatarIdAndCostume_Category(avatar.getAvatarId(), CostumeCategory.valueOf(category));
+
+		if(avatarCostumes.isEmpty()) {
+			throw new NotFoundException();
+		}
+
+		return avatarCostumes.stream()
+			.map(costume ->
+				AvatarCostumeGetResponse.builder()
+					.avatarCostumeId(costume.getAvatarCostumeId())
+					.costume(costume.getCostume())
+					.build())
+			.toList();
+	}
 }
