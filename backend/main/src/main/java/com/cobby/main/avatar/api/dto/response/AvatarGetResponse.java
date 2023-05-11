@@ -21,6 +21,8 @@ public class AvatarGetResponse {
 
 	private Integer exp;
 
+	private Integer nextExp;
+
 	private Map<String, String> outfits;
 
 	private List<AvatarCostume> costumes;
@@ -30,9 +32,10 @@ public class AvatarGetResponse {
 	private List<AvatarQuest> quests;
 
 	@Builder
-	public AvatarGetResponse (Avatar avatar, Map<String, String> outfits) {
+	public AvatarGetResponse (Avatar avatar, Integer nextExp, Map<String, String> outfits) {
 		this.level = avatar.getLevel();
 		this.exp = avatar.getExp();
+		this.nextExp = nextExp;
 		this.outfits = outfits;
 		this.costumes = avatar.getCostumes();
 		this.titles = avatar.getTitles();

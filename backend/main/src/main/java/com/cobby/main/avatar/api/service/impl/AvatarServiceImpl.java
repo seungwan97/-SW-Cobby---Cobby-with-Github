@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import com.cobby.main.avatar.api.dto.request.AvatarPatchRequest;
@@ -13,6 +12,7 @@ import com.cobby.main.avatar.api.service.AvatarService;
 import com.cobby.main.avatar.db.entity.Avatar;
 import com.cobby.main.avatar.db.repository.AvatarCostumeRepository;
 import com.cobby.main.avatar.db.repository.AvatarRepository;
+import com.cobby.main.avatar.db.repository.LevelTableRepository;
 import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
 import com.cobby.main.costume.db.repository.CostumeRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,6 +29,8 @@ public class AvatarServiceImpl implements AvatarService {
 	private final AvatarRepository avatarRepository;
 
 	private final CostumeRepository costumeRepository;
+
+	private final LevelTableRepository levelTableRepository;
 
 	private final ObjectMapper objectMapper;
 	private final AvatarCostumeRepository avatarCostumeRepository;
@@ -53,7 +55,11 @@ public class AvatarServiceImpl implements AvatarService {
 				.getCostume()
 				.getGifUrl()));
 
+		var levelTable = levelTableRepository.findById(avatar.getLevel())
+			.orElseThrow(() -> new IllegalArgumentException("레벨 정보가 없습니다. (Level=" + avatar.getLevel() + ")"));
+
 		return AvatarGetResponse.builder()
+			.nextExp(levelTable.getNextExp())
 			.avatar(avatar)
 			.outfits(outfits)
 			.build();
