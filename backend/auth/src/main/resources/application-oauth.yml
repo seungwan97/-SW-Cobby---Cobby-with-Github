@@ -7,7 +7,8 @@ spring:
           github:
             client-id: ENC(gDE0T0N7wd+acpzThjIWB9KyfLA1fsd3bJnVQEko8PQ=)
             client-secret: ENC(wXfDuKyMOAF+tYYM/Vb3DhQMX1E5ciDZdU5JVMLeU9JQKC+9qlZQ4DpDSuii3C2I7wl6oFAnxyg=)
-            redirect-uri: ENC(B/gqg5gwRZJJMpFR1BmsB4FedREvx/gUwdGZiMNZHm3mMv4FZM9WXe4+2kThS9FVoqneXvwiwAc=)
+            redirect-uri: http://k8b201.p.ssafy.io:15010/login/oauth2/code/github
+#            redirect-uri: ENC(B/gqg5gwRZJJMpFR1BmsB4FedREvx/gUwdGZiMNZHm3mMv4FZM9WXe4+2kThS9FVoqneXvwiwAc=)
 
 jwt:
   header: Authorization
