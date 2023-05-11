@@ -8,6 +8,7 @@ export const getNickname = async (userId: string) => {
     headers: {
       // Authorization: `Bearer ${accessToken}`,
       userId: `${userId}`,
+      "Content-Type": "application/json",
     },
   });
 
@@ -20,6 +21,7 @@ export const getStatus = async (userId: string) => {
     headers: {
       // Authorization: `Bearer ${accessToken}`,
       userId: `${userId}`,
+      "Content-Type": "application/json",
     },
   });
 
@@ -32,6 +34,7 @@ export const getCommitInfo = async (userId: string) => {
     headers: {
       // Authorization: `Bearer ${accessToken}`,
       userId: `${userId}`,
+      "Content-Type": "application/json",
     },
   });
 
@@ -44,6 +47,7 @@ export const getAttendanceInfo = async (userId: string) => {
     headers: {
       // Authorization: `Bearer ${accessToken}`,
       userId: `${userId}`,
+      "Content-Type": "application/json",
     },
   });
 
