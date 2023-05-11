@@ -1,5 +1,7 @@
 package com.cobby.main.quest.api.controller;
 
+import java.net.URI;
+
 import com.cobby.main.avatar.api.service.AvatarQuestService;
 import com.cobby.main.common.util.ApiDocumentResponse;
 import com.cobby.main.quest.api.dto.request.QuestPostRequest;
@@ -13,6 +15,8 @@ import com.cobby.main.quest.api.service.QuestService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +36,12 @@ public class QuestController {
 	@Operation(summary = "#####도전과제 조회#####", description = "quest ID로 도전과제를 조회합니다.")
 	@GetMapping("/one/{questId}")
 	public ResponseEntity<? extends BaseResponseBody> getQuest(@PathVariable Long questId) {
-		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", questService.selectQuest(questId)));
+
+		var quest = questService.selectQuest(questId);
+
+		return ResponseEntity
+			.ok()
+			.body(new BaseResponseBody<>(200, "OK", quest));
 	}
 
 	@Hidden
@@ -40,25 +49,31 @@ public class QuestController {
 	@Operation(summary = "#####도전과제 목록 전체 조회#####", description = "모든 도전과제를 조회합니다.")
 	@GetMapping
 	public ResponseEntity<? extends BaseResponseBody> getAllQuests() {
-		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "OK", questService.selectAllQuest()));
+
+		var quests = questService.selectAllQuest();
+
+		return ResponseEntity
+			.ok()
+			.body(new BaseResponseBody<>(200, "OK", quests));
 	}
 
 	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####도전과제 생성#####", description = "도전과제 이름, 종류, 달성 조건, 보상으로 이루어진 도전과제를 생성합니다.")
 	@PostMapping("/new")
-	public ResponseEntity<? extends BaseResponseBody> createQuest(@RequestBody QuestPostRequest questInfo) {
-		questService.insertQuest(questInfo);
-		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Created", "생성되었습니다."));
-	}
+	public ResponseEntity<? extends BaseResponseBody> createQuest(
+		@RequestBody @Valid QuestPostRequest questInfo,
+		HttpServletRequest request
+	) {
+		var id = questService.insertQuest(questInfo);
 
-	@Hidden
-	@ApiDocumentResponse
-	@Operation(summary = "#####도전과제 수정#####", description = "도전과제 ID에 해당하는 도전과제 이름, 종류, 달성 조건, 보상으로 이루어진 도전과제를 수정합니다.")
-	@PutMapping
-	public ResponseEntity<? extends BaseResponseBody> updateQuest(@RequestBody QuestPutRequest questInfo) {
-		questService.updateQuest(questInfo);
-		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Updated", "수정되었습니다."));
+		var location = URI.create(request.getRequestURI() + "/" + id);
+
+		var successMessage = "아바타를 성공적으로 삭제했습니다. (ID=" + id + ")";
+
+		return ResponseEntity
+			.created(location)
+			.body(new BaseResponseBody<>(201, "Created", successMessage));
 	}
 
 	@Hidden
@@ -66,8 +81,13 @@ public class QuestController {
 	@Operation(summary = "#####도전과제 삭제#####", description = "도전과제 ID에 해당하는 도전과제를 삭제합니다.")
 	@DeleteMapping("/{questId}")
 	public ResponseEntity<? extends BaseResponseBody> deleteQuest(@PathVariable Long questId) {
-		questService.deleteQuest(questId);
-		return ResponseEntity.ok().body(new BaseResponseBody<>(200, "Deleted", "삭제되었습니다."));
+		var id = questService.deleteQuest(questId);
+
+		var successMessage = "아바타를 성공적으로 삭제했습니다. (ID=" + id + ")";
+
+		return ResponseEntity
+			.ok()
+			.body(new BaseResponseBody<>(200, "OK", successMessage));
 	}
 
 	@ApiDocumentResponse
