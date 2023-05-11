@@ -2,7 +2,7 @@ import client from "./client";
 
 const req = "/api/main";
 
-// 코비 관련 정보 조회 (코스튬 포함)
+// 코비 관련 정보 전체 조회 (코스튬 포함)
 export const getAvatarInfo = async (userId: string) => {
   const response = await client.get(`${req}/avatars`, {
     headers: {
@@ -14,7 +14,7 @@ export const getAvatarInfo = async (userId: string) => {
   return response;
 };
 
-// 인벤토리 유형 별 코스튬 조회 (머리, 몸통, 효과)
+// 코비 관련 정보 유형별 조회 (코스튬, 칭호, 도전과제)
 export const getInventoryItem = async (userId: string, itemType: string) => {
   const response = await client.get(`${req}/avatars/inventories/${itemType}`, {
     headers: {
