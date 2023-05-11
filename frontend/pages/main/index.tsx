@@ -11,6 +11,8 @@ import {
   getAttendanceInfo,
 } from "../api/user";
 
+import { getAvatarInfo } from "../api/main";
+
 import { GetServerSideProps } from "next";
 import { InferGetServerSidePropsType } from "next";
 
@@ -20,6 +22,7 @@ const MainFunc = ({
   statusData,
   commitData,
   attendanceData,
+  avatarData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   // useEffect(() => {
   //   localStorage.setItem("nickname", JSON.stringify(nicknameData.nickname));
@@ -33,6 +36,7 @@ const MainFunc = ({
           statusData={statusData}
           commitData={commitData}
           attendanceData={attendanceData}
+          avatarData={avatarData}
         />
       </page.PageWrapper>
       <BottomNavBar />
@@ -62,12 +66,18 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const attendanceData = attendanceRes.data;
   console.log(attendanceData.content);
 
+  const avatarRes = await getAttendanceInfo(userId);
+  const avatarData = avatarRes.data;
+
+  console.log(avatarData.content);
+
   return {
     props: {
       nicknameData: nicknameData.content,
       statusData: statusData.content,
       commitData: commitData.content,
       attendanceData: attendanceData.content,
+      avatarData: avatarData.content,
     },
   };
 };
