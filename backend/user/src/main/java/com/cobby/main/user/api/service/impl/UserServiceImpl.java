@@ -111,16 +111,16 @@ public class UserServiceImpl implements UserService {
 
 				statRepository.save(stat);
 
-				// 이후 user 정보를 메시지 큐에 보냅니다.
-				var res = send("make-avatar", user.getId());
-				log.info("Sending message: " + res);
+				// // 이후 user 정보를 메시지 큐에 보냅니다.
+				// var res = send("make-avatar", user.getId());
+				// log.info("Sending message: " + res);
 			});
 	}
 
-	private String send(String topic, String id) {
-		kafkaTemplate.send(topic, id);
-		return id;
-	}
+	// private String send(String topic, String id) {
+	// 	kafkaTemplate.send(topic, id);
+	// 	return id;
+	// }
 
 	private Long getFollower(UserPostRequest userPostRequest) {
 		OkHttpClient client = new OkHttpClient();
