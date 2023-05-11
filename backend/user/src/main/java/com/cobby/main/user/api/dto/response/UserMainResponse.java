@@ -4,12 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class UserMainResponse {
 
 	private String nickname;
+	private String githubUrl;
 
-	@Builder
-	public UserMainResponse(String nickname) {
-		this.nickname = nickname;
-	}
 }

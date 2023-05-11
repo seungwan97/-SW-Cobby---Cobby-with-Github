@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
 
 		var userMainResponse = UserMainResponse.builder()
 			.nickname(user.getNickname())
+			.githubUrl(user.getGithubUrl())
 			.build();
 		return userMainResponse;
 	}
