@@ -49,7 +49,6 @@ public class AvatarServiceImpl implements AvatarService {
 			.outfits(outfits)
 			.build();
 
-
 	}
 
 	private Map<String, CostumeGetResponse> getCostumeOutfits(final String idMapString) throws JsonProcessingException {
@@ -64,37 +63,37 @@ public class AvatarServiceImpl implements AvatarService {
 
 		// 맵에 들어있는 key (costume의 카테고리) value 들 (costume id)을 순회하며
 		idMap.forEach((category, costumeId) -> {
-				// 코스튬 Id가 0인 경우 "empty" 라는 이름을 가진 빈 객체를 DTO 형태로 outfits map에 넣습니다.
-				if(NO_COSTUME == costumeId) {
-					var emptyCostume = Costume.builder()
-						.costumeId(0L)
-						.name("empty")
-						.category(CostumeCategory.valueOf(category.toUpperCase()))
-						.quest(null)
-						.imgUrl("")
-						.gifUrl("")
-						.build();
+			// 코스튬 Id가 0인 경우 "empty" 라는 이름을 가진 빈 객체를 DTO 형태로 outfits map에 넣습니다.
+			if (NO_COSTUME == costumeId) {
+				var emptyCostume = Costume.builder()
+					.costumeId(0L)
+					.name("empty")
+					.category(CostumeCategory.valueOf(category.toUpperCase()))
+					.quest(null)
+					.imgUrl("")
+					.gifUrl("")
+					.build();
 
-					outfits.put(
-						category,
-						CostumeGetResponse.builder()
-							.costume(emptyCostume)
-							.build());
-				}
-				// 코스튬 Id가 0 이상인 경우에는 해당 ID를 가진 코스튬을 넣습니다.
-				else {
-					var costume = avatarCostumeRepository.findByCostume_CostumeId(costumeId)
-						.orElseThrow(() -> new IllegalArgumentException(
-							"보유하고 있지 않은 코스튬입니다. (category=" + category + ", ID=" + costumeId + ")"))
-						.getCostume();
+				outfits.put(
+					category,
+					CostumeGetResponse.builder()
+						.costume(emptyCostume)
+						.build());
+			}
+			// 코스튬 Id가 0 이상인 경우에는 해당 ID를 가진 코스튬을 넣습니다.
+			else {
+				var costume = avatarCostumeRepository.findByCostume_CostumeId(costumeId)
+					.orElseThrow(() -> new IllegalArgumentException(
+						"보유하고 있지 않은 코스튬입니다. (category=" + category + ", ID=" + costumeId + ")"))
+					.getCostume();
 
-					outfits.put(
-						category,
-						CostumeGetResponse.builder()
-							.costume(costume)
-							.build()
-					);
-				}
+				outfits.put(
+					category,
+					CostumeGetResponse.builder()
+						.costume(costume)
+						.build()
+				);
+			}
 		});
 
 		return outfits;
@@ -137,18 +136,30 @@ public class AvatarServiceImpl implements AvatarService {
 			avatar.getOutfits(),
 			objectMapper.getTypeFactory().constructParametricType(Map.class, String.class, Long.class));
 
-		var head = Optional.ofNullable(avatarUpdateInfo.head())
-			.orElse(currentCostumeIds.get("head"));
-		var body = Optional.ofNullable(avatarUpdateInfo.body())
-			.orElse(currentCostumeIds.get("body"));
-		var effect = Optional.ofNullable(avatarUpdateInfo.effect())
-			.orElse(currentCostumeIds.get("effect"));
+		// 각 코스튬 카테고리별로 변화를 감지하고 Map 형태로 저장
+		var outfit = Map.of(
+			"head", Optional.ofNullable(avatarUpdateInfo.head())
+				.orElse(currentCostumeIds.get("head")),
+			"body", Optional.ofNullable(avatarUpdateInfo.body())
+				.orElse(currentCostumeIds.get("body")),
+			"effect", Optional.ofNullable(avatarUpdateInfo.effect())
+				.orElse(currentCostumeIds.get("effect"))
+		);
+		var NO_COSTUME = 0L;
+		// 변경하려는 코스튬이 실제로 아바타가 가진 코스튬인지, 또는 빈 값(0)인지 확인
+		outfit.forEach((category, id) -> {
+			if (NO_COSTUME != id)
+				avatarCostumeRepository.findByCostume_CostumeId(id)
+					.orElseThrow(() -> new IllegalArgumentException(
+						"보유하고 있지 않은 코스튬입니다. (category=" + category + ", ID=" + id + ")"));
+		});
 
+		// Map 객체를 String 으로 변환하여 저장
 		avatar = avatar.toBuilder()
-			.outfits(objectMapper.writeValueAsString(
-				Map.of("head", head, "body", body, "effect", effect)))
+			.outfits(objectMapper.writeValueAsString(outfit))
 			.build();
 
+		// db 저장
 		return avatarRepository.save(avatar).getAvatarId();
 	}
 
