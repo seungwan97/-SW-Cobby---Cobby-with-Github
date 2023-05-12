@@ -4,7 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import com.cobby.main.avatar.api.dto.request.AvatarItemPostRequest;
 import com.cobby.main.avatar.api.dto.response.AvatarGetResponse;
+import com.cobby.main.avatar.api.service.AvatarCostumeService;
+import com.cobby.main.avatar.api.service.AvatarTitleService;
 import com.cobby.main.avatar.db.repository.AvatarQuestRepository;
 import com.cobby.main.quest.api.dto.response.CurrentQuest;
 import com.cobby.main.avatar.api.service.AvatarService;
@@ -12,6 +15,8 @@ import com.cobby.main.common.exception.NotFoundException;
 import com.cobby.main.quest.api.dto.request.QuestPostRequest;
 import com.cobby.main.quest.api.dto.response.QuestGetResponse;
 
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.cobby.main.quest.api.service.QuestService;
@@ -21,6 +26,9 @@ import com.cobby.main.quest.db.repository.QuestRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @RequiredArgsConstructor
 @Transactional
@@ -28,9 +36,13 @@ import lombok.RequiredArgsConstructor;
 public class QuestServiceImpl implements QuestService {
 
 	private final AvatarService avatarService;
-
+	private final AvatarTitleService avatarTitleService;
+	private final AvatarCostumeService avatarCostumeService;
 	private final QuestRepository questRepository;
 	private final AvatarQuestRepository avatarQuestRepository;
+
+	@Value("{request.user}")
+	private String USER_SERVER;
 
 	@Override
 	public QuestGetResponse selectQuest(Long questId) {
@@ -79,43 +91,15 @@ public class QuestServiceImpl implements QuestService {
 
 		CurrentQuest[] currentQuests = new CurrentQuest[4];
 		try {
-			// 1. 현재 달성 현황
-			// 1-1. 연속 출석 일자, 연속 커밋 일자 서버통신 받아오기
-
-			// 0 : 레벨, 1 : 커밋, 2 : 출석, 3 : 아이템 순서
-			int[] progressReq = new int[4];
-
-			// user서버 연동 후 설정
-			// 추후 yml에 설정l
-			// String url = "";
-			// OkHttpClient client = new OkHttpClient();
-			//
-			// Request.Builder builder = new Request.Builder()
-			// 	.url(url)
-			// 	.addHeader("userId", userId);
-			// Request request = builder.build();
-			//
-			// Response response = client.newCall(request).execute();
-			//
-			// JSONObject jsonObject = new JSONObject(response.body().string());
-			//
-			// // progressReq[1] = Integer.parseInt(jsonObject.getString("relayCommit"));
-			// // progressReq[2] = Integer.parseInt(jsonObject.getString("relayAttend"));
-
-			progressReq[1] = 1;
-			progressReq[2] = 1;
-
-			// 1-2. 레벨, 아이템 갯수
-			AvatarGetResponse avatar = avatarService.selectAvatar(userId);
-			progressReq[0] = avatar.getLevel();
-			progressReq[3] = avatar.getCostumes().size();
-
-			// 2. 퀘스트 목록 불러옴(추후 캐싱 가능할듯?)
-			// 0 : 레벨, 1 : 커밋, 2 : 출석, 3 : 아이템 순서
+			// idx => 0 : 레벨, 1 : 커밋, 2 : 출석, 3 : 아이템 순서
+			// 1. currentProgress : 현재 달성 현황
+			// 2. 퀘스트 목록 불러옴
+			int[] currentProgress = new int[4];
 			var questList = new List[4];
-
 			int idx = 0;
+
 			for (QuestCategory category : QuestCategory.values()) {
+				currentProgress[idx] = getCurrentProgress(userId, category);
 				questList[idx++] = this.selectAllQuestByQuestType(category);
 			}
 
@@ -144,7 +128,7 @@ public class QuestServiceImpl implements QuestService {
 						int progress =
 							Math.min(
 							Math.round(
-								((float)progressReq[idx] / quest.getQuestGoal()) * 100)
+								((float)currentProgress[idx] / quest.getQuestGoal()) * 100)
 								, 100
 						);
 
@@ -183,13 +167,35 @@ public class QuestServiceImpl implements QuestService {
 
 	@Override
 	public CurrentQuest selectNextQuest(String userId, Long questId) {
-
-		var clearQuest = questRepository.findById(questId)
+		
+		// 퀘스트 보상 아이템 DB에 추가
+		var clearQuestEntity = questRepository.findById(questId)
 			.orElseThrow(NotFoundException::new);
+		
+		if (!Objects.isNull(clearQuestEntity.getCostume())) {
+			avatarCostumeService.insertItem(
+				userId, new AvatarItemPostRequest(
+					"costume",
+						clearQuestEntity.getCostume().getCostumeId())
+			);
+		}
+		else if (!Objects.isNull((clearQuestEntity.getTitle()))) {
+			avatarTitleService.insertItem(
+				userId, new AvatarItemPostRequest(
+					"title",
+					clearQuestEntity.getTitle().getTitleId())
+			);
+		}
+		
+		// 현재 클리어한 퀘스트
+		var clearQuest = selectQuest(questId);
 		var type = clearQuest.getQuestType();
 		var goal = clearQuest.getQuestGoal();
 
+		// 같은 타입의 보다 상위 조건의 퀘스트 가져옴 
 		var findNextQuest = questRepository.findFirstByQuestTypeAndQuestGoalGreaterThanOrderByQuestGoal(type, goal);
+		
+		// 상위 조건의 퀘스트가 존재하지 않을 시 달성 완료
 		if (!findNextQuest.isPresent()) {
 			return CurrentQuest.builder()
 				.questId(-1L)
@@ -201,15 +207,16 @@ public class QuestServiceImpl implements QuestService {
 			.map(quest -> QuestGetResponse.builder().quest(quest).build())
 			.orElseThrow(NotFoundException::new);
 
-		int progressReq = 1;
-
+		// 진행상황 계산
+		int currentProgress = getCurrentProgress(userId, type);
 		int progress =
 			Math.min(
 				Math.round(
-					((float)progressReq / nextQuest.getQuestGoal()) * 100)
+					((float)currentProgress / nextQuest.getQuestGoal()) * 100)
 				, 100
 			);
 
+		// 다음 퀘스트 내용 반환
 		return CurrentQuest.builder()
 			.questId(nextQuest.getQuestId())
 			.questName(nextQuest.getQuestName())
@@ -218,6 +225,52 @@ public class QuestServiceImpl implements QuestService {
 			.progress(progress)
 			.award(getAward(nextQuest))
 			.build();
+	}
+
+	int getCurrentProgress(String userId, QuestCategory type) {
+		int progress = 1;
+		try {
+			switch (type) {
+				case LEVEL -> {
+					AvatarGetResponse avatar = avatarService.selectAvatar(userId);
+					progress = avatar.getLevel();
+				}
+				case COMMIT -> {
+					progress = getRelayCnt(userId, "commit");
+				}
+				case ATTENDANCE -> {
+					progress = getRelayCnt(userId, "attendance");
+				}
+				case ITEM -> {
+					AvatarGetResponse avatar = avatarService.selectAvatar(userId);
+					progress = avatar.getCostumes().size();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return progress;
+	}
+
+	int getRelayCnt(String userId, String kind) {
+		int relayCnt = 0;
+		try {
+			OkHttpClient client = new OkHttpClient();
+
+			Request.Builder builder = new Request.Builder()
+				.url(USER_SERVER + "/api/user/activityLog/" + kind)
+				.addHeader("userId", userId);
+			Request request = builder.build();
+
+			Response response = client.newCall(request).execute();
+
+			JSONObject jsonObject = new JSONObject(response.body().string());
+			relayCnt = jsonObject.getJSONObject("content").getInt("relayCnt");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return relayCnt;
 	}
 
 	Object getAward(QuestGetResponse quest) {
@@ -230,5 +283,4 @@ public class QuestServiceImpl implements QuestService {
 		else
 			return "none";
 	}
-
 }

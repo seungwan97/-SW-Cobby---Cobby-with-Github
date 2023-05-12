@@ -2,6 +2,7 @@ package com.cobby.main.quest.api.controller;
 
 import java.net.URI;
 
+import com.cobby.main.avatar.api.dto.request.AvatarItemPostRequest;
 import com.cobby.main.avatar.api.service.AvatarQuestService;
 import com.cobby.main.common.util.ApiDocumentResponse;
 import com.cobby.main.quest.api.dto.request.QuestPostRequest;
@@ -116,11 +117,10 @@ public class QuestController {
 		@PathVariable
 		Long questId
 	) {
-		// 아바타가 가진 아이템으로 업데이트
+		// 아바타가 클리어한 퀘스트 추가
+		avatarQuestService.insertItem(userId, new AvatarItemPostRequest("quest", questId));
 
-		// 아바타가 클리어한 퀘스트 업데이트
-
-		// 다음 퀘스트 반환
+		// 다음 퀘스트 정보 및 보상 아이템 추가
 		var nextQuest = questService.selectNextQuest(userId, questId);
 
 		return ResponseEntity

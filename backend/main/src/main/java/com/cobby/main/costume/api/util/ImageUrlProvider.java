@@ -27,7 +27,7 @@ import okhttp3.RequestBody;
 public class ImageUrlProvider {
 
 	@Value("${request.url}")
-	private static String REQUEST_URL;
+	private String REQUEST_URL;
 
 	private final OkHttpClient okHttpClient = new OkHttpClient()
 		.newBuilder()

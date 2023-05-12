@@ -22,4 +22,5 @@ spring:
 
 # okhttp request url to store-service
 request:
-  url: ENC(CvV1QHfQ5kdVK2p2q3bHCX8l4WDtD1IMPSmD9Ltxo3gRdUF92NZI243fvfzD3qgD57ZmL)
+  user: ENC(JpGMOhIVAHkn22DnOGaotfCQUIYrb2J9UN3NKTUly81rBNw8OXAYrEWg8tmOEitT)
+  url:  ENC(04Z0CsjoAwyPkqBTQP1/tzHp94vxj+G+8xUurTS5UU7IUSPE9kILGFcyBgRoghBxIrB0dOt7hard0MLVw3Zk3Q==)
