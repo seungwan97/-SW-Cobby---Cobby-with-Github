@@ -8,13 +8,13 @@ import lombok.Builder;
 
 @Builder
 public record AvatarPatchRequest(
-	@Schema(description = "수정하고자 하는 코스튬 ID 정보", minimum = "0")
+	@Schema(description = "머리 코스튬 ID", minimum = "0")
 	Long head,
 
-	@Schema(description = "얼굴 부분 코스튬 ID", minimum = "0")
-	Long face,
+	@Schema(description = "몸통 코스튬 ID", minimum = "0")
+	Long body,
 
-	@Schema(description = "몸통 부분 코스튬 ID", minimum = "0")
-	Long body
+	@Schema(description = "특수효과 코스튬 ID", minimum = "0")
+	Long effect
 ) {
 }
