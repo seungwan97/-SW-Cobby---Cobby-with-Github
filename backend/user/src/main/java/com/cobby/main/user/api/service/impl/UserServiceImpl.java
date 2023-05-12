@@ -113,14 +113,14 @@ public class UserServiceImpl implements UserService {
 					.issueCnt(getStatList(userPostRequest, 9))
 					.build();
 
-				// // commit 기록 하나 쌓기
-				// var activityLog = ActivityLog.builder()
-				// 	.activityType(ActivityType.COMMIT)
-				// 	.user(user)
-				// 	.relayCnt(0L)
-				// 	.build();
-				//
-				// activityLogRepository.save(activityLog);
+				// commit 기록 하나 쌓기
+				var activityLog = ActivityLog.builder()
+					.activityType(ActivityType.COMMIT)
+					.user(user)
+					.relayCnt(0L)
+					.build();
+
+				activityLogRepository.save(activityLog);
 
 				statRepository.save(stat);
 
