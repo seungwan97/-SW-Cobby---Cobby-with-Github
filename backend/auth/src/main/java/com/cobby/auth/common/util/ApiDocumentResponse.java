@@ -8,7 +8,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.cobby.auth.common.exception.NotFoundException;
+import com.cobby.auth.common.exception.handler.GlobalExceptionHandler;
+import com.cobby.auth.common.exception.handler.ValidationExceptionHandler;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,33 +25,34 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
         @ApiResponse(
                 responseCode = NOT_FOUND+"",
                 description = "존재하지 않는 API",
-                content = @Content(schema = @Schema(implementation = NotFoundException.class))),
+                content = @Content(schema = @Schema(implementation = GlobalExceptionHandler.class))),
 
         @ApiResponse(
                 responseCode = BAD_REQUEST+"",
                 description = "유효성 검증 실패",
-                content = @Content(schema = @Schema(implementation = NotFoundException.class))),
+                content = @Content(schema = @Schema(implementation = ValidationExceptionHandler.class))),
 
         @ApiResponse(
                 responseCode = METHOD_NOT_ALLOWED+"",
                 description = "잘못된 Method 요청",
-                content = @Content(schema = @Schema(implementation = NotFoundException.class))),
+                content = @Content(schema = @Schema(implementation = GlobalExceptionHandler.class))),
 
         @ApiResponse(
                 responseCode = UNAUTHORIZED+"",
                 description = "인증 실패",
-                content = @Content(schema = @Schema(implementation = NotFoundException.class))),
+                content = @Content(schema = @Schema(implementation = GlobalExceptionHandler.class))),
 
         @ApiResponse(
                 responseCode = FORBIDDEN+"",
                 description = "인가 실패(권한 없음)",
-                content = @Content(schema = @Schema(implementation = NotFoundException.class))),
+                content = @Content(schema = @Schema(implementation = GlobalExceptionHandler.class))),
 
         @ApiResponse(
                 responseCode = METHOD_NOT_ALLOWED+"",
                 description = "데이터 등록 실패",
-                content = @Content(schema = @Schema(implementation = NotFoundException.class))),
+                content = @Content(schema = @Schema(implementation = GlobalExceptionHandler.class))),
 
 })
 public @interface ApiDocumentResponse {
 }
+
