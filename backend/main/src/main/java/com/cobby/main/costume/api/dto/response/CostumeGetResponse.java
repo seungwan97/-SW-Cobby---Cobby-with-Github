@@ -1,11 +1,10 @@
 package com.cobby.main.costume.api.dto.response;
 
 import java.util.Map;
+import java.util.Objects;
 
 import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
-import com.cobby.main.quest.api.dto.response.QuestGetResponse;
-import com.cobby.main.quest.db.entity.Quest;
 
 import lombok.Builder;
 import lombok.Data;
@@ -31,12 +30,12 @@ public class CostumeGetResponse {
 		this.name = costume.getName();
 		this.category = costume.getCategory();
 		var quest = costume.getQuest();
-		this.quest = Map.of(
+		this.quest = Objects.nonNull(quest) ? Map.of(
 			"questId", quest.getQuestId(),
 			"questName", quest.getQuestName(),
 			"questType", quest.getQuestType().name(),
 			"questGoal", quest.getQuestGoal()
-		);
+		) : null;
 		this.imgUrl = costume.getImgUrl();
 		this.gifUrl = costume.getGifUrl();
 	}

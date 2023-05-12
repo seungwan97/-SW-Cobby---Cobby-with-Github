@@ -25,8 +25,6 @@ import lombok.RequiredArgsConstructor;
 public class AvatarQuestServiceImpl implements AvatarQuestService {
 
 	private final AvatarQuestRepository avatarQuestRepository;
-	private final AvatarService avatarService;
-	private final QuestService questService;
 	private final QuestRepository questRepository;
 	private final AvatarRepository avatarRepository;
 
