@@ -141,22 +141,15 @@ public class QuestServiceImpl implements QuestService {
 			for (List<QuestGetResponse> qList : questList) {
 				for (QuestGetResponse quest : qList) {
 					if (goal[idx] < quest.getQuestGoal()) {
-						int progress = Math.min(Math.round(((float)progressReq[idx] / quest.getQuestGoal()) * 100),
-							100);
+						int progress =
+							Math.min(
+							Math.round(
+								((float)progressReq[idx] / quest.getQuestGoal()) * 100)
+								, 100
+						);
 
 						// 퀘스트가 가지고 있는 보상의 유형(코스튬/칭호) 파악
-						Object award = "";
-
-						award = quest.getCostume();
-//						// null이 아니면 보상임
-//						if (quest.getCostume() == null && quest.getTitle() == null)
-//							award = "none";
-//						else if (quest.getCostume() != null)
-//							award = quest.getCostume();
-//						else if (quest.getTitle() != null)
-//							award = quest.getTitle();
-//						else
-//							award = "none";
+						Object award = getAward(quest);
 
 						currentQuests[idx] = CurrentQuest.builder()
 							.questId(quest.getQuestId())
@@ -187,4 +180,55 @@ public class QuestServiceImpl implements QuestService {
 
 		return Arrays.asList(currentQuests);
 	}
+
+	@Override
+	public CurrentQuest selectNextQuest(String userId, Long questId) {
+
+		var clearQuest = questRepository.findById(questId)
+			.orElseThrow(NotFoundException::new);
+		var type = clearQuest.getQuestType();
+		var goal = clearQuest.getQuestGoal();
+
+		var findNextQuest = questRepository.findFirstByQuestTypeAndQuestGoalGreaterThanOrderByQuestGoal(type, goal);
+		if (!findNextQuest.isPresent()) {
+			return CurrentQuest.builder()
+				.questId(-1L)
+				.questName("달성 완료")
+				.build();
+		}
+
+		var nextQuest = findNextQuest
+			.map(quest -> QuestGetResponse.builder().quest(quest).build())
+			.orElseThrow(NotFoundException::new);
+
+		int progressReq = 1;
+
+		int progress =
+			Math.min(
+				Math.round(
+					((float)progressReq / nextQuest.getQuestGoal()) * 100)
+				, 100
+			);
+
+		return CurrentQuest.builder()
+			.questId(nextQuest.getQuestId())
+			.questName(nextQuest.getQuestName())
+			.questType(nextQuest.getQuestType())
+			.questGoal(nextQuest.getQuestGoal())
+			.progress(progress)
+			.award(getAward(nextQuest))
+			.build();
+	}
+
+	Object getAward(QuestGetResponse quest) {
+		if (quest.getCostume() == null && quest.getTitle() == null)
+			return "none";
+		else if (quest.getCostume() != null)
+			return quest.getCostume();
+		else if (quest.getTitle() != null)
+			return quest.getTitle();
+		else
+			return "none";
+	}
+
 }

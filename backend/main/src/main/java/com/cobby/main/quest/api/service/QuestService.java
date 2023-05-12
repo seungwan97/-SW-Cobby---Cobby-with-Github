@@ -15,5 +15,6 @@ public interface QuestService {
 	Long insertQuest(QuestPostRequest questInfo);
 	Long deleteQuest(Long questId);
 
-	List<CurrentQuest> selectCurrentQuests(String avatarId);
+	List<CurrentQuest> selectCurrentQuests(String userId);
+	CurrentQuest selectNextQuest(String userId, Long questId);
 }

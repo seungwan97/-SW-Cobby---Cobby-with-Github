@@ -105,4 +105,26 @@ public class QuestController {
 			.body(new BaseResponseBody<>(200, "ok", currentQuests));
 	}
 
+
+	@ApiDocumentResponse
+	@Operation
+	@GetMapping("/getItem/{questId}")
+	public ResponseEntity<? extends BaseResponseBody> getQuestItem(
+		@RequestHeader("userId")
+		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
+			String userId,
+		@PathVariable
+		Long questId
+	) {
+		// 아바타가 가진 아이템으로 업데이트
+
+		// 아바타가 클리어한 퀘스트 업데이트
+
+		// 다음 퀘스트 반환
+		var nextQuest = questService.selectNextQuest(userId, questId);
+
+		return ResponseEntity
+			.ok()
+			.body(new BaseResponseBody<>(200, "ok", nextQuest));
+	}
 }
