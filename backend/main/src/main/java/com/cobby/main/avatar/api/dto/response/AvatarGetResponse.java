@@ -1,10 +1,12 @@
 package com.cobby.main.avatar.api.dto.response;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.cobby.main.avatar.db.entity.Avatar;
 import com.cobby.main.costume.api.dto.response.CostumeGetResponse;
+import com.cobby.main.costume.db.entity.Costume;
 
 import lombok.Builder;
 import lombok.Data;
@@ -17,7 +19,7 @@ public class AvatarGetResponse {
 
 	private Integer nextExp;
 
-	private Map<String, String> outfits;
+	private Map<String, CostumeGetResponse> outfits;
 
 	private List<AvatarCostumeGetResponse> costumes;
 
@@ -26,7 +28,7 @@ public class AvatarGetResponse {
 	private List<AvatarQuestGetResponse> quests;
 
 	@Builder
-	public AvatarGetResponse (Avatar avatar, Integer nextExp, Map<String, String> outfits) {
+	public AvatarGetResponse (Avatar avatar, Integer nextExp, Map<String, CostumeGetResponse> outfits) {
 		this.level = avatar.getLevel();
 		this.exp = avatar.getExp();
 		this.nextExp = nextExp;

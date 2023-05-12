@@ -13,26 +13,24 @@ import com.cobby.main.avatar.db.entity.Avatar;
 import com.cobby.main.avatar.db.repository.AvatarCostumeRepository;
 import com.cobby.main.avatar.db.repository.AvatarRepository;
 import com.cobby.main.avatar.db.repository.LevelTableRepository;
+import com.cobby.main.costume.api.dto.response.CostumeGetResponse;
+import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
-import com.cobby.main.costume.db.repository.CostumeRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AvatarServiceImpl implements AvatarService {
 
 	private final AvatarRepository avatarRepository;
 
-	private final CostumeRepository costumeRepository;
-
 	private final LevelTableRepository levelTableRepository;
 
 	private final ObjectMapper objectMapper;
+
 	private final AvatarCostumeRepository avatarCostumeRepository;
 
 	@Override
@@ -40,22 +38,7 @@ public class AvatarServiceImpl implements AvatarService {
 		var avatar = avatarRepository.findById(avatarId)
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + avatarId + ")"));
 
-		// String 을 Map 으로 변환
-		Map<String, Long> map = objectMapper.readValue(
-			avatar.getOutfits(),
-			objectMapper.getTypeFactory().constructParametricType(Map.class, String.class, Long.class)
-		);
-
-		var NO_COSTUME = "";
-		var outfits = new HashMap<String, String>();
-
-		map.forEach((costumeCategory, costumeId) ->
-			outfits.put(costumeCategory, costumeId == 0L ? NO_COSTUME :
-				avatarCostumeRepository.findByCostume_CostumeId(costumeId)
-					.orElseThrow(() -> new IllegalArgumentException(
-						"보유하고 있지 않은 코스튬입니다. (category=" + costumeCategory + ", ID=" + costumeId + ")"))
-					.getCostume()
-					.getGifUrl()));
+		var outfits = getCostumeOutfits(avatar.getOutfits());
 
 		var levelTable = levelTableRepository.findById(avatar.getLevel())
 			.orElseThrow(() -> new IllegalArgumentException("레벨 정보가 없습니다. (Level=" + avatar.getLevel() + ")"));
@@ -65,6 +48,56 @@ public class AvatarServiceImpl implements AvatarService {
 			.avatar(avatar)
 			.outfits(outfits)
 			.build();
+
+
+	}
+
+	private Map<String, CostumeGetResponse> getCostumeOutfits(final String idMapString) throws JsonProcessingException {
+		// String 을 Map 으로 변환
+		Map<String, Long> idMap = objectMapper.readValue(
+			idMapString,
+			objectMapper.getTypeFactory().constructParametricType(Map.class, String.class, Long.class)
+		);
+
+		var NO_COSTUME = 0L;
+		var outfits = new HashMap<String, CostumeGetResponse>();
+
+		// 맵에 들어있는 key (costume의 카테고리) value 들 (costume id)을 순회하며
+		idMap.forEach((category, costumeId) -> {
+				// 코스튬 Id가 0인 경우 "empty" 라는 이름을 가진 빈 객체를 DTO 형태로 outfits map에 넣습니다.
+				if(NO_COSTUME == costumeId) {
+					var emptyCostume = Costume.builder()
+						.costumeId(0L)
+						.name("empty")
+						.category(CostumeCategory.valueOf(category.toUpperCase()))
+						.quest(null)
+						.imgUrl("")
+						.gifUrl("")
+						.build();
+
+					outfits.put(
+						category,
+						CostumeGetResponse.builder()
+							.costume(emptyCostume)
+							.build());
+				}
+				// 코스튬 Id가 0 이상인 경우에는 해당 ID를 가진 코스튬을 넣습니다.
+				else {
+					var costume = avatarCostumeRepository.findByCostume_CostumeId(costumeId)
+						.orElseThrow(() -> new IllegalArgumentException(
+							"보유하고 있지 않은 코스튬입니다. (category=" + category + ", ID=" + costumeId + ")"))
+						.getCostume();
+
+					outfits.put(
+						category,
+						CostumeGetResponse.builder()
+							.costume(costume)
+							.build()
+					);
+				}
+		});
+
+		return outfits;
 	}
 
 	@Override
