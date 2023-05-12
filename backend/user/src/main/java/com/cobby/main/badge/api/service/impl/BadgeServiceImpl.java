@@ -1,8 +1,6 @@
 package com.cobby.main.badge.api.service.impl;
 
-
-import java.util.Map;
-
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -40,17 +38,22 @@ public class BadgeServiceImpl implements BadgeService {
 	 */
 	@Override
 	public String getBadge(String nickname) {
-		log.info(getAvatar(nickname).toString());
 		String svgContent = getSvg(nickname);
 
 		return svgContent;
+	}
+
+	private String getCustome(String name){
+		log.info("s3 url : " + bucketName + "base64/"  + name + ".txt");
+		var custome = amazonS3Client.getObjectAsString(bucketName, "base64/"  + name + ".txt");
+		log.info("s3 url : " + custome);
+		return custome.toString();
 	}
 
 
 	// 인코딩 한 것을 올리고 이름은 같게 맞추고 거서
 	// 입고 있는 옷 가지고 오기 ...
 	private String getCharacter(){
-
 		var character = amazonS3Client.getObjectAsString(bucketName, "character/cobby.txt");
 
 		return character.toString();
@@ -65,23 +68,27 @@ public class BadgeServiceImpl implements BadgeService {
 			.url(mainUrl + "/avatars")
 			.addHeader("userId", findUser.getId());
 		Request request = builder.build();
+		log.info(mainUrl + "/avatars");
 
 		try {
 			Response response = client.newCall(request).execute();
 			if (response.code() == 200) {
 
-				JSONObject jsonObject = new JSONObject(response.body().string());
-				log.info(jsonObject.toString());
-				JSONObject contentObject = jsonObject.getJSONObject("content");
-				JSONObject outfitsObject = contentObject.getJSONObject("outfits");
-				Map<String, Object> outfitsMap = outfitsObject.toMap();
+				JSONObject contentObject = new JSONObject(response.body().string()).getJSONObject("content");
+				log.info(contentObject.toString());
+				JSONArray costumeArray = contentObject.getJSONArray("costumes");
+				log.info(contentObject.getJSONArray("costumes").toString());
+				String head = "";
+				String effect = "";
+				String body = "";
 
-				String head = (String)outfitsMap.get("head");
-				String effect = (String)outfitsMap.get("effect");
-				String body = (String)outfitsMap.get("body");
-				log.info("현재 입고 있는 것 : " + head);
-				log.info("현재 입고 있는 것 : " + effect);
-				log.info("현재 입고 있는 것 : " + body);
+				for(int i = 0; i < costumeArray.length(); i++){
+					var name = costumeArray.getJSONObject(i).getJSONObject("costume").getString("name");
+					var category = costumeArray.getJSONObject(i).getJSONObject("costume").getString("category");
+					if(category.equals("BODY")) body = name;
+					else if(category.equals("HEAD")) head = name;
+					else if(category.equals("EFFECT")) effect = name;
+				}
 
 				var badgeGetResponse = BadgeGetResponse.builder()
 					.level(contentObject.getInt("level"))
@@ -107,6 +114,15 @@ public class BadgeServiceImpl implements BadgeService {
 	}
 
 	public String getSvg(String nickname){
+		BadgeGetResponse badgeGetResponse = getAvatar(nickname);
+		String body = "";
+		String effect = "";
+		String head = "";
+
+		if(!badgeGetResponse.getBody().isEmpty()) body = getCustome(badgeGetResponse.getBody());
+		if(!badgeGetResponse.getEffect().isEmpty()) effect = getCustome(badgeGetResponse.getEffect());
+		if(!badgeGetResponse.getHead().isEmpty()) head = getCustome(badgeGetResponse.getHead());
+
 		StringBuilder svg = new StringBuilder();
 		svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"500\" height=\"350\" viewBox=\"0 0 700 350\">\n")
 			.append("\t<style>\n")
@@ -144,12 +160,13 @@ public class BadgeServiceImpl implements BadgeService {
 			.append("\t<rect class=\"card\" x=\"0\" y=\"0\" />\n")
 			.append("\n")
 			.append("\t<image href=\"data:image/gif;base64," + getCharacter() + "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"cobby\" />\n")
-			.append("\t<image href=\"data:image/gif;base64,\" x=\"0\" y=\"0\" width=\"300px\" alt=\"body\" />\n")
-			.append("\t<image href=\"data:image/gif;base64,\" x=\"0\" y=\"0\" width=\"300px\" alt=\"head\" />\n")
+			.append("\t<image href=\"data:image/gif;base64," + body + "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"body\" />\n")
+			.append("\t<image href=\"data:image/gif;base64," + effect + "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"effect\" />\n")
+			.append("\t<image href=\"data:image/gif;base64," + head +  "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"head\" />\n")
 			.append("\n")
 			.append("\t<g class=\"info\">\n")
 			.append("\t\t<text class=\"info_line\" x=\"500\" y=\"100\" text-anchor=\"middle\">" + nickname + "'s COBBY</text>\n")
-			.append("\t\t<text class=\"info_line\" x=\"500\" y=\"175\" text-anchor=\"middle\">LV " + getAvatar(nickname).getLevel() + " </text>\n")
+			.append("\t\t<text class=\"info_line\" x=\"500\" y=\"175\" text-anchor=\"middle\">LV " + badgeGetResponse.getLevel() + " </text>\n")
 			.append("\t\t<text class=\"info_line\" x=\"500\" y=\"250\" text-anchor=\"middle\">Today's Commits : " + getCommitCnt(nickname) +"</text>\n")
 			.append("\t</g>\n")
 			.append("</svg>\n");

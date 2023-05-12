@@ -13,4 +13,6 @@ cloud:
 
 request:
   main:
-    url: ENC(HL8nc4lTdwrlZ3Acmsvs7891nkCtFUNNEDAzxK229JeAXBX4HWewtQ==)
+    url: ENC(86/xgvQYGP5zlxnLAmfAhD0AMldEWX8b/QmR7E5AyazumVadjLZ2ACyftHyZ1fBi) // k
+#    url: ENC(HL8nc4lTdwrlZ3Acmsvs7891nkCtFUNNEDAzxK229JeAXBX4HWewtQ==) cobby
+#    url: http://localhost:15030/api/main

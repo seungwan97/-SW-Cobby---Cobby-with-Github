@@ -28,6 +28,8 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 	private final UserRepository userRepository;
 	private final ActivityLogRepository activityLogRepository;
 
+
+	// 1. webhook 걸릴 때 로그라 그냥 다 찍히는데 commit webhook 걸리면 db에 저장됩니다.
 	@Override
 	public void webhookCreate(Map<String, String> headers, String payload) {
 
@@ -50,35 +52,26 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 
 	}
 
+	// 2. 출석 api 요청을 받으면 그냥 바로 활동 일자 비교해서 일이 다르면 relayCnt 하나 증가
 	@Override
-	public ActivityLogResponse getActivityLogInfo(String userId) {
+	public ActivityLog getActivityLogInfo(String userId) {
 		var existingActivityLog = activityLogRepository.findTopByUserIdOrderByIdDesc(userId);
-		ActivityLogResponse activityLogResponse;
+		var relayCnt = 1L;
+
 		if (existingActivityLog.isPresent()) {
 			var activityLog = existingActivityLog.orElseThrow(NotFoundException::new);
-
-			activityLogResponse = ActivityLogResponse.builder()
-				.activityType(ActivityType.ATTENDANCE)
-				.relayCnt(findDate(activityLog.getUser().getNickname()))
-				.userId(userId)
-				.build();
-		}else {
-			activityLogResponse = ActivityLogResponse.builder()
-				.activityType(ActivityType.ATTENDANCE)
-				.relayCnt(1L)
-				.userId(userId)
-				.build();
+			relayCnt = findDate(activityLog.getUser().getNickname());
 		}
 		var user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
 
 		var activityLog = ActivityLog.builder()
-			.activityType(activityLogResponse.getActivityType())
-			.relayCnt(activityLogResponse.getRelayCnt())
+			.activityType(ActivityType.ATTENDANCE)
+			.relayCnt(relayCnt)
 			.user(user)
 			.build();
 		activityLogRepository.save(activityLog);
 
-		return activityLogResponse;
+		return activityLog;
 	}
 
 	@Override

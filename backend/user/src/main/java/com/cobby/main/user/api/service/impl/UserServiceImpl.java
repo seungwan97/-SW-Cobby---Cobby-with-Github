@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.json.JSONObject;
 
+import com.cobby.main.activitylog.db.entity.ActivityLog;
+import com.cobby.main.activitylog.db.entity.ActivityType;
+import com.cobby.main.activitylog.db.repository.ActivityLogRepository;
 import com.cobby.main.common.exception.NotFoundException;
 import com.cobby.main.stat.db.entity.Stat;
 import com.cobby.main.stat.db.repository.StatRepository;
@@ -34,8 +37,7 @@ public class UserServiceImpl implements UserService {
 	private static final String GITHUB_API_URL = "https://api.github.com";
 	private final UserRepository userRepository;
 	private final StatRepository statRepository;
-
-	// private final KafkaTemplate<String, String> kafkaTemplate;
+	private final ActivityLogRepository activityLogRepository;
 
 	@Override
 	public UserMainResponse getUserInfo(String userId) {
@@ -108,6 +110,15 @@ public class UserServiceImpl implements UserService {
 					.followerCnt(getFollower(userPostRequest))
 					.issueCnt(getStatList(userPostRequest, 9))
 					.build();
+
+				// commit 기록 하나 쌓기
+				var activityLog = ActivityLog.builder()
+					.activityType(ActivityType.COMMIT)
+					.user(user)
+					.relayCnt(0L)
+					.build();
+
+				activityLogRepository.save(activityLog);
 
 				statRepository.save(stat);
 
