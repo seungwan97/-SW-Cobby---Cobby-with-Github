@@ -77,14 +77,14 @@ public class BadgeServiceImpl implements BadgeService {
 				JSONObject contentObject = new JSONObject(response.body().string()).getJSONObject("content");
 				log.info(contentObject.toString());
 				JSONArray costumeArray = contentObject.getJSONArray("costumes");
-				log.info(contentObject.getJSONArray("costumes").toString());
+				log.info("코스튬 목록입니다 : " + contentObject.getJSONArray("costumes").toString());
 				String head = "";
 				String effect = "";
 				String body = "";
 
 				for(int i = 0; i < costumeArray.length(); i++){
-					var name = costumeArray.getJSONObject(i).getJSONObject("costume").getString("name");
-					var category = costumeArray.getJSONObject(i).getJSONObject("costume").getString("category");
+					var name = costumeArray.getJSONObject(i).getString("name");
+					var category = costumeArray.getJSONObject(i).getString("category");
 					if(category.equals("BODY")) body = name;
 					else if(category.equals("HEAD")) head = name;
 					else if(category.equals("EFFECT")) effect = name;
