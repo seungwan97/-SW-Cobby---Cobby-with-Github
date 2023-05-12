@@ -4,6 +4,7 @@ import static jakarta.persistence.EnumType.*;
 
 import com.cobby.main.common.entity.UpdateTimeEntity;
 import com.cobby.main.user.db.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,6 +31,7 @@ public class ActivityLog extends UpdateTimeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;

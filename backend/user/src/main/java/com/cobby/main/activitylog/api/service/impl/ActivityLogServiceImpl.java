@@ -3,10 +3,10 @@ package com.cobby.main.activitylog.api.service.impl;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
 import com.cobby.main.activitylog.api.dto.response.ActivityLogCommitResponse;
-import com.cobby.main.activitylog.api.dto.response.ActivityLogResponse;
 import com.cobby.main.activitylog.api.service.ActivityLogService;
 import com.cobby.main.activitylog.db.entity.ActivityLog;
 import com.cobby.main.activitylog.db.entity.ActivityType;
@@ -17,6 +17,7 @@ import com.cobby.main.user.db.repository.UserRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,13 +56,21 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 	// 2. 출석 api 요청을 받으면 그냥 바로 활동 일자 비교해서 일이 다르면 relayCnt 하나 증가
 	@Override
 	public ActivityLog getActivityLogInfo(String userId) {
-		var existingActivityLog = activityLogRepository.findTopByUserIdOrderByIdDesc(userId);
+		var activityLogList = activityLogRepository.findByUserIdOrderByIdDesc(userId);
 		var relayCnt = 1L;
-
-		if (existingActivityLog.isPresent()) {
-			var activityLog = existingActivityLog.orElseThrow(NotFoundException::new);
-			relayCnt = findDate(activityLog.getUser().getNickname());
+		for(ActivityLog activityLog : activityLogList){
+			if(activityLog.getActivityType() == ActivityType.ATTENDANCE) {
+				if(activityLog.getLastModifiedAt().getDayOfMonth() == LocalDateTime.now().getDayOfMonth()) {
+					relayCnt = activityLog.getRelayCnt();
+					break;
+				}
+				else if(activityLog.getLastModifiedAt().getDayOfMonth()+1 == LocalDateTime.now().getDayOfMonth()) {
+					relayCnt++;
+					break;
+				}
+			}
 		}
+
 		var user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
 
 		var activityLog = ActivityLog.builder()
@@ -76,7 +85,6 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 
 	@Override
 	public ActivityLogCommitResponse getActivityLogCommit(String userId) {
-		var existingActivityLog = activityLogRepository.findTopByUserIdOrderByIdDesc(userId).orElseThrow(NotFoundException::new);
 		var activityLogList = activityLogRepository.findByUserIdOrderByIdDesc(userId);
 		Long count = 1L, relayCnt = 0L;
 		for(ActivityLog activityLog : activityLogList){
@@ -97,24 +105,26 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 		return activityLogCommitResponse;
 	}
 
-	public Long findDate(String name){
-		var existingActivityLog = activityLogRepository.findTopByUserIdOrderByIdDesc(findUser(name).getId());
-		if (existingActivityLog.isPresent()) {
-			var lastUpdateDay = existingActivityLog.orElseThrow(NotFoundException::new);
-			var yesterday = lastUpdateDay.getLastModifiedAt().getDayOfMonth();
-			var today = LocalDateTime.now().getDayOfMonth();
+	@Transactional
+	private Long findDate(String name){
+		// 마지막 활동기록 조회
+		var lastActivityLog = activityLogRepository.findTopByUserIdOrderByIdDesc(findUser(name).getId())
+			.orElseThrow(NotFoundException::new);
 
-			var activityLog = lastUpdateDay;
-			// 결과
-			if(yesterday == today) {
-				return activityLog.getRelayCnt();
-			}
-			else if (yesterday + 1 == today) {
-				return activityLog.getRelayCnt()+1;
-			}
-		}
+		var past = lastActivityLog.getLastModifiedAt().getDayOfMonth();
+		var present = LocalDateTime.now().getDayOfMonth();
+		var relayCnt = lastActivityLog.getRelayCnt();
 
-		return 1L;
+		// 날짜의 차이에 따라 relayCnt를 변화시킨 값을 return
+		return switch (present - past) {
+			case 0 -> relayCnt;
+			case 1 -> {
+				// 변화량이 있을 경우
+				// send("activity-update", lastActivityLog);
+				yield relayCnt + 1;
+			}
+			default -> 1L;
+		};
 	}
 
 	public User findUser(String name){

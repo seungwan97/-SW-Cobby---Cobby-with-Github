@@ -101,9 +101,11 @@ public class UserServiceImpl implements UserService {
 					.build();
 				userRepository.save(user);
 
+				var user1 = userRepository.findById(userPostRequest.userId()).orElseThrow(NotFoundException::new);
+
 				// 새로운 사용자의 통계 정보를 생성합니다.
 				var stat = Stat.builder()
-					.user(user)
+					.user(user1)
 					.commitCnt(getStatList(userPostRequest, 5))
 					.starCnt(getStatList(userPostRequest, 3))
 					.prCnt(getStatList(userPostRequest, 7))
@@ -111,14 +113,14 @@ public class UserServiceImpl implements UserService {
 					.issueCnt(getStatList(userPostRequest, 9))
 					.build();
 
-				// commit 기록 하나 쌓기
-				var activityLog = ActivityLog.builder()
-					.activityType(ActivityType.COMMIT)
-					.user(user)
-					.relayCnt(0L)
-					.build();
-
-				activityLogRepository.save(activityLog);
+				// // commit 기록 하나 쌓기
+				// var activityLog = ActivityLog.builder()
+				// 	.activityType(ActivityType.COMMIT)
+				// 	.user(user)
+				// 	.relayCnt(0L)
+				// 	.build();
+				//
+				// activityLogRepository.save(activityLog);
 
 				statRepository.save(stat);
 
