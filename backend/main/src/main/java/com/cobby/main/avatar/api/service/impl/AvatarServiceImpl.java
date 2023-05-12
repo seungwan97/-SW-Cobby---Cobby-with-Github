@@ -139,9 +139,9 @@ public class AvatarServiceImpl implements AvatarService {
 
 		var head = Optional.ofNullable(avatarUpdateInfo.head())
 			.orElse(currentCostumeIds.get("head"));
-		var body = Optional.ofNullable(avatarUpdateInfo.face())
+		var body = Optional.ofNullable(avatarUpdateInfo.body())
 			.orElse(currentCostumeIds.get("body"));
-		var effect = Optional.ofNullable(avatarUpdateInfo.body())
+		var effect = Optional.ofNullable(avatarUpdateInfo.effect())
 			.orElse(currentCostumeIds.get("effect"));
 
 		avatar = avatar.toBuilder()
