@@ -10,6 +10,7 @@ spring:
     include:
       - oauth
       - db
+      - swagger
 
 # log level setting
 logging:
