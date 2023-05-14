@@ -4,15 +4,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import com.cobby.main.avatar.api.dto.request.AvatarPatchRequest;
 import com.cobby.main.avatar.api.dto.response.AvatarGetResponse;
+import com.cobby.main.avatar.api.enumtype.ExpReward;
 import com.cobby.main.avatar.api.service.AvatarService;
 import com.cobby.main.avatar.db.entity.Avatar;
 import com.cobby.main.avatar.db.repository.AvatarCostumeRepository;
 import com.cobby.main.avatar.db.repository.AvatarRepository;
 import com.cobby.main.avatar.db.repository.LevelTableRepository;
+import com.cobby.main.common.exception.NotFoundException;
 import com.cobby.main.costume.api.dto.response.CostumeGetResponse;
 import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
@@ -99,8 +103,10 @@ public class AvatarServiceImpl implements AvatarService {
 		return outfits;
 	}
 
-	@Override
-	public String insertDefaultAvatar(String avatarId) throws JsonProcessingException {
+	@KafkaListener(topics = "create-new-avatar")
+	public String insertNewAvatar(String avatarId) throws JsonProcessingException {
+
+		// 아바타가 존재하면 예외 발생
 		avatarRepository.findById(avatarId)
 			.ifPresent((x) -> {
 				throw new IllegalArgumentException("이미 존재하는 아바타입니다.");
@@ -110,21 +116,6 @@ public class AvatarServiceImpl implements AvatarService {
 
 		return avatarRepository.save(newAvatar).getAvatarId();
 	}
-
-	// @KafkaListener(topics = "make-avatar")
-	// public String saveDefaultAvatar(String avatarId) throws JsonProcessingException {
-	// 	log.info("Massage received ===> " + avatarId);
-	//
-	// 	// 아바타가 존재하면 예외 발생
-	// 	avatarRepository.findById(avatarId)
-	// 		.ifPresent((x) -> {
-	// 			throw new IllegalArgumentException("이미 존재하는 아바타입니다.");
-	// 		});
-	//
-	// 	var newAvatar = getDefaultAvatar(avatarId);
-	//
-	// 	return avatarRepository.save(newAvatar).getAvatarId();
-	// }
 
 	@Override
 	public String updateAvatar(String avatarId, AvatarPatchRequest avatarUpdateInfo) throws JsonProcessingException {
@@ -161,6 +152,40 @@ public class AvatarServiceImpl implements AvatarService {
 
 		// db 저장
 		return avatarRepository.save(avatar).getAvatarId();
+	}
+
+	@KafkaListener(topics = "exp-update")
+	public void updateAvatarExp(String kafkaMessage) throws JsonProcessingException {
+		Map<String, String> activityLog = objectMapper.readValue(
+			kafkaMessage,
+			objectMapper.getTypeFactory().constructParametricType(Map.class, String.class, String.class)
+		);
+
+		// 경험치 보상을 받을 사용자가 존재하는 지 확인
+		var avatar = avatarRepository.findById(activityLog.get("userId"))
+			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + activityLog.get("userId") + ")"));
+
+		// 활동에 따른 (커밋, 출석) 경험치 보상
+		var expReward = ExpReward.valueOf(activityLog.get("type")).getValue();
+
+		var levelInfo = levelTableRepository.findById(avatar.getLevel())
+			.orElseThrow(NotFoundException::new);
+
+		// 보상에 따라 레벨업에 필요한 경험치량을 채운 경우
+		if(expReward + avatar.getExp() >= levelInfo.getNextExp()) {
+			avatar = avatar.toBuilder()
+				.exp(expReward + avatar.getExp())
+				.level(avatar.getLevel() + 1)
+				.build();
+		}
+		// 레벨업을 하지 않는 경우 경험치량만 업데이트
+		else {
+			avatar = avatar.toBuilder()
+				.exp(expReward + avatar.getExp())
+				.build();
+		}
+
+		avatarRepository.save(avatar);
 	}
 
 	@Override
