@@ -4,15 +4,14 @@ import java.io.IOException;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.util.XMLResourceDescriptor;
-import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.json.JSONObject;
 
-import com.cobby.main.activitylog.db.entity.ActivityLog;
-import com.cobby.main.activitylog.db.entity.ActivityType;
-import com.cobby.main.activitylog.db.repository.ActivityLogRepository;
+import com.cobby.main.common.exception.BaseRuntimeException;
 import com.cobby.main.common.exception.NotFoundException;
 import com.cobby.main.stat.db.entity.Stat;
 import com.cobby.main.stat.db.repository.StatRepository;
@@ -35,19 +34,24 @@ import okhttp3.Response;
 public class UserServiceImpl implements UserService {
 
 	private static final String GITHUB_API_URL = "https://api.github.com";
+
+	@Value("${kafka-producer.topics.make-avatar}")
+	private String KAFKA_TOPIC;
+
 	private final UserRepository userRepository;
+
 	private final StatRepository statRepository;
-	private final ActivityLogRepository activityLogRepository;
+
+	private final KafkaTemplate<String, String> kafkaTemplate;
 
 	@Override
 	public UserMainResponse getUserInfo(String userId) {
 		var user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
 
-		var userMainResponse = UserMainResponse.builder()
+		return UserMainResponse.builder()
 			.nickname(user.getNickname())
 			.githubUrl(user.getGithubUrl())
 			.build();
-		return userMainResponse;
 	}
 
 	@Override
@@ -109,7 +113,7 @@ public class UserServiceImpl implements UserService {
 					.commitCnt(getStatList(userPostRequest, 5))
 					.starCnt(getStatList(userPostRequest, 3))
 					.prCnt(getStatList(userPostRequest, 7))
-					.followerCnt(getFollower(userPostRequest))
+					.followerCnt(/*getFollower(userPostRequest)*/0L)
 					.issueCnt(getStatList(userPostRequest, 9))
 					.build();
 
@@ -124,16 +128,16 @@ public class UserServiceImpl implements UserService {
 
 				statRepository.save(stat);
 
-				// // 이후 user 정보를 메시지 큐에 보냅니다.
-				// var res = send("make-avatar", user.getId());
-				// log.info("Sending message: " + res);
+				// 이후 user 정보를 메시지 큐에 보냅니다.
+				var res = sendUserId(user.getId());
+				log.info("Sending message: " + res);
 			});
 	}
 
-	// private String send(String topic, String id) {
-	// 	kafkaTemplate.send(topic, id);
-	// 	return id;
-	// }
+	private String sendUserId(String id) {
+		kafkaTemplate.send(KAFKA_TOPIC, id);
+		return id;
+	}
 
 	private Long getFollower(UserPostRequest userPostRequest) {
 		OkHttpClient client = new OkHttpClient();
@@ -156,7 +160,7 @@ public class UserServiceImpl implements UserService {
 				System.out.println("API 요청이 실패했습니다.");
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new BaseRuntimeException(HttpStatus.UNAVAILABLE_FOR_LEGAL_REASONS, "Github API 정보를 얻어오는 데 실패했습니다.");
 		}
 		return null;
 	}

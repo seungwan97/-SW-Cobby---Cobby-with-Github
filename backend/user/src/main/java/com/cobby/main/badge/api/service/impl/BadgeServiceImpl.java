@@ -110,7 +110,7 @@ public class BadgeServiceImpl implements BadgeService {
 	private Long getCommitCnt(String nickname){
 		var findUser = userRepository.findByNickname(nickname).orElseThrow(NotFoundException::new);
 		log.info(String.valueOf(findUser));
-		return activityLogService.getActivityLogCommit(findUser.getId()).getTodayCnt();
+		return activityLogService.getCommitActivityLog(findUser.getId()).getTodayCnt();
 	}
 
 	public String getSvg(String nickname){

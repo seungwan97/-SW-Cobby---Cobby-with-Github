@@ -2,9 +2,9 @@ package com.cobby.main.activitylog.db.entity;
 
 import static jakarta.persistence.EnumType.*;
 
-import com.cobby.main.common.entity.UpdateTimeEntity;
+import com.cobby.main.common.entity.CreatedTimeEntity;
 import com.cobby.main.user.db.entity.User;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,13 +25,13 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ActivityLog extends UpdateTimeEntity {
+public class ActivityLog extends CreatedTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;

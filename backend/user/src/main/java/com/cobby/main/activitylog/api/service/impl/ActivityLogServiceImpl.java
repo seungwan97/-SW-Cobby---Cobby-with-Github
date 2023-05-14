@@ -3,10 +3,12 @@ package com.cobby.main.activitylog.api.service.impl;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import com.cobby.main.activitylog.api.dto.response.ActivityLogCommitResponse;
+import com.cobby.main.activitylog.api.dto.response.AttendanceLogResponse;
+import com.cobby.main.activitylog.api.dto.response.CommitLogResponse;
 import com.cobby.main.activitylog.api.service.ActivityLogService;
 import com.cobby.main.activitylog.db.entity.ActivityLog;
 import com.cobby.main.activitylog.db.entity.ActivityType;
@@ -14,6 +16,8 @@ import com.cobby.main.activitylog.db.repository.ActivityLogRepository;
 import com.cobby.main.common.exception.NotFoundException;
 import com.cobby.main.user.db.entity.User;
 import com.cobby.main.user.db.repository.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -22,114 +26,146 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class ActivityLogServiceImpl implements ActivityLogService {
 
+	@Value("${kafka-producer.topics.update-exp}")
+	private String KAFKA_TOPIC;
 	private final UserRepository userRepository;
 	private final ActivityLogRepository activityLogRepository;
+	private final KafkaTemplate<String, String> kafkaTemplate;
+	private final ObjectMapper objectMapper;
 
-
-	// 1. webhook 걸릴 때 로그라 그냥 다 찍히는데 commit webhook 걸리면 db에 저장됩니다.
+	// 웹훅에 따라 사용자의 커밋 로그를 새로 저장하고, 연속 커밋 횟수도 업데이트 합니다.
 	@Override
 	public void webhookCreate(Map<String, String> headers, String payload) {
 
 		for (Map.Entry<String, String> entry : headers.entrySet()) {
 
-			Gson gson = new Gson();
-			JsonObject jsonObject = gson.fromJson(payload, JsonObject.class);
-			if(entry.getValue().equals("push")){ // commit push면
+			JsonObject jsonObject = new Gson().fromJson(payload, JsonObject.class);
+			if (entry.getValue().equals("push")) { // commit push면
 				// ( commit: pusher )
-				String name = jsonObject.getAsJsonObject("pusher").get("name").getAsString();
-				var activityLog = ActivityLog.builder()
-					.activityType(ActivityType.COMMIT)
-					.user(findUser(name))
-					.relayCnt(findDate(name))
-					.build();
+				var nickname = jsonObject.getAsJsonObject("pusher").get("name").getAsString();
 
-				activityLogRepository.save(activityLog);
+				// 해당 닉네임을 가진 사용자가 존재하는 지 확인
+				var user = findUserByNickname(nickname);
+
+				// 커밋 로그를 DB에 저장
+				saveActivityLog(user, ActivityType.COMMIT);
 			}
 		}
-
 	}
 
-	// 2. 출석 api 요청을 받으면 그냥 바로 활동 일자 비교해서 일이 다르면 relayCnt 하나 증가
+	// 사용자의 마지막 출석 기록을 조회하고, 연속 출석 횟수도 업데이트 합니다.
 	@Override
-	public ActivityLog getActivityLogInfo(String userId) {
-		var activityLogList = activityLogRepository.findByUserIdOrderByIdDesc(userId);
-		var relayCnt = 1L;
-		for(ActivityLog activityLog : activityLogList){
-			if(activityLog.getActivityType() == ActivityType.ATTENDANCE) {
-				if(activityLog.getLastModifiedAt().getDayOfMonth() == LocalDateTime.now().getDayOfMonth()) {
-					relayCnt = activityLog.getRelayCnt();
-					break;
-				}
-				else if(activityLog.getLastModifiedAt().getDayOfMonth()+1 == LocalDateTime.now().getDayOfMonth()) {
-					relayCnt++;
-					break;
-				}
-			}
-		}
-
+	public AttendanceLogResponse getAttendanceActivityLog(String userId) {
+		// 해당 사용자가 존재하는 사용자인지 체크
 		var user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
 
-		var activityLog = ActivityLog.builder()
-			.activityType(ActivityType.ATTENDANCE)
-			.relayCnt(relayCnt)
-			.user(user)
-			.build();
-		activityLogRepository.save(activityLog);
+		var activityLog = saveActivityLog(user, ActivityType.ATTENDANCE);
 
-		return activityLog;
+		return AttendanceLogResponse.builder()
+			.activityLog(activityLog)
+			.build();
 	}
 
+	// 사용자의 마지막 커밋 기록을 조회합니다.
 	@Override
-	public ActivityLogCommitResponse getActivityLogCommit(String userId) {
-		var activityLogList = activityLogRepository.findByUserIdOrderByIdDesc(userId);
-		Long count = 1L, relayCnt = 0L;
-		for(ActivityLog activityLog : activityLogList){
-			if(activityLog.getLastModifiedAt().getDayOfMonth() == LocalDateTime.now().getDayOfMonth()) {
-				if(activityLog.getActivityType() == ActivityType.COMMIT) {
-					count++;
-					if(relayCnt == 0L) relayCnt = activityLog.getRelayCnt();
-				}
-			}else break;
+	public CommitLogResponse getCommitActivityLog(String userId) {
+		// 해당 사용자가 존재하는 사용자인지 체크
+		var user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
+
+		// 사용자의 커밋 활동 로그들을 조회
+		var activityLogs = activityLogRepository.findAllByType(userId, ActivityType.COMMIT);
+
+		// 조회한 로그들에서 오늘 커밋 횟수를 계산
+		var today = LocalDateTime.now().getDayOfMonth();
+		var todayCnt = activityLogs.stream()
+			.filter((log) ->
+				today == log.getCreatedAt().getDayOfMonth())
+			.toList()
+			.size();
+
+		// 사용자의 커밋 활동 로그 중 가장 최근 것을 조회
+		var lastLog = activityLogs.get(0);
+
+		return CommitLogResponse.builder()
+			.activityLog(lastLog)
+			.todayCnt((long)todayCnt)
+			.build();
+	}
+
+	// 닉네임으로 사용자를 조회합니다.
+	public User findUserByNickname(String name) {
+		// user 에서 찾아야합니다!
+		return userRepository.findByNickname(name).orElseThrow(NotFoundException::new);
+	}
+
+	// 사용자의 활동 타입 별 마지막 로그 하나를 조회합니다.
+	private ActivityLog findLastActivityLogByType(User user, ActivityType type) {
+		return activityLogRepository.findLastByType(user.getId(), type)
+			.orElseThrow(NotFoundException::new);
+	}
+
+	// 사용자의 활동 타입 별 업데이트된 로그를 생성합니다.
+	private ActivityLog saveActivityLog(User user, ActivityType type) {
+		// 해당 사용자의 해당 type 마지막 ActivityLog 를 조회
+		var lastLog = findLastActivityLogByType(user, type);
+
+		// 마지막 로그의 수정 시간을 기반으로 relayCnt 업데이트
+		var recentRelayCnt = lastLog.getRelayCnt();
+		var currentRelayCnt = updateRelayCnt(lastLog.getCreatedAt(), lastLog.getRelayCnt());
+
+		// 새로운 ActivityLog 를 DB에 저장
+		var newLog = activityLogRepository.save(
+			ActivityLog.builder()
+				.user(user)
+				.activityType(type)
+				.relayCnt(currentRelayCnt)
+				.build()
+		);
+
+		// relayCnt에 변화가 있었다면 main-service 에 메시지를 보냄
+		if (!currentRelayCnt.equals(recentRelayCnt)) {
+			sendActivityLog(newLog);
 		}
 
-		var activityLogCommitResponse = ActivityLogCommitResponse.builder()
-			.activityType(ActivityType.COMMIT)
-			.relayCnt(relayCnt)
-			.userId(userId)
-			.todayCnt(count)
-			.build();
-		return activityLogCommitResponse;
+		return newLog;
 	}
 
-	@Transactional
-	private Long findDate(String name){
-		// 마지막 활동기록 조회
-		var lastActivityLog = activityLogRepository.findTopByUserIdOrderByIdDesc(findUser(name).getId())
-			.orElseThrow(NotFoundException::new);
+	// 연속 횟수를 업데이트 합니다.
+	private Long updateRelayCnt(LocalDateTime recent, Long relayCnt) {
+		var past = recent.getDayOfMonth();
+		var now = LocalDateTime.now().getDayOfMonth();
 
-		var past = lastActivityLog.getLastModifiedAt().getDayOfMonth();
-		var present = LocalDateTime.now().getDayOfMonth();
-		var relayCnt = lastActivityLog.getRelayCnt();
-
-		// 날짜의 차이에 따라 relayCnt를 변화시킨 값을 return
-		return switch (present - past) {
-			case 0 -> relayCnt;
-			case 1 -> {
-				// 변화량이 있을 경우
-				// send("activity-update", lastActivityLog);
-				yield relayCnt + 1;
-			}
-			default -> 1L;
+		// 날짜의 차이에 따라 연속 횟수를 업데이트
+		return switch (now - past) {
+			case 0 ->  // 같은 날짜일 경우
+				relayCnt;
+			case 1 ->  // 바로 다음날일 경우
+				relayCnt + 1;
+			default -> // 그 이상 차이날 경우
+				1L;
 		};
 	}
 
-	public User findUser(String name){
-		// user에서 찾아야합니다!
-		var existingUser = userRepository.findByNickname(name).orElseThrow(NotFoundException::new);
-		return existingUser;
+	// kafka 메시지를 보냅니다.
+	private void sendActivityLog(ActivityLog activityLog) {
+		String jsonInString = "";
+		var message = Map.of(
+			"userId", activityLog.getUser().getId(),
+			"type", activityLog.getActivityType().name()
+		);
+
+		try {
+			jsonInString = objectMapper.writeValueAsString(message);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		kafkaTemplate.send(KAFKA_TOPIC, jsonInString);
+		log.info("Produced message for [\"" + KAFKA_TOPIC + "\"] topic at " + LocalDateTime.now());
 	}
 }
