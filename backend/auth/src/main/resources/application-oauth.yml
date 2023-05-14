@@ -6,7 +6,7 @@ spring:
         registration:
           github:
             client-id: ENC(9xEmPP82PcZpAtopRPkxFQNGGCrSmfED/FZVfFa4lyM=)
-            client-secret: 2895aaaa570f5b5eb41559c10f06d91d8aefc4d5
+            client-secret: ENC(JD1KbZaMCD+ovDe85yvGM8dV5gB5irrxJvyaw6cHdrT9+9Ik029sqapwuR/Y3LZMV7Gp9QcNSGY=)
 #            redirect-uri: https://k8b201.p.ssafy.io/login/oauth2/code/github
             redirect-uri: https://cobby-play.com/login/oauth2/code/github
 
