@@ -46,32 +46,32 @@ MyFuncProps) => {
 
 export default MyFunc;
 
-export const getServerSideProps: GetServerSideProps<MyFuncProps> = async (
-  context
-) => {
-  const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+// export const getServerSideProps: GetServerSideProps<MyFuncProps> = async (
+//   context
+// ) => {
+//   const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
 
-  // 닉네임, 깃허브url
-  const res = await getNicknameAndGithubURL(userId);
+//   // 닉네임, 깃허브url
+//   const res = await getNicknameAndGithubURL(userId);
 
-  // 코비 정보 : 레벨, 갖고있는 코스튬 수, 달성한 퀘스트 수
-  const cobbyInfo = await getAvatarInfo(userId);
+//   // 코비 정보 : 레벨, 갖고있는 코스튬 수, 달성한 퀘스트 수
+//   const cobbyInfo = await getAvatarInfo(userId);
 
-  let nickname = "";
-  let githubUrl = "";
-  let myLevel = 0;
-  let cntCostumes = 0;
-  let cntQuests = 0;
+//   let nickname = "";
+//   let githubUrl = "";
+//   let myLevel = 0;
+//   let cntCostumes = 0;
+//   let cntQuests = 0;
 
-  if (cobbyInfo.status === 200) {
-    nickname = res.data.content.nickname;
-    githubUrl = res.data.content.githubUrl;
-    myLevel = cobbyInfo.data.content.level;
-    cntCostumes = cobbyInfo.data.content.costumes.length;
-    cntQuests = cobbyInfo.data.content.quests.length;
-  }
+//   if (cobbyInfo.status === 200) {
+//     nickname = res.data.content.nickname;
+//     githubUrl = res.data.content.githubUrl;
+//     myLevel = cobbyInfo.data.content.level;
+//     cntCostumes = cobbyInfo.data.content.costumes.length;
+//     cntQuests = cobbyInfo.data.content.quests.length;
+//   }
 
-  return {
-    props: { nickname, githubUrl, myLevel, cntCostumes, cntQuests },
-  };
-};
+//   return {
+//     props: { nickname, githubUrl, myLevel, cntCostumes, cntQuests },
+//   };
+// };
