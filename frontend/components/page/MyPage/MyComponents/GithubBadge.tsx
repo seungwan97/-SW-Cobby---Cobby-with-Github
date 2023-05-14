@@ -3,10 +3,11 @@ import * as style from "./style/GithubBadge";
 
 const BADGE_URL = "![COBBY_BADGE](https://cobby-play.com/baefrica/badge...)sfsdfasfkldsnfknsklnskjvnaklsjvnjkvnkjsnksj";
 
-const GithubBadge = () => {
-  
+const GithubBadge = (props: any) => {
+
   const copyBadgeText = () => {
     navigator.clipboard.writeText(BADGE_URL);
+    props.setIsCopied(true);
   }
 
   return (
@@ -17,8 +18,8 @@ const GithubBadge = () => {
       <style.CodeCopyBox>
         <style.ReadmeCode>
           <style.CustomTextBox size={20}>
-          {BADGE_URL}
-            </style.CustomTextBox>
+            {BADGE_URL}
+          </style.CustomTextBox>
         </style.ReadmeCode>
         <style.CopyBtnImg src="/copybutton.png" onClick={copyBadgeText} />
       </style.CodeCopyBox>

@@ -10,6 +10,7 @@ import GithubBadge from "./MyComponents/GithubBadge";
 import UserInformation from "./MyComponents/UserInformation";
 import LogoutBtn from "./MyComponents/LogoutBtn";
 import Modal from "@/components/common/Modal/Modal";
+import CopyAlarm from "@/components/common/CopyAlarm/CopyAlarm";
 
 interface MyFuncProps {
   nickname: string;
@@ -31,6 +32,7 @@ const MyPage = ({
 
   const [isLogout, setIsLogout] = useState(false);
   const [isLeave, setIsLeave] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   const setLogout = (val: boolean) => {
     setIsLogout(val);
@@ -53,7 +55,8 @@ const MyPage = ({
           <TextBox size={50} content={"MY PAGE"} />
         </style.MyPageTxt>
         <style.Cobby />
-        <GithubBadge />
+        <GithubBadge setIsCopied={setIsCopied} />
+        <CopyAlarm isVisible={isCopied} setIsVisible={setIsCopied} />
         <UserInformation
           nickname={nickname}
           githubUrl={githubUrl}
