@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.json.JSONObject;
 
+import com.cobby.main.activitylog.db.entity.ActivityLog;
+import com.cobby.main.activitylog.db.entity.ActivityType;
+import com.cobby.main.activitylog.db.repository.ActivityLogRepository;
 import com.cobby.main.common.exception.BaseRuntimeException;
 import com.cobby.main.common.exception.NotFoundException;
 import com.cobby.main.stat.db.entity.Stat;
@@ -41,6 +44,8 @@ public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
 
 	private final StatRepository statRepository;
+
+	private final ActivityLogRepository activityLogRepository;
 
 	private final KafkaTemplate<String, String> kafkaTemplate;
 
@@ -118,19 +123,19 @@ public class UserServiceImpl implements UserService {
 					.build();
 
 				// commit 기록 하나 쌓기
-				var activityLog = ActivityLog.builder()
-					.activityType(ActivityType.COMMIT)
-					.user(user)
-					.relayCnt(0L)
-					.build();
-
-				activityLogRepository.save(activityLog);
+				activityLogRepository.save(
+					ActivityLog.builder()
+						.user(user)
+						.activityType(ActivityType.COMMIT)
+						.relayCnt(0L)
+						.build()
+				);
 
 				statRepository.save(stat);
 
-				// 이후 user 정보를 메시지 큐에 보냅니다.
-				var res = sendUserId(user.getId());
-				log.info("Sending message: " + res);
+				// // 이후 user 정보를 메시지 큐에 보냅니다.
+				// var res = sendUserId(user.getId());
+				// log.info("Sending message: " + res);
 			});
 	}
 

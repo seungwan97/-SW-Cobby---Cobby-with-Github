@@ -1,9 +1,9 @@
 spring:
   # MysqlDB
   datasource:
-    url: ENC(PaoYUCo2AMIchkpEizHVZyVIVYMs6dsvmBatVrWQY8YnJAQfIjK0JbSCVcUBQW7GUgYih2brEpe3yDtst0NvSw==)
-    username: ENC(ySBkqn7rc0rzhCnJx1aNtMcQdtGI7IRQ)
-    password: ENC(i7j46L3hTWPdOmMe3uGWug==)
+    url: ENC(M6v9SH8XkI2rbY2JY98/2Zgx96nzg1rJgypg0ziNlGvSrFiKimGqxkezRCDFqELFiwkyNfo0W/0kxA2uXdBcFg==)
+    username: ENC(qom6FQ+QTknc5H+OkxQpJCFkur21CrAk)
+    password: ENC(mrJeZTLLaK5c95Jy4jI8YA==)
     driver-class-name: org.mariadb.jdbc.Driver
   # JPA Properties
   jpa:
