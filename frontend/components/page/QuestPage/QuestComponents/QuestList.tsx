@@ -72,8 +72,8 @@ const QuestList = (props: Props) => {
   }
   return (
     <style.QuestListWrapper>
-      {arr.map((item) => (
-        <QuestItem questData={item} />
+      {arr.map((item, index) => (
+        <QuestItem key={index} questData={item} />
       ))}
     </style.QuestListWrapper>
   );
