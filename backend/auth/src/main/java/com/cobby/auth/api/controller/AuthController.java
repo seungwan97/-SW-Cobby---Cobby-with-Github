@@ -3,8 +3,10 @@ package com.cobby.auth.api.controller;
 import com.cobby.auth.common.model.BaseResponseBody;
 import com.cobby.auth.common.util.ApiDocumentResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +43,11 @@ public class AuthController {
     @GetMapping(value = "/reissue")
     @ApiDocumentResponse
     @Operation(summary = "토큰 조회", description = "Request Header 에 있는 쿠키의 Refresh Token 값을 반환하는 메서드 입니다.")
-    public ResponseEntity<? extends BaseResponseBody> reissue(@RequestHeader("Cookie") String token) {
+    public ResponseEntity<? extends BaseResponseBody> reissue(
+            @CookieValue
+            @Nullable
+            @Parameter(required = false)
+            String token) {
 
         return ResponseEntity
                 .ok()
