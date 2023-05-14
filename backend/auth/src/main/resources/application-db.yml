@@ -18,9 +18,8 @@ spring:
 redis:
   host: k8b201.p.ssafy.io
   port: 6379
-#  password: k8b201
 
 request:
   url:
-    user-server: http://k8b201.p.ssafy.io:15020/api/user/users
+    user-server: ENC(1pDCxkeJgc4aLRGg5QSemS7fx6MPMuOaJ589WQ1UwWeq6PIuLFCf087yvuEA1ZJr)
     front-login: https://cobby-play.com
