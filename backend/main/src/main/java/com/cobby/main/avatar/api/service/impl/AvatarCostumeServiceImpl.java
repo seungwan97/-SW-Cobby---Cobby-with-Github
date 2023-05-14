@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.cobby.main.avatar.api.dto.request.AvatarCostumePatchRequest;
 import com.cobby.main.avatar.api.dto.request.AvatarItemPostRequest;
 import com.cobby.main.avatar.api.dto.response.AvatarCostumeGetResponse;
 import com.cobby.main.avatar.api.service.AvatarCostumeService;
@@ -98,5 +99,20 @@ public class AvatarCostumeServiceImpl implements AvatarCostumeService {
 					.costume(costume.getCostume())
 					.build())
 			.toList();
+	}
+
+	@Override
+	public Long openItem(String userId, AvatarCostumePatchRequest costumeInfo) {
+		var avatar = avatarRepository.findById(userId)
+			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + userId + ")"));
+
+		var avatarCostume = avatarCostumeRepository.findByCostume_CostumeId(costumeInfo.costumeId())
+			.orElseThrow(() -> new IllegalArgumentException("코스튬 정보가 없습니다. (ID=" + costumeInfo.costumeId() + ")"));
+
+		avatarCostume = avatarCostume.toBuilder()
+			.isOpened(true)
+			.build();
+
+		return avatarCostumeRepository.save(avatarCostume).getCostume().getCostumeId();
 	}
 }

@@ -52,27 +52,6 @@ public class AvatarController {
 			.body(new BaseResponseBody<>(200, "OK", costumes));
 	}
 
-	@Hidden
-	@ApiDocumentResponse
-	@Operation(summary = "#####아바타 생성#####", description = "최초 로그인 시점에 기본 아바타를 생성하는 메소드입니다.")
-	@PostMapping
-	public ResponseEntity<? extends BaseResponseBody> createAvatar(
-		@RequestHeader("userId")
-		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
-		String userId,
-		HttpServletRequest request) throws JsonProcessingException {
-
-		var avatarId = avatarService.insertDefaultAvatar(userId);
-
-		var successMessage = "기본 아바타를 성공적으로 생성했습니다. (ID=" + avatarId + ")";
-
-		var location = URI.create(request.getRequestURI() + "/" + avatarId);
-
-		return ResponseEntity
-			.created(location)
-			.body(new BaseResponseBody<>(201, "created", successMessage));
-	}
-
 	@ApiDocumentResponse
 	@Operation(summary = "아바타 정보 수정", description = "user ID에 해당하는 아바타 정보를 업데이트 하는 메서드입니다.")
 	@PatchMapping

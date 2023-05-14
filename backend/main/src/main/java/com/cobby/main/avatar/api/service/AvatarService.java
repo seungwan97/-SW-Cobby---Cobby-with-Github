@@ -8,8 +8,6 @@ public interface AvatarService {
 
 	AvatarGetResponse selectAvatar(String avatarId) throws JsonProcessingException;
 
-	String insertDefaultAvatar(String avatarId) throws JsonProcessingException;
-
 	String updateAvatar(String avatarId, AvatarPatchRequest avatarUpdateInfo) throws JsonProcessingException;
 
 	String resetAvatar(String avatarId) throws JsonProcessingException;

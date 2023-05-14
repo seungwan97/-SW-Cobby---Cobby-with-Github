@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cobby.main.avatar.api.dto.request.AvatarCostumePatchRequest;
 import com.cobby.main.avatar.api.dto.request.AvatarItemPostRequest;
 import com.cobby.main.avatar.api.service.AvatarCostumeService;
 import com.cobby.main.avatar.api.service.AvatarItemService;
@@ -102,6 +104,25 @@ public class AvatarItemController {
 		return ResponseEntity
 			.created(location)
 			.body(new BaseResponseBody<>(201, "created", successMessage));
+	}
+
+	@Hidden
+	@ApiDocumentResponse
+	@Operation(summary = "인벤토리에 새로운 코스튬 열어보기", description = "코스튬의 상태를 새로 획득한 코스튬에서 일반 코스튬 상태로 변경합니다.")
+	@PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<? extends BaseResponseBody> openAvatarItem(
+		@RequestHeader("userId")
+		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
+		String userId,
+		@RequestBody @Valid AvatarCostumePatchRequest costumeInfo) {
+
+		var avatarCostumeId = avatarCostumeService.openItem(userId, costumeInfo);
+
+		var successMessage = "새로운 코스튬을 성공적으로 열어보았습니다. (ID=" + avatarCostumeId + ")";
+
+		return ResponseEntity
+			.ok()
+			.body(new BaseResponseBody<>(200, "OK", successMessage));
 	}
 
 	private AvatarItemService pickServiceByItemType(String type) {
