@@ -1,7 +1,7 @@
 spring:
   # MariaDB
   datasource:
-    url: ENC(tq3IL4VLVsnulAL6J785QYgbOSyMRA0VEyJYtkr3pLaaJ7bUA4Cu14a9P6iwWBUifwdFN8PID3J7LaoMMYGHhw==)
+    url: ENC(O9VQ6R9roHy9W/Tm7clK14GB25aOQuVvflePPmOvApnnxjRDxwOTtWDZ9yjFRBSAsbbTzR8f8VdLtXdLUDc0Lg==)
     username: ENC(ySBkqn7rc0rzhCnJx1aNtMcQdtGI7IRQ)
     password: ENC(i7j46L3hTWPdOmMe3uGWug==)
     driver-class-name: org.mariadb.jdbc.Driver
@@ -22,5 +22,5 @@ spring:
 
 # okhttp request url to store-service
 request:
-  user: ENC(JpGMOhIVAHkn22DnOGaotfCQUIYrb2J9UN3NKTUly81rBNw8OXAYrEWg8tmOEitT)
-  url:  ENC(04Z0CsjoAwyPkqBTQP1/tzHp94vxj+G+8xUurTS5UU7IUSPE9kILGFcyBgRoghBxIrB0dOt7hard0MLVw3Zk3Q==)
+  user: ENC(mVQN90HqIlOYcPRrrTyIc5F2we71Z2dC6SXlfUKVtPEkf9+U7d2TwA==)
+  url:  ENC(6tWQjAFg4JB8CYgfEhkEGGS/31xfQZ8UMUm9WC70YgR0Q7NuTz8Q5UYgdKl7oxvDy+8Uk7Txf2to+ZCLClO1Eg==)
