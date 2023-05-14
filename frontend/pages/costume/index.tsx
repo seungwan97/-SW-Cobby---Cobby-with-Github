@@ -5,7 +5,7 @@ import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import CostumePage from "@/components/page/CostumePage/CostumePage";
 import { GetServerSideProps } from "next";
-import { getAvatarInfo, getAllItemList } from "../api/main";
+import { getAllItemList } from "../api/main";
 
 // Costumepage
 const CostumeFunc = (props: any) => {
@@ -40,18 +40,11 @@ export const getServerSideProps: GetServerSideProps =
     const BODY_ITEMS = resBODY.data.content;
     const EFFECT_ITEMS = resEFFECT.data.content;
 
-    // 현재 나의 코비 모습
-    const resMyCobbyInfo = await getAvatarInfo(userId);
-
-    const myCobbyOutfits =
-      resMyCobbyInfo.data.content.outfits;
-
     return {
       props: {
         HEAD_ITEMS,
         BODY_ITEMS,
         EFFECT_ITEMS,
-        myCobbyOutfits,
       },
     };
   };
