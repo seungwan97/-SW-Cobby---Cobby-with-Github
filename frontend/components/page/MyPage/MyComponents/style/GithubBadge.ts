@@ -33,6 +33,32 @@ export const ReadmeCode = styled.div`
   overflow: hidden; // 여기 나중에 주소 길이통해서 수정해야할 수 있음.
 `;
 
+export const CustomTextBox = styled.div<{ size: number }>`
+  display: flex;
+  white-space: nowrap;
+  overflow-x: scroll;
+  height: 30px;
+  font-weight:bold;
+
+  font-size: ${(props) => props.size}px;
+  font-family: "DungGeunMo";
+  color: ${(props) => props.color};
+  font-weight: normal;
+
+  @media (max-width: 1200px) {
+    font-size: ${(props) => props.size * 1.2}px;
+    @media (max-width: 1024px) {
+      font-size: ${(props) => props.size * 1.2}px;
+      @media (max-width: 711px) {
+        font-size: ${(props) => props.size * 0.7}px;
+        @media (max-width: 667px) {
+          font-size: ${(props) => props.size * 0.7}px;
+        }
+      }
+    }
+  }
+`;
+
 export const CopyBtnImg = styled.img`
   background-color: ${colors.ItemBoxColor};
   padding: 2%;
