@@ -14,8 +14,6 @@ import {
 
 // CostumePage
 const CostumePage = (props: any) => {
-  // const router = useRouter();
-
   const [outfits, setOutfits] = useState({
     head: {},
     body: {},
@@ -29,6 +27,7 @@ const CostumePage = (props: any) => {
       try {
         const res = await getAvatarInfo(userId);
         const cobbyOutfits = res.data.content.outfits;
+
         setOutfits(cobbyOutfits);
       } catch (error) {
         console.error(
@@ -39,7 +38,7 @@ const CostumePage = (props: any) => {
     };
 
     getCobbyOutfits();
-  }, [outfits]);
+  }, []);
 
   const handleInventoryItem = (itemInfo: any) => {
     setOutfits((prevOutfits: any) => {
@@ -53,21 +52,20 @@ const CostumePage = (props: any) => {
         updatedOutfits.effect = itemInfo;
       }
 
+      // 코비 정보 수정
+      const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+      const data = {
+        head: updatedOutfits.head.costumeId,
+        body: updatedOutfits.body.costumeId,
+        effect: updatedOutfits.effect.costumeId,
+      };
+
+      patchAvatarInfo(userId, data).then((res) => {
+        console.log(res.data.content);
+      });
+
       return updatedOutfits;
     });
-
-    // // 코비 정보 수정
-    // const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
-    // const data = {
-    //   head: outfits.head.costumeId,
-    //   body: outfits.body.costumeId,
-    //   effect: outfits.effect.costumeId,
-    // };
-
-    // patchAvatarInfo(userId, data).then((res) => {
-    //   console.log(res.data.content);
-    //   // console.log(outfits);
-    // });
   };
 
   return (

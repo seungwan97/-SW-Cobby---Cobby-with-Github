@@ -42,7 +42,7 @@ const Inventory = (props: any) => {
       costumeId: 0,
       name: "empty",
       category: itemType,
-      questId: 0,
+      questId: null,
       imgUrl: "/CostumeItems_IMG/empty.png",
       gifUrl: "/CostumeItems_GIF/empty.gif",
     };
