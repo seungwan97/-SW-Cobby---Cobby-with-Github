@@ -26,7 +26,7 @@ const MyPage = ({
   cntCostumes,
   cntQuests,
 }: MyFuncProps) => {
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <Fragment>
