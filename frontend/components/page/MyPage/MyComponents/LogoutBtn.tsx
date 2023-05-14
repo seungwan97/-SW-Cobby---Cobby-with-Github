@@ -3,12 +3,13 @@ import { Fragment, useState } from "react";
 import TextBox from "@/components/common/TextBox/TextBox";
 import * as style from "./style/LogoutBtn";
 
-const LogoutBtn = () => {
+const LogoutBtn = (props: any) => {
   const [flag, setFlag] = useState(false);
+
   const Logout = () => {
-    setFlag(true);
-    console.log("로그아웃!");
+    props.setLogout(true);
   };
+
   return (
     <Fragment>
       <style.LogoutWrapper>
