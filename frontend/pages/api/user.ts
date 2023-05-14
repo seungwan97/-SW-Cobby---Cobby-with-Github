@@ -1,7 +1,7 @@
 import axios from "axios";
 import client from "./client";
 
-const req = "http://k8b201.p.ssafy.io:15020/api/user";
+const req = "/api/user";
 
 // 메인페이지 닉네임, 깃허브url 정보 불러오기
 export const getNicknameAndGithubURL = async (userId: string) => {
