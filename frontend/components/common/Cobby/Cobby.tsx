@@ -97,6 +97,7 @@ const Cobby = (props: any) => {
           {cobbyEffect && (
             <style.CobbyEffectItem src={cobbyEffect} />
           )}
+          {/* <style.CobbyEffectItem src="/CostumeItems_GIF/Head/sunglass.gif" /> */}
         </>
       )}
     </style.CobbyWrapper>
