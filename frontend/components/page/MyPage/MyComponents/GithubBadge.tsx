@@ -1,7 +1,7 @@
 import TextBox from "@/components/common/TextBox/TextBox";
 import * as style from "./style/GithubBadge";
 
-const BADGE_URL = "https://cobby-play.com/baefrica/badge...";
+const BADGE_URL = "![COBBY_BADGE](https://cobby-play.com/baefrica/badge...)";
 
 const GithubBadge = () => {
   
