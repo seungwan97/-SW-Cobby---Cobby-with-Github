@@ -17,6 +17,8 @@ public class AvatarCostumeGetResponse {
 
 	private CostumeCategory category;
 
+	private Boolean isOpened;
+
 	private Long questId;
 
 	private String imgUrl;
@@ -24,10 +26,11 @@ public class AvatarCostumeGetResponse {
 	private String gifUrl;
 
 	@Builder
-	public AvatarCostumeGetResponse(Costume costume) {
+	public AvatarCostumeGetResponse(Costume costume, Boolean isOpened) {
 		this.costumeId = costume.getCostumeId();
 		this.name = costume.getName();
 		this.category = costume.getCategory();
+		this.isOpened = isOpened;
 		this.questId = costume.getQuest().getQuestId();
 		this.imgUrl = costume.getImgUrl();
 		this.gifUrl = costume.getGifUrl();
