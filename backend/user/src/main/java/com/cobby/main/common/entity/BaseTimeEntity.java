@@ -20,18 +20,19 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @EntityListeners(value = AuditingEntityListener.class) // Auditing 기능 포함
 @MappedSuperclass	// JPA Entity 클래스들이 이 클래스를 상속할 경우 필드들도 칼럼으로 인식하게 함.
-public class BaseTimeEntity extends UpdateTimeEntity{
+public class BaseTimeEntity extends CreatedTimeEntity {
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@CreatedDate
-	@Column(updatable = false, nullable = false)
-	private LocalDateTime createdAt; // 생성 시간
+	@LastModifiedDate
+	@Column(nullable = false)
+	private LocalDateTime lastModifiedAt; // 생성 시간
 
 
 	@Override
 	public String toString() {
 		return "BaseTimeEntity{" +
-			"createdAt=" + createdAt +
+			"createdAt=" + super.getCreatedAt() +
+			", LastModifiedAt=" + lastModifiedAt +
 			'}';
 	}
 }
