@@ -1,12 +1,7 @@
 spring:
   kafka:
     # kafka-server url
-    bootstrap-servers: ENC(eQwwjBNyQ7P5A8XyR/I8IemXHLQH/57PDcvopoIlbWs=)
-
-    # kafka-producer
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    bootstrap-servers: ENC(bzE7r6NEmHGFqc6p9k4qfPpzXfTzf8VhgcNx35SYul4gdo92u/kIQJa2zHVccViTeU+zTBVp8yhfgNuLeLPzD7MH8OVdBLSy+QuzV8IdZKJYppH0qvJ12RsYjKq17QPspTOATAjX9OE=)
 
     # kafka-consumer
     consumer:
