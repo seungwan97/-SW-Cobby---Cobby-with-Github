@@ -1,37 +1,73 @@
 // 유저별 코스튬 페이지
 import { useRouter } from "next/router";
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import TextBox from "@/components/common/TextBox/TextBox";
 import Inventory from "./CostumeComponents/Inventory";
 import * as style from "./CostumeComponents/style/CostumePage";
 import Cobby from "@/components/common/Cobby/Cobby";
+import {
+  getAvatarInfo,
+  patchAvatarInfo,
+} from "@/pages/api/main";
 
 // CostumePage
 const CostumePage = (props: any) => {
   // const router = useRouter();
 
-  const [outfits, setOutfits] = useState(
-    props.myCobbyOutfits
-  );
+  const [outfits, setOutfits] = useState({
+    head: {},
+    body: {},
+    effect: {},
+  });
+
+  useEffect(() => {
+    const getCobbyOutfits = async () => {
+      const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+
+      try {
+        const res = await getAvatarInfo(userId);
+        const cobbyOutfits = res.data.content.outfits;
+        setOutfits(cobbyOutfits);
+      } catch (error) {
+        console.error(
+          "Failed to fetch avatar info:",
+          error
+        );
+      }
+    };
+
+    getCobbyOutfits();
+  }, [outfits]);
 
   const handleInventoryItem = (itemInfo: any) => {
-    // console.log(itemInfo);
-
     setOutfits((prevOutfits: any) => {
       let updatedOutfits = { ...prevOutfits };
 
       if (itemInfo.category === "HEAD") {
-        updatedOutfits.head = itemInfo.gifUrl;
+        updatedOutfits.head = itemInfo;
       } else if (itemInfo.category === "BODY") {
-        updatedOutfits.body = itemInfo.gifUrl;
+        updatedOutfits.body = itemInfo;
       } else if (itemInfo.category === "EFFECT") {
-        updatedOutfits.effect = itemInfo.gifUrl;
+        updatedOutfits.effect = itemInfo;
       }
 
       return updatedOutfits;
     });
+
+    // // 코비 정보 수정
+    // const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+    // const data = {
+    //   head: outfits.head.costumeId,
+    //   body: outfits.body.costumeId,
+    //   effect: outfits.effect.costumeId,
+    // };
+
+    // patchAvatarInfo(userId, data).then((res) => {
+    //   console.log(res.data.content);
+    //   // console.log(outfits);
+    // });
   };
 
   return (

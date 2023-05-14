@@ -1,6 +1,6 @@
 import * as style from "./style/Inventory";
 import ItemBox from "@/components/common/Itembox/ItemBox";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type ItemType = {
   name: string;
@@ -33,6 +33,31 @@ const Inventory = (props: any) => {
   };
 
   const [itemType, setItemType] = useState("HEAD");
+  const [headArr, setHeadArr] = useState([]);
+  const [bodyArr, setBodyArr] = useState([]);
+  const [effectArr, setEffectArr] = useState([]);
+
+  useEffect(() => {
+    const index0 = {
+      costumeId: 0,
+      name: "empty",
+      category: itemType,
+      questId: 0,
+      imgUrl: "/CostumeItems_IMG/empty.png",
+      gifUrl: "/CostumeItems_GIF/empty.gif",
+    };
+
+    if (itemType === "HEAD") {
+      const arr: any = [index0, ...props.headItemList];
+      setHeadArr(arr);
+    } else if (itemType === "BODY") {
+      const arr: any = [index0, ...props.bodyItemList];
+      setBodyArr(arr);
+    } else {
+      const arr: any = [index0, ...props.effectItemList];
+      setEffectArr(arr);
+    }
+  }, [itemType]);
 
   return (
     <style.Inventory>
@@ -52,41 +77,35 @@ const Inventory = (props: any) => {
       </style.InventoryBar>
       {itemType === "HEAD" && (
         <style.InventoryBox>
-          {props.headItemList.map(
-            (item: object, index: number) => (
-              <ItemBox
-                item={item}
-                key={index}
-                onItemClick={handleItemClick}
-              />
-            )
-          )}
+          {headArr.map((item: object, index: number) => (
+            <ItemBox
+              item={item}
+              key={index}
+              onItemClick={handleItemClick}
+            />
+          ))}
         </style.InventoryBox>
       )}
       {itemType === "BODY" && (
         <style.InventoryBox>
-          {props.bodyItemList.map(
-            (item: object, index: number) => (
-              <ItemBox
-                item={item}
-                key={index}
-                onItemClick={handleItemClick}
-              />
-            )
-          )}
+          {bodyArr.map((item: object, index: number) => (
+            <ItemBox
+              item={item}
+              key={index}
+              onItemClick={handleItemClick}
+            />
+          ))}
         </style.InventoryBox>
       )}
       {itemType === "EFFECT" && (
         <style.InventoryBox>
-          {props.effectItemList.map(
-            (item: object, index: number) => (
-              <ItemBox
-                item={item}
-                key={index}
-                onItemClick={handleItemClick}
-              />
-            )
-          )}
+          {effectArr.map((item: object, index: number) => (
+            <ItemBox
+              item={item}
+              key={index}
+              onItemClick={handleItemClick}
+            />
+          ))}
         </style.InventoryBox>
       )}
     </style.Inventory>
