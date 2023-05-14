@@ -5,34 +5,46 @@ import { useState, useEffect } from "react";
 const Cobby = (props: any) => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
-  const cobby = "/Character/Cobby.gif";
-  const cobbyHead = props.outfits.head.gifUrl || cobby;
-  const cobbyBody = props.outfits.body.gifUrl || cobby;
-  const cobbyEffect = props.outfits.effect.gifUrl || cobby;
+  const cobby = "/Character/Cobby2.gif";
+  const cobbyHead = props.outfits.head?.gifUrl;
+  const cobbyBody = props.outfits.body?.gifUrl;
+  const cobbyEffect = props.outfits.effect?.gifUrl;
 
-  // 제발 동시에 좀 불러와바라
+  // 제발 동시에 좀 불러와바라 Tlqkf
+  // 택도 없네 이거 tlqkf 근데 새로고침하면 되긴하는거 같노 아닌거 같기도 하고
   useEffect(() => {
-    const preloadImages = async () => {
-      const img1 = loadImage(cobby);
-      const img2 = loadImage(cobbyHead);
-      const img3 = loadImage(cobbyBody);
-      const img4 = loadImage(cobbyEffect);
+    const loadImages = () => {
+      const img1 = new Image();
+      img1.onload = handleImageLoad;
+      img1.onerror = handleImageError;
+      img1.src = cobby;
 
-      await Promise.all([img1, img2, img3, img4]);
+      const img2 = new Image();
+      img2.onload = handleImageLoad;
+      img2.onerror = handleImageError;
+      img2.src = cobbyHead;
 
-      setImagesLoaded(true);
+      const img3 = new Image();
+      img3.onload = handleImageLoad;
+      img3.onerror = handleImageError;
+      img3.src = cobbyBody;
+
+      const img4 = new Image();
+      img4.onload = handleImageLoad;
+      img4.onerror = handleImageError;
+      img4.src = cobbyEffect;
     };
 
-    preloadImages();
+    loadImages();
   }, [cobby, cobbyHead, cobbyBody, cobbyEffect]);
 
-  const loadImage = (src: string) => {
-    return new Promise((resolve, reject) => {
-      const image = new Image();
-      image.onload = resolve;
-      image.onerror = reject;
-      image.src = src;
-    });
+  const handleImageLoad = () => {
+    setImagesLoaded(true);
+  };
+
+  // 새로고침하면 실행된다 tq...? 이유가 뭘까...?
+  const handleImageError = () => {
+    console.error("Failed to load image.");
   };
 
   // //머리 장착
@@ -76,15 +88,15 @@ const Cobby = (props: any) => {
       {imagesLoaded && (
         <>
           <style.Cobby src={cobby} alt={cobby} />
-          <style.CobbyHeadItem
-            src={cobbyHead}
-          ></style.CobbyHeadItem>
-          <style.CobbyBodyItem
-            src={cobbyBody}
-          ></style.CobbyBodyItem>
-          <style.CobbyEffectItem
-            src={cobbyEffect}
-          ></style.CobbyEffectItem>
+          {cobbyHead && (
+            <style.CobbyHeadItem src={cobbyHead} />
+          )}
+          {cobbyBody && (
+            <style.CobbyBodyItem src={cobbyBody} />
+          )}
+          {cobbyEffect && (
+            <style.CobbyEffectItem src={cobbyEffect} />
+          )}
         </>
       )}
     </style.CobbyWrapper>
