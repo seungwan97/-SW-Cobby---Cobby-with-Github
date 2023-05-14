@@ -114,14 +114,15 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         }
 
         // 2-5. 프로필 DB에 저장
-//        var userinfo = userProfileClient.logInUserInfo(userInfoDto);
-//        log.info("UserInfo Body = {}", userinfo.getBody());
-//        log.info("UserInfo Status = {}", userinfo.getStatusCode());
+        var userinfo = userProfileClient.logInUserInfo(userInfoDto);
+        log.info("UserInfo Body = {}", userinfo.getBody());
+        log.info("UserInfo Status = {}", userinfo.getStatusCode());
 
         // 3. FE 에 요청할 targetUrl 생성
         String targetUrl;
         targetUrl = UriComponentsBuilder.fromUriString(REDIRECT_URI)
                 .queryParam("Initial", init)
+                .queryParam(TokenKey.ACCESS.getKey(), "Bearer-" + tokens.getAccessToken()) // access 토큰
                 .build().toUriString();
 
         // 3-1. 쿠키 생성 및 Refresh Token 저장
