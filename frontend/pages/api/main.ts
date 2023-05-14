@@ -32,6 +32,24 @@ export const getInventoryItem = async (
   return response;
 };
 
+// 사용자가 가진 코스튬 카테고리별 조회 (HEAD, BODY, EFFECT)
+export const getMyCostumes = async (
+  userId: string,
+  itemType: string
+) => {
+  const response = await client.get(
+    `${req}/avatars/inventories/costumes/${itemType}`,
+    {
+      headers: {
+        //   Authorization: `Bearer ${accessToken}`,
+        userId: `${userId}`,
+      },
+    }
+  );
+
+  return response;
+};
+
 // 코비 관련 정보 수정
 export const patchAvatarInfo = async (
   userId: string,

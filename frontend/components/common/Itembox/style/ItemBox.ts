@@ -1,22 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { colors } from "@/styles/colors-style";
 
-export const ItemWrapper = styled.div`
-  border: 2px solid ${colors.ItemBoxColor};
-  background-color: ${colors.ItemBoxColor};
-  text-align: center;
-  width: 100px;
-  height: 100px;
-  border-radius: 10px;
-`;
-
-export const ItemImage = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 10px;
-`;
-
 export const ImageWrapper = styled.div`
+  position: relative;
   border: 2px solid ${colors.MainBlackColor};
   border-radius: 10px;
   display: flex;
@@ -27,9 +13,24 @@ export const ImageWrapper = styled.div`
   margin: auto 0;
   justify-content: center;
   align-items: center;
+  z-index: 2;
 
   &:hover {
     cursor: pointer;
     background-color: gray;
   }
+
+  ${(props) =>
+    !props.selected &&
+    css`
+      position: relative;
+      border: 2px solid ${colors.MainBlackColor};
+      background-color: ${colors.MainBlackColor};
+      pointer-events: none;
+      background-image: url("/lock.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 100% auto;
+      z-index: 10;
+    `}
 `;

@@ -1,6 +1,7 @@
 import * as style from "./style/Inventory";
 import ItemBox from "@/components/common/Itembox/ItemBox";
 import { useState, useEffect } from "react";
+import { getMyCostumes } from "@/pages/api/main";
 
 type ItemType = {
   name: string;
@@ -37,6 +38,10 @@ const Inventory = (props: any) => {
   const [bodyArr, setBodyArr] = useState([]);
   const [effectArr, setEffectArr] = useState([]);
 
+  const [myHeadItems, setMyHeadItems] = useState([]);
+  const [myBodyItems, setMyBodyItems] = useState([]);
+  const [myEffectItems, setMyEffectItems] = useState([]);
+
   useEffect(() => {
     const index0 = {
       costumeId: 0,
@@ -59,6 +64,29 @@ const Inventory = (props: any) => {
     }
   }, [itemType]);
 
+  // 사용자가 보유한 아이템 조회하자
+  useEffect(() => {
+    const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+
+    const getMyItems = async () => {
+      // 내가 보유한 HEAD 코스튬 목록 불러오기
+      const resMyHEAD = await getMyCostumes(userId, "HEAD");
+      // 내가 보유한 BODY 코스튬 목록 불러오기
+      const resMyBODY = await getMyCostumes(userId, "BODY");
+      // 내가 보유한 EFFECT 코스튬 목록 불러오기
+      const resMyEFFECT = await getMyCostumes(
+        userId,
+        "EFFECT"
+      );
+
+      setMyHeadItems(resMyHEAD.data.content);
+      setMyBodyItems(resMyBODY.data.content);
+      setMyEffectItems(resMyEFFECT.data.content);
+    };
+
+    getMyItems();
+  }, []);
+
   return (
     <style.Inventory>
       <style.InventoryBar>
@@ -77,10 +105,15 @@ const Inventory = (props: any) => {
       </style.InventoryBar>
       {itemType === "HEAD" && (
         <style.InventoryBox>
-          {headArr.map((item: object, index: number) => (
+          {headArr.map((item: any, index: number) => (
             <ItemBox
               item={item}
               key={index}
+              selected={myHeadItems.some(
+                (myItem: any) =>
+                  myItem.costumeId === item.costumeId ||
+                  item.costumeId === 0
+              )}
               onItemClick={handleItemClick}
             />
           ))}
@@ -88,10 +121,15 @@ const Inventory = (props: any) => {
       )}
       {itemType === "BODY" && (
         <style.InventoryBox>
-          {bodyArr.map((item: object, index: number) => (
+          {bodyArr.map((item: any, index: number) => (
             <ItemBox
               item={item}
               key={index}
+              selected={myBodyItems.some(
+                (myItem: any) =>
+                  myItem.costumeId === item.costumeId ||
+                  item.costumeId === 0
+              )}
               onItemClick={handleItemClick}
             />
           ))}
@@ -99,10 +137,15 @@ const Inventory = (props: any) => {
       )}
       {itemType === "EFFECT" && (
         <style.InventoryBox>
-          {effectArr.map((item: object, index: number) => (
+          {effectArr.map((item: any, index: number) => (
             <ItemBox
               item={item}
               key={index}
+              selected={myEffectItems.some(
+                (myItem: any) =>
+                  myItem.costumeId === item.costumeId ||
+                  item.costumeId === 0
+              )}
               onItemClick={handleItemClick}
             />
           ))}

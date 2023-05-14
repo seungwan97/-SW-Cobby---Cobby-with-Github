@@ -8,10 +8,14 @@ const ItemBox = (props: any) => {
   };
 
   return (
-    <style.ImageWrapper onClick={() => handleItemClick()}>
+    <style.ImageWrapper
+      selected={props.selected}
+      onClick={() => handleItemClick()}
+    >
       <Image
         src={props.item.imgUrl}
         alt={props.item.name}
+        selected={props.selected}
         width={80}
         height={65}
       />
