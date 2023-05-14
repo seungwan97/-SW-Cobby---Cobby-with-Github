@@ -1,7 +1,14 @@
 import TextBox from "@/components/common/TextBox/TextBox";
 import * as style from "./style/GithubBadge";
 
+const BADGE_URL = "https://cobby-play.com/baefrica/badge...";
+
 const GithubBadge = () => {
+  
+  const copyBadgeText = () => {
+    navigator.clipboard.writeText(BADGE_URL);
+  }
+
   return (
     <style.GithubBadgeWrapper>
       <style.BadgeTxt>
@@ -11,10 +18,10 @@ const GithubBadge = () => {
         <style.ReadmeCode>
           <TextBox
             size={20}
-            content={"https://cobby-play.com/baefrica/badge..."}
+            content={BADGE_URL}
           />
         </style.ReadmeCode>
-        <style.CopyBtnImg src="/copybutton.png" />
+        <style.CopyBtnImg src="/copybutton.png" onClick={copyBadgeText} />
       </style.CodeCopyBox>
     </style.GithubBadgeWrapper>
   );
