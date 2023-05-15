@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/main/health").permitAll()
+                .requestMatchers("/api/main/swagger").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(customAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
