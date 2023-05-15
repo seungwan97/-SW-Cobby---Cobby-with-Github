@@ -3,7 +3,13 @@ server:
 
 spring:
   profiles:
-    include: db, notification, cloud, swagger, kafka
+    include:
+      - db
+      - notification
+      - cloud
+      - swagger
+      - kafka
+      - jwt
 
   servlet:
     multipart:
