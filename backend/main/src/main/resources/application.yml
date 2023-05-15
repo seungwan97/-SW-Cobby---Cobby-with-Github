@@ -3,7 +3,12 @@ server:
 
 spring:
   profiles:
-    include: db, encrypt, swagger, kafka
+    include:
+      - db
+      - encrypt
+      - swagger
+      - kafka
+      - jwt
 
   servlet:
     multipart:
