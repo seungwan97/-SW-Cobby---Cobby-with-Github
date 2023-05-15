@@ -42,6 +42,10 @@ const Inventory = (props: any) => {
   const [myBodyItems, setMyBodyItems] = useState([]);
   const [myEffectItems, setMyEffectItems] = useState([]);
 
+  const [myHead, setMyHead] = useState({});
+  const [myBody, setMyBody] = useState({});
+  const [myEffect, setMyEffect] = useState({});
+
   useEffect(() => {
     const index0 = {
       costumeId: 0,
@@ -87,6 +91,12 @@ const Inventory = (props: any) => {
     getMyItems();
   }, []);
 
+  useEffect(() => {
+    setMyHead(props.outfits.head);
+    setMyBody(props.outfits.body);
+    setMyEffect(props.outfits.effect);
+  }, [props.outfits]);
+
   return (
     <style.Inventory>
       <style.InventoryBar>
@@ -114,6 +124,7 @@ const Inventory = (props: any) => {
                   myItem.costumeId === item.costumeId ||
                   item.costumeId === 0
               )}
+              checked={myHead.costumeId === item.costumeId}
               onItemClick={handleItemClick}
             />
           ))}
@@ -130,6 +141,7 @@ const Inventory = (props: any) => {
                   myItem.costumeId === item.costumeId ||
                   item.costumeId === 0
               )}
+              checked={myBody.costumeId === item.costumeId}
               onItemClick={handleItemClick}
             />
           ))}
@@ -146,6 +158,9 @@ const Inventory = (props: any) => {
                   myItem.costumeId === item.costumeId ||
                   item.costumeId === 0
               )}
+              checked={
+                myEffect.costumeId === item.costumeId
+              }
               onItemClick={handleItemClick}
             />
           ))}

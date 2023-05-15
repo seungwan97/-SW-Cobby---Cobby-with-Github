@@ -10,12 +10,12 @@ const ItemBox = (props: any) => {
   return (
     <style.ImageWrapper
       selected={props.selected}
+      checked={props.checked}
       onClick={() => handleItemClick()}
     >
       <Image
         src={props.item.imgUrl}
         alt={props.item.name}
-        selected={props.selected}
         width={80}
         height={65}
       />
