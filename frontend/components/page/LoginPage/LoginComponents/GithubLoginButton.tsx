@@ -1,11 +1,26 @@
 import * as style from "./style/GithubLoginButton";
 import { useEffect } from "react";
 import client from "@/pages/api/client";
+import { useRouter } from "next/router";
+import { setCookie } from "@/util/cookie";
 
 const GithubLoginButton = () => {
+  const router = useRouter();
+  const token = router.query.Authorization;
+
+  if (token !== undefined) {
+    setCookie("Authorization", `${token}`, {
+      path: "/",
+      secure: true,
+      sameSite: "none",
+    });
+
+    router.push("/main");
+    // router.push({ pathname: "/main", query: { name: "song" } });
+  }
+
   const Login = () => {
-    window.location.href = `http://k8b201.p.ssafy.io:15010/oauth2/authorization/github`;
-    // window.location.href = `http://cobby-play.com/oauth2/authorization/github`;
+    window.location.href = `https://cobby-play.com/oauth2/authorization/github`;
   };
 
   useEffect(() => {

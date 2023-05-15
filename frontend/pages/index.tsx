@@ -1,6 +1,7 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import LoginComponents from "@/components/page/LoginPage/LoginPage";
+import { useRouter } from "next/router";
 
 export default function Home() {
   return (

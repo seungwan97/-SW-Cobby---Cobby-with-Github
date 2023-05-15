@@ -3,6 +3,7 @@ import { Fragment, useEffect } from "react";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import MainPage from "@/components/page/MainPage/MainPage";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
+import { getCookie } from "@/util/cookie";
 
 import {
   getNicknameAndGithubURL,
@@ -28,6 +29,7 @@ const MainFunc = ({
   //   localStorage.setItem("nickname", JSON.stringify(nicknameData.nickname));
   // }, []);
   const router = useRouter();
+
   return (
     <Fragment>
       <page.PageWrapper>
@@ -47,29 +49,24 @@ const MainFunc = ({
 export default MainFunc;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+  const userId = context.req.headers.cookie?.replace("Authorization=", "");
+  console.log(userId);
   const token = "token";
 
-  const nicknameRes = await getNicknameAndGithubURL(userId);
+  const nicknameRes = await getNicknameAndGithubURL(`${userId}`);
   const nicknameData = nicknameRes.data;
-  console.log(nicknameData.content);
 
-  const statusRes = await getStatus(userId);
+  const statusRes = await getStatus(`${userId}`);
   const statusData = statusRes.data;
-  console.log(statusData.content);
 
-  const commitRes = await getCommitInfo(userId);
+  const commitRes = await getCommitInfo(`${userId}`);
   const commitData = commitRes.data;
-  console.log(commitData.content);
 
-  const attendanceRes = await getAttendanceInfo(userId);
+  const attendanceRes = await getAttendanceInfo(`${userId}`);
   const attendanceData = attendanceRes.data;
-  console.log(attendanceData.content);
 
-  const avatarRes = await getAvatarInfo(userId);
+  const avatarRes = await getAvatarInfo(`${userId}`);
   const avatarData = avatarRes.data;
-
-  console.log(avatarData.content);
 
   return {
     props: {
