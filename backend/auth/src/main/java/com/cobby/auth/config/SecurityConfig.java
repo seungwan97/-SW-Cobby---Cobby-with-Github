@@ -1,6 +1,5 @@
 package com.cobby.auth.config;
 
-import com.cobby.auth.api.dto.Token;
 import com.cobby.auth.api.service.CustomOAuth2UserService;
 import com.cobby.auth.api.service.OAuth2SuccessHandler;
 import com.cobby.auth.api.service.TokenProvider;
@@ -56,8 +55,11 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 // Token 검증하는 페이지와 메인페이지는 인가 허가하며, 그 외엔 모두 인가가 필요
-                .authorizeRequests()
+                .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/user/swagger").permitAll()
+                .requestMatchers("/api/main/swagger").permitAll()
+                .requestMatchers("/api/store/swagger").permitAll()
                 .requestMatchers("/").permitAll()
                 .and()
                 // 로그인 인증 로직 수행
@@ -66,6 +68,7 @@ public class SecurityConfig {
                 .userInfoEndpoint()
                 .userService(oAuth2UserService);
 
+        // 사용할 레포지토리 엔드포인트 -> 서비스 성공실패핸들러 베이스uri <<
         return http.build();
     }
 }
