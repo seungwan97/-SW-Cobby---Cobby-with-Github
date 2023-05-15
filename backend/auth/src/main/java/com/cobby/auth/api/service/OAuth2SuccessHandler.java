@@ -45,8 +45,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private String COBBY_AUTH_CLIENT_SECRET;
     @Value("{spring.security.oauth2.client.registration.github.redirect-uri}")
     private String COBBY_AUTH_REDIRECT_URI;
-    @Value("{request.url.user-server}")
-    private String COBBY_AUTH_USER_SERVER;
+    @Value("{jwt.secret}")
+    private String COBBY_AUTH_JWT_SECRET;
 
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
@@ -124,7 +124,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         log.info("COBBY_AUTH_CLIENT_ID = {}",COBBY_AUTH_CLIENT_ID);
         log.info("COBBY_AUTH_CLIENT_SECRET = {}",COBBY_AUTH_CLIENT_SECRET);
         log.info("COBBY_AUTH_REDIRECT_URI = {}",COBBY_AUTH_REDIRECT_URI);
-        log.info("COBBY_AUTH_USER_SERVER = {}",COBBY_AUTH_USER_SERVER);
+        log.info("COBBY_AUTH_JWT_SECRET = {}",COBBY_AUTH_JWT_SECRET);
 
         // 2-5. 프로필 DB에 저장
         var userinfo = userProfileClient.logInUserInfo(userInfoDto);
