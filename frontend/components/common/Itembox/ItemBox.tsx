@@ -13,7 +13,7 @@ const ItemBox = (props: any) => {
       checked={props.checked}
       onClick={() => handleItemClick()}
     >
-      <Image
+      <style.ItemImage
         src={props.item.imgUrl}
         alt={props.item.name}
         width={80}

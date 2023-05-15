@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { colors } from "@/styles/colors-style";
 import { keyframes } from "@emotion/react";
+import Image from "next/image";
 
 export const ImageWrapper = styled.div`
   position: relative;
@@ -57,6 +58,31 @@ export const ImageWrapper = styled.div`
       background-color: ${colors.ItemBoxHoveredColor};
       pointer-events: none;
     `}
+
+    @media (max-width: 767px) {
+    width: 55px;
+    height: 55px;
+
+    @media (max-height: 667px) {
+      width: 55px;
+      height: 55px;
+    }
+  }
+`;
+
+export const ItemImage = styled(Image)<{
+  width: number;
+  height: number;
+}>`
+  @media (max-width: 767px) {
+    width: ${(props) => props.width * 0.75}px;
+    height: ${(props) => props.height * 0.75}px;
+
+    @media (max-height: 667px) {
+      width: ${(props) => props.width * 0.75}px;
+      height: ${(props) => props.height * 0.75}px;
+    }
+  }
 `;
 
 export const backgroundColor = keyframes`

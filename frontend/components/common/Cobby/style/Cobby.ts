@@ -23,6 +23,11 @@ export const CobbyHeadItem = styled.img`
   left: 50%;
   transform: translate(-50%);
   z-index: 4;
+
+  @media (max-height: 667px) {
+    width: 150px;
+    height: 150px;
+  }
 `;
 
 export const CobbyBodyItem = styled.img`
@@ -32,6 +37,11 @@ export const CobbyBodyItem = styled.img`
   left: 50%;
   transform: translate(-50%);
   z-index: 3;
+
+  @media (max-height: 667px) {
+    width: 150px;
+    height: 150px;
+  }
 `;
 
 export const CobbyEffectItem = styled.img`
@@ -41,4 +51,9 @@ export const CobbyEffectItem = styled.img`
   left: 50%;
   transform: translate(-50%);
   z-index: 1;
+
+  @media (max-height: 667px) {
+    width: 150px;
+    height: 150px;
+  }
 `;
