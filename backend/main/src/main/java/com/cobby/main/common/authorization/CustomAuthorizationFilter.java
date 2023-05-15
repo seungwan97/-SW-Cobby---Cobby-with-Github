@@ -31,7 +31,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("필터 진입");
-        if (request.getServletPath().equals("/api/main/health")) {   // 인증없이 건너 뛸 요청 설정
+        if (request.getServletPath().equals("/api/main/health")
+                || request.getServletPath().equals("/api/main/swagger") ) {   // 인증없이 건너 뛸 요청 설정
             filterChain.doFilter(request, response);
         } else {
 
