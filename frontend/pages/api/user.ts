@@ -1,13 +1,12 @@
-import axios from "axios";
 import client from "./client";
 
 const req = "/api/user";
 
 // 메인페이지 닉네임, 깃허브url 정보 불러오기
 export const getNicknameAndGithubURL = async (userId: string) => {
-  const response = await axios.get(`${req}/users`, {
+  const response = await client.get(`${req}/users`, {
     headers: {
-      // Authorization: `Bearer ${accessToken}`,
+      Authorization: `${userId}`,
       userId: `${userId}`,
     },
   });
@@ -19,7 +18,7 @@ export const getNicknameAndGithubURL = async (userId: string) => {
 export const getStatus = async (userId: string) => {
   const response = await client.get(`${req}/stat`, {
     headers: {
-      // Authorization: `Bearer ${accessToken}`,
+      Authorization: `${userId}`,
       userId: `${userId}`,
     },
   });
@@ -31,7 +30,7 @@ export const getStatus = async (userId: string) => {
 export const getCommitInfo = async (userId: string) => {
   const response = await client.get(`${req}/activityLog/commit`, {
     headers: {
-      // Authorization: `Bearer ${accessToken}`,
+      Authorization: `${userId}`,
       userId: `${userId}`,
     },
   });
@@ -43,7 +42,7 @@ export const getCommitInfo = async (userId: string) => {
 export const getAttendanceInfo = async (userId: string) => {
   const response = await client.get(`${req}/activityLog/attendance`, {
     headers: {
-      // Authorization: `Bearer ${accessToken}`,
+      Authorization: `${userId}`,
       userId: `${userId}`,
     },
   });
