@@ -33,6 +33,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         log.info("필터 진입");
         if (request.getServletPath().equals("/api/user/health")
                 || request.getServletPath().equals("/api/user/users")
+                || request.getServletPath().equals("/api/user/swagger")
                 || request.getServletPath().equals("/api/user/activityLog/**")
         ) {    // 인증없이 건너 뛸 요청 설정
             filterChain.doFilter(request, response);
