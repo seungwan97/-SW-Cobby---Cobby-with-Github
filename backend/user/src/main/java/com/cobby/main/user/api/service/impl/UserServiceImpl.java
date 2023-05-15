@@ -122,6 +122,15 @@ public class UserServiceImpl implements UserService {
 					.issueCnt(getStatList(userPostRequest, 9))
 					.build();
 
+				// attendance 기록 하나 쌓기
+				activityLogRepository.save(
+					ActivityLog.builder()
+						.user(user)
+						.activityType(ActivityType.ATTENDANCE)
+						.relayCnt(1L)
+						.build()
+				);
+
 				// commit 기록 하나 쌓기
 				activityLogRepository.save(
 					ActivityLog.builder()
