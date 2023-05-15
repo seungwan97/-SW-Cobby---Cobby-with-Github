@@ -31,35 +31,33 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("필터 진입");
-        /*
-        if (request.getServletPath().equals("/api/members/user") || request.getServletPath().equals("/api/members/image")) {    // 인증없이 건너 뛸 요청 설정
+        if (request.getServletPath().equals("/api/main/health")) {   // 인증없이 건너 뛸 요청 설정
             filterChain.doFilter(request, response);
         } else {
 
+            String token = request.getHeader("Authorization").substring(7);   // 헤더의 토큰 파싱 (Bearer 제거)
+
+            log.info("{}", token);
+            try {
+                String userId = jwtUtil.getUid(token);
+
+                addAuthorizationHeaders(request, userId);
+
+                Authentication auth = getAuthentication(userId);
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            } catch (Exception e) {
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+                Map<String, Object> body = new LinkedHashMap<>();
+                body.put("code", HttpStatus.UNAUTHORIZED.value());
+                body.put("error", e.getMessage());
+
+                new ObjectMapper().writeValue(response.getOutputStream(), body);
+            }
+
+            filterChain.doFilter(request, response);
         }
-        */
-        String token = request.getHeader("Authorization").substring(7);   // 헤더의 토큰 파싱 (Bearer 제거)
-
-        log.info("{}", token);
-        try {
-            String userId = jwtUtil.getUid(token);
-
-            addAuthorizationHeaders(request, userId);
-
-            Authentication auth = getAuthentication(userId);
-            SecurityContextHolder.getContext().setAuthentication(auth);
-        } catch (Exception e) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-
-            Map<String, Object> body = new LinkedHashMap<>();
-            body.put("code", HttpStatus.UNAUTHORIZED.value());
-            body.put("error", e.getMessage());
-
-            new ObjectMapper().writeValue(response.getOutputStream(), body);
-        }
-
-        filterChain.doFilter(request, response);
 
     }
 
