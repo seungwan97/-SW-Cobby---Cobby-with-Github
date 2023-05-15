@@ -42,7 +42,7 @@ public class SecurityConfig {
                 .cors().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
+                .authorizeHttpRequests()
                 .requestMatchers("/api/main/health").permitAll()
                 .anyRequest().authenticated()
                 .and()
