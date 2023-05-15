@@ -81,6 +81,7 @@ const CostumePage = (props: any) => {
           headItemList={props.HEAD_ITEMS}
           bodyItemList={props.BODY_ITEMS}
           effectItemList={props.EFFECT_ITEMS}
+          outfits={outfits}
           onItemClick={handleInventoryItem}
         />
       </page.PageWrapper>
