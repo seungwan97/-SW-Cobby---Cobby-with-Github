@@ -5,11 +5,11 @@ spring:
       client:
         registration:
           github:
-            client-id: ${COBBY_AUTH_CLIENT_ID}
-            client-secret: ${COBBY_AUTH_CLIENT_SECRET}
-            redirect-uri: ${COBBY_AUTH_REDIRECT_URI}
+            client-id: ENC(cGZ2aSg57gtrME04EfID2lBDd/VHSF8AP0f1+MUNJ9k=)
+            client-secret: ENC(cc1Tdktj6b8yo7BBlrVVlGvrQWRh2ou18OG7Ez9c1IZIsLaprF3XMlpi07RcSFNCcgoK8O6vkDE=)
+            redirect-uri: ENC(RTfTf+THRqR8vwtyf5UKB7N/zo27ljU5IU18ND8c8h4kYaoVtD9rsysHCX3Yyy/lBXVWFTv7pUs=)
 
 jwt:
   header: Authorization
-  secret: ${COBBY_AUTH_JWT_SECRET}
+  secret: ENC(ituP3QXb9GmFFUMtRPHChMw2zABWICrVZkV4z2c2dBLg7qj4cntsu6D82AUytNlyxBUk4pVHApg=)
   token-validity-in-seconds: 3600
