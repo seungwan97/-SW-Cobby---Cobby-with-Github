@@ -22,5 +22,5 @@ redis:
 request:
   url:
 #    user-server: ENC(1pDCxkeJgc4aLRGg5QSemS7fx6MPMuOaJ589WQ1UwWeq6PIuLFCf087yvuEA1ZJr)
-    user-server: https://cobby-play.com/api/user/users
+    user-server: ${COBBY_AUTH_USER_SERVER}
     front-login: https://cobby-play.com

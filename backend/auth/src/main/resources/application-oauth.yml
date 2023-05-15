@@ -5,9 +5,9 @@ spring:
       client:
         registration:
           github:
-            client-id: Iv1.b8ef7b59157b67a1
-            client-secret: 6d659f4c9b980ce5b07bf24602379750adacf9e0
-            redirect-uri: https://cobby-play.com/login/oauth2/code/github
+            client-id: ${COBBY_AUTH_CLIENT_ID}
+            client-secret: ${COBBY_AUTH_CLIENT_SECRET}
+            redirect-uri: ${COBBY_AUTH_REDIRECT_URI}
 #            scope: id, login, html_url
 #            redirect-uri: https://k8b201.p.ssafy.io/login/oauth2/code/github
 
