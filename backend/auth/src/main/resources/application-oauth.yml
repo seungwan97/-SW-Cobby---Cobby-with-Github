@@ -6,7 +6,7 @@ spring:
         registration:
           github:
             client-id: ENC(nAlgFbHkFPhfBthdidNy20y29nmDOZyuMIu6mQLN2RA=)
-            client-secret: ENC(kjWNF+oXrnlxbiwzy7OE8LQzm+YxumkGMVxUVF+RE6OjZiia5Je3paMCP5sW0b8C5C4gQrMhaCo=)
+            client-secret: ENC(P7nsgi3wja7Dey8c3bwmjr0hOIAWeJX6G+6AsA4TVdam81ya4SLvHMLzxzDGF6a639s0t1dY0tA=)
             redirect-uri: ENC(eUYQwg8ALIuHZYR4gh8qqZUln7OKpg1J2lqEMZ8i2qhP9Gmj44WxqNW3fiDveIRFujE92Zq0mtQ=)
 #            scope: id, login, html_url
 #            redirect-uri: https://k8b201.p.ssafy.io/login/oauth2/code/github
