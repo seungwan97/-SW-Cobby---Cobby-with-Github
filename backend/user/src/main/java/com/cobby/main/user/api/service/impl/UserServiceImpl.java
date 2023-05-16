@@ -142,9 +142,9 @@ public class UserServiceImpl implements UserService {
 
 				statRepository.save(stat);
 
-				// // 이후 user 정보를 메시지 큐에 보냅니다.
-				// var res = sendUserId(user.getId());
-				// log.info("Sending message: " + res);
+				// 이후 user 정보를 메시지 큐에 보냅니다.
+				var res = sendUserId(user.getId());
+				log.info("Sending message: " + res);
 			});
 	}
 
