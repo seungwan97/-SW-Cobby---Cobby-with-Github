@@ -1,20 +1,12 @@
 // 유저별 코스튬 페이지
-import {
-  Fragment,
-  useState,
-  useEffect,
-  useLayoutEffect,
-} from "react";
+import { Fragment, useState, useEffect, useLayoutEffect } from "react";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import TextBox from "@/components/common/TextBox/TextBox";
 import Inventory from "./CostumeComponents/Inventory";
 import * as style from "./CostumeComponents/style/CostumePage";
 import Cobby from "@/components/common/Cobby/Cobby";
-import {
-  getAvatarInfo,
-  patchAvatarInfo,
-} from "@/pages/api/main";
+import { getAvatarInfo, patchAvatarInfo } from "@/pages/api/main";
 
 // CostumePage
 const CostumePage = (props: any) => {
@@ -34,7 +26,8 @@ const CostumePage = (props: any) => {
   // 나의 코비의 outfits 를 불러오기
   useEffect(() => {
     const getCobbyOutfits = async () => {
-      const token = "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
+      const token =
+        "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
 
       try {
         const res = await getAvatarInfo(token);
@@ -69,68 +62,82 @@ const CostumePage = (props: any) => {
         updatedOutfits.head = itemInfo;
 
         setCobby((state: any) => {
-          const nextState = state.head
-            ? { ...state, head: null }
-            : {
-              baseCobby: newImgReq(
-                "/Character/Cobby.gif"
-              ),
-              head: newImgReq(updatedOutfits.head.gifUrl),
-              body: state.body
-                ? newImgReq(updatedOutfits.body.gifUrl)
-                : null,
-              effect: state.effect
-                ? newImgReq(updatedOutfits.effect.gifUrl)
-                : null,
-            };
+          // const nextState = state.head
+          //   ? { ...state, head: null }
+          //   : {
+          //       baseCobby: newImgReq("/Character/Cobby.gif"),
+          //       head: newImgReq(updatedOutfits.head.gifUrl),
+          //       body: state.body ? newImgReq(updatedOutfits.body.gifUrl) : null,
+          //       effect: state.effect
+          //         ? newImgReq(updatedOutfits.effect.gifUrl)
+          //         : null,
+          //     };
+
+          const nextState = {
+            baseCobby: newImgReq("/Character/Cobby.gif"),
+            head: newImgReq(updatedOutfits.head.gifUrl),
+            body: state.body ? newImgReq(updatedOutfits.body.gifUrl) : null,
+            effect: state.effect
+              ? newImgReq(updatedOutfits.effect.gifUrl)
+              : null,
+          };
+
           return nextState;
         });
       } else if (itemInfo.category === "BODY") {
         updatedOutfits.body = itemInfo;
 
         setCobby((state: any) => {
-          const nextState = state.body
-            ? { ...state, body: null }
-            : {
-              baseCobby: newImgReq(
-                "/Character/Cobby.gif"
-              ),
-              head: state.head
-                ? newImgReq(updatedOutfits.head.gifUrl)
-                : null,
-              body: newImgReq(updatedOutfits.body.gifUrl),
-              effect: state.effect
-                ? newImgReq(updatedOutfits.effect.gifUrl)
-                : null,
-            };
+          // const nextState = state.body
+          //   ? { ...state, body: null }
+          //   : {
+          //       baseCobby: newImgReq("/Character/Cobby.gif"),
+          //       head: state.head ? newImgReq(updatedOutfits.head.gifUrl) : null,
+          //       body: newImgReq(updatedOutfits.body.gifUrl),
+          //       effect: state.effect
+          //         ? newImgReq(updatedOutfits.effect.gifUrl)
+          //         : null,
+          //     };
+
+          const nextState = {
+            baseCobby: newImgReq("/Character/Cobby.gif"),
+            head: state.head ? newImgReq(updatedOutfits.head.gifUrl) : null,
+            body: newImgReq(updatedOutfits.body.gifUrl),
+            effect: state.effect
+              ? newImgReq(updatedOutfits.effect.gifUrl)
+              : null,
+          };
+
           return nextState;
         });
       } else if (itemInfo.category === "EFFECT") {
         updatedOutfits.effect = itemInfo;
 
         setCobby((state: any) => {
-          const nextState = state.effect
-            ? { ...state, effect: null }
-            : {
-              baseCobby: newImgReq(
-                "/Character/Cobby.gif"
-              ),
-              head: state.head
-                ? newImgReq(updatedOutfits.head.gifUrl)
-                : null,
-              body: state.body
-                ? newImgReq(updatedOutfits.body.gifUrl)
-                : null,
-              effect: newImgReq(
-                updatedOutfits.effect.gifUrl
-              ),
-            };
+          // const nextState = state.effect
+          //   ? { ...state, effect: null }
+          //   : {
+          //       baseCobby: newImgReq("/Character/Cobby.gif"),
+          //       head: state.head ? newImgReq(updatedOutfits.head.gifUrl) : null,
+          //       body: state.body ? newImgReq(updatedOutfits.body.gifUrl) : null,
+          //       effect: newImgReq(updatedOutfits.effect.gifUrl),
+          //     };
+
+          const nextState = {
+            baseCobby: newImgReq("/Character/Cobby.gif"),
+            head: state.head ? newImgReq(updatedOutfits.head.gifUrl) : null,
+            body: state.body ? newImgReq(updatedOutfits.body.gifUrl) : null,
+            effect: newImgReq(updatedOutfits.effect.gifUrl),
+          };
+
           return nextState;
         });
       }
 
       // 코비 정보 수정
-      const userId = "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
+      const userId =
+        "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
+
       const data = {
         head: updatedOutfits.head.costumeId,
         body: updatedOutfits.body.costumeId,
@@ -195,11 +202,7 @@ const CostumePage = (props: any) => {
           <TextBox size={50} content={"COSTUME"} />
         </style.CostumePageTextWrapper>
         <style.CostumedCobby>
-          <Cobby
-            outfits={outfits}
-            isLoading={isLoading}
-            cobby={cobby}
-          />
+          <Cobby outfits={outfits} isLoading={isLoading} cobby={cobby} />
         </style.CostumedCobby>
         <Inventory
           headItemList={props.HEAD_ITEMS}
