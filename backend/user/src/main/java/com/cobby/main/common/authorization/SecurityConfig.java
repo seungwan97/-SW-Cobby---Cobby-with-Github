@@ -49,6 +49,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/user/swagger-ui/**").permitAll()
                 .requestMatchers("/api/user/api-docs/**").permitAll()
                 .requestMatchers("/api/user/swagger/**").permitAll()
+                .requestMatchers("/api/user/badge/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(customAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);

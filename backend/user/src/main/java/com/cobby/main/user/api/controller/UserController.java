@@ -32,7 +32,7 @@ public class UserController {
 
 	private final UserService userService;
 
-	@GetMapping // 회원 정보 조회
+	@GetMapping("/info") // 회원 정보 조회
 	@ApiDocumentResponse
 	@Operation(summary = "닉네임 조회", description = "유저의 깃헙 닉네임을 조회합니다.")
 	public ResponseEntity<? extends BaseResponseBody> getUserInfo(

@@ -134,61 +134,6 @@ public class BadgeServiceImpl implements BadgeService {
 		return findUser.getId();
 	}
 
-	// public String getSvg(String nickname){
-	// 	BadgeGetResponse badgeGetResponse = getAvatar(nickname);
-	// 	String body = "";
-	// 	String effect = "";
-	// 	String head = "";
-	//
-	// 	if(!badgeGetResponse.getBody().isEmpty()) body = getCustome(badgeGetResponse.getBody());
-	// 	if(!badgeGetResponse.getEffect().isEmpty()) effect = getCustome(badgeGetResponse.getEffect());
-	// 	if(!badgeGetResponse.getHead().isEmpty()) head = getCustome(badgeGetResponse.getHead());
-	//
-	// 	StringBuilder svg = new StringBuilder();
-	// 	svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"285\">\n")
-	// 		.append("\t<style>\n")
-	// 		.append("\t\t.cobby {\n")
-	// 		.append("\t\t\twidth: 130px;\n")
-	// 		.append("\t\t}\n")
-	// 		.append("\n")
-	// 		.append("\t\t.character {\n")
-	// 		.append("\t\t\twidth: 300px;\n")
-	// 		.append("\t\t\theight: 300px;\n")
-	// 		.append("\t\t}\n")
-	// 		.append("\n")
-	// 		.append("\t\t.info {\n")
-	// 		.append("\t\t\twidth: 300px;\n")
-	// 		.append("\t\t\tdisplay: flex;\n")
-	// 		.append("\t\t\tflex-direction: column;\n")
-	// 		.append("\t\t\talign-items: center;\n")
-	// 		.append("\t\t\tpadding: 50px;\n")
-	// 		.append("\t\t}\n")
-	// 		.append("\n")
-	// 		.append("\t\t.info_line {\n")
-	// 		.append("\t\t\tfont-size: 20px;\n")
-	// 		.append("\t\t\tfont-weight: bolder;\n")
-	// 		.append("\t\t\tfill: #ffffff;\n")
-	// 		.append("\t\t\tmargin-bottom: 20px;\n")
-	// 		.append("\t\t}\n")
-	// 		.append("\t</style>\n")
-	// 		.append("\n")
-	// 		.append("\t<rect class=\"card\" x=\"0\" y=\"0\" />\n")
-	// 		.append("\n")
-	// 		.append("\t<image href=\"data:image/gif;base64," + getCharacter() + "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"cobby\" />\n")
-	// 		.append("\t<image href=\"data:image/gif;base64," + body + "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"body\" />\n")
-	// 		.append("\t<image href=\"data:image/gif;base64," + effect + "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"effect\" />\n")
-	// 		.append("\t<image href=\"data:image/gif;base64," + head +  "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"head\" />\n")
-	// 		.append("\n")
-	// 		.append("\t<g class=\"info\">\n")
-	// 		.append("\t\t<text class=\"info_line\" x=\"500\" y=\"100\" text-anchor=\"middle\">" + nickname + "'s COBBY</text>\n")
-	// 		.append("\t\t<text class=\"info_line\" x=\"500\" y=\"175\" text-anchor=\"middle\">LV " + badgeGetResponse.getLevel() + " </text>\n")
-	// 		.append("\t\t<text class=\"info_line\" x=\"500\" y=\"250\" text-anchor=\"middle\">Today's Commits : " + getCommitCnt(nickname).getTodayCnt() +"</text>\n")
-	// 		.append("\t</g>\n")
-	// 		.append("</svg>\n");
-	// 	return svg.toString();
-	// }
-
-
 	public String getSvg(String nickname){
 		BadgeGetResponse badgeGetResponse = getAvatar(nickname);
 		String body = "";
@@ -218,7 +163,7 @@ public class BadgeServiceImpl implements BadgeService {
 			.append("        margin-bottom: 20px;\n")
 			.append("    }\n")
 			.append("    @font-face {\n")
-			.append("        font-family: 'Cobby';\n")
+			.append("        font-fmily: 'Cobby';\n")
 			.append("        src: url('"+ getFont() + "');\n")
 			.append("    }\n")
 			.append("    .line {\n")
