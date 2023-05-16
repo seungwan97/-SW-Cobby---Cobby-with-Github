@@ -30,10 +30,15 @@ public class TokenProvider {
         this.secret = Base64.getEncoder().encodeToString(secret.getBytes());
         this.tokenValidityInMilliseconds = tokenValidityInMilliseconds * 1000;
         this.redisService = redisService;
+
+        log.info("1. TokenProvider 에서 생성한 토큰 = {}", this.secret);
     }
 
     public String createToken(String userId, String role, TokenKey tokenKey) {
         // access : 1 hour, refresh : 1 month
+
+        log.info("2. createToken 에서 생성한 토큰 = {}", secret);
+
         long period = getExpiration(tokenKey);
 
         Claims claims = Jwts.claims().setSubject(userId);
