@@ -32,9 +32,11 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         log.info("doFilterInternal");
 
-        if (request.getServletPath().equals("/api/main/health")
-                || request.getServletPath().contains("/api/main/swagger")
-                || request.getServletPath().contains("/api/main/api-docs")) {   // 인증없이 건너 뛸 요청 설정
+        log.info("ㄴ> request uri = " + request.getRequestURI());
+        
+        if (request.getServletPath().contains("health")
+                || request.getServletPath().contains("swagger")
+                || request.getServletPath().contains("api-docs")) {   // 인증없이 건너 뛸 요청 설정
             filterChain.doFilter(request, response);
 
         }
@@ -45,7 +47,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             log.info("Header - (key:Authorization, value:userId) = {}", token);
             try {
                 String userId = jwtUtil.getUid(token);
-
+                log.info("획득한 userId = " + userId)
                 addAuthorizationHeaders(request, userId);
 
                 Authentication auth = getAuthentication(userId);
