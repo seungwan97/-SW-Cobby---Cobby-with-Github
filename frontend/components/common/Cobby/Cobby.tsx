@@ -6,7 +6,7 @@ const Cobby = (props: any) => {
   if (!props.isLoading) {
     return (
       <style.CobbyWrapper>
-        <style.Cobby
+        {/* <style.Cobby
           src={props.cobby.baseCobby}
           alt="Cobby"
         />
@@ -18,7 +18,7 @@ const Cobby = (props: any) => {
         )}
         {props.cobby.effect && (
           <style.CobbyEffectItem src={props.cobby.effect} />
-        )}
+        )} */}
       </style.CobbyWrapper>
     );
   } else {
