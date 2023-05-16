@@ -8,6 +8,7 @@ const Modal: React.FC<{
   name2: string;
   yes: boolean;
   no: boolean;
+  setStatus: Function;
 }> = (props) => {
   const value = props.name2;
   let flag: boolean = true;
@@ -15,11 +16,19 @@ const Modal: React.FC<{
     flag = false;
   }
 
+  const handleClose = () => {
+    props.setStatus(false);
+  }
+
+  const handleConfirm = () => { // 모달에서 yes를 눌렀을때의 동작
+    //props.doConfirm 정도로?
+  }
+
   return (
     <Fragment>
       <style.Contatiner>
         <style.Modal>
-          <style.CloseButton>
+          <style.CloseButton onClick={handleClose}>
             <FontAwesomeIcon icon={faXmark} />
           </style.CloseButton>
           <style.ModalInfo>
@@ -28,10 +37,10 @@ const Modal: React.FC<{
             {flag && <span>{value}</span>}
             {flag && <br />}
 
-            <style.ModalButton style={{ marginRight: "10px" }}>
+            <style.ModalButton onClick={handleConfirm} style={{ marginRight: "10px" }}>
               yes
             </style.ModalButton>
-            <style.ModalButton style={{ marginLeft: "10px" }}>
+            <style.ModalButton onClick={handleClose} style={{ marginLeft: "10px" }}>
               no
             </style.ModalButton>
           </style.ModalInfo>

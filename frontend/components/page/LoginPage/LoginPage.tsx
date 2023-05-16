@@ -12,12 +12,17 @@ import GithubLoginButton from "@/components/page/LoginPage/LoginComponents/Githu
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 
 const LoginPage = () => {
+  const outfits = {
+    head: "",
+    body: "",
+    effect: "",
+  };
   return (
     <style.LoginPageWrapper>
       <style.LoginPageContent>
         <TextBox size={50} content={"Cobby"} />
         <style.LogoMargin />
-        <Cobby />
+        <Cobby outfits={outfits} />
         <style.LogoMargin />
         <TextBox size={30} content={"Github with Cobby"} />
       </style.LoginPageContent>
