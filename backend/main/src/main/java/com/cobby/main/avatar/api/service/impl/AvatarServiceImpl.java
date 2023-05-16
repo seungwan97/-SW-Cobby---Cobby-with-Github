@@ -42,7 +42,7 @@ public class AvatarServiceImpl implements AvatarService {
 		var avatar = avatarRepository.findById(avatarId)
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + avatarId + ")"));
 
-		var outfits = getCostumeOutfits(avatar.getOutfits());
+		var outfits = getCostumeOutfits(avatarId, avatar.getOutfits());
 
 		var levelTable = levelTableRepository.findById(avatar.getLevel())
 			.orElseThrow(() -> new IllegalArgumentException("레벨 정보가 없습니다. (Level=" + avatar.getLevel() + ")"));
@@ -55,7 +55,7 @@ public class AvatarServiceImpl implements AvatarService {
 
 	}
 
-	private Map<String, CostumeGetResponse> getCostumeOutfits(final String idMapString) throws JsonProcessingException {
+	private Map<String, CostumeGetResponse> getCostumeOutfits(String avatarId, final String idMapString) throws JsonProcessingException {
 		// String 을 Map 으로 변환
 		Map<String, Long> idMap = objectMapper.readValue(
 			idMapString,
@@ -86,7 +86,7 @@ public class AvatarServiceImpl implements AvatarService {
 			}
 			// 코스튬 Id가 0 이상인 경우에는 해당 ID를 가진 코스튬을 넣습니다.
 			else {
-				var costume = avatarCostumeRepository.findByCostume_CostumeId(costumeId)
+				var costume = avatarCostumeRepository.findByAvatar_AvatarIdAndCostume_CostumeId(avatarId, costumeId)
 					.orElseThrow(() -> new IllegalArgumentException(
 						"보유하고 있지 않은 코스튬입니다. (category=" + category + ", ID=" + costumeId + ")"))
 					.getCostume();
@@ -138,11 +138,11 @@ public class AvatarServiceImpl implements AvatarService {
 		);
 		var NO_COSTUME = 0L;
 		// 변경하려는 코스튬이 실제로 아바타가 가진 코스튬인지, 또는 빈 값(0)인지 확인
-		outfit.forEach((category, id) -> {
-			if (NO_COSTUME != id)
-				avatarCostumeRepository.findByCostume_CostumeId(id)
+		outfit.forEach((category, costumeId) -> {
+			if (NO_COSTUME != costumeId)
+				avatarCostumeRepository.findByAvatar_AvatarIdAndCostume_CostumeId(avatarId, costumeId)
 					.orElseThrow(() -> new IllegalArgumentException(
-						"보유하고 있지 않은 코스튬입니다. (category=" + category + ", ID=" + id + ")"));
+						"보유하고 있지 않은 코스튬입니다. (category=" + category + ", ID=" + costumeId + ")"));
 		});
 
 		// Map 객체를 String 으로 변환하여 저장

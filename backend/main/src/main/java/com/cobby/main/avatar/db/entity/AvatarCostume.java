@@ -47,7 +47,7 @@ public class AvatarCostume extends BaseTimeEntity {
 	@JoinColumn(name = "costume_id")
 	private Costume costume;
 
-	@Column(name = "is_Opened", nullable = false)
+	@Column(name = "is_opened", nullable = false)
 	private Boolean isOpened;
 
 	@Builder(toBuilder = true)

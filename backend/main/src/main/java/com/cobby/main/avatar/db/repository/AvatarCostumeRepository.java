@@ -12,7 +12,7 @@ public interface AvatarCostumeRepository extends JpaRepository<AvatarCostume, Lo
 
 	List<AvatarCostume> findAllByAvatar_AvatarId(String avatarId);
 
-	Optional<AvatarCostume> findByCostume_CostumeId(Long costumeId);
+	Optional<AvatarCostume> findByAvatar_AvatarIdAndCostume_CostumeId(String avatarId, Long costumeId);
 
 	List<AvatarCostume> findAllByAvatar_AvatarIdAndCostume_Category(String userId, CostumeCategory category);
 
