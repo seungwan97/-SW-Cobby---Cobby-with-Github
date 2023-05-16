@@ -36,25 +36,40 @@ const MyPage = ({
 
   const setLogout = (val: boolean) => {
     setIsLogout(val);
-  }
+  };
 
   const setLeave = () => {
     setIsLeave(true);
-  }
+  };
 
   return (
     <Fragment>
       {isLogout && (
-        <Modal name={""} name2={"로그아웃 하시겠습니까?"} yes={true} no={true} setStatus={setIsLogout} />
+        <Modal
+          name={""}
+          name2={"로그아웃 하시겠습니까?"}
+          yes={true}
+          no={true}
+          setStatus={setIsLogout}
+        />
       )}
       {isLeave && (
-        <Modal name={""} name2={"회원탈퇴 하시겠습니까?"} yes={true} no={true} setStatus={setIsLeave} />
+        <Modal
+          name={""}
+          name2={"회원탈퇴 하시겠습니까?"}
+          yes={true}
+          no={true}
+          setStatus={setIsLeave}
+        />
       )}
       <page.PageWrapper>
         <style.MyPageTxt>
           <TextBox size={50} content={"MY PAGE"} />
         </style.MyPageTxt>
-        <style.Cobby />
+        <style.Background src="/Character/background.png" />
+        <style.Div>
+          <style.Cobby />
+        </style.Div>
         <GithubBadge setIsCopied={setIsCopied} />
         <CopyAlarm isVisible={isCopied} setIsVisible={setIsCopied} />
         <UserInformation
