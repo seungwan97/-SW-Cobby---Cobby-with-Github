@@ -11,5 +11,5 @@ spring:
 
 jwt:
   header: Authorization
-  secret: ENC(ituP3QXb9GmFFUMtRPHChMw2zABWICrVZkV4z2c2dBLg7qj4cntsu6D82AUytNlyxBUk4pVHApg=)
+  secret: ENC(Oc+80dgjgizjttruyKyevjLMfdIYEG0mfHgQs2byYEM7nwCVizEPeuZ7wR7EYv5IfBkbeknXNr4=)
   token-validity-in-seconds: 3600
