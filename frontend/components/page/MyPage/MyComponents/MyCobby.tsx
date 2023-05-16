@@ -12,7 +12,8 @@ const MyCobby = () => {
 
   useEffect(() => {
     const getCobbyOutfits = async () => {
-      const userId = "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
+      const userId =
+        "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
 
       try {
         const res = await getAvatarInfo(userId);
@@ -29,6 +30,7 @@ const MyCobby = () => {
 
   return (
     <style.MyCobbyWrapper>
+      <style.Background src="/Character/background.png" />
       <style.MyCobby />
     </style.MyCobbyWrapper>
   );

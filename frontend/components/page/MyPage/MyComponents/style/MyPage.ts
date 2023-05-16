@@ -8,18 +8,13 @@ export const MyPageTxt = styled.div`
   height: 10vh;
 `;
 
-export const Background = styled.img`
+export const Cobby = styled(MyCobby)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 20%;
 `;
-
-export const Div = styled.div`
-  position: absolute;
-  top: 20%;
-  left: 3%;
-`;
-
-export const Cobby = styled(MyCobby)``;
 
 export const LeaveButton = styled.div`
   width: auto;
