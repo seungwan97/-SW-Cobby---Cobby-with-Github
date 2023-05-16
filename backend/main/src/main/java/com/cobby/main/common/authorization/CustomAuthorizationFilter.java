@@ -36,7 +36,12 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         
         if (request.getServletPath().contains("health")
                 || request.getServletPath().contains("swagger")
-                || request.getServletPath().contains("api-docs")) {   // 인증없이 건너 뛸 요청 설정
+                || request.getServletPath().contains("api-docs")
+                || request.getServletPath().contains("main/costumes")
+                || request.getServletPath().contains("main/titles")
+                || (request.getServletPath().contains("main/quests") 
+                        && !request.getServletPath().contains("getItem"))
+                ) {   // 인증없이 건너 뛸 요청 설정
             filterChain.doFilter(request, response);
 
         }
