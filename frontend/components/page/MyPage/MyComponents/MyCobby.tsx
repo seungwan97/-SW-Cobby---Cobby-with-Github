@@ -20,10 +20,7 @@ const MyCobby = () => {
 
         setOutfits(cobbyOutfits);
       } catch (error) {
-        console.error(
-          "Failed to fetch avatar info:",
-          error
-        );
+        console.error("Failed to fetch avatar info:", error);
       }
     };
 
@@ -32,7 +29,7 @@ const MyCobby = () => {
 
   return (
     <style.MyCobbyWrapper>
-      <Cobby outfits={outfits} />
+      <style.MyCobby />
     </style.MyCobbyWrapper>
   );
 };
