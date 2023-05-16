@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -86,6 +85,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             // 2-4. 토큰 발행
             tokens = tokenProvider.generateToken(userInfoDto.getUserId(), Role.USER.getKey());
 
+            log.info("JWT 토큰 = {}", tokens);
+
             // 최초 로그인 일때, true < 헤더에 저장 >
             init = "true";
             response.setHeader("Initial", init);
@@ -105,6 +106,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             String access = tokenProvider.generateAccess(userInfoDto.getUserId(), Role.USER.getKey());
 
             tokens = tokenProvider.generateToken(userInfoDto.getUserId(), Role.USER.getKey());
+
+            log.info("JWT 토큰 = {}", tokens);
 
             // 기존 로그인 일때, false < 헤더에 저장 >
             init = "false";
