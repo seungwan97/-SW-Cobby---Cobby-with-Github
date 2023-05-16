@@ -66,10 +66,7 @@ const MyPage = ({
         <style.MyPageTxt>
           <TextBox size={50} content={"MY PAGE"} />
         </style.MyPageTxt>
-        <style.Background src="/Character/background.png" />
-        <style.Div>
-          <style.Cobby />
-        </style.Div>
+        <style.Cobby />
         <GithubBadge setIsCopied={setIsCopied} />
         <CopyAlarm isVisible={isCopied} setIsVisible={setIsCopied} />
         <UserInformation

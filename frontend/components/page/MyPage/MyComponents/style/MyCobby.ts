@@ -1,11 +1,14 @@
 import Cobby from "@/components/common/Cobby/Cobby";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 export const MyCobbyWrapper = styled.div`
-  text-align: center;
+  position: relative;
 `;
 
-export const MyCobby = styled(Cobby)`
-  width: 50px;
-  height: 50px;
+export const Background = styled.img`
+  position: absolute;
+  width: 100%;
+  height: 100%;
 `;
+
+export const MyCobby = styled(Cobby)``;

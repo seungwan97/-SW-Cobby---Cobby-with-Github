@@ -30,6 +30,7 @@ const MyCobby = () => {
 
   return (
     <style.MyCobbyWrapper>
+      <style.Background src="/Character/background.png" />
       <style.MyCobby />
     </style.MyCobbyWrapper>
   );
