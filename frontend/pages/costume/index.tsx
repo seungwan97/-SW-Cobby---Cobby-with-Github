@@ -25,28 +25,27 @@ const CostumeFunc = (props: any) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps =
-  async (context) => {
-    const token = "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const token = context.req.headers.cookie?.replace("Authorization=", "");
 
-    // HEAD 코스튬 목록 불러오기
-    const resHEAD = await getAllItemList("HEAD", token);
-    // BODY 코스튬 목록 불러오기
-    const resBODY = await getAllItemList("BODY", token);
-    // // EFFECT 코스튬 목록 불러오기
-    const resEFFECT = await getAllItemList("EFFECT", token);
+  // HEAD 코스튬 목록 불러오기
+  const resHEAD = await getAllItemList("HEAD", `${token}`);
+  // BODY 코스튬 목록 불러오기
+  const resBODY = await getAllItemList("BODY", `${token}`);
+  // // EFFECT 코스튬 목록 불러오기
+  const resEFFECT = await getAllItemList("EFFECT", `${token}`);
 
-    const HEAD_ITEMS = resHEAD.data.content;
-    const BODY_ITEMS = resBODY.data.content;
-    const EFFECT_ITEMS = resEFFECT.data.content;
+  const HEAD_ITEMS = resHEAD.data.content;
+  const BODY_ITEMS = resBODY.data.content;
+  const EFFECT_ITEMS = resEFFECT.data.content;
 
-    return {
-      props: {
-        HEAD_ITEMS,
-        BODY_ITEMS,
-        EFFECT_ITEMS,
-      },
-    };
+  return {
+    props: {
+      HEAD_ITEMS,
+      BODY_ITEMS,
+      EFFECT_ITEMS,
+    },
   };
+};
 
 export default CostumePage;

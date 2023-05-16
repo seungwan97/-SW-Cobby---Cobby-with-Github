@@ -7,6 +7,7 @@ import Inventory from "./CostumeComponents/Inventory";
 import * as style from "./CostumeComponents/style/CostumePage";
 import Cobby from "@/components/common/Cobby/Cobby";
 import { getAvatarInfo, patchAvatarInfo } from "@/pages/api/main";
+import cookie from "react-cookies";
 
 // CostumePage
 const CostumePage = (props: any) => {
@@ -26,8 +27,7 @@ const CostumePage = (props: any) => {
   // 나의 코비의 outfits 를 불러오기
   useEffect(() => {
     const getCobbyOutfits = async () => {
-      const token =
-        "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
+      const token = cookie.load("Authorization");
 
       try {
         const res = await getAvatarInfo(token);
@@ -135,8 +135,7 @@ const CostumePage = (props: any) => {
       }
 
       // 코비 정보 수정
-      const userId =
-        "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
+      const token = cookie.load("Authorization");
 
       const data = {
         head: updatedOutfits.head.costumeId,
@@ -144,7 +143,7 @@ const CostumePage = (props: any) => {
         effect: updatedOutfits.effect.costumeId,
       };
 
-      patchAvatarInfo(userId, data).then((res) => {
+      patchAvatarInfo(token, data).then((res) => {
         console.log(res.data.content);
       });
 

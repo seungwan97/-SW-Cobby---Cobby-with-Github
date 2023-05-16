@@ -24,7 +24,7 @@ const MyFunc = ({
   cntCostumes,
   cntQuests,
 }: // myNickName,
-  MyFuncProps) => {
+MyFuncProps) => {
   const router = useRouter();
 
   return (
@@ -36,7 +36,7 @@ const MyFunc = ({
           myLevel={myLevel}
           cntCostumes={cntCostumes}
           cntQuests={cntQuests}
-        // myNickName={myNickName}
+          // myNickName={myNickName}
         />
       </page.PageWrapper>
       <BottomNavBar />
@@ -46,32 +46,31 @@ const MyFunc = ({
 
 export default MyFunc;
 
-// export const getServerSideProps: GetServerSideProps<MyFuncProps> = async (
-//   context
-// ) => {
-//   const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
-//  const userId = "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
-//   // 닉네임, 깃허브url
-//   const res = await getNicknameAndGithubURL(userId);
+export const getServerSideProps: GetServerSideProps<MyFuncProps> = async (
+  context
+) => {
+  const token = context.req.headers.cookie?.replace("Authorization=", "");
+  // 닉네임, 깃허브url
+  const res = await getNicknameAndGithubURL(`${token}`);
 
-//   // 코비 정보 : 레벨, 갖고있는 코스튬 수, 달성한 퀘스트 수
-//   const cobbyInfo = await getAvatarInfo(userId);
+  // 코비 정보 : 레벨, 갖고있는 코스튬 수, 달성한 퀘스트 수
+  const cobbyInfo = await getAvatarInfo(`${token}`);
 
-//   let nickname = "";
-//   let githubUrl = "";
-//   let myLevel = 0;
-//   let cntCostumes = 0;
-//   let cntQuests = 0;
+  let nickname = "";
+  let githubUrl = "";
+  let myLevel = 0;
+  let cntCostumes = 0;
+  let cntQuests = 0;
 
-//   if (cobbyInfo.status === 200) {
-//     nickname = res.data.content.nickname;
-//     githubUrl = res.data.content.githubUrl;
-//     myLevel = cobbyInfo.data.content.level;
-//     cntCostumes = cobbyInfo.data.content.costumes.length;
-//     cntQuests = cobbyInfo.data.content.quests.length;
-//   }
+  if (cobbyInfo.status === 200) {
+    nickname = res.data.content.nickname;
+    githubUrl = res.data.content.githubUrl;
+    myLevel = cobbyInfo.data.content.level;
+    cntCostumes = cobbyInfo.data.content.costumes.length;
+    cntQuests = cobbyInfo.data.content.quests.length;
+  }
 
-//   return {
-//     props: { nickname, githubUrl, myLevel, cntCostumes, cntQuests },
-//   };
-// };
+  return {
+    props: { nickname, githubUrl, myLevel, cntCostumes, cntQuests },
+  };
+};

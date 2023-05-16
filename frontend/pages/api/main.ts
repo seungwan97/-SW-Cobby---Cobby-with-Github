@@ -15,11 +15,14 @@ export const getAvatarInfo = async (userId: string) => {
 
 // 코비 관련 정보 유형별 조회 (코스튬, 칭호, 도전과제)
 export const getInventoryItem = async (userId: string, itemType: string) => {
-  const response = await client.get(`${req}/avatars/inventories/${itemType}`, {
-    headers: {
-      Authorization: `${userId}`,
-    },
-  });
+  const response = await client.get(
+    `${req}/avatars/inventories/costumes/${itemType}`,
+    {
+      headers: {
+        Authorization: `${userId}`,
+      },
+    }
+  );
 
   return response;
 };
@@ -39,11 +42,10 @@ export const getMyCostumes = async (userId: string, itemType: string) => {
 };
 
 // 코비 관련 정보 수정
-export const patchAvatarInfo = async (userId: string, data: {}) => {
+export const patchAvatarInfo = async (token: string, data: {}) => {
   const response = await client.patch(`${req}/avatars`, data, {
     headers: {
-      //   Authorization: `Bearer ${accessToken}`,
-      userId: `${userId}`,
+      Authorization: token,
       "Content-Type": "application/json",
     },
   });
@@ -52,11 +54,10 @@ export const patchAvatarInfo = async (userId: string, data: {}) => {
 };
 
 // 도전과제 목록 조회
-export const getQuests = async (userId: string) => {
+export const getQuests = async (token: string) => {
   const response = await client.get(`${req}/quests/current`, {
     headers: {
-      //   Authorization: `Bearer ${accessToken}`,
-      userId: `${userId}`,
+      Authorization: token,
     },
   });
 
@@ -65,12 +66,7 @@ export const getQuests = async (userId: string) => {
 
 // 칭호 목록 전체조회
 export const getTitles = async () => {
-  const response = await client.get(`${req}/titles`, {
-    headers: {
-      //   Authorization: `Bearer ${accessToken}`,
-      //   userId: `${userId}`,
-    },
-  });
+  const response = await client.get(`${req}/titles`, {});
 
   return response;
 };
