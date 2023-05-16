@@ -56,10 +56,6 @@ public class AvatarCostumeServiceImpl implements AvatarCostumeService {
 
 		var avatarCostumes = avatarCostumeRepository.findAllByAvatar_AvatarId(userId);
 
-		if(avatarCostumes.isEmpty()) {
-			throw new BaseRuntimeException(HttpStatus.NOT_FOUND, "사용자가 보유한 코스튬이 없습니다.");
-		}
-
 		return avatarCostumes.stream()
 			.map(costume ->
 				AvatarCostumeGetResponse.builder()
@@ -74,7 +70,7 @@ public class AvatarCostumeServiceImpl implements AvatarCostumeService {
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + userId + ")"));
 
 		var avatarCostume = avatarCostumeRepository.findById(itemId)
-			.orElseThrow(() -> new IllegalArgumentException("코스튬 정보가 없습니다. (ID=" + itemId + ")"));
+			.orElseThrow(() -> new BaseRuntimeException(HttpStatus.NO_CONTENT, "코스튬 정보가 없습니다. (ID=" + itemId + ")"));
 
 		return AvatarCostumeGetResponse.builder()
 			.costume(avatarCostume.getCostume())
@@ -88,10 +84,6 @@ public class AvatarCostumeServiceImpl implements AvatarCostumeService {
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + userId + ")"));
 
 		var avatarCostumes = avatarCostumeRepository.findAllByAvatar_AvatarIdAndCostume_Category(avatar.getAvatarId(), CostumeCategory.valueOf(category));
-
-		if(avatarCostumes.isEmpty()) {
-			throw new NotFoundException();
-		}
 
 		return avatarCostumes.stream()
 			.map(costume ->

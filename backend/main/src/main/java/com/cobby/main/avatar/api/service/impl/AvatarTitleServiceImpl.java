@@ -50,10 +50,6 @@ public class AvatarTitleServiceImpl implements AvatarTitleService {
 
 		var avatarTitles = avatarTitleRepository.findAllByAvatar_AvatarId(avatarId);
 
-		if(avatarTitles.isEmpty()) {
-			throw new BaseRuntimeException(HttpStatus.NOT_FOUND, "사용자가 보유한 칭호가 없습니다.");
-		}
-
 		return avatarTitles.stream()
 			.map(title ->
 				AvatarTitleGetResponse.builder()
@@ -68,7 +64,7 @@ public class AvatarTitleServiceImpl implements AvatarTitleService {
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + userId + ")"));
 
 		var avatarTitle = avatarTitleRepository.findById(itemId)
-			.orElseThrow(() -> new IllegalArgumentException("칭호 정보가 없습니다. (ID=" + itemId + ")"));
+			.orElseThrow(() -> new BaseRuntimeException(HttpStatus.NO_CONTENT, "칭호 정보가 없습니다. (ID=" + itemId + ")"));
 
 		return AvatarTitleGetResponse.builder()
 			.title(avatarTitle.getTitle())
