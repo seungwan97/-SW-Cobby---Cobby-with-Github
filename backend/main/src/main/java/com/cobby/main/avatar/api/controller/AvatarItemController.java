@@ -6,15 +6,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cobby.main.avatar.api.dto.request.AvatarCostumePatchRequest;
 import com.cobby.main.avatar.api.dto.request.AvatarItemPostRequest;
@@ -49,7 +41,7 @@ public class AvatarItemController {
 	@Operation(summary = "아바타가 가진 코스튬 카테고리 별 조회", description = "코스튬의 특정 카테고리(머리 = HEAD, 몸통 = BODY, 효과 = EFFECT) 목록을 조회합니다.")
 	@GetMapping("/costumes/{itemType}")
 	public ResponseEntity<? extends BaseResponseBody> getAvatarCostumeByCategory(
-		@RequestHeader("userId")
+		@RequestAttribute("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId,
 		@PathVariable @NotBlank(message = "필수 입력 항목입니다. (HEAD / BODY / EFFECT)")
@@ -66,7 +58,7 @@ public class AvatarItemController {
 	@Operation(summary = "아바타가 가진 특정 타입 아이템 전체 조회", description = "아이템 종류(코스튬 = costume, 칭호 = title, 도전 과제 = quest)를 입력하면 해당 유저가 가진 특정 타입 아이템을 조회합니다.")
 	@GetMapping("/{itemType}")
 	public ResponseEntity<? extends BaseResponseBody> getAllAvatarItems(
-		@RequestHeader("userId")
+		@RequestAttribute("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId,
 		@PathVariable
@@ -87,7 +79,7 @@ public class AvatarItemController {
 	@Operation(summary = "#####인벤토리에 아이템(코스튬/칭호/도전 과제) 추가#####", description = "아이템 종류(코스튬 = costume, 칭호 = title, 도전 과제 = quest)와 그 아이템의 ID를 입력하면 해당 유저의 인벤토리에 추가합니다.")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<? extends BaseResponseBody> createAvatarItem(
-		@RequestHeader("userId")
+		@RequestAttribute("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId,
 		@RequestBody @Valid AvatarItemPostRequest itemInfo,
@@ -111,7 +103,7 @@ public class AvatarItemController {
 	@Operation(summary = "인벤토리에 새로운 코스튬 열어보기", description = "코스튬의 상태를 새로 획득한 코스튬에서 일반 코스튬 상태로 변경합니다.")
 	@PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<? extends BaseResponseBody> openAvatarItem(
-		@RequestHeader("userId")
+		@RequestAttribute("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId,
 		@RequestBody @Valid AvatarCostumePatchRequest costumeInfo) {

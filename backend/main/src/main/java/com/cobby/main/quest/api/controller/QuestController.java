@@ -95,7 +95,7 @@ public class QuestController {
 	@Operation(summary = "아바타 도전과제 목록 조회", description = "아바타의 현재 도전과제 목록을 조회합니다.")
 	@GetMapping(value = "/current")
 	public ResponseEntity<? extends BaseResponseBody> getAvatarCurrentQuests(
-		@RequestHeader("userId")
+		@RequestAttribute("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId
 	) {
@@ -111,7 +111,7 @@ public class QuestController {
 	@Operation
 	@GetMapping("/getItem/{questId}")
 	public ResponseEntity<? extends BaseResponseBody> getQuestItem(
-		@RequestHeader("userId")
+		@RequestAttribute("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 			String userId,
 		@PathVariable

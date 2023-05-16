@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,7 +41,7 @@ public class AvatarController {
 	@Operation(summary = "아바타 조회", description = "user ID로 아바타를 조회하는 메서드 입니다.")
 	@GetMapping
 	public ResponseEntity<? extends BaseResponseBody> getAvatar(
-		@RequestHeader("userId")
+		@RequestAttribute("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) throws JsonProcessingException {
 
@@ -57,7 +57,7 @@ public class AvatarController {
 	@PatchMapping
 	public ResponseEntity<? extends BaseResponseBody> updateAvatar(
 		@RequestBody AvatarPatchRequest avatarUpdateInfo,
-		@RequestHeader("userId")
+		@RequestAttribute("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) throws JsonProcessingException {
 
@@ -75,7 +75,7 @@ public class AvatarController {
 	@Operation(summary = "#####아바타 정보 초기화#####", description = "user ID에 해당하는 아바타를 초기화하는 메서드 입니다.")
 	@GetMapping("/reset")
 	public ResponseEntity<? extends BaseResponseBody> resetAvatar(
-		@RequestHeader("userId")
+		@RequestAttribute("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) throws JsonProcessingException {
 
@@ -93,7 +93,7 @@ public class AvatarController {
 	@Operation(summary = "#####아바타 정보 삭제#####", description = "user ID에 해당하는 아바타를 삭제하는 메서드 입니다.")
 	@DeleteMapping
 	public ResponseEntity<? extends BaseResponseBody> deleteAvatar(
-		@RequestHeader("userId")
+		@RequestAttribute("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) {
 
