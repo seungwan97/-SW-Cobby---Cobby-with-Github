@@ -1,15 +1,12 @@
 import styled from "styled-components";
 
 export const Contatiner = styled.div`
-  font-family: "DungGeunMo";
   position: absolute;
-  z-index: 100;
-  top: 27.5%;
-  left: 25%;
-  right: 25%;
-  width: 50%;
-  height: 200%;
-  border-radius: 30px 30px 0 0;
+  font-family: "DungGeunMo";
+  width : 100%;
+  height: 100%;
+  background-color: rgba(89, 89, 89, 0.5);  
+  z-index: 10;
 `;
 
 export const Modal = styled.div`

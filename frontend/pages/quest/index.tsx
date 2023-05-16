@@ -5,6 +5,8 @@ import { Fragment } from "react";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import QuestPage from "@/components/page/QuestPage/QuestPage";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { getQuests } from "../api/main";
 
 const DUMMY_DATA = [
   {
@@ -38,25 +40,31 @@ const DUMMY_DATA = [
 ];
 
 //QuestPage
-const QuestFunc = (props: any) => {
+const QuestFunc = ({
+  questData,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   // const router = useRouter(); // router.query.userId
   return (
     <Fragment>
       <page.PageWrapper>
-        <QuestPage QuestItemList={props.QuestItemList} />
+        <QuestPage questData={questData} />
       </page.PageWrapper>
       <BottomNavBar />
     </Fragment>
   );
 };
 
-export async function getStaticProps() {
-  // fetch data for a single meetup
+export default QuestFunc;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const token = context.req.headers.cookie?.replace("Authorization=", "");
+  const questRes = await getQuests(`${token}`);
+  const questData = questRes.data;
+  console.log(questData.content);
+
   return {
     props: {
-      QuestItemList: DUMMY_DATA,
+      questData: questData.content,
     },
   };
-}
-
-export default QuestFunc;
+};

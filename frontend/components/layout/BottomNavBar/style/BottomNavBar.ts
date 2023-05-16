@@ -3,12 +3,11 @@ import Link from "next/link";
 
 export const NavWrapper = styled.div`
   width: 100%;
-  height: 9%;
+  position: fixed;
   display: flex;
   justify-content: space-around;
-  background-color: #fafae7;
-  position: fixed;
   bottom: 0;
+  background-color: #fafae7;
 `;
 export const TextBox = styled.div<{ size: number }>`
   font-size: ${(props) => props.size}px;
@@ -19,6 +18,7 @@ export const TextBox = styled.div<{ size: number }>`
 export const NavItemWrapper = styled.div`
   width: 25%;
   height: auto;
+  padding: 5px;
   text-align: center;
 
   &:hover {
@@ -35,6 +35,9 @@ export const NavItemIcon = styled.img<{ imgSrc: string }>`
   padding-top: 10px;
   height: 30px;
   content: url(${(props) => props.imgSrc});
+  @media (max-width: 667px) {
+    height: 25px;
+  }
 `;
 
 export const CustomLink = styled(Link)``;
