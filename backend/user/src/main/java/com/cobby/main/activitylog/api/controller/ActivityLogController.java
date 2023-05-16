@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +52,7 @@ public class ActivityLogController {
 	@ApiDocumentResponse
 	@Operation(summary = "회원 연속 출석 조회", description = "금일 기준 사용자의 cobby 서비스 연속 출석 기록을 조회합니다.")
 	public ResponseEntity<? extends BaseResponseBody> getActivityLogInfo(
-		@RequestHeader("userId")
+		@RequestAttribute("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) {
 
@@ -66,7 +67,7 @@ public class ActivityLogController {
 	@ApiDocumentResponse
 	@Operation(summary = "회원 연속 커밋 조회", description = "금일 기준 사용자의 github 연속 커밋 기록을 조회합니다.")
 	public ResponseEntity<? extends BaseResponseBody> getActivityLogCommit(
-		@RequestHeader("userId")
+		@RequestAttribute("userId")
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) {
 

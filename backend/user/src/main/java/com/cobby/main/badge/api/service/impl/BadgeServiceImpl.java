@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.cobby.main.activitylog.api.dto.response.CommitLogResponse;
 import com.cobby.main.activitylog.api.service.ActivityLogService;
 import com.cobby.main.badge.api.dto.response.BadgeGetResponse;
 import com.cobby.main.badge.api.service.BadgeService;
 import com.cobby.main.common.exception.NotFoundException;
+import com.cobby.main.stat.db.repository.StatRepository;
 import com.cobby.main.user.db.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,7 @@ public class BadgeServiceImpl implements BadgeService {
 	private String mainUrl;
 	private final AmazonS3 amazonS3Client;
 	private final UserRepository userRepository;
+	private final StatRepository statRepository;
 	private final ActivityLogService activityLogService;
 
 	/*
@@ -46,7 +49,6 @@ public class BadgeServiceImpl implements BadgeService {
 	private String getCustome(String name){
 		log.info("s3 url : " + bucketName + "base64/"  + name + ".txt");
 		var custome = amazonS3Client.getObjectAsString(bucketName, "base64/"  + name + ".txt");
-		log.info("s3 url : " + custome);
 		return custome.toString();
 	}
 
@@ -55,8 +57,17 @@ public class BadgeServiceImpl implements BadgeService {
 	// 입고 있는 옷 가지고 오기 ...
 	private String getCharacter(){
 		var character = amazonS3Client.getObjectAsString(bucketName, "character/cobby.txt");
-
 		return character.toString();
+	}
+
+	private String getCharacterPng(){
+		var character = amazonS3Client.getObjectAsString(bucketName, "character/cobbyPng.txt");
+		return character.toString();
+	}
+
+	private String getFont(){
+		var character = amazonS3Client.getObjectAsString(bucketName, "character/DNFBitBitTTF.txt");
+		return "data:font/ttf;base64," + character.toString();
 	}
 
 	// 아바타 정보 lv, outfit
@@ -107,11 +118,76 @@ public class BadgeServiceImpl implements BadgeService {
 		return null;
 	}
 
-	private Long getCommitCnt(String nickname){
+	private CommitLogResponse getCommitCnt(String nickname){
 		var findUser = userRepository.findByNickname(nickname).orElseThrow(NotFoundException::new);
 		log.info(String.valueOf(findUser));
-		return activityLogService.getCommitActivityLog(findUser.getId()).getTodayCnt();
+		return activityLogService.getCommitActivityLog(findUser.getId());
 	}
+
+	private Long getStatCommitCnt(String id){
+		var findStat = statRepository.findById(id).orElseThrow(NotFoundException::new);
+		return findStat.getCommitCnt();
+	}
+
+	private String findById(String nickname){
+		var findUser = userRepository.findByNickname(nickname).orElseThrow(NotFoundException::new);
+		return findUser.getId();
+	}
+
+	// public String getSvg(String nickname){
+	// 	BadgeGetResponse badgeGetResponse = getAvatar(nickname);
+	// 	String body = "";
+	// 	String effect = "";
+	// 	String head = "";
+	//
+	// 	if(!badgeGetResponse.getBody().isEmpty()) body = getCustome(badgeGetResponse.getBody());
+	// 	if(!badgeGetResponse.getEffect().isEmpty()) effect = getCustome(badgeGetResponse.getEffect());
+	// 	if(!badgeGetResponse.getHead().isEmpty()) head = getCustome(badgeGetResponse.getHead());
+	//
+	// 	StringBuilder svg = new StringBuilder();
+	// 	svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"285\">\n")
+	// 		.append("\t<style>\n")
+	// 		.append("\t\t.cobby {\n")
+	// 		.append("\t\t\twidth: 130px;\n")
+	// 		.append("\t\t}\n")
+	// 		.append("\n")
+	// 		.append("\t\t.character {\n")
+	// 		.append("\t\t\twidth: 300px;\n")
+	// 		.append("\t\t\theight: 300px;\n")
+	// 		.append("\t\t}\n")
+	// 		.append("\n")
+	// 		.append("\t\t.info {\n")
+	// 		.append("\t\t\twidth: 300px;\n")
+	// 		.append("\t\t\tdisplay: flex;\n")
+	// 		.append("\t\t\tflex-direction: column;\n")
+	// 		.append("\t\t\talign-items: center;\n")
+	// 		.append("\t\t\tpadding: 50px;\n")
+	// 		.append("\t\t}\n")
+	// 		.append("\n")
+	// 		.append("\t\t.info_line {\n")
+	// 		.append("\t\t\tfont-size: 20px;\n")
+	// 		.append("\t\t\tfont-weight: bolder;\n")
+	// 		.append("\t\t\tfill: #ffffff;\n")
+	// 		.append("\t\t\tmargin-bottom: 20px;\n")
+	// 		.append("\t\t}\n")
+	// 		.append("\t</style>\n")
+	// 		.append("\n")
+	// 		.append("\t<rect class=\"card\" x=\"0\" y=\"0\" />\n")
+	// 		.append("\n")
+	// 		.append("\t<image href=\"data:image/gif;base64," + getCharacter() + "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"cobby\" />\n")
+	// 		.append("\t<image href=\"data:image/gif;base64," + body + "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"body\" />\n")
+	// 		.append("\t<image href=\"data:image/gif;base64," + effect + "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"effect\" />\n")
+	// 		.append("\t<image href=\"data:image/gif;base64," + head +  "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"head\" />\n")
+	// 		.append("\n")
+	// 		.append("\t<g class=\"info\">\n")
+	// 		.append("\t\t<text class=\"info_line\" x=\"500\" y=\"100\" text-anchor=\"middle\">" + nickname + "'s COBBY</text>\n")
+	// 		.append("\t\t<text class=\"info_line\" x=\"500\" y=\"175\" text-anchor=\"middle\">LV " + badgeGetResponse.getLevel() + " </text>\n")
+	// 		.append("\t\t<text class=\"info_line\" x=\"500\" y=\"250\" text-anchor=\"middle\">Today's Commits : " + getCommitCnt(nickname).getTodayCnt() +"</text>\n")
+	// 		.append("\t</g>\n")
+	// 		.append("</svg>\n");
+	// 	return svg.toString();
+	// }
+
 
 	public String getSvg(String nickname){
 		BadgeGetResponse badgeGetResponse = getAvatar(nickname);
@@ -124,54 +200,85 @@ public class BadgeServiceImpl implements BadgeService {
 		if(!badgeGetResponse.getHead().isEmpty()) head = getCustome(badgeGetResponse.getHead());
 
 		StringBuilder svg = new StringBuilder();
-		svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"500\" height=\"350\" viewBox=\"0 0 700 350\">\n")
-			.append("\t<style>\n")
-			.append("\t\t.card {\n")
-			.append("\t\t\tstroke: black;\n")
-			.append("\t\t\tstroke-width: 1px;\n")
-			.append("\t\t\tfill: #333333;\n")
-			.append("\t\t\tdisplay: flex;\n")
-			.append("\t\t\talign-items: center;\n")
-			.append("\t\t\twidth: 700px;\n")
-			.append("\t\t\theight: 350px;\n")
-			.append("\t\t}\n")
-			.append("\n")
-			.append("\t\t.character {\n")
-			.append("\t\t\twidth: 300px;\n")
-			.append("\t\t\theight: 300px;\n")
-			.append("\t\t}\n")
-			.append("\n")
-			.append("\t\t.info {\n")
-			.append("\t\t\twidth: 300px;\n")
-			.append("\t\t\tdisplay: flex;\n")
-			.append("\t\t\tflex-direction: column;\n")
-			.append("\t\t\talign-items: center;\n")
-			.append("\t\t\tpadding: 50px;\n")
-			.append("\t\t}\n")
-			.append("\n")
-			.append("\t\t.info_line {\n")
-			.append("\t\t\tfont-size: 20px;\n")
-			.append("\t\t\tfont-weight: bolder;\n")
-			.append("\t\t\tfill: #ffffff;\n")
-			.append("\t\t\tmargin-bottom: 20px;\n")
-			.append("\t\t}\n")
-			.append("\t</style>\n")
-			.append("\n")
-			.append("\t<rect class=\"card\" x=\"0\" y=\"0\" />\n")
-			.append("\n")
-			.append("\t<image href=\"data:image/gif;base64," + getCharacter() + "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"cobby\" />\n")
-			.append("\t<image href=\"data:image/gif;base64," + body + "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"body\" />\n")
-			.append("\t<image href=\"data:image/gif;base64," + effect + "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"effect\" />\n")
-			.append("\t<image href=\"data:image/gif;base64," + head +  "\" x=\"0\" y=\"0\" width=\"300px\" alt=\"head\" />\n")
-			.append("\n")
-			.append("\t<g class=\"info\">\n")
-			.append("\t\t<text class=\"info_line\" x=\"500\" y=\"100\" text-anchor=\"middle\">" + nickname + "'s COBBY</text>\n")
-			.append("\t\t<text class=\"info_line\" x=\"500\" y=\"175\" text-anchor=\"middle\">LV " + badgeGetResponse.getLevel() + " </text>\n")
-			.append("\t\t<text class=\"info_line\" x=\"500\" y=\"250\" text-anchor=\"middle\">Today's Commits : " + getCommitCnt(nickname) +"</text>\n")
-			.append("\t</g>\n")
-			.append("</svg>\n");
+		svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"285\">\n")
+			.append("<style>\n")
+			.append("    .cobby { width: 130px; }\n")
+			.append("    .info {\n")
+			.append("        width: 300px;\n")
+			.append("        display: flex;\n")
+			.append("        flex-direction: column;\n")
+			.append("        align-items: center;\n")
+			.append("        padding: 50px;\n")
+			.append("    }\n")
+			.append("    .info_line {\n")
+			.append("        font-family: 'Cobby', sans-serif;\n")
+			.append("        font-size: 20px;\n")
+			.append("        font-weight: bolder;\n")
+			.append("        fill: #ffffff;\n")
+			.append("        margin-bottom: 20px;\n")
+			.append("    }\n")
+			.append("    @font-face {\n")
+			.append("        font-family: 'Cobby';\n")
+			.append("        src: url('"+ getFont() + "');\n")
+			.append("    }\n")
+			.append("    .line {\n")
+			.append("        letter-spacing: 1px;\n")
+			.append("        font-family: 'Cobby';\n")
+			.append("        font-size: 11px;\n")
+			.append("        fill: #FFFFF8;\n")
+			.append("    }\n")
+			.append("    .text_info {\n")
+			.append("        letter-spacing: 2px;\n")
+			.append("        font-size: 35px;\n")
+			.append("        fill: #FEEBB6;\n")
+			.append("    }\n")
+			.append("    .text_info_0 {\n")
+			.append("        letter-spacing: 2px;\n")
+			.append("        font-size: 35px;\n")
+			.append("    }\n")
+			.append("    .text_info_1 {\n")
+			.append("        letter-spacing: 2px;\n")
+			.append("        font-size: 16px;\n")
+			.append("    }\n")
+			.append("    .text_info_2 {\n")
+			.append("        letter-spacing: 2px;\n")
+			.append("        font-size: 35px;\n")
+			.append("        fill: #FEEBB6;\n")
+			.append("    }\n")
+			.append("</style>\n")
+			.append("<rect class=\"card\" x=\"0\" y=\"0\" />\n")
+			.append("<image href=\"data:image/png;base64," + getCharacterPng() + "\" x=\"0\" y=\"0\" alt=\"cobby\" />\n")
+			.append("<image class='cobby' href=\"data:image/gif;base64," + getCharacter() + "\" x=\"93\" y=\"91\" width=\"300px\" alt=\"cobby\" />\n")
+			.append("<image class='cobby' href=\"data:image/gif;base64," + body + "\" x=\"93\" y=\"91\" width=\"300px\" alt=\"head\" />\n")
+			.append("<image class='cobby' href=\"data:image/gif;base64," + effect + "\" x=\"93\" y=\"91\" width=\"300px\" alt=\"body\" />\n")
+			.append("<image class='cobby' href=\"data:image/gif;base64," + head + "\" x=\"93\" y=\"91\" width=\"300px\" alt=\"effect\" />\n")
+			.append("<g class=\"info\">\n")
+			.append("    <text class=\"info_line text_info\" x=\"270\" y=\"90\" text-anchor=\"left\">\n")
+			.append("       " + nickname + "'s \n")
+			.append("    </text>\n")
+			.append("    <text class=\"info_line text_info_0\" x=\"270\" y=\"130\" text-anchor=\"left\">\n")
+			.append("       Cobby\n")
+			.append("    </text>\n")
+			.append("    <text class=\"info_line text_info_1\" x=\"270\" y=\"170\" text-anchor=\"left\">\n")
+			.append("      Total Commits : " + getStatCommitCnt(findById(nickname)) + "\n")
+			.append("    </text>\n")
+			.append("    <text class=\"info_line text_info_1\" x=\"270\" y=\"195\" text-anchor=\"left\">\n")
+			.append("      Today's Commits : " + getCommitCnt(nickname).getTodayCnt() + "\n")
+			.append("    </text>\n")
+			.append("    <text class=\"info_line text_info_1\" x=\"270\" y=\"220\" text-anchor=\"left\">\n")
+			.append("      Consecutive Commits : " + getCommitCnt(nickname).getRelayCnt() + "\n")
+			.append("    </text>\n")
+			.append("    <text class=\"info_line text_info_2\" x=\"108\" y=\"60\" text-anchor=\"left\">\n")
+			.append("      Lv. 12\n")
+			.append("    </text>\n")
+			.append("	 <text class=\"line\" x=\"77\" y=\"256\" text-anchor=\"left\">\n")
+			.append("  		<a href=\"https://cobby-play.com\" target=\"_blank\">\n")
+			.append("    	@ https://cobby-play.com\n")
+			.append("  	</a>\n")
+			.append("</text>\n")
+			.append("  </g>\n")
+			.append("</svg>");
 		return svg.toString();
 	}
-
 
 }
