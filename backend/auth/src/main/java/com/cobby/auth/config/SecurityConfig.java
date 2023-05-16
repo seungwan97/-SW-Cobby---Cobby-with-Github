@@ -57,6 +57,8 @@ public class SecurityConfig {
                 // Token 검증하는 페이지와 메인페이지는 인가 허가하며, 그 외엔 모두 인가가 필요
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/user/swagger").permitAll()
+                .requestMatchers("/api/main/swagger").permitAll()
                 .requestMatchers("/").permitAll()
                 .and()
                 // 로그인 인증 로직 수행
