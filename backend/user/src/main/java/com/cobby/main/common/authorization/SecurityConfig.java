@@ -46,7 +46,9 @@ public class SecurityConfig {
                 .requestMatchers("/api/user/health").permitAll()
                 .requestMatchers("/api/user/users").permitAll()
                 .requestMatchers("/api/user/activityLog/**").permitAll()
-                .requestMatchers("/api/user/swagger").permitAll()
+                .requestMatchers("/api/user/swagger-ui/**").permitAll()
+                .requestMatchers("/api/user/api-docs/**").permitAll()
+                .requestMatchers("/api/user/swagger/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(customAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
