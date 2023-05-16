@@ -57,9 +57,9 @@ const QuestFunc = ({
 export default QuestFunc;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+  const token = "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
 
-  const questRes = await getQuests(userId);
+  const questRes = await getQuests(token);
   const questData = questRes.data;
   console.log(questData.content);
 
