@@ -14,12 +14,12 @@ export const getAvatarInfo = async (userId: string) => {
 };
 
 // 코비 관련 정보 유형별 조회 (코스튬, 칭호, 도전과제)
-export const getInventoryItem = async (userId: string, itemType: string) => {
+export const getInventoryItem = async (token: string, itemType: string) => {
   const response = await client.get(
     `${req}/avatars/inventories/costumes/${itemType}`,
     {
       headers: {
-        Authorization: `${userId}`,
+        Authorization: `${token}`,
       },
     }
   );
@@ -28,12 +28,12 @@ export const getInventoryItem = async (userId: string, itemType: string) => {
 };
 
 // 사용자가 가진 코스튬 카테고리별 조회 (HEAD, BODY, EFFECT)
-export const getMyCostumes = async (userId: string, itemType: string) => {
+export const getMyCostumes = async (token: string, itemType: string) => {
   const response = await client.get(
     `${req}/avatars/inventories/costumes/${itemType}`,
     {
       headers: {
-        Authorization: `${userId}`,
+        Authorization: `${token}`,
       },
     }
   );
