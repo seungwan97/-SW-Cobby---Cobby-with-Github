@@ -49,23 +49,24 @@ const MainFunc = ({
 export default MainFunc;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const userId = context.req.headers.cookie?.replace("Authorization=", "");
+  // const userId = context.req.headers.cookie?.split("; ")[4].replace("Authorization=", "");
+  const userId = "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
   console.log(userId);
   const token = "token";
 
-  const nicknameRes = await getNicknameAndGithubURL(`${userId}`);
+  const nicknameRes = await getNicknameAndGithubURL(userId);
   const nicknameData = nicknameRes.data;
 
-  const statusRes = await getStatus(`${userId}`);
+  const statusRes = await getStatus(userId);
   const statusData = statusRes.data;
 
-  const commitRes = await getCommitInfo(`${userId}`);
+  const commitRes = await getCommitInfo(userId);
   const commitData = commitRes.data;
 
-  const attendanceRes = await getAttendanceInfo(`${userId}`);
+  const attendanceRes = await getAttendanceInfo(userId);
   const attendanceData = attendanceRes.data;
 
-  const avatarRes = await getAvatarInfo(`${userId}`);
+  const avatarRes = await getAvatarInfo(userId);
   const avatarData = avatarRes.data;
 
   return {

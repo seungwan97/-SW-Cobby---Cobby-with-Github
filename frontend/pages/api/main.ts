@@ -7,7 +7,6 @@ export const getAvatarInfo = async (userId: string) => {
   const response = await client.get(`${req}/avatars`, {
     headers: {
       Authorization: `${userId}`,
-      userId: `${userId}`,
     },
   });
 
@@ -18,8 +17,7 @@ export const getAvatarInfo = async (userId: string) => {
 export const getInventoryItem = async (userId: string, itemType: string) => {
   const response = await client.get(`${req}/avatars/inventories/${itemType}`, {
     headers: {
-      //   Authorization: `Bearer ${accessToken}`,
-      userId: `${userId}`,
+      Authorization: `${userId}`,
     },
   });
 
@@ -32,8 +30,7 @@ export const getMyCostumes = async (userId: string, itemType: string) => {
     `${req}/avatars/inventories/costumes/${itemType}`,
     {
       headers: {
-        //   Authorization: `Bearer ${accessToken}`,
-        userId: `${userId}`,
+        Authorization: `${userId}`,
       },
     }
   );
@@ -79,10 +76,10 @@ export const getTitles = async () => {
 };
 
 // 카테고리별 코스튬 아이템 전체 목록 조회
-export const getAllItemList = async (category: string) => {
+export const getAllItemList = async (category: string, token: string) => {
   const response = await client.get(`${req}/costumes/${category}`, {
     headers: {
-      //   Authorization: `Bearer ${accessToken}`,
+      Authorization: token,
     },
   });
 

@@ -34,10 +34,10 @@ const CostumePage = (props: any) => {
   // 나의 코비의 outfits 를 불러오기
   useEffect(() => {
     const getCobbyOutfits = async () => {
-      const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+      const token = "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
 
       try {
-        const res = await getAvatarInfo(userId);
+        const res = await getAvatarInfo(token);
         const cobbyOutfits = res.data.content.outfits;
 
         setOutfits(cobbyOutfits);
@@ -72,17 +72,17 @@ const CostumePage = (props: any) => {
           const nextState = state.head
             ? { ...state, head: null }
             : {
-                baseCobby: newImgReq(
-                  "/Character/Cobby.gif"
-                ),
-                head: newImgReq(updatedOutfits.head.gifUrl),
-                body: state.body
-                  ? newImgReq(updatedOutfits.body.gifUrl)
-                  : null,
-                effect: state.effect
-                  ? newImgReq(updatedOutfits.effect.gifUrl)
-                  : null,
-              };
+              baseCobby: newImgReq(
+                "/Character/Cobby.gif"
+              ),
+              head: newImgReq(updatedOutfits.head.gifUrl),
+              body: state.body
+                ? newImgReq(updatedOutfits.body.gifUrl)
+                : null,
+              effect: state.effect
+                ? newImgReq(updatedOutfits.effect.gifUrl)
+                : null,
+            };
           return nextState;
         });
       } else if (itemInfo.category === "BODY") {
@@ -92,17 +92,17 @@ const CostumePage = (props: any) => {
           const nextState = state.body
             ? { ...state, body: null }
             : {
-                baseCobby: newImgReq(
-                  "/Character/Cobby.gif"
-                ),
-                head: state.head
-                  ? newImgReq(updatedOutfits.head.gifUrl)
-                  : null,
-                body: newImgReq(updatedOutfits.body.gifUrl),
-                effect: state.effect
-                  ? newImgReq(updatedOutfits.effect.gifUrl)
-                  : null,
-              };
+              baseCobby: newImgReq(
+                "/Character/Cobby.gif"
+              ),
+              head: state.head
+                ? newImgReq(updatedOutfits.head.gifUrl)
+                : null,
+              body: newImgReq(updatedOutfits.body.gifUrl),
+              effect: state.effect
+                ? newImgReq(updatedOutfits.effect.gifUrl)
+                : null,
+            };
           return nextState;
         });
       } else if (itemInfo.category === "EFFECT") {
@@ -112,25 +112,25 @@ const CostumePage = (props: any) => {
           const nextState = state.effect
             ? { ...state, effect: null }
             : {
-                baseCobby: newImgReq(
-                  "/Character/Cobby.gif"
-                ),
-                head: state.head
-                  ? newImgReq(updatedOutfits.head.gifUrl)
-                  : null,
-                body: state.body
-                  ? newImgReq(updatedOutfits.body.gifUrl)
-                  : null,
-                effect: newImgReq(
-                  updatedOutfits.effect.gifUrl
-                ),
-              };
+              baseCobby: newImgReq(
+                "/Character/Cobby.gif"
+              ),
+              head: state.head
+                ? newImgReq(updatedOutfits.head.gifUrl)
+                : null,
+              body: state.body
+                ? newImgReq(updatedOutfits.body.gifUrl)
+                : null,
+              effect: newImgReq(
+                updatedOutfits.effect.gifUrl
+              ),
+            };
           return nextState;
         });
       }
 
       // 코비 정보 수정
-      const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+      const userId = "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
       const data = {
         head: updatedOutfits.head.costumeId,
         body: updatedOutfits.body.costumeId,

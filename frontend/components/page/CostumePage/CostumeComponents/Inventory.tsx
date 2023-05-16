@@ -75,16 +75,16 @@ const Inventory = (props: any) => {
 
   // 사용자가 보유한 아이템 조회하자
   useEffect(() => {
-    const userId = "9302629d-ae6a-43b6-a965-996d5429783c";
+    const token = "Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmZDJkMDlmNC1lOTA0LTQyZDMtOTQwMy0wMzJkODE0ZDVhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0MjUxOTM0LCJleHAiOjE2ODQyNTU1MzR9.p9miuyHDFwDG3ImN31G17LfapE3Y17ZM2YpNaeq9jG0";
 
     const getMyItems = async () => {
       // 내가 보유한 HEAD 코스튬 목록 불러오기
-      const resMyHEAD = await getMyCostumes(userId, "HEAD");
+      const resMyHEAD = await getMyCostumes(token, "HEAD");
       // 내가 보유한 BODY 코스튬 목록 불러오기
-      const resMyBODY = await getMyCostumes(userId, "BODY");
+      const resMyBODY = await getMyCostumes(token, "BODY");
       // 내가 보유한 EFFECT 코스튬 목록 불러오기
       const resMyEFFECT = await getMyCostumes(
-        userId,
+        token,
         "EFFECT"
       );
 
