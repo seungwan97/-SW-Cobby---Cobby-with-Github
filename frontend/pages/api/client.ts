@@ -11,8 +11,8 @@ const port = [15010, 15020, 15030, 15040, 15050];
 client.defaults.url = "http://localhost:3000";
 
 // 배포 서버 용
-client.defaults.baseURL = `https://cobby-play.com`;
-// client.defaults.baseURL = `https://k8b201.p.ssafy.io`;
+// client.defaults.baseURL = `https://cobby-play.com`;
+client.defaults.baseURL = `https://k8b201.p.ssafy.io`;
 
 // client.defaults.url = "https://cobby-play.com/";
 
