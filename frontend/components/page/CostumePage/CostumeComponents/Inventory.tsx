@@ -27,6 +27,11 @@ const Inventory = (props: any) => {
   const handleItemClick = (itemInfo: {}) => {
     // 클릭한 아이템의 정보를 상위 컴포넌트로 전달
     props.onItemClick(itemInfo);
+    console.log(
+      "CostumePage 컴포넌트로 ",
+      itemInfo,
+      " 전달했습니다."
+    );
   };
 
   const handleTypeClick = (typeName: string) => {

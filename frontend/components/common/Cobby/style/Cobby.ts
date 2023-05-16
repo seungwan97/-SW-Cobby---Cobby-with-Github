@@ -50,7 +50,7 @@ export const CobbyEffectItem = styled.img`
   height: 180px;
   left: 50%;
   transform: translate(-50%);
-  z-index: 1;
+  z-index: -1;
 
   @media (max-height: 667px) {
     width: 150px;
