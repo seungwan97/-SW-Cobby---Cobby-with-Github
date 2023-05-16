@@ -39,6 +39,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
         }
         else {
+
             String token = request.getHeader("Authorization").substring(7);   // 헤더의 토큰 파싱 (Bearer 제거)
 
             log.info("Header - (key:Authorization, value:userId) = {}", token);

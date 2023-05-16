@@ -18,7 +18,8 @@ public class JwtUtil {
         log.info("Jwt Util 생성 getUid() 실행");
 
         var encodeSecret = Base64.getEncoder().encodeToString(secret.getBytes());
-        log.info("secret Key Base64 인코딩");
+
+        log.info("3. secret Key Base64 인코딩 = {}", encodeSecret);
 
         return Jwts.parserBuilder().setSigningKey(encodeSecret).build().parseClaimsJws(token).getBody().getSubject();
     }
