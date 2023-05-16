@@ -47,7 +47,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             log.info("Header - (key:Authorization, value:userId) = {}", token);
             try {
                 String userId = jwtUtil.getUid(token);
-                log.info("획득한 userId = " + userId)
+                log.info("획득한 userId = " + userId);
                 addAuthorizationHeaders(request, userId);
 
                 Authentication auth = getAuthentication(userId);
