@@ -3,7 +3,7 @@ import { colors } from "@/styles/colors-style";
 import { keyframes } from "@emotion/react";
 import Image from "next/image";
 
-export const ImageWrapper = styled.div`
+export const ImageWrapper = styled.div<{ select: boolean; check: boolean }>`
   position: relative;
   border-radius: 10px;
   display: flex;
@@ -23,25 +23,23 @@ export const ImageWrapper = styled.div`
   }
 
   ${(props) =>
-    !props.selected &&
+    !props.select &&
     css`
       &:before {
         content: "";
         position: absolute;
         width: 100%;
         height: 100%;
-        background-image: url("/lock.png");
         background-position: center;
         background-repeat: no-repeat;
         background-size: 50% auto;
       }
-
-      background-color: ${colors.MainBlackColor};
+      background-color: #b1b1b1;
       pointer-events: none;
     `}
 
   ${(props) =>
-    props.checked &&
+    props.check &&
     css`
       &:before {
         content: "";
@@ -54,12 +52,87 @@ export const ImageWrapper = styled.div`
         background-size: 70% auto;
       }
 
-      border: 2px solid ${colors.MainBlackColor};
-      background-color: ${colors.ItemBoxHoveredColor};
+      // border: 2px solid ${colors.MainBlackColor};
+      // background-color: ${colors.ItemBoxHoveredColor};
       pointer-events: none;
     `}
 
     @media (max-width: 767px) {
+    width: 55px;
+    height: 55px;
+
+    @media (max-height: 667px) {
+      width: 55px;
+      height: 55px;
+    }
+  }
+`;
+
+export const Filter = styled.div<{ select: boolean }>`
+  position: absolute;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+
+  ${(props) =>
+    !props.select &&
+    css`
+      &:before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 50% auto;
+      }
+      opacity: 0.5;
+      background-color: black;
+      pointer-events: none;
+    `}
+
+  @media (max-width: 767px) {
+    width: 55px;
+    height: 55px;
+
+    @media (max-height: 667px) {
+      width: 55px;
+      height: 55px;
+    }
+  }
+`;
+
+export const LockFilter = styled.div<{ select: boolean }>`
+  position: absolute;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+
+  ${(props) =>
+    !props.select &&
+    css`
+      &:before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: url("/lock.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 50% auto;
+      }
+      pointer-events: none;
+    `}
+
+  @media (max-width: 767px) {
     width: 55px;
     height: 55px;
 

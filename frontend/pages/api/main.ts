@@ -64,6 +64,17 @@ export const getQuests = async (token: string) => {
   return response;
 };
 
+// 도전과제 아이템 수령
+export const getQuestItem = async (token: string, questId: number) => {
+  const response = await client.get(`${req}/quests/getItem/${questId}`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+
+  return response;
+};
+
 // 칭호 목록 전체조회
 export const getTitles = async () => {
   const response = await client.get(`${req}/titles`, {});

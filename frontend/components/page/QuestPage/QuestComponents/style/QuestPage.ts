@@ -71,12 +71,28 @@ export const ConfirmButtonWrapper = styled.div`
   width: 100%;
 `;
 
-export const ConfirmButton = styled.button<{ color: string }>`
+export const ConfirmButton = styled.button<{
+  color: string;
+  cursor: string;
+  width: number;
+  height: number;
+  transition: string;
+  x: number;
+}>`
   display: inline-block;
   width: 70%;
   height: 35px;
   border: none;
   background-color: ${(props) => props.color};
+  :hover {
+    cursor: ${(props) => props.cursor};
+    width: ${(props) => props.width + props.x}%;
+    height: ${(props) => props.height + props.x}px;
+    transition: ${(props) => props.transition}s;
+  }
+  :active {
+    background-color: #f2f2f2;
+  }
 `;
 
 export const CustomProgressBar = styled(ProgressBar)`

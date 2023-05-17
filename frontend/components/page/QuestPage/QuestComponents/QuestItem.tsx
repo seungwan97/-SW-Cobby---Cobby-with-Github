@@ -37,7 +37,10 @@ const QuestItem = (props: Props) => {
             />
             <TextBox size={20} content={`${questData.progress}%`} />
           </style.ProgressWrapper>
-          <QuestConfirmButton progress={parseInt(`${questData.progress}`)} />
+          <QuestConfirmButton
+            questId={parseInt(`${questData.questId}`)}
+            progress={parseInt(`${questData.progress}`)}
+          />
         </style.ColumContentWrapper>
         <style.ImageWrapper>
           <style.CustomImage
