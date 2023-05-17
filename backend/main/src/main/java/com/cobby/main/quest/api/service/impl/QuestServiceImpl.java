@@ -261,7 +261,7 @@ public class QuestServiceImpl implements QuestService {
 			OkHttpClient client = new OkHttpClient();
 
 			Request.Builder builder = new Request.Builder()
-				.url(USER_SERVER + "/activityLog/" + kind)
+				.url(USER_SERVER + "/activityLog/" + kind + "/server")
 				.addHeader("userId", userId);
 
 			Request request = builder.build();
