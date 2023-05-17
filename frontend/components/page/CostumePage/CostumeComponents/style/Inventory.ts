@@ -46,7 +46,12 @@ export const InventoryBox = styled.div`
   overflow-y: scroll;
   padding: 15px;
   justify-items: center;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
   & > * {
     width: 100%;
   }

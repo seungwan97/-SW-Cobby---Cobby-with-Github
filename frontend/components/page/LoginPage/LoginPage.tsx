@@ -28,7 +28,6 @@ const LoginPage = () => {
       </style.LoginPageContent>
       <style.LoginBtnMargin />
       <GithubLoginButton />
-      <BottomNavBar />
     </style.LoginPageWrapper>
   );
 };
