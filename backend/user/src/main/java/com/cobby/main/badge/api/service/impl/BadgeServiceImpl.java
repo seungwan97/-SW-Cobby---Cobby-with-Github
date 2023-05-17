@@ -142,7 +142,8 @@ public class BadgeServiceImpl implements BadgeService {
 		if(!badgeGetResponse.getHead().isEmpty()) head = getCustome(badgeGetResponse.getHead());
 		
 		StringBuilder svg = new StringBuilder();
-		svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"285\">\n")
+		svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"600\" height=\"285\">\n")
+			.append("<a xlink:href=\"https://cobby-play.com\">\n")
 			.append("<style>\n")
 			.append("    .cobby { width: 130px; }\n")
 			.append("    .info {\n")
@@ -222,11 +223,10 @@ public class BadgeServiceImpl implements BadgeService {
 			.append("      Lv. " + badgeGetResponse.getLevel() + "\n")
 			.append("    </text>\n")
 			.append("	 <text class=\"line\" x=\"77\" y=\"256\" text-anchor=\"left\">\n")
-			.append("  		<a href=\"https://cobby-play.com\" target=\"_blank\">\n")
 			.append("    	@ https://cobby-play.com\n")
-			.append("  	</a>\n")
 			.append("</text>\n")
 			.append("  </g>\n")
+			.append("</a>\n")
 			.append("</svg>");
 		return svg.toString();
 	}
