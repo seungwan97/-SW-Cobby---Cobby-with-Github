@@ -214,7 +214,7 @@ public class BadgeServiceImpl implements BadgeService {
 			.append("      Consecutive Commits : " + getCommitCnt(nickname).getRelayCnt() + "\n")
 			.append("    </text>\n")
 			.append("    <text class=\"info_line text_info_2\" x=\"108\" y=\"60\" text-anchor=\"left\">\n")
-			.append("      Lv. 12\n")
+			.append("      Lv. " + badgeGetResponse.getLevel() + "\n")
 			.append("    </text>\n")
 			.append("	 <text class=\"line\" x=\"77\" y=\"256\" text-anchor=\"left\">\n")
 			.append("  		<a href=\"https://cobby-play.com\" target=\"_blank\">\n")
