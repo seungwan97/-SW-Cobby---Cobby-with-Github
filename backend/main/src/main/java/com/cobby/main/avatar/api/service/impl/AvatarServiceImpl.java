@@ -138,7 +138,7 @@ public class AvatarServiceImpl implements AvatarService {
 
 	private Avatar addInitialExp(Avatar newAvatar, Long initExp) {
 
-		var initLevel = levelTableRepository.findTopByNextExpIsLessThanEqual(initExp.intValue())
+		var initLevel = levelTableRepository.findTopByNextExpIsLessThanEqualOOrderByLevelDesc(initExp.intValue())
 			.orElseThrow(() -> new IllegalArgumentException("초기 경험치보다 작은 레벨이 존재하지 않습니다."));
 
 		return newAvatar.toBuilder()
