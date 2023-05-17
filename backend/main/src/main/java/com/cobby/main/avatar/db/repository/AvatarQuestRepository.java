@@ -15,5 +15,5 @@ import com.cobby.main.avatar.db.entity.AvatarQuest;
 public interface AvatarQuestRepository extends JpaRepository<AvatarQuest, Long> {
 	List<AvatarQuest> findAllByAvatar_AvatarId(String avatarId);
 
-	Optional<AvatarQuest> findByQuest_QuestId(Long questId);
+	Optional<AvatarQuest> findByAvatar_AvatarIdAndQuest_QuestId(String avatarId, Long questId);
 }

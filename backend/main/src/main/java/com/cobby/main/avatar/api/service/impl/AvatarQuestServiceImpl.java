@@ -37,6 +37,10 @@ public class AvatarQuestServiceImpl implements AvatarQuestService {
 			.orElseThrow(() -> new IllegalArgumentException("아이템 정보가 없습니다. (type=" +
 				itemInfo.itemType() + ", ID=" + itemInfo.itemId() + ")"));
 
+		avatarQuestRepository.findByAvatar_AvatarIdAndQuest_QuestId(avatarId, quest.getQuestId())
+			.ifPresent((x) -> {
+				throw new IllegalArgumentException("이미 클리어한 퀘스트입니다. (ID=" + quest.getQuestId() + ")");});
+
 		var avatarQuest = AvatarQuest.builder()
 			.avatar(avatar)
 			.quest(quest)
@@ -68,7 +72,7 @@ public class AvatarQuestServiceImpl implements AvatarQuestService {
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + userId + ")"));
 
 		var avatarQuest = avatarQuestRepository.findById(itemId)
-			.orElseThrow(() -> new BaseRuntimeException(HttpStatus.NO_CONTENT, "코스튬 정보가 없습니다. (ID=" + itemId + ")"));
+			.orElseThrow(() -> new BaseRuntimeException(HttpStatus.NO_CONTENT, "퀘스트 정보가 없습니다. (ID=" + itemId + ")"));
 
 		return AvatarQuestGetResponse.builder()
 			.quest(avatarQuest.getQuest())
