@@ -1,6 +1,7 @@
 package com.cobby.main.user.api.service.impl;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.util.XMLResourceDescriptor;
@@ -24,6 +25,8 @@ import com.cobby.main.user.api.service.UserService;
 import com.cobby.main.user.db.entity.State;
 import com.cobby.main.user.db.entity.User;
 import com.cobby.main.user.db.repository.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +51,8 @@ public class UserServiceImpl implements UserService {
 	private final ActivityLogRepository activityLogRepository;
 
 	private final KafkaTemplate<String, String> kafkaTemplate;
+
+	private final ObjectMapper objectMapper;
 
 	@Override
 	public UserMainResponse getUserInfo(String userId) {
@@ -112,10 +117,11 @@ public class UserServiceImpl implements UserService {
 
 				var user1 = userRepository.findById(userPostRequest.userId()).orElseThrow(NotFoundException::new);
 
+				var commitCnt = 0L;
 				// 새로운 사용자의 통계 정보를 생성합니다.
 				var stat = Stat.builder()
 					.user(user1)
-					.commitCnt(getStatList(userPostRequest, 5))
+					.commitCnt((commitCnt = getStatList(userPostRequest, 5)))
 					.starCnt(getStatList(userPostRequest, 3))
 					.prCnt(getStatList(userPostRequest, 7))
 					.followerCnt(/*getFollower(userPostRequest)*/0L)
@@ -143,13 +149,29 @@ public class UserServiceImpl implements UserService {
 				statRepository.save(stat);
 
 				// 이후 user 정보를 메시지 큐에 보냅니다.
-				var res = sendUserId(user.getId());
+				var res = sendUserInfo(user.getId(), commitCnt);
 				log.info("Sending message: " + res);
 			});
 	}
 
-	private String sendUserId(String id) {
-		kafkaTemplate.send(KAFKA_TOPIC, id);
+	private String sendUserInfo(String id, Long commitCnt) {
+		// 유저 ID와 기존 Github 커밋 횟수를 Map 으로 생성.
+		var message = Map.of(
+			"userId", id,
+			"commitCnt", String.valueOf(commitCnt)
+		);
+
+		String jsonInString = "";
+
+		// String 으로 변환
+		try {
+			jsonInString = objectMapper.writeValueAsString(message);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+
+		// kafka 메시지큐에 발행
+		kafkaTemplate.send(KAFKA_TOPIC, jsonInString);
 		return id;
 	}
 
