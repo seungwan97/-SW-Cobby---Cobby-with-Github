@@ -52,7 +52,7 @@ export const ImageWrapper = styled.div<{ select: boolean; check: boolean }>`
         background-size: 70% auto;
       }
 
-      border: 2px solid ${colors.MainBlackColor};
+      border: 3px solid #333333;
       background-color: #ededdb;
       pointer-events: none;
       box-shadow: 2px 2px 2px gray;

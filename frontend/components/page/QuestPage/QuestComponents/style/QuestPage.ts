@@ -25,10 +25,12 @@ export const QuestListWrapper = styled.div`
 
 export const QuestItemWrapper = styled.div`
   text-align: center;
-  width: 90%;
+  width: 70%;
   padding: 5px;
   background-color: ${colors.NavBarCreamColor};
   margin: 10px;
+  padding-top: 15px;
+  height: 130px;
 
   @media (min-width: 1300px) {
     width: 100%;
@@ -51,7 +53,7 @@ export const ColumContentWrapper = styled.div`
 export const ProgressWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 70%;
+  width: 80%;
 `;
 
 export const ImageWrapper = styled.div`
@@ -62,7 +64,9 @@ export const ImageWrapper = styled.div`
   width: auto;
   height: auto;
   padding: 7px;
-  margin: auto 0;
+  float: left;
+  margin-right: 3%;
+  margin-bottom: 3%;
   justify-content: center;
   align-items: center;
 `;
@@ -80,9 +84,10 @@ export const ConfirmButton = styled.button<{
   x: number;
 }>`
   display: inline-block;
-  width: 70%;
+  width: 80%;
   height: 35px;
   border: none;
+  margin-bottom: 3%;
   background-color: ${(props) => props.color};
   :hover {
     cursor: ${(props) => props.cursor};
@@ -97,7 +102,7 @@ export const ConfirmButton = styled.button<{
 
 export const CustomProgressBar = styled(ProgressBar)`
   flex-grow: 2;
-  margin-right: 20px;
+  margin-right: 3%;
 `;
 
 export const CustomImage = styled(Image)<{ width: number; height: number }>`

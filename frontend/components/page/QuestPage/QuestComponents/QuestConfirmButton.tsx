@@ -5,15 +5,12 @@ import cookie from "react-cookies";
 interface Props {
   progress: number;
   questId: number;
+  modifyData: (qId: number) => void;
 }
 const QuestConfirmButton = (props: Props) => {
   const { progress } = props;
   const { questId } = props;
-  const getItem = async () => {
-    const token = cookie.load("Authorization");
-    const res = await getQuestItem(token, questId);
-    console.log(res);
-  };
+  const { modifyData } = props;
   return (
     <style.ConfirmButtonWrapper>
       {progress !== 100 && (
@@ -36,7 +33,7 @@ const QuestConfirmButton = (props: Props) => {
           height={35}
           transition={"0.3"}
           x={3}
-          onClick={getItem}
+          onClick={() => modifyData(questId)}
         >
           <TextBox size={15} content={"Get an Item"} />
         </style.ConfirmButton>
