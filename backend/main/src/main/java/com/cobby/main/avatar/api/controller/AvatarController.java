@@ -60,7 +60,7 @@ public class AvatarController {
 	@Operation(summary = "아바타 서버 조회", description = "user ID로 아바타를 조회하는 메서드 입니다.")
 	@GetMapping("/server")
 	public ResponseEntity<? extends BaseResponseBody> getAvatarServer(
-		@RequestAttribute(value = "userId", required = false)
+		@RequestHeader(value = "userId", required = false)
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) throws JsonProcessingException {
 		log.info("userId{} : " + userId);
