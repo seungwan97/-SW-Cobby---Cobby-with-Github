@@ -89,8 +89,8 @@ public class CostumeServiceImpl implements CostumeService {
 			.name(request.name())
 			.category(category)
 			.quest(quest)
-			.imgUrl(null)
-			.gifUrl(null)
+			.imgUrl(imgUrl)
+			.gifUrl(gifUrl)
 			.build();
 
 		return costumeRepository.save(costume).getCostumeId();
