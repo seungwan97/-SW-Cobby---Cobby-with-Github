@@ -36,7 +36,8 @@ public class UserController {
 	@ApiDocumentResponse
 	@Operation(summary = "닉네임 조회", description = "유저의 깃헙 닉네임을 조회합니다.")
 	public ResponseEntity<? extends BaseResponseBody> getUserInfo(
-		@RequestAttribute("userId")
+		@RequestAttribute(value = "userId", required = false)
+		@RequestHeader(value = "userId", required = false)
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) {
 
@@ -52,7 +53,8 @@ public class UserController {
 	@ApiDocumentResponse
 	@Operation(summary = "*회원 탈퇴", description = "미구현")
 	public ResponseEntity<? extends BaseResponseBody> signOutUserInfo(
-		@RequestAttribute("userId")
+		@RequestAttribute(value = "userId", required = false)
+		@RequestHeader(value = "userId", required = false)
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) {
 
