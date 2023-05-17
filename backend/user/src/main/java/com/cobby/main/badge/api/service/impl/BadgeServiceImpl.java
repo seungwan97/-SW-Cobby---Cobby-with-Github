@@ -87,19 +87,16 @@ public class BadgeServiceImpl implements BadgeService {
 
 				JSONObject contentObject = new JSONObject(response.body().string()).getJSONObject("content");
 				log.info(contentObject.toString());
-				JSONArray costumeArray = contentObject.getJSONArray("costumes");
-				log.info("코스튬 목록입니다 : " + contentObject.getJSONArray("costumes").toString());
-				String head = "";
-				String effect = "";
-				String body = "";
+				JSONObject costumeObject = contentObject.getJSONObject("outfits");
+				log.info("보유하고 있는 코스튬 목록입니다 : " + costumeObject.toString());
+				String head = costumeObject.getJSONObject("head").getString("name");
+				String body = costumeObject.getJSONObject("body").getString("name");
+				String effect = costumeObject.getJSONObject("effect").getString("name");
+				log.info("head: " + head + ", effect: " + effect + ", body: "+ body);
 
-				for(int i = 0; i < costumeArray.length(); i++){
-					var name = costumeArray.getJSONObject(i).getString("name");
-					var category = costumeArray.getJSONObject(i).getString("category");
-					if(category.equals("BODY")) body = name;
-					else if(category.equals("HEAD")) head = name;
-					else if(category.equals("EFFECT")) effect = name;
-				}
+				if(head.equals("empty")) head = "";
+				if(effect.equals("empty")) effect = "";
+				if(body.equals("empty")) body = "";
 
 				var badgeGetResponse = BadgeGetResponse.builder()
 					.level(contentObject.getInt("level"))
@@ -139,11 +136,11 @@ public class BadgeServiceImpl implements BadgeService {
 		String body = "";
 		String effect = "";
 		String head = "";
-
-		if(!badgeGetResponse.getBody().isEmpty()) body = getCustome(badgeGetResponse.getBody());
+		
 		if(!badgeGetResponse.getEffect().isEmpty()) effect = getCustome(badgeGetResponse.getEffect());
+		if(!badgeGetResponse.getBody().isEmpty()) body = getCustome(badgeGetResponse.getBody());
 		if(!badgeGetResponse.getHead().isEmpty()) head = getCustome(badgeGetResponse.getHead());
-
+		
 		StringBuilder svg = new StringBuilder();
 		svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"285\">\n")
 			.append("<style>\n")
@@ -193,10 +190,18 @@ public class BadgeServiceImpl implements BadgeService {
 			.append("</style>\n")
 			.append("<rect class=\"card\" x=\"0\" y=\"0\" />\n")
 			.append("<image href=\"data:image/png;base64," + getCharacterPng() + "\" x=\"0\" y=\"0\" alt=\"cobby\" />\n")
-			.append("<image class='cobby' href=\"data:image/gif;base64," + getCharacter() + "\" x=\"93\" y=\"91\" width=\"300px\" alt=\"cobby\" />\n")
-			.append("<image class='cobby' href=\"data:image/gif;base64," + body + "\" x=\"93\" y=\"91\" width=\"300px\" alt=\"head\" />\n")
-			.append("<image class='cobby' href=\"data:image/gif;base64," + effect + "\" x=\"93\" y=\"91\" width=\"300px\" alt=\"body\" />\n")
-			.append("<image class='cobby' href=\"data:image/gif;base64," + head + "\" x=\"93\" y=\"91\" width=\"300px\" alt=\"effect\" />\n")
+			.append("<image class='cobby' x=\"93\" y=\"91\" width=\"300px\" alt=\"effect\">")
+			.append("<animate attributeName=\"href\" from=\"data:image/gif;base64," + effect + "\" to=\"data:image/gif;base64," + effect + "\" begin=\"0s\" dur=\"0s\" fill=\"freeze\" />")
+			.append("</image>")
+			.append("<image class='cobby' x=\"93\" y=\"91\" width=\"300px\" alt=\"cobby\">")
+			.append("<animate attributeName=\"href\" from=\"data:image/gif;base64," + getCharacter() + "\" to=\"data:image/gif;base64," + getCharacter() + "\" begin=\"0s\" dur=\"0s\" fill=\"freeze\" />")
+			.append("</image>")
+			.append("<image class='cobby' x=\"93\" y=\"91\" width=\"300px\" alt=\"body\">")
+			.append("<animate attributeName=\"href\" from=\"data:image/gif;base64," + body + "\" to=\"data:image/gif;base64," + body + "\" begin=\"0s\" dur=\"0s\" fill=\"freeze\" />")
+			.append("</image>")
+			.append("<image class='cobby' x=\"93\" y=\"91\" width=\"300px\" alt=\"head\">")
+			.append("<animate attributeName=\"href\" from=\"data:image/gif;base64," + head + "\" to=\"data:image/gif;base64," + head + "\" begin=\"0s\" dur=\"0s\" fill=\"freeze\" />")
+			.append("</image>")
 			.append("<g class=\"info\">\n")
 			.append("    <text class=\"info_line text_info\" x=\"270\" y=\"90\" text-anchor=\"left\">\n")
 			.append("       " + nickname + "'s \n")
