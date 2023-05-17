@@ -38,7 +38,14 @@ export const CustomTextBox = styled.div<{ size: number }>`
   white-space: nowrap;
   overflow-x: scroll;
   height: 30px;
-  font-weight:bold;
+  font-weight: bold;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 
   font-size: ${(props) => props.size}px;
   font-family: "DungGeunMo";
