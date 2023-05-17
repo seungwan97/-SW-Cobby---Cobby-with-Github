@@ -46,15 +46,16 @@ export const ImageWrapper = styled.div<{ select: boolean; check: boolean }>`
         position: absolute;
         width: 100%;
         height: 100%;
-        background-image: url("/checked.png");
+        // background-image: url("/checked.png");
         background-position: center;
         background-repeat: no-repeat;
         background-size: 70% auto;
       }
 
-      // border: 2px solid ${colors.MainBlackColor};
-      // background-color: ${colors.ItemBoxHoveredColor};
+      border: 2px solid ${colors.MainBlackColor};
+      background-color: #ededdb;
       pointer-events: none;
+      box-shadow: 2px 2px 2px gray;
     `}
 
     @media (max-width: 767px) {
