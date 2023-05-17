@@ -11,6 +11,8 @@ import UserInformation from "./MyComponents/UserInformation";
 import LogoutBtn from "./MyComponents/LogoutBtn";
 import Modal from "@/components/common/Modal/Modal";
 import CopyAlarm from "@/components/common/CopyAlarm/CopyAlarm";
+import cookie from "react-cookies";
+import { doSignOut } from "@/pages/api/user";
 
 interface MyFuncProps {
   nickname: string;
@@ -34,12 +36,24 @@ const MyPage = ({
   const [isLeave, setIsLeave] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
 
+  const router = useRouter();
+
   const setLogout = (val: boolean) => {
     setIsLogout(val);
   };
 
   const setLeave = () => {
     setIsLeave(true);
+  };
+
+  const doLogout = () => {
+    cookie.remove("Authorization");
+    router.push("/");
+  };
+
+  const doLeave = () => {
+    doSignOut(cookie.load("Authorization"));
+    doLogout();
   };
 
   return (
@@ -51,6 +65,7 @@ const MyPage = ({
           yes={true}
           no={true}
           setStatus={setIsLogout}
+          confirmMethod={doLogout}
         />
       )}
       {isLeave && (
@@ -60,6 +75,7 @@ const MyPage = ({
           yes={true}
           no={true}
           setStatus={setIsLeave}
+          confirmMethod={doLeave}
         />
       )}
       <page.PageWrapper>

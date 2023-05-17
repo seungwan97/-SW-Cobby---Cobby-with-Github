@@ -46,3 +46,14 @@ export const getAttendanceInfo = async (userId: string) => {
 
   return response;
 };
+
+// 메인페이지 연속 출석일수 정보 불러오기
+export const doSignOut = async (token: string) => {
+  const response = await client.get(`${req}/users/signout`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+
+  return response;
+};
