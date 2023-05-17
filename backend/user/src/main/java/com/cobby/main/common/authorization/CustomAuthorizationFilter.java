@@ -36,6 +36,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
         if (request.getServletPath().contains("health")
                 || request.getServletPath().equals("/api/user/users")
                 || request.getServletPath().contains("swagger")
+                || request.getServletPath().contains("activityLog")
                 || request.getServletPath().contains("webhooks")
                 || request.getServletPath().contains("api-docs")
                 || request.getServletPath().contains("/badge/")
