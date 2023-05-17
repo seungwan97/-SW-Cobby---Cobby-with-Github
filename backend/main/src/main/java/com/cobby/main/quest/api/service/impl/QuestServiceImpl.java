@@ -26,10 +26,12 @@ import com.cobby.main.quest.db.repository.QuestRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional
 @Service
@@ -41,7 +43,7 @@ public class QuestServiceImpl implements QuestService {
 	private final QuestRepository questRepository;
 	private final AvatarQuestRepository avatarQuestRepository;
 
-	@Value("{request.user}")
+	@Value("${request.user}")
 	private String USER_SERVER;
 
 	@Override
@@ -259,8 +261,9 @@ public class QuestServiceImpl implements QuestService {
 			OkHttpClient client = new OkHttpClient();
 
 			Request.Builder builder = new Request.Builder()
-				.url(USER_SERVER + "/api/user/activityLog/" + kind)
+				.url(USER_SERVER + "/activityLog/" + kind)
 				.addHeader("userId", userId);
+
 			Request request = builder.build();
 
 			Response response = client.newCall(request).execute();

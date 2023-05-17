@@ -1,5 +1,7 @@
 package com.cobby.main.avatar.db.entity;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.cobby.main.common.entity.BaseTimeEntity;
 import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.quest.db.entity.Quest;
@@ -47,7 +49,8 @@ public class AvatarCostume extends BaseTimeEntity {
 	@JoinColumn(name = "costume_id")
 	private Costume costume;
 
-	@Column(name = "is_opened", nullable = false)
+	@ColumnDefault("false")
+	@Column(name = "is_opened", nullable = false, columnDefinition = "Boolean")
 	private Boolean isOpened;
 
 	@Builder(toBuilder = true)

@@ -44,6 +44,7 @@ public class AvatarCostumeServiceImpl implements AvatarCostumeService {
 		var avatarCostume = AvatarCostume.builder()
 			.avatar(avatar)
 			.costume(costume)
+			.isOpened(false)
 			.build();
 
 		return avatarCostumeRepository.save(avatarCostume).getAvatarCostumeId();
