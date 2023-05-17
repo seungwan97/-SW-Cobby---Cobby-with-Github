@@ -1,5 +1,8 @@
 package com.cobby.main.avatar.api.dto.response;
 
+import java.util.Objects;
+import java.util.Optional;
+
 import com.cobby.main.costume.api.dto.response.CostumeGetResponse;
 import com.cobby.main.quest.api.dto.response.QuestGetResponse;
 import com.cobby.main.quest.db.entity.Quest;
@@ -30,8 +33,10 @@ public class AvatarQuestGetResponse {
 		this.questName = quest.getQuestName();
 		this.questType = quest.getQuestType().name();
 		this.questGoal = quest.getQuestGoal();
-		this.costumeId = quest.getCostume().getCostumeId();
-		this.titleId = quest.getTitle().getTitleId();
+		this.costumeId = Objects.isNull(quest.getCostume())
+						? null : quest.getCostume().getCostumeId();
+		this.titleId = Objects.isNull(quest.getTitle())
+						? null : quest.getTitle().getTitleId();
 	}
 
 }
