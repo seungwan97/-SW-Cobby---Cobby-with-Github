@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +22,10 @@ import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class AvatarServiceImpl implements AvatarService {
@@ -104,7 +105,16 @@ public class AvatarServiceImpl implements AvatarService {
 	}
 
 	@KafkaListener(topics = "create-new-avatar")
-	public String insertNewAvatar(String avatarId) throws JsonProcessingException {
+	public String insertNewAvatar(String kafkaMessage) throws JsonProcessingException {
+
+		// Map 형태로 kafka 메시지를 파싱
+		Map<String, String> userinfo = objectMapper.readValue(
+			kafkaMessage,
+			objectMapper.getTypeFactory().constructParametricType(Map.class, String.class, String.class)
+		);
+
+		// 사용자 ID 조회
+		var avatarId = userinfo.get("userId");
 
 		// 아바타가 존재하면 예외 발생
 		avatarRepository.findById(avatarId)
@@ -112,9 +122,29 @@ public class AvatarServiceImpl implements AvatarService {
 				throw new IllegalArgumentException("이미 존재하는 아바타입니다.");
 			});
 
+		// 기본 아바타 생성
 		var newAvatar = getDefaultAvatar(avatarId);
 
+		// 사용자의 기존 커밋 횟수 조회
+		var commitCnt = Long.parseLong(userinfo.get("commitCnt"));
+
+		// (기존 커밋 횟수 X 커밋 보상 경험치 X 0.5) 만큼의 경험치를 제공합니다.
+		var initExp = Math.round(commitCnt * ExpReward.COMMIT.getValue() * 0.5);
+
+		newAvatar = addInitialExp(newAvatar, initExp);
+
 		return avatarRepository.save(newAvatar).getAvatarId();
+	}
+
+	private Avatar addInitialExp(Avatar newAvatar, Long initExp) {
+
+		var initLevel = levelTableRepository.findTopByNextExpIsLessThanEqual(initExp.intValue())
+			.orElseThrow(() -> new IllegalArgumentException("초기 경험치보다 작은 레벨이 존재하지 않습니다."));
+
+		return newAvatar.toBuilder()
+			.level(initLevel.getLevel())
+			.exp(initExp.intValue())
+			.build();
 	}
 
 	@Override
