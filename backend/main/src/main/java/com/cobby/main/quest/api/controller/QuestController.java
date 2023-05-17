@@ -7,6 +7,7 @@ import com.cobby.main.avatar.api.service.AvatarQuestService;
 import com.cobby.main.common.util.ApiDocumentResponse;
 import com.cobby.main.quest.api.dto.request.QuestPostRequest;
 import com.cobby.main.quest.api.dto.request.QuestPutRequest;
+import com.cobby.main.quest.db.entity.enumtype.QuestCategory;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,16 @@ public class QuestController {
 	private final QuestService questService;
 
 	private final AvatarQuestService avatarQuestService;
+
+	@GetMapping("/test/{questCategory}")
+	public ResponseEntity<? extends BaseResponseBody> getQuestCategory(@PathVariable QuestCategory questCategory) {
+
+		var quest = questService.selectAllQuestByQuestType(questCategory);
+
+		return ResponseEntity
+				.ok()
+				.body(new BaseResponseBody<>(200, "OK", quest));
+	}
 
 	@Hidden
 	@ApiDocumentResponse

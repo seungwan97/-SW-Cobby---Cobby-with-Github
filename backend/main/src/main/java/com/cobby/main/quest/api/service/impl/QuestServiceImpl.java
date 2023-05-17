@@ -17,6 +17,7 @@ import com.cobby.main.quest.api.dto.response.QuestGetResponse;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.cobby.main.quest.api.service.QuestService;
@@ -42,6 +43,7 @@ public class QuestServiceImpl implements QuestService {
 	private final AvatarCostumeService avatarCostumeService;
 	private final QuestRepository questRepository;
 	private final AvatarQuestRepository avatarQuestRepository;
+	private final RedisTemplate<String, QuestGetResponse> redisQuestTemplate;
 
 	@Value("${request.user}")
 	private String USER_SERVER;
@@ -64,10 +66,17 @@ public class QuestServiceImpl implements QuestService {
 
 	@Override
 	public List<QuestGetResponse> selectAllQuestByQuestType(QuestCategory questCategory) {
-		return questRepository.findAllByQuestTypeOrderByQuestGoal(questCategory)
-			.stream()
-			.map(quest -> QuestGetResponse.builder().quest(quest).build())
-			.toList();
+		if (Boolean.TRUE.equals(redisQuestTemplate.hasKey("quest_" + questCategory))) {
+			return redisQuestTemplate.opsForList().range("quest_" + questCategory, 0, -1);
+		} else {
+			var questList = questRepository.findAllByQuestTypeOrderByQuestGoal(questCategory)
+					.stream()
+					.map(quest -> QuestGetResponse.builder().quest(quest).build())
+					.toList();
+
+			redisQuestTemplate.opsForList().rightPushAll("quest_" + questCategory, questList.toArray(new QuestGetResponse[0]));
+			return questList;
+		}
 	}
 
 	@Override

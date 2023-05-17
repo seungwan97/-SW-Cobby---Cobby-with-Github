@@ -20,6 +20,14 @@ spring:
     serialization:
       FAIL_ON_EMPTY_BEANS: false
 
+  data:
+    redis:
+      host: ENC(f6OfbDsBS9As9DpyKFdAi4uBOiDc+ECHEFke0oHFneE=)
+      password: ENC(H56OqiI90VFpOIzOv6bdMw==)
+      sentinel:
+        nodes: ENC(f6OfbDsBS9As9DpyKFdAi4uBOiDc+ECHEFke0oHFneE=):26379, ENC(f6OfbDsBS9As9DpyKFdAi4uBOiDc+ECHEFke0oHFneE=):26380, ENC(f6OfbDsBS9As9DpyKFdAi4uBOiDc+ECHEFke0oHFneE=):26381
+        master: ENC(qTyCMgvWnEFD3ctCjhtB6y7iQtQnqJOC)
+
 # okhttp request url to store-service
 request:
   user: ENC(mVQN90HqIlOYcPRrrTyIc5F2we71Z2dC6SXlfUKVtPEkf9+U7d2TwA==)

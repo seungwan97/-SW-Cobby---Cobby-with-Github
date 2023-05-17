@@ -42,7 +42,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                 || request.getServletPath().contains("main/titles")
                 || (request.getServletPath().contains("main/quests") 
                         && !request.getServletPath().contains("getItem")
-                        && !request.getServletPath().contains("current"))
+                        && !request.getServletPath().contains("current")
+                        && !request.getServletPath().contains("test"))
                 ) {   // 인증없이 건너 뛸 요청 설정
             filterChain.doFilter(request, response);
 
