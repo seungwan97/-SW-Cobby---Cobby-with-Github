@@ -49,6 +49,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/main/swagger/**").permitAll()
                 .requestMatchers("/api/main/titles/**").permitAll()
                 .requestMatchers("/api/main/costumes/**").permitAll()
+                .requestMatchers("/api/main/avatars/server/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(customAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -38,6 +38,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                 || request.getServletPath().contains("swagger")
                 || request.getServletPath().contains("api-docs")
                 || request.getServletPath().contains("main/costumes")
+                || request.getServletPath().contains("api/main/avatars/server")
                 || request.getServletPath().contains("main/titles")
                 || (request.getServletPath().contains("main/quests") 
                         && !request.getServletPath().contains("getItem")
