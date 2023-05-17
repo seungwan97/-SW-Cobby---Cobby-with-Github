@@ -17,7 +17,9 @@ const CurrentCommit = (props: Props) => {
     <style.CommitContainer>
       <TextBox
         size={23}
-        content={`${nicknameData.nickname} made ${attendanceData.relayCnt} commits today.`}
+        content={`${nicknameData.nickname} visited ${
+          attendanceData.relayCnt
+        } time${attendanceData.relayCnt > 1 ? "s" : null} today.`}
       />
     </style.CommitContainer>
   );
