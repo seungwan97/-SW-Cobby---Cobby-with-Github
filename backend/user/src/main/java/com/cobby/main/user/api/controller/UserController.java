@@ -22,7 +22,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
@@ -37,10 +39,10 @@ public class UserController {
 	@Operation(summary = "닉네임 조회", description = "유저의 깃헙 닉네임을 조회합니다.")
 	public ResponseEntity<? extends BaseResponseBody> getUserInfo(
 		@RequestAttribute(value = "userId", required = false)
-		@RequestHeader(value = "userId", required = false)
 		@Pattern(regexp = "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", message = "올바르지 않은 ID 양식입니다.")
 		String userId) {
 
+		log.info("userId : " + userId);
 		var info = userService.getUserInfo(userId);
 
 		return ResponseEntity

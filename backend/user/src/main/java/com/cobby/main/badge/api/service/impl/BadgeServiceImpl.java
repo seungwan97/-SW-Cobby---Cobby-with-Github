@@ -76,7 +76,7 @@ public class BadgeServiceImpl implements BadgeService {
 
 		OkHttpClient client = new OkHttpClient();
 		Request.Builder builder = new Request.Builder()
-			.url(mainUrl + "/avatars")
+			.url(mainUrl + "/avatars/server")
 			.addHeader("userId", findUser.getId());
 		Request request = builder.build();
 		log.info(mainUrl + "/avatars");
