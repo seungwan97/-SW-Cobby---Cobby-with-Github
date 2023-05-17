@@ -45,7 +45,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/user/health").permitAll()
                 .requestMatchers("/api/user/users").permitAll()
-                .requestMatchers("/api/user/activityLog/**").permitAll()
+                .requestMatchers("/api/user/activityLog/*/server").permitAll()
                 .requestMatchers("/api/user/swagger-ui/**").permitAll()
                 .requestMatchers("/api/user/api-docs/**").permitAll()
                 .requestMatchers("/api/user/swagger/**").permitAll()
