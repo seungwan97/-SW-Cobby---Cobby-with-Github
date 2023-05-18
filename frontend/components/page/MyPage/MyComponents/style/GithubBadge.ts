@@ -3,7 +3,7 @@ import { colors } from "@/styles/colors-style";
 import TextBox from "@/components/common/TextBox/TextBox";
 
 export const GithubBadgeWrapper = styled.div`
-  margin: 3% 0 3% 0;
+  margin: 8% 0 8% 0;
   display: flex;
   flex-direction: column;
   align-items: center;
