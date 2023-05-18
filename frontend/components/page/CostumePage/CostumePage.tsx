@@ -1,20 +1,12 @@
 // 유저별 코스튬 페이지
-import {
-  Fragment,
-  useState,
-  useEffect,
-  useLayoutEffect,
-} from "react";
+import { Fragment, useState, useEffect, useLayoutEffect } from "react";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import TextBox from "@/components/common/TextBox/TextBox";
 import Inventory from "./CostumeComponents/Inventory";
 import * as style from "./CostumeComponents/style/CostumePage";
 import Cobby from "@/components/common/Cobby/Cobby";
-import {
-  getAvatarInfo,
-  patchAvatarInfo,
-} from "@/pages/api/main";
+import { getAvatarInfo, patchAvatarInfo } from "@/pages/api/main";
 import cookie from "react-cookies";
 
 interface Props {
@@ -26,10 +18,7 @@ interface Props {
 
 // CostumePage
 const CostumePage = (props: Props) => {
-  console.log(props);
-  const [outfits, setOutfits]: any = useState(
-    props.cobbyOutfits
-  );
+  const [outfits, setOutfits]: any = useState(props.cobbyOutfits);
 
   const [cobby, setCobby]: any = useState({
     baseCobby: "/Character/Cobby.gif" + "?" + Date.now(),
@@ -50,9 +39,7 @@ const CostumePage = (props: Props) => {
           const nextState = {
             baseCobby: newImgReq("/Character/Cobby.gif"),
             head: newImgReq(updatedOutfits.head.gifUrl),
-            body: state.body
-              ? newImgReq(updatedOutfits.body.gifUrl)
-              : null,
+            body: state.body ? newImgReq(updatedOutfits.body.gifUrl) : null,
             effect: state.effect
               ? newImgReq(updatedOutfits.effect.gifUrl)
               : null,
@@ -66,9 +53,7 @@ const CostumePage = (props: Props) => {
         setCobby((state: any) => {
           const nextState = {
             baseCobby: newImgReq("/Character/Cobby.gif"),
-            head: state.head
-              ? newImgReq(updatedOutfits.head.gifUrl)
-              : null,
+            head: state.head ? newImgReq(updatedOutfits.head.gifUrl) : null,
             body: newImgReq(updatedOutfits.body.gifUrl),
             effect: state.effect
               ? newImgReq(updatedOutfits.effect.gifUrl)
@@ -83,12 +68,8 @@ const CostumePage = (props: Props) => {
         setCobby((state: any) => {
           const nextState = {
             baseCobby: newImgReq("/Character/Cobby.gif"),
-            head: state.head
-              ? newImgReq(updatedOutfits.head.gifUrl)
-              : null,
-            body: state.body
-              ? newImgReq(updatedOutfits.body.gifUrl)
-              : null,
+            head: state.head ? newImgReq(updatedOutfits.head.gifUrl) : null,
+            body: state.body ? newImgReq(updatedOutfits.body.gifUrl) : null,
             effect: newImgReq(updatedOutfits.effect.gifUrl),
           };
 
@@ -105,9 +86,7 @@ const CostumePage = (props: Props) => {
         effect: updatedOutfits.effect.costumeId,
       };
 
-      patchAvatarInfo(token, data).then((res) => {
-        console.log(res.data.content);
-      });
+      patchAvatarInfo(token, data).then((res) => {});
 
       return updatedOutfits;
     });
@@ -141,7 +120,6 @@ const CostumePage = (props: Props) => {
           setIsLoading(false);
         })
         .catch((err) => {
-          console.log("error!");
           setIsLoading(true);
         });
     }, [cobby]);
@@ -162,11 +140,7 @@ const CostumePage = (props: Props) => {
           <TextBox size={50} content={"COSTUME"} />
         </style.CostumePageTextWrapper>
         <style.CostumedCobby>
-          <Cobby
-            outfits={outfits}
-            isLoading={isLoading}
-            cobby={cobby}
-          />
+          <Cobby outfits={outfits} isLoading={isLoading} cobby={cobby} />
         </style.CostumedCobby>
         <Inventory
           headItemList={props.HEAD_ITEMS}

@@ -4,7 +4,6 @@ const req = "/api/user";
 
 // 메인페이지 닉네임, 깃허브url 정보 불러오기
 export const getNicknameAndGithubURL = async (userId: string) => {
-  console.log("getNicknameAndGithubURL : " + userId);
   const response = await client.get(`${req}/users/info`, {
     headers: {
       Authorization: userId,

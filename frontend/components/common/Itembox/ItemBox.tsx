@@ -1,23 +1,34 @@
 import * as style from "./style/ItemBox";
 import { patchInventories } from "@/pages/api/main";
+import { useEffect, useState } from "react";
 import cookie from "react-cookies";
 
 // ItemBox
 const ItemBox = (props: any) => {
+  const [isNew, setIsNew] = useState(true);
+
+  useEffect(() => {
+    if (props.getto) {
+      setIsNew(false);
+    }
+  });
+
   const handleItemClick = async () => {
     const costumeId = props.costumeId.filter(
       (item: any) => item !== undefined
     )[0];
-    console.log("costumeId", costumeId);
+
     if (props.isOpened === false) {
       const token = cookie.load("Authorization");
 
-      await patchInventories(costumeId, token);
+      await patchInventories(costumeId, token).then((res) => {
+        if (res.status === 200) {
+          setIsNew(false);
+        }
+      });
     }
     props.onItemClick(props.item);
   };
-  // console.log("isDefault", props.isDefault);
-  console.log("isOpened", props.isOpened);
 
   return (
     <style.ImageWrapper
@@ -33,7 +44,9 @@ const ItemBox = (props: any) => {
         width={80}
         height={65}
       />
-      {!props.isOpened && props.getto ? <style.isNew>new</style.isNew> : null}
+      {!props.isOpened && props.getto && isNew ? (
+        <style.isNew>new</style.isNew>
+      ) : null}
       <style.Filter select={props.getto} />
       <style.LockFilter select={props.getto} />
     </style.ImageWrapper>
