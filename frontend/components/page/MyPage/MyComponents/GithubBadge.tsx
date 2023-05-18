@@ -1,14 +1,13 @@
 import TextBox from "@/components/common/TextBox/TextBox";
 import * as style from "./style/GithubBadge";
 
-const BADGE_URL = "![COBBY_BADGE](https://cobby-play.com/baefrica/badge...)sfsdfasfkldsnfknsklnskjvnaklsjvnjkvnkjsnksj";
-
 const GithubBadge = (props: any) => {
-
   const copyBadgeText = () => {
-    navigator.clipboard.writeText(BADGE_URL);
+    navigator.clipboard.writeText(
+      `![COBBY_BADGE](https://cobby-play.com/api/user/badge/${props.nickname})`
+    );
     props.setIsCopied(true);
-  }
+  };
 
   return (
     <style.GithubBadgeWrapper>
@@ -18,7 +17,7 @@ const GithubBadge = (props: any) => {
       <style.CodeCopyBox>
         <style.ReadmeCode>
           <style.CustomTextBox size={20}>
-            {BADGE_URL}
+            {`![COBBY_BADGE](https://cobby-play.com/api/user/badge/${props.nickname})`}
           </style.CustomTextBox>
         </style.ReadmeCode>
         <style.CopyBtnImg src="/copybutton.png" onClick={copyBadgeText} />
