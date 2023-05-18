@@ -58,10 +58,17 @@ public class QuestServiceImpl implements QuestService {
 
 	@Override
 	public List<QuestGetResponse> selectAllQuest() {
-		return questRepository.findAll()
-			.stream()
-			.map(quest -> QuestGetResponse.builder().quest(quest).build())
-			.toList();
+		if (Boolean.TRUE.equals(redisQuestTemplate.hasKey("quest_ALL"))) {
+			return redisQuestTemplate.opsForList().range("quest_ALL", 0, -1);
+		} else {
+			var questList = questRepository.findAll()
+				.stream()
+				.map(quest -> QuestGetResponse.builder().quest(quest).build())
+				.toList();
+
+			redisQuestTemplate.opsForList().rightPushAll("quest_ALL", questList.toArray(new QuestGetResponse[0]));
+			return questList;
+		}
 	}
 
 	@Override
@@ -74,7 +81,7 @@ public class QuestServiceImpl implements QuestService {
 					.map(quest -> QuestGetResponse.builder().quest(quest).build())
 					.toList();
 
-			redisQuestTemplate.opsForList().rightPushAll("quest_" + questCategory, questList.toArray(new QuestGetResponse[0]));
+			redisQuestTemplate.opsForList().rightPushAll("quest_" + questCategory, questList.toArray(QuestGetResponse[]::new));
 			return questList;
 		}
 	}

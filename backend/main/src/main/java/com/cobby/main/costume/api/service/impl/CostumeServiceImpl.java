@@ -3,6 +3,7 @@ package com.cobby.main.costume.api.service.impl;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,10 +16,13 @@ import com.cobby.main.costume.api.util.ImageUrlProvider;
 import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
 import com.cobby.main.costume.db.repository.CostumeRepository;
+import com.cobby.main.quest.api.dto.response.QuestGetResponse;
 import com.cobby.main.quest.db.repository.QuestRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class CostumeServiceImpl implements CostumeService {
@@ -29,36 +33,52 @@ public class CostumeServiceImpl implements CostumeService {
 
 	private final ImageUrlProvider imageUrlProvider;
 
+	private final RedisTemplate<String, CostumeGetResponse> redisCostumeTemplate;
+
 	@Override
 	public List<CostumeGetResponse> selectAllCostumes() {
+		if (Boolean.TRUE.equals(redisCostumeTemplate.hasKey("costume_ALL"))) {
+			return redisCostumeTemplate.opsForList().range("costume_ALL", 0, -1);
+		} else {
+			var costumes = costumeRepository.findAll();
 
-		var costumes = costumeRepository.findAll();
+			if(costumes.isEmpty()) {
+				throw new BaseRuntimeException(HttpStatus.NOT_FOUND, "조회할 수 있는 코스튬이 없습니다.");
+			}
 
-		if(costumes.isEmpty()) {
-			throw new BaseRuntimeException(HttpStatus.NOT_FOUND, "조회할 수 있는 코스튬이 없습니다.");
+			var costumeList = costumes.stream()
+				.map(costume -> CostumeGetResponse.builder()
+					.costume(costume)
+					.build())
+				.toList();
+
+			redisCostumeTemplate.opsForList().rightPushAll("costume_ALL", costumeList.toArray(CostumeGetResponse[]::new));
+
+			return costumeList;
 		}
-
-		return costumes.stream()
-			.map(costume -> CostumeGetResponse.builder()
-				.costume(costume)
-				.build())
-			.toList();
 	}
 
 	@Override
 	public List<CostumeGetResponse> selectAllCostumesByCategoryType(CostumeCategory category) {
+		if (Boolean.TRUE.equals(redisCostumeTemplate.hasKey("costume_" + category))) {
+			return redisCostumeTemplate.opsForList().range("costume_" + category, 0, -1);
+		} else {
+			var costumes = costumeRepository.findAllByCategory(category);
 
-		var costumes = costumeRepository.findAllByCategory(category);
+			if (costumes.isEmpty()) {
+				throw new BaseRuntimeException(HttpStatus.NOT_FOUND, "조회할 수 있는 코스튬이 없습니다.");
+			}
 
-		if(costumes.isEmpty()) {
-			throw new BaseRuntimeException(HttpStatus.NOT_FOUND, "조회할 수 있는 코스튬이 없습니다.");
+			var costumeList = costumes.stream()
+				.map(costume -> CostumeGetResponse.builder()
+					.costume(costume)
+					.build())
+				.toList();
+
+			redisCostumeTemplate.opsForList().rightPushAll("costume_" + category, costumeList.toArray(new CostumeGetResponse[0]));
+
+			return costumeList;
 		}
-
-		return costumes.stream()
-			.map(costume -> CostumeGetResponse.builder()
-				.costume(costume)
-				.build())
-			.toList();
 	}
 
 	@Override

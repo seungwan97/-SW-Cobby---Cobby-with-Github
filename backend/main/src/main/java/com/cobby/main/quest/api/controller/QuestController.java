@@ -33,16 +33,6 @@ public class QuestController {
 
 	private final AvatarQuestService avatarQuestService;
 
-	@GetMapping("/test/{questCategory}")
-	public ResponseEntity<? extends BaseResponseBody> getQuestCategory(@PathVariable QuestCategory questCategory) {
-
-		var quest = questService.selectAllQuestByQuestType(questCategory);
-
-		return ResponseEntity
-				.ok()
-				.body(new BaseResponseBody<>(200, "OK", quest));
-	}
-
 	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "#####도전과제 조회#####", description = "quest ID로 도전과제를 조회합니다.")
