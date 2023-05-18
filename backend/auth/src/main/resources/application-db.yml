@@ -1,0 +1,25 @@
+spring:
+  data:
+    mongodb:
+      host: ENC(e6Uv5RpXd/fm/4vz63QuFU+f7RsbBc4vH9JdYF0FVRs=)
+      port: ENC(V95UBnfXEUarkvxGYRliCg==)
+      database: ENC(X3Db90LZ/lGUb8kI5nyQxBABbCjWceaR)
+      username: ENC(ySBkqn7rc0rzhCnJx1aNtMcQdtGI7IRQ)
+      password: ENC(i7j46L3hTWPdOmMe3uGWug==)
+      uuid-representation: standard
+  # JPA Properties
+  jpa:
+    properties:
+      hibernate:
+        ogm:
+          datastore:
+            create_database: true
+
+redis:
+  host: k8b201.p.ssafy.io
+  port: 6379
+
+request:
+  url:
+    user-server: https://cobby-play.com/api/user/users
+    front-login: https://cobby-play.com
