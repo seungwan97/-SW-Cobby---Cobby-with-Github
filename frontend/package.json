@@ -1,0 +1,42 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@ramonak/react-progress-bar": "^5.0.3",
+    "@types/node": "18.16.1",
+    "@types/react": "18.2.0",
+    "@types/react-cookies": "^0.1.0",
+    "@types/react-dom": "18.2.1",
+    "axios": "^1.4.0",
+    "eslint": "8.39.0",
+    "eslint-config-next": "13.3.1",
+    "hapi-auth-github": "^2.1.2",
+    "js-cookie": "^3.0.5",
+    "next": "13.3.1",
+    "next-cookies": "^2.0.3",
+    "react": "^18.2.0",
+    "react-cookie": "^4.1.1",
+    "react-cookies": "^0.1.1",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.11.1",
+    "styled-components": "^5.3.10",
+    "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.26",
+    "babel-plugin-styled-components": "^2.1.1"
+  }
+}
