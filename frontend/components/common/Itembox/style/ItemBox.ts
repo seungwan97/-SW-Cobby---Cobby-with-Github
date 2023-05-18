@@ -5,6 +5,7 @@ import Image from "next/image";
 
 export const ImageWrapper = styled.div<{
   select: boolean;
+  getto: boolean;
 }>`
   position: relative;
   border-radius: 10px;
@@ -41,6 +42,11 @@ export const ImageWrapper = styled.div<{
       background-color: #ededdb;
       pointer-events: none;
       box-shadow: 2px 2px 2px gray;
+    `}
+  ${(props) =>
+    !props.getto &&
+    css`
+      pointer-events: none;
     `}
 
   @media (max-width: 767px) {
