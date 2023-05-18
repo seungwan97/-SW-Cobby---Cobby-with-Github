@@ -24,11 +24,15 @@ const MainFunc = ({
   commitData,
   attendanceData,
   avatarData,
+  error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  // useEffect(() => {
-  //   localStorage.setItem("nickname", JSON.stringify(nicknameData.nickname));
-  // }, []);
   const router = useRouter();
+
+  if (error) {
+    // 오류 처리 로직
+    alert("페이지에 접근할 수 없습니다. 다시 로그인해주세요");
+    router.push("/");
+  }
 
   return (
     <Fragment>
@@ -49,32 +53,40 @@ const MainFunc = ({
 export default MainFunc;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const token = context.req.headers.cookie?.replace("Authorization=", "");
+  try {
+    const token = context.req.headers.cookie?.replace("Authorization=", "");
 
-  console.log(token);
+    console.log(token);
 
-  const nicknameRes = await getNicknameAndGithubURL(`${token}`);
-  const nicknameData = nicknameRes.data;
+    const nicknameRes = await getNicknameAndGithubURL(`${token}`);
+    const nicknameData = nicknameRes.data;
 
-  const statusRes = await getStatus(`${token}`);
-  const statusData = statusRes.data;
+    const statusRes = await getStatus(`${token}`);
+    const statusData = statusRes.data;
 
-  const commitRes = await getCommitInfo(`${token}`);
-  const commitData = commitRes.data;
+    const commitRes = await getCommitInfo(`${token}`);
+    const commitData = commitRes.data;
 
-  const attendanceRes = await getAttendanceInfo(`${token}`);
-  const attendanceData = attendanceRes.data;
+    const attendanceRes = await getAttendanceInfo(`${token}`);
+    const attendanceData = attendanceRes.data;
 
-  const avatarRes = await getAvatarInfo(`${token}`);
-  const avatarData = avatarRes.data;
+    const avatarRes = await getAvatarInfo(`${token}`);
+    const avatarData = avatarRes.data;
 
-  return {
-    props: {
-      nicknameData: nicknameData.content,
-      statusData: statusData.content,
-      commitData: commitData.content,
-      attendanceData: attendanceData.content,
-      avatarData: avatarData.content,
-    },
-  };
+    return {
+      props: {
+        nicknameData: nicknameData.content,
+        statusData: statusData.content,
+        commitData: commitData.content,
+        attendanceData: attendanceData.content,
+        avatarData: avatarData.content,
+      },
+    };
+  } catch (e) {
+    return {
+      props: {
+        error: "An error occurred",
+      },
+    };
+  }
 };
