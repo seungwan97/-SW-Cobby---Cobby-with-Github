@@ -3,6 +3,7 @@ import QuestItem from "./QuestItem";
 import * as style from "./style/QuestPage";
 import cookie from "react-cookies";
 import { getQuestItem, getQuests } from "@/pages/api/main";
+import TextBox from "@/components/common/TextBox/TextBox";
 interface Props {
   questData: [
     {
@@ -70,7 +71,7 @@ interface Props {
 const QuestList = (props: Props) => {
   const { questData } = props;
   const [arr, setArr] = useState(questData);
-  // const [data, setData] = useState(questData[0].questId);
+  const [data, setData] = useState(false);
   const modifyData = async (qId: number) => {
     const token = cookie.load("Authorization");
     //아이템수령api쏴주고
@@ -86,6 +87,9 @@ const QuestList = (props: Props) => {
         questData.splice(i, 1);
       }
     }
+    if (questData.length === 0) {
+      setData(true);
+    }
     console.log(questData);
 
     //useState 배열에 저장
@@ -97,6 +101,7 @@ const QuestList = (props: Props) => {
       {arr.map((item, index) => (
         <QuestItem key={index} questData={item} modifyData={modifyData} />
       ))}
+      {data && <TextBox size={30} content={"모든 퀘스트를 완료하였습니다!"} />}
     </style.QuestListWrapper>
   );
 };

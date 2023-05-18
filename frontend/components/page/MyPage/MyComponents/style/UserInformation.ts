@@ -20,3 +20,9 @@ export const InfoContent = styled.div`
   justify-content: space-around;
   padding: 0 10% 0 10%;
 `;
+
+export const Margin = styled.div`
+  margin-bottom: 3%;
+`;
+
+export const Margin2 = styled.div``;

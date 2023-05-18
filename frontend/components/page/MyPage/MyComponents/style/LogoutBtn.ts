@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { colors } from "@/styles/colors-style";
 
 export const LogoutBtnWrapper = styled.div`
-  margin-top: 1%;
+  margin-top: 10%;
   display: flex;
   align-items: center;
   justify-content: center;

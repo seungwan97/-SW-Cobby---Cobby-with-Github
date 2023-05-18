@@ -17,7 +17,7 @@ const QuestConfirmButton = (props: Props) => {
         <style.ConfirmButton
           color="#F2F2F2"
           cursor={"default"}
-          width={70}
+          width={80}
           height={35}
           transition={"0"}
           x={0}
@@ -29,7 +29,7 @@ const QuestConfirmButton = (props: Props) => {
         <style.ConfirmButton
           color="#A0FF72"
           cursor={"pointer"}
-          width={70}
+          width={80}
           height={35}
           transition={"0.3"}
           x={3}
