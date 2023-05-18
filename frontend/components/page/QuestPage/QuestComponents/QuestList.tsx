@@ -93,7 +93,6 @@ const QuestList = (props: Props) => {
       idx++;
     }
     setArr(questData);
-    setData(true);
     if (cnt === 4) {
       setData(true);
     }
