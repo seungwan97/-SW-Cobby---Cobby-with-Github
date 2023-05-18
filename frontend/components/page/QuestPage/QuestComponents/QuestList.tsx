@@ -81,6 +81,13 @@ const QuestList = (props: Props) => {
     const questRes = await getQuests(token);
     const questData = questRes.data.content;
     console.log(questData);
+    for (let i = 0; i < questData.length; i++) {
+      if (questData[i].questId === -1) {
+        questData.splice(i, 1);
+      }
+    }
+    console.log(questData);
+
     //useState 배열에 저장
     setArr(questData);
   };

@@ -8,37 +8,6 @@ import QuestPage from "@/components/page/QuestPage/QuestPage";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import { getQuests } from "../api/main";
 
-const DUMMY_DATA = [
-  {
-    category: "Level",
-    title: "Reaching Level",
-    goal: 10,
-    progress: 70,
-    award: "/Character/Cobby.png",
-  },
-  {
-    category: "Level",
-    title: "Reaching Level",
-    goal: 20,
-    progress: 70,
-    award: "/Character/Cobby.png",
-  },
-  {
-    category: "Level",
-    title: "Reaching Level",
-    goal: 30,
-    progress: 70,
-    award: "/Character/Cobby.png",
-  },
-  {
-    category: "Level",
-    title: "Reaching Level",
-    goal: 40,
-    progress: 70,
-    award: "/Character/Cobby.png",
-  },
-];
-
 //QuestPage
 const QuestFunc = ({
   questData,
@@ -59,12 +28,16 @@ export default QuestFunc;
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const token = context.req.headers.cookie?.replace("Authorization=", "");
   const questRes = await getQuests(`${token}`);
-  const questData = questRes.data;
-  console.log(questData.content);
+  const questData = questRes.data.content;
+  for (let i = 0; i < questData.length; i++) {
+    if (questData[i].questId === -1) {
+      questData.splice(i, 1);
+    }
+  }
 
   return {
     props: {
-      questData: questData.content,
+      questData: questData,
     },
   };
 };
