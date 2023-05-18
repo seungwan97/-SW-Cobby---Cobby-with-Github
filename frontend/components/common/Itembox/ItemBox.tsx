@@ -9,6 +9,7 @@ const ItemBox = (props: any) => {
 
   return (
     <style.ImageWrapper
+      select={props.selected}
       onClick={() => {
         handleItemClick();
       }}
