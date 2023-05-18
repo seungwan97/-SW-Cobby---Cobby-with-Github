@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import QuestItem from "./QuestItem";
-import * as style from "./style/QuestPage";
-=======
 import { useEffect, useState } from "react";
 import QuestItem from "./QuestItem";
 import * as style from "./style/QuestPage";
@@ -9,7 +5,6 @@ import cookie from "react-cookies";
 import { getQuestItem, getQuests } from "@/pages/api/main";
 import TextBox from "@/components/common/TextBox/TextBox";
 import { log } from "console";
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
 interface Props {
   questData: [
     {
@@ -76,17 +71,6 @@ interface Props {
 }
 const QuestList = (props: Props) => {
   const { questData } = props;
-<<<<<<< HEAD
-  const arr = [];
-  for (let i = 0; i < questData.length; i++) {
-    arr.push(questData[i]);
-  }
-  return (
-    <style.QuestListWrapper>
-      {arr.map((item, index) => (
-        <QuestItem key={index} questData={item} />
-      ))}
-=======
   const [arr, setArr] = useState(questData);
   const [data, setData] = useState(false);
 
@@ -152,7 +136,6 @@ const QuestList = (props: Props) => {
           <TextBox size={30} content={"모든 퀘스트를 완료했습니다!"} />
         </div>
       )}
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
     </style.QuestListWrapper>
   );
 };

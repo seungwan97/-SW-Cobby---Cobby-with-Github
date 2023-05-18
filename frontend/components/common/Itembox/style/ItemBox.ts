@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-import styled, { css } from "styled-components";
-import { colors } from "@/styles/colors-style";
-import { keyframes } from "@emotion/react";
-import Image from "next/image";
-
-export const ImageWrapper = styled.div`
-=======
 import styled, { css, keyframes } from "styled-components";
 import { colors } from "@/styles/colors-style";
 import Image from "next/image";
@@ -14,7 +6,6 @@ export const ImageWrapper = styled.div<{
   select: boolean;
   getto: boolean;
 }>`
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
   position: relative;
   border-radius: 10px;
   display: flex;
@@ -34,9 +25,6 @@ export const ImageWrapper = styled.div<{
   }
 
   ${(props) =>
-<<<<<<< HEAD
-    !props.selected &&
-=======
     props.select &&
     css`
       &:before {
@@ -121,7 +109,6 @@ export const LockFilter = styled.div<{ select: boolean }>`
 
   ${(props) =>
     !props.select &&
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
     css`
       &:before {
         content: "";
@@ -133,38 +120,10 @@ export const LockFilter = styled.div<{ select: boolean }>`
         background-repeat: no-repeat;
         background-size: 50% auto;
       }
-<<<<<<< HEAD
-
-      background-color: ${colors.MainBlackColor};
-      pointer-events: none;
-    `}
-
-  ${(props) =>
-    props.checked &&
-    css`
-      &:before {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-image: url("/checked.png");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 70% auto;
-      }
-
-      border: 2px solid ${colors.MainBlackColor};
-      background-color: ${colors.ItemBoxHoveredColor};
-      pointer-events: none;
-    `}
-
-    @media (max-width: 767px) {
-=======
       pointer-events: none;
     `}
 
   @media (max-width: 767px) {
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
     width: 55px;
     height: 55px;
 
@@ -175,14 +134,7 @@ export const LockFilter = styled.div<{ select: boolean }>`
   }
 `;
 
-<<<<<<< HEAD
-export const ItemImage = styled(Image)<{
-  width: number;
-  height: number;
-}>`
-=======
 export const ItemImage = styled(Image)<{ width: number; height: number }>`
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
   @media (max-width: 767px) {
     width: ${(props) => props.width * 0.75}px;
     height: ${(props) => props.height * 0.75}px;
@@ -206,11 +158,6 @@ export const backgroundColor = keyframes`
   }
 `;
 
-<<<<<<< HEAD
-export const NewTag = styled.div`
-  color: black;
-  border-radius: 10px 10px 0 0;
-=======
 export const isNew = styled.div`
   width: 100%;
   height: 20%;
@@ -221,7 +168,6 @@ export const isNew = styled.div`
   top: 0;
   border-radius: 10px 10px 0 0;
 
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
   animation-name: ${backgroundColor};
   animation-duration: 1s;
   animation-timing-function: linear;

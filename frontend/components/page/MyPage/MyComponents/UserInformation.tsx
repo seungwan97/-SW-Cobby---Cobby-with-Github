@@ -19,16 +19,6 @@ const UserInformation = ({
 }: MyFuncProps) => {
   return (
     <style.UserInfoWrapper>
-<<<<<<< HEAD
-      <style.InformationTxt>
-        <TextBox size={30} content={"INFORMATION"} />
-      </style.InformationTxt>
-      <style.InfoContent>
-        <TextBox size={20} content={`Github : ${githubUrl}`} />
-        <TextBox size={20} content={`Nickname : ${nickname}`} />
-        <TextBox size={20} content={`Level : ${myLevel}`} />
-        <TextBox size={20} content={`Number of Costumes : ${cntCostumes}`} />
-=======
       <style.Margin2 />
       <style.InformationTxt>
         <TextBox size={30} content={"INFORMATION"} />
@@ -43,7 +33,6 @@ const UserInformation = ({
         <style.Margin />
         <TextBox size={20} content={`Number of Costumes : ${cntCostumes}`} />
         <style.Margin />
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
         <TextBox
           size={20}
           content={`Number of Quests Completed : ${cntQuests}`}

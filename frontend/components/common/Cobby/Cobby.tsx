@@ -3,16 +3,6 @@ import * as style from "./style/Cobby";
 import { useState, useEffect } from "react";
 
 const Cobby = (props: any) => {
-<<<<<<< HEAD
-  if (!props.isLoading) {
-    return (
-      <style.CobbyWrapper>
-        <style.Cobby src={props.cobby.baseCobby} alt="Cobby" />
-        {props.cobby.head && <style.CobbyHeadItem src={props.cobby.head} />}
-        {props.cobby.body && <style.CobbyBodyItem src={props.cobby.body} />}
-        {props.cobby.effect && (
-          <style.CobbyEffectItem src={props.cobby.effect} />
-=======
   if (props.outfits.head.costumeId === 0) {
     props.outfits.head.gifUrl = "/CostumeItems_GIF/empty.gif";
   }
@@ -72,16 +62,11 @@ const Cobby = (props: any) => {
           <style.CobbyBodyItem
             src={props.outfits.body.gifUrl + `?${Date.now()}`}
           />
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
         )}
       </style.CobbyWrapper>
     );
   } else {
-<<<<<<< HEAD
-    return <p>Loading</p>;
-=======
     return <p>Loading...</p>;
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
   }
 };
 

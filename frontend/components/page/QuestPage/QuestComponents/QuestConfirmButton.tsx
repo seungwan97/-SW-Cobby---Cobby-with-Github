@@ -1,16 +1,5 @@
 import * as style from "./style/QuestPage";
 import TextBox from "@/components/common/TextBox/TextBox";
-<<<<<<< HEAD
-interface Props {
-  progress: number;
-}
-const QuestConfirmButton = (props: Props) => {
-  const { progress } = props;
-  return (
-    <style.ConfirmButtonWrapper>
-      {progress !== 100 && (
-        <style.ConfirmButton color="#F2F2F2">
-=======
 import { getQuestItem } from "@/pages/api/main";
 import cookie from "react-cookies";
 interface Props {
@@ -33,14 +22,10 @@ const QuestConfirmButton = (props: Props) => {
           transition={"0"}
           x={0}
         >
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
           <TextBox size={15} content={"Get an Item"} />
         </style.ConfirmButton>
       )}
       {progress === 100 && (
-<<<<<<< HEAD
-        <style.ConfirmButton color="#A0FF72">
-=======
         <style.ConfirmButton
           color="#A0FF72"
           cursor={"pointer"}
@@ -50,7 +35,6 @@ const QuestConfirmButton = (props: Props) => {
           x={3}
           onClick={() => modifyData(questId)}
         >
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
           <TextBox size={15} content={"Get an Item"} />
         </style.ConfirmButton>
       )}

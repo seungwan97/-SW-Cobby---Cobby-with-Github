@@ -7,19 +7,7 @@ import MyPage from "@/components/page/MyPage/MyPage";
 import { GetServerSideProps } from "next";
 import { getAvatarInfo } from "../api/main";
 import { getNicknameAndGithubURL } from "../api/user";
-<<<<<<< HEAD
-
-interface MyFuncProps {
-  nickname: string;
-  githubUrl: string;
-  myLevel: number;
-  cntCostumes: number;
-  cntQuests: number;
-  // myNickName: string;
-}
-=======
 import { InferGetServerSidePropsType } from "next";
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
 
 const MyFunc = ({
   nickname,
@@ -27,12 +15,6 @@ const MyFunc = ({
   myLevel,
   cntCostumes,
   cntQuests,
-<<<<<<< HEAD
-}: // myNickName,
-MyFuncProps) => {
-  const router = useRouter();
-
-=======
   cobbyOutfits,
   error,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
@@ -45,7 +27,6 @@ MyFuncProps) => {
     return;
   }
 
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
   return (
     <Fragment>
       <page.PageWrapper>
@@ -55,11 +36,7 @@ MyFuncProps) => {
           myLevel={myLevel}
           cntCostumes={cntCostumes}
           cntQuests={cntQuests}
-<<<<<<< HEAD
-          // myNickName={myNickName}
-=======
           cobbyOutfits={cobbyOutfits}
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
         />
       </page.PageWrapper>
       <BottomNavBar />
@@ -69,35 +46,6 @@ MyFuncProps) => {
 
 export default MyFunc;
 
-<<<<<<< HEAD
-export const getServerSideProps: GetServerSideProps<MyFuncProps> = async (
-  context
-) => {
-  const token = context.req.headers.cookie?.replace("Authorization=", "");
-  // 닉네임, 깃허브url
-  const res = await getNicknameAndGithubURL(`${token}`);
-
-  // 코비 정보 : 레벨, 갖고있는 코스튬 수, 달성한 퀘스트 수
-  const cobbyInfo = await getAvatarInfo(`${token}`);
-
-  let nickname = "";
-  let githubUrl = "";
-  let myLevel = 0;
-  let cntCostumes = 0;
-  let cntQuests = 0;
-
-  if (cobbyInfo.status === 200) {
-    nickname = res.data.content.nickname;
-    githubUrl = res.data.content.githubUrl;
-    myLevel = cobbyInfo.data.content.level;
-    cntCostumes = cobbyInfo.data.content.costumes.length;
-    cntQuests = cobbyInfo.data.content.quests.length;
-  }
-
-  return {
-    props: { nickname, githubUrl, myLevel, cntCostumes, cntQuests },
-  };
-=======
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
 
@@ -140,5 +88,4 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   }
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
 };

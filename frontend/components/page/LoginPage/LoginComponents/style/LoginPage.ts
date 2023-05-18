@@ -2,8 +2,6 @@ import styled from "styled-components";
 
 export const LoginPageWrapper = styled.div`
   text-align: center;
-<<<<<<< HEAD
-=======
   @media (max-height: 1180px) {
     height: 600px;
   }
@@ -31,7 +29,6 @@ export const LoginPageWrapper = styled.div`
   @media (max-height: 667px) {
     height: 250px;
   }
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
 `;
 export const LoginPageContent = styled.div`
   /* 임시  CSS임 => 밑에 NavBar 표시하느라 잠시 넣었음 */

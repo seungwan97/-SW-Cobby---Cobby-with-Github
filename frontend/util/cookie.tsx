@@ -9,7 +9,4 @@ export const setCookie = (name: string, value: string, option?: any) => {
 export const getCookie = (name: string) => {
   return cookies.get(name);
 };
-<<<<<<< HEAD
-=======
 
->>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
