@@ -1,0 +1,28 @@
+server:
+  port: ENC(ebgriZq6nYMbCAHbDRLjaA==)
+
+spring:
+  profiles:
+    include:
+      - db
+<<<<<<< HEAD:backend/main/src/main/resources/application.yml
+      - encrypt
+=======
+      - notification
+      - cloud
+>>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/resources/application.yml
+      - swagger
+      - kafka
+      - jwt
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 10MB
+      max-request-size: 15MB
+
+# logger
+logging.level:
+  org.hibernate.SQL: info
+  org.hibernate.type: trace
