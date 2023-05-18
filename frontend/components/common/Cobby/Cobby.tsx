@@ -3,8 +3,6 @@ import * as style from "./style/Cobby";
 import { useState, useEffect } from "react";
 
 const Cobby = (props: any) => {
-  console.log(props);
-
   if (props.outfits.head.costumeId === 0) {
     props.outfits.head.gifUrl =
       "/CostumeItems_GIF/empty.gif";
@@ -21,9 +19,9 @@ const Cobby = (props: any) => {
   if (!props.isLoading) {
     return (
       <style.CobbyWrapper>
-        {props.cobby.effect ? (
+        {props.cobby.effect && (
           <style.CobbyEffectItem src={props.cobby.effect} />
-        ) : null}
+        )}
         {props.cobby.effect === null && (
           <style.CobbyEffectItem
             src={props.outfits.effect.gifUrl}

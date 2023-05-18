@@ -38,11 +38,19 @@ const MainPage = (props: Props) => {
   const { attendanceData } = props;
   const { avatarData } = props;
 
+  console.log(props);
+
   return (
     <Fragment>
       <style.MainPageContent>
-        <CobbyInfo nicknameData={nicknameData} avatarData={avatarData} />
-        <GithubStatus statusData={statusData} commitData={commitData} />
+        <CobbyInfo
+          nicknameData={nicknameData}
+          avatarData={avatarData}
+        />
+        <GithubStatus
+          statusData={statusData}
+          commitData={commitData}
+        />
         <CurrentCommit
           nicknameData={nicknameData}
           attendanceData={attendanceData}

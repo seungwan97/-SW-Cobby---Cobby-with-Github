@@ -50,15 +50,6 @@ const CostumePage = (props: any) => {
     getCobbyOutfits();
   }, []);
 
-  // useEffect(() => {
-  //   setCobby({
-  //     baseCobby: "/Character/Cobby.gif" + "?" + Date.now(),
-  //     head: outfits.head.gifUrl,
-  //     body: outfits.body.gifUrl,
-  //     effect: outfits.effect.gifUrl,
-  //   });
-  // }, [outfits]);
-
   const handleInventoryItem = (itemInfo: any) => {
     console.log("전달받은 itemInfo : ", itemInfo);
 
@@ -70,17 +61,6 @@ const CostumePage = (props: any) => {
         updatedOutfits.head = itemInfo;
 
         setCobby((state: any) => {
-          // const nextState = state.head
-          //   ? { ...state, head: null }
-          //   : {
-          //       baseCobby: newImgReq("/Character/Cobby.gif"),
-          //       head: newImgReq(updatedOutfits.head.gifUrl),
-          //       body: state.body ? newImgReq(updatedOutfits.body.gifUrl) : null,
-          //       effect: state.effect
-          //         ? newImgReq(updatedOutfits.effect.gifUrl)
-          //         : null,
-          //     };
-
           const nextState = {
             baseCobby: newImgReq("/Character/Cobby.gif"),
             head: newImgReq(updatedOutfits.head.gifUrl),
@@ -98,17 +78,6 @@ const CostumePage = (props: any) => {
         updatedOutfits.body = itemInfo;
 
         setCobby((state: any) => {
-          // const nextState = state.body
-          //   ? { ...state, body: null }
-          //   : {
-          //       baseCobby: newImgReq("/Character/Cobby.gif"),
-          //       head: state.head ? newImgReq(updatedOutfits.head.gifUrl) : null,
-          //       body: newImgReq(updatedOutfits.body.gifUrl),
-          //       effect: state.effect
-          //         ? newImgReq(updatedOutfits.effect.gifUrl)
-          //         : null,
-          //     };
-
           const nextState = {
             baseCobby: newImgReq("/Character/Cobby.gif"),
             head: state.head
@@ -126,15 +95,6 @@ const CostumePage = (props: any) => {
         updatedOutfits.effect = itemInfo;
 
         setCobby((state: any) => {
-          // const nextState = state.effect
-          //   ? { ...state, effect: null }
-          //   : {
-          //       baseCobby: newImgReq("/Character/Cobby.gif"),
-          //       head: state.head ? newImgReq(updatedOutfits.head.gifUrl) : null,
-          //       body: state.body ? newImgReq(updatedOutfits.body.gifUrl) : null,
-          //       effect: newImgReq(updatedOutfits.effect.gifUrl),
-          //     };
-
           const nextState = {
             baseCobby: newImgReq("/Character/Cobby.gif"),
             head: state.head
