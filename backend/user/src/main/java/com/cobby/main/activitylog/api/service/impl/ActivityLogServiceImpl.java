@@ -2,6 +2,7 @@ package com.cobby.main.activitylog.api.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -78,23 +79,34 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 		var user = userRepository.findById(userId).orElseThrow(NotFoundException::new);
 
 		// 사용자의 커밋 활동 로그들을 조회
-		var activityLogs = activityLogRepository.findAllByType(userId, ActivityType.COMMIT);
+		if (activityLogRepository.findAllByType(userId, ActivityType.COMMIT).size() < 1) {
+			return CommitLogResponse.builder()
+				.activityLog(ActivityLog.builder()
+					.activityType(ActivityType.COMMIT)
+					.relayCnt(0L)
+					.build())
+				.todayCnt(0L)
+				.build();
+		} else {
 
-		// 조회한 로그들에서 오늘 커밋 횟수를 계산
-		var today = LocalDateTime.now().getDayOfMonth();
-		var todayCnt = activityLogs.stream()
-			.filter((log) ->
-				today == log.getCreatedAt().getDayOfMonth())
-			.toList()
-			.size();
+			var activityLogs = activityLogRepository.findAllByType(userId, ActivityType.COMMIT);
 
-		// 사용자의 커밋 활동 로그 중 가장 최근 것을 조회
-		var lastLog = activityLogs.get(0);
+			// 조회한 로그들에서 오늘 커밋 횟수를 계산
+			var today = LocalDateTime.now().getDayOfMonth();
+			var todayCnt = activityLogs.stream()
+				.filter((log) ->
+					today == log.getCreatedAt().getDayOfMonth())
+				.toList()
+				.size();
 
-		return CommitLogResponse.builder()
-			.activityLog(lastLog)
-			.todayCnt((long)todayCnt)
-			.build();
+			// 사용자의 커밋 활동 로그 중 가장 최근 것을 조회
+			var lastLog = activityLogs.get(0);
+
+			return CommitLogResponse.builder()
+				.activityLog(lastLog)
+				.todayCnt((long)todayCnt)
+				.build();
+		}
 	}
 
 	// 닉네임으로 사용자를 조회합니다.

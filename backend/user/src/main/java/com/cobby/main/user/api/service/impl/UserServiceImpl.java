@@ -137,14 +137,14 @@ public class UserServiceImpl implements UserService {
 						.build()
 				);
 
-				// commit 기록 하나 쌓기
-				activityLogRepository.save(
-					ActivityLog.builder()
-						.user(user)
-						.activityType(ActivityType.COMMIT)
-						.relayCnt(0L)
-						.build()
-				);
+				// // commit 기록 하나 쌓기
+				// activityLogRepository.save(
+				// 	ActivityLog.builder()
+				// 		.user(user)
+				// 		.activityType(ActivityType.COMMIT)
+				// 		.relayCnt(0L)
+				// 		.build()
+				// );
 
 				statRepository.save(stat);
 
