@@ -105,7 +105,6 @@ const QuestList = (props: Props) => {
     //아이템수령api쏴주고
     const res = await getQuestItem(token, qId);
     const data = res.data.content;
-    console.log(data);
     //새로운 퀘스트로 갱신됐을 것이니 전체리스트api 다시 쏴주고
     const questRes = await getQuests(token);
     const questData = questRes.data.content;

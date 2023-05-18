@@ -16,14 +16,6 @@ const QuestFunc = ({
 InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
 
-  // if (error) {
-  //   console.log(error);
-
-  //   // 오류 처리 로직
-  //   alert("페이지에 접근할 수 없습니다. 다시 로그인해주세요");
-  //   router.push("/");
-  //   return;
-  // }
   return (
     <Fragment>
       <page.PageWrapper>
@@ -41,7 +33,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const token = context.req.headers.cookie?.replace("Authorization=", "");
   const questRes = await getQuests(`${token}`);
   const questData = questRes.data.content;
-  console.log(questData);
   let cnt = 0;
   const tmpArr = [];
   for (let i = 0; i < questData.length; i++) {
@@ -51,7 +42,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
     tmpArr.push(questData[i]);
   }
-  console.log(tmpArr);
 
   return {
     props: {

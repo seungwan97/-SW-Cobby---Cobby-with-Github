@@ -39,8 +39,6 @@ const MainPage = (props: Props) => {
   const { attendanceData } = props;
   const { avatarData } = props;
 
-  console.log(props);
-
   return (
     <Fragment>
       <style.MainPageContent>

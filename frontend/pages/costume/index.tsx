@@ -58,7 +58,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     // 아바타 정보 가져오기
     const avatarRes = await getAvatarInfo(`${token}`);
     const avatarData = avatarRes.data;
-    console.log(avatarData);
 
     return {
       props: {

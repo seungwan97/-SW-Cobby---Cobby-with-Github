@@ -14,8 +14,6 @@ interface Props {
 }
 const ExpProgress = (props: Props) => {
   const { avatarData } = props;
-  console.log(avatarData.exp);
-  console.log(avatarData.nextExp);
 
   return (
     <>

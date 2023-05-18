@@ -57,8 +57,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const token = context.req.headers.cookie?.replace("Authorization=", "");
 
-    console.log(token);
-
     const nicknameRes = await getNicknameAndGithubURL(`${token}`);
     const nicknameData = nicknameRes.data;
 
@@ -73,7 +71,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const avatarRes = await getAvatarInfo(`${token}`);
     const avatarData = avatarRes.data;
-    console.log(avatarData);
 
     return {
       props: {
