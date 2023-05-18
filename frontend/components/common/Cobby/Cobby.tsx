@@ -4,32 +4,29 @@ import { useState, useEffect } from "react";
 
 const Cobby = (props: any) => {
   if (props.outfits.head.costumeId === 0) {
-    props.outfits.head.gifUrl =
-      "/CostumeItems_GIF/empty.gif";
+    props.outfits.head.gifUrl = "/CostumeItems_GIF/empty.gif";
   }
   if (props.outfits.body.costumeId === 0) {
-    props.outfits.body.gifUrl =
-      "/CostumeItems_GIF/empty.gif";
+    props.outfits.body.gifUrl = "/CostumeItems_GIF/empty.gif";
   }
   if (props.outfits.effect.costumeId === 0) {
-    props.outfits.effect.gifUrl =
-      "/CostumeItems_GIF/empty.gif";
+    props.outfits.effect.gifUrl = "/CostumeItems_GIF/empty.gif";
   }
 
   if (!props.isLoading) {
     return (
       <style.CobbyWrapper>
         {props.cobby.effect && (
-          <style.CobbyEffectItem src={props.cobby.effect} />
+          <style.CobbyEffectItem src={props.cobby.effect + `?${Date.now()}`} />
         )}
         {props.cobby.effect === null && (
           <style.CobbyEffectItem
-            src={props.outfits.effect.gifUrl}
+            src={props.outfits.effect.gifUrl + `?${Date.now()}`}
           />
         )}
         {props.cobby.effect === "" && (
           <style.CobbyEffectItem
-            src={props.outfits.effect.gifUrl}
+            src={props.outfits.effect.gifUrl + `?${Date.now()}`}
           />
         )}
         {/* <style.Cobby
@@ -37,33 +34,33 @@ const Cobby = (props: any) => {
           alt="Cobby"
         /> */}
         <style.Cobby
-          src={props.cobby.baseCobby}
+          src={props.cobby.baseCobby + `?${Date.now()}`}
           alt="Cobby"
         />
         {props.cobby.head && (
-          <style.CobbyHeadItem src={props.cobby.head} />
+          <style.CobbyHeadItem src={props.cobby.head + `?${Date.now()}`} />
         )}
         {props.cobby.head === null && (
           <style.CobbyHeadItem
-            src={props.outfits.head.gifUrl}
+            src={props.outfits.head.gifUrl + `?${Date.now()}`}
           />
         )}
         {props.cobby.head === "" && (
           <style.CobbyHeadItem
-            src={props.outfits.head.gifUrl}
+            src={props.outfits.head.gifUrl + `?${Date.now()}`}
           />
         )}
         {props.cobby.body && (
-          <style.CobbyBodyItem src={props.cobby.body} />
+          <style.CobbyBodyItem src={props.cobby.body + `?${Date.now()}`} />
         )}
         {props.cobby.body === null && (
           <style.CobbyBodyItem
-            src={props.outfits.body.gifUrl}
+            src={props.outfits.body.gifUrl + `?${Date.now()}`}
           />
         )}
         {props.cobby.body === "" && (
           <style.CobbyBodyItem
-            src={props.outfits.body.gifUrl}
+            src={props.outfits.body.gifUrl + `?${Date.now()}`}
           />
         )}
       </style.CobbyWrapper>
