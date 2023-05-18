@@ -51,7 +51,7 @@ public class AvatarServiceImpl implements AvatarService {
 
 		var outfits = getCostumeOutfits(avatarId, avatar.getOutfits());
 
-		var levelInfo = levelTableRepository.findTopByNextExpIsLessThanEqualOrderByLevelDesc(avatar.getExp())
+		var levelInfo = levelTableRepository.findTopByPrevExpIsLessThanEqualOrderByLevelDesc(avatar.getExp())
 			.orElseThrow(() -> new IllegalArgumentException("초기 경험치보다 작은 레벨이 존재하지 않습니다."));
 
 		return AvatarGetResponse.builder()
@@ -148,7 +148,7 @@ public class AvatarServiceImpl implements AvatarService {
 
 	private Avatar addInitialExp(Avatar newAvatar, Long initExp) {
 
-		var initLevel = levelTableRepository.findTopByNextExpIsLessThanEqualOrderByLevelDesc(initExp.intValue())
+		var initLevel = levelTableRepository.findTopByPrevExpIsLessThanEqualOrderByLevelDesc(initExp.intValue())
 			.orElseThrow(() -> new IllegalArgumentException("초기 경험치보다 작은 레벨이 존재하지 않습니다."));
 
 		return newAvatar.toBuilder()
@@ -211,7 +211,7 @@ public class AvatarServiceImpl implements AvatarService {
 		var expReward = ExpReward.valueOf(activityLog.get("type")).getValue();
 
 		var updatedExp = avatar.getExp() + expReward;
-		var levelInfo = levelTableRepository.findTopByNextExpIsLessThanEqualOrderByLevelDesc(updatedExp)
+		var levelInfo = levelTableRepository.findTopByPrevExpIsLessThanEqualOrderByLevelDesc(updatedExp)
 			.orElseThrow(NotFoundException::new);
 
 		// 경험치 변동에 따흔 아바타 정보 업데이트
