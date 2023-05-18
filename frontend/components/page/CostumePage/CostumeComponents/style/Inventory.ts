@@ -21,7 +21,9 @@ export const InventoryType: any = styled.div`
   text-align: center;
   margin: 10px 5px 0 5px;
   background-color: ${({ selected }: any) =>
-    selected ? colors.NavBarCreamColor : colors.ItemBoxColor};
+    selected
+      ? colors.NavBarCreamColor
+      : colors.ItemBoxColor};
   border-radius: 10px 10px 0px 0px;
   cursor: pointer;
 
@@ -54,5 +56,33 @@ export const InventoryBox = styled.div`
   }
   & > * {
     width: 100%;
+  }
+
+  @media (max-height: 1180px) {
+    height: 600px;
+  }
+
+  @media (max-height: 1024px) {
+    height: 500px;
+  }
+
+  @media (max-height: 915px) {
+    height: 430px;
+  }
+
+  @media (max-height: 844px) {
+    height: 330px;
+  }
+
+  @media (max-height: 812px) {
+    height: 330px;
+  }
+
+  @media (max-height: 736px) {
+    height: 250px;
+  }
+
+  @media (max-height: 667px) {
+    height: 250px;
   }
 `;
