@@ -21,9 +21,7 @@ export const InventoryType: any = styled.div`
   text-align: center;
   margin: 10px 5px 0 5px;
   background-color: ${({ selected }: any) =>
-    selected
-      ? colors.NavBarCreamColor
-      : colors.ItemBoxColor};
+    selected ? colors.NavBarCreamColor : colors.ItemBoxColor};
   border-radius: 10px 10px 0px 0px;
   cursor: pointer;
 
@@ -63,7 +61,7 @@ export const InventoryBox = styled.div`
   }
 
   @media (max-height: 1024px) {
-    height: 500px;
+    height: 350px;
   }
 
   @media (max-height: 915px) {

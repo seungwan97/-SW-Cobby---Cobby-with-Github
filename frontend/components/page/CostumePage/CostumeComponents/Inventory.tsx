@@ -114,6 +114,8 @@ const Inventory = (props: any) => {
           {headArr.map((item: any, index: number) => {
             return item.costumeId === 0 ? (
               <ItemBox
+                isDefault={true}
+                isOpened={true}
                 item={item}
                 key={index}
                 getto={true}
@@ -122,6 +124,11 @@ const Inventory = (props: any) => {
               />
             ) : (
               <ItemBox
+                isDefault={false}
+                isOpened={myHeadItems.some((myItem: any) => {
+                  if (myItem.costumeId === item.costumeId)
+                    return myItem.isOpened;
+                })}
                 item={item}
                 key={index}
                 getto={myHeadItems.some(
@@ -139,6 +146,8 @@ const Inventory = (props: any) => {
           {bodyArr.map((item: any, index: number) => {
             return item.costumeId === 0 ? (
               <ItemBox
+                isDefault={true}
+                isOpened={true}
                 item={item}
                 key={index}
                 getto={true}
@@ -147,6 +156,11 @@ const Inventory = (props: any) => {
               />
             ) : (
               <ItemBox
+                isDefault={false}
+                isOpened={myBodyItems.some((myItem: any) => {
+                  if (myItem.costumeId === item.costumeId)
+                    return myItem.isOpened;
+                })}
                 item={item}
                 key={index}
                 getto={myBodyItems.some(
@@ -164,6 +178,8 @@ const Inventory = (props: any) => {
           {effectArr.map((item: any, index: number) => {
             return item.costumeId === 0 ? (
               <ItemBox
+                isDefault={true}
+                isOpened={true}
                 item={item}
                 key={index}
                 getto={true}
@@ -172,6 +188,11 @@ const Inventory = (props: any) => {
               />
             ) : (
               <ItemBox
+                isDefault={false}
+                isOpened={myEffectItems.some((myItem: any) => {
+                  if (myItem.costumeId === item.costumeId)
+                    return myItem.isOpened;
+                })}
                 item={item}
                 key={index}
                 getto={myEffectItems.some(
