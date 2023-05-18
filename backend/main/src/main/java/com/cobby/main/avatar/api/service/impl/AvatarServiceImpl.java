@@ -51,9 +51,12 @@ public class AvatarServiceImpl implements AvatarService {
 
 		var outfits = getCostumeOutfits(avatarId, avatar.getOutfits());
 
+		var levelInfo = levelTableRepository.findTopByNextExpIsLessThanEqualOrderByLevelDesc(avatar.getExp())
+			.orElseThrow(() -> new IllegalArgumentException("초기 경험치보다 작은 레벨이 존재하지 않습니다."));
+
 		return AvatarGetResponse.builder()
-			.prevExp(getExp(false, avatar.getLevel()))
-			.nextExp(getExp(true, avatar.getLevel()))
+			.prevExp(levelInfo.getPrevExp())
+			.nextExp(levelInfo.getNextExp())
 			.avatar(avatar)
 			.outfits(outfits)
 			.build();
