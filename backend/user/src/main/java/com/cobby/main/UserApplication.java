@@ -6,10 +6,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
 @SpringBootApplication
-public class MainApplication {
+public class UserApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(MainApplication.class, args);
+    SpringApplication.run(UserApplication.class, args);
   }
 
 }
