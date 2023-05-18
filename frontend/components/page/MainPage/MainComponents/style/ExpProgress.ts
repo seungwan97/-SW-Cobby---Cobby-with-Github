@@ -30,9 +30,20 @@ export const FullDiv = styled.div`
   }
 `;
 
+<<<<<<< HEAD
 export const RangeDiv = styled.div<{ level: number; fullLevel: number }>`
   //   display: inline-block;
   width: ${(props) => (props.level / props.fullLevel) * 100}%;
+=======
+export const RangeDiv = styled.div<{
+  prevExp: number;
+  exp: number;
+  nextExp: number;
+}>`
+  //   display: inline-block;
+  width: ${(props) =>
+    ((props.exp - props.prevExp) / (props.nextExp - props.prevExp)) * 100}%;
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
   height: 100%;
   background-color: #333333;
 `;

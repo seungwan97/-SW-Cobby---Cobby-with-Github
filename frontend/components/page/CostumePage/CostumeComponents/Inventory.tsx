@@ -28,7 +28,10 @@ const Inventory = (props: any) => {
   const handleItemClick = (itemInfo: {}) => {
     // 클릭한 아이템의 정보를 상위 컴포넌트로 전달
     props.onItemClick(itemInfo);
+<<<<<<< HEAD
     console.log("CostumePage 컴포넌트로 ", itemInfo, " 전달했습니다.");
+=======
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
   };
 
   const handleTypeClick = (typeName: string) => {
@@ -44,9 +47,15 @@ const Inventory = (props: any) => {
   const [myBodyItems, setMyBodyItems] = useState([]);
   const [myEffectItems, setMyEffectItems] = useState([]);
 
+<<<<<<< HEAD
   const [myHead, setMyHead] = useState({});
   const [myBody, setMyBody] = useState({});
   const [myEffect, setMyEffect] = useState({});
+=======
+  const [myHead, setMyHead]: any = useState({});
+  const [myBody, setMyBody]: any = useState({});
+  const [myEffect, setMyEffect]: any = useState({});
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
 
   useEffect(() => {
     const index0 = {
@@ -76,11 +85,19 @@ const Inventory = (props: any) => {
 
     const getMyItems = async () => {
       // 내가 보유한 HEAD 코스튬 목록 불러오기
+<<<<<<< HEAD
       const resMyHEAD = await getMyCostumes(token, "HEAD");
       // 내가 보유한 BODY 코스튬 목록 불러오기
       const resMyBODY = await getMyCostumes(token, "BODY");
       // 내가 보유한 EFFECT 코스튬 목록 불러오기
       const resMyEFFECT = await getMyCostumes(token, "EFFECT");
+=======
+      const resMyHEAD: any = await getMyCostumes(token, "HEAD");
+      // 내가 보유한 BODY 코스튬 목록 불러오기
+      const resMyBODY: any = await getMyCostumes(token, "BODY");
+      // 내가 보유한 EFFECT 코스튬 목록 불러오기
+      const resMyEFFECT: any = await getMyCostumes(token, "EFFECT");
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
 
       setMyHeadItems(resMyHEAD.data.content);
       setMyBodyItems(resMyBODY.data.content);
@@ -111,6 +128,7 @@ const Inventory = (props: any) => {
       </style.InventoryBar>
       {itemType === "HEAD" && (
         <style.InventoryBox>
+<<<<<<< HEAD
           {headArr.map((item: any, index: number) => (
             <ItemBox
               item={item}
@@ -123,10 +141,45 @@ const Inventory = (props: any) => {
               onItemClick={handleItemClick}
             />
           ))}
+=======
+          {headArr.map((item: any, index: number) => {
+            return item.costumeId === 0 ? (
+              <ItemBox
+                isDefault={true}
+                isOpened={true}
+                item={item}
+                key={index}
+                getto={true}
+                selected={myHead.costumeId === item.costumeId}
+                onItemClick={handleItemClick}
+              />
+            ) : (
+              <ItemBox
+                isDefault={false}
+                isOpened={myHeadItems.some((myItem: any) => {
+                  if (myItem.costumeId === item.costumeId)
+                    return myItem.isOpened;
+                })}
+                costumeId={myHeadItems.map((myItem: any) => {
+                  if (myItem.costumeId === item.costumeId)
+                    return myItem.costumeId;
+                })}
+                item={item}
+                key={index}
+                getto={myHeadItems.some(
+                  (myItem: any) => myItem.costumeId === item.costumeId
+                )}
+                selected={myHead.costumeId === item.costumeId}
+                onItemClick={handleItemClick}
+              />
+            );
+          })}
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
         </style.InventoryBox>
       )}
       {itemType === "BODY" && (
         <style.InventoryBox>
+<<<<<<< HEAD
           {bodyArr.map((item: any, index: number) => (
             <ItemBox
               item={item}
@@ -139,10 +192,45 @@ const Inventory = (props: any) => {
               onItemClick={handleItemClick}
             />
           ))}
+=======
+          {bodyArr.map((item: any, index: number) => {
+            return item.costumeId === 0 ? (
+              <ItemBox
+                isDefault={true}
+                isOpened={true}
+                item={item}
+                key={index}
+                getto={true}
+                selected={myBody.costumeId === item.costumeId}
+                onItemClick={handleItemClick}
+              />
+            ) : (
+              <ItemBox
+                isDefault={false}
+                isOpened={myBodyItems.some((myItem: any) => {
+                  if (myItem.costumeId === item.costumeId)
+                    return myItem.isOpened;
+                })}
+                costumeId={myBodyItems.map((myItem: any) => {
+                  if (myItem.costumeId === item.costumeId)
+                    return myItem.costumeId;
+                })}
+                item={item}
+                key={index}
+                getto={myBodyItems.some(
+                  (myItem: any) => myItem.costumeId === item.costumeId
+                )}
+                selected={myBody.costumeId === item.costumeId}
+                onItemClick={handleItemClick}
+              />
+            );
+          })}
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
         </style.InventoryBox>
       )}
       {itemType === "EFFECT" && (
         <style.InventoryBox>
+<<<<<<< HEAD
           {effectArr.map((item: any, index: number) => (
             <ItemBox
               item={item}
@@ -155,6 +243,40 @@ const Inventory = (props: any) => {
               onItemClick={handleItemClick}
             />
           ))}
+=======
+          {effectArr.map((item: any, index: number) => {
+            return item.costumeId === 0 ? (
+              <ItemBox
+                isDefault={true}
+                isOpened={true}
+                item={item}
+                key={index}
+                getto={true}
+                selected={myEffect.costumeId === item.costumeId}
+                onItemClick={handleItemClick}
+              />
+            ) : (
+              <ItemBox
+                isDefault={false}
+                isOpened={myEffectItems.some((myItem: any) => {
+                  if (myItem.costumeId === item.costumeId)
+                    return myItem.isOpened;
+                })}
+                costumeId={myEffectItems.map((myItem: any) => {
+                  if (myItem.costumeId === item.costumeId)
+                    return myItem.costumeId;
+                })}
+                item={item}
+                key={index}
+                getto={myEffectItems.some(
+                  (myItem: any) => myItem.costumeId === item.costumeId
+                )}
+                selected={myEffect.costumeId === item.costumeId}
+                onItemClick={handleItemClick}
+              />
+            );
+          })}
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
         </style.InventoryBox>
       )}
     </style.Inventory>

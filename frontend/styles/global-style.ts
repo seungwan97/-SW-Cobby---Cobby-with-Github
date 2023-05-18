@@ -10,8 +10,13 @@ export const GlobalStyle = createGlobalStyle`
       margin: 0;
       padding: 0;
       background-color: #333333;
+<<<<<<< HEAD
       width: 100vw;
       height: 90vh;
+=======
+      width: 90vw;
+      height: 95vh;
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
     }
     body {
        /* 스크롤바 없에기 */
@@ -21,6 +26,10 @@ export const GlobalStyle = createGlobalStyle`
     position: absolute;
     top: 50%;
     left: 50%;
+<<<<<<< HEAD
+=======
+    width:30%;
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
     transform: translate(-50%,-50%);
     }
 
@@ -30,8 +39,13 @@ export const GlobalStyle = createGlobalStyle`
           margin: 0;
           padding: 0;
           background-color: white;
+<<<<<<< HEAD
           width: 100vw;
           height: 100vh;
+=======
+          width: 90vw;
+          height: 95vh;
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
         }
 
         body {
@@ -44,6 +58,7 @@ export const GlobalStyle = createGlobalStyle`
           background-color: #fffff8;
         }         
     }
+<<<<<<< HEAD
 
     @media (min-width: 768px) and (max-width: 991px) {
         // 테블릿 세로
@@ -56,6 +71,8 @@ export const GlobalStyle = createGlobalStyle`
     @media (min-width: 1200px) {
         // 데스크탑 일반
     }
+=======
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
 `;
 
 export const colors = createGlobalStyle`

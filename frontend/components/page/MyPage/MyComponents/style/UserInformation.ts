@@ -20,3 +20,12 @@ export const InfoContent = styled.div`
   justify-content: space-around;
   padding: 0 10% 0 10%;
 `;
+<<<<<<< HEAD
+=======
+
+export const Margin = styled.div`
+  margin-bottom: 3%;
+`;
+
+export const Margin2 = styled.div``;
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34

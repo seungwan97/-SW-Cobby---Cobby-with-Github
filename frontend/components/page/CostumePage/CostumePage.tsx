@@ -9,6 +9,7 @@ import Cobby from "@/components/common/Cobby/Cobby";
 import { getAvatarInfo, patchAvatarInfo } from "@/pages/api/main";
 import cookie from "react-cookies";
 
+<<<<<<< HEAD
 // CostumePage
 const CostumePage = (props: any) => {
   const [outfits, setOutfits]: any = useState({
@@ -16,6 +17,18 @@ const CostumePage = (props: any) => {
     body: {},
     effect: {},
   });
+=======
+interface Props {
+  HEAD_ITEMS: any;
+  BODY_ITEMS: any;
+  EFFECT_ITEMS: any;
+  cobbyOutfits: any;
+}
+
+// CostumePage
+const CostumePage = (props: Props) => {
+  const [outfits, setOutfits]: any = useState(props.cobbyOutfits);
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
 
   const [cobby, setCobby]: any = useState({
     baseCobby: "/Character/Cobby.gif" + "?" + Date.now(),
@@ -24,6 +37,7 @@ const CostumePage = (props: any) => {
     effect: null,
   });
 
+<<<<<<< HEAD
   // 나의 코비의 outfits 를 불러오기
   useEffect(() => {
     const getCobbyOutfits = async () => {
@@ -54,6 +68,9 @@ const CostumePage = (props: any) => {
   const handleInventoryItem = (itemInfo: any) => {
     console.log("전달받은 itemInfo : ", itemInfo);
 
+=======
+  const handleInventoryItem = (itemInfo: any) => {
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
     // 나의 Cobby 의 outfits 업데이트해주기
     setOutfits((prevOutfits: any) => {
       let updatedOutfits = { ...prevOutfits };
@@ -62,6 +79,7 @@ const CostumePage = (props: any) => {
         updatedOutfits.head = itemInfo;
 
         setCobby((state: any) => {
+<<<<<<< HEAD
           // const nextState = state.head
           //   ? { ...state, head: null }
           //   : {
@@ -73,6 +91,8 @@ const CostumePage = (props: any) => {
           //         : null,
           //     };
 
+=======
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
           const nextState = {
             baseCobby: newImgReq("/Character/Cobby.gif"),
             head: newImgReq(updatedOutfits.head.gifUrl),
@@ -88,6 +108,7 @@ const CostumePage = (props: any) => {
         updatedOutfits.body = itemInfo;
 
         setCobby((state: any) => {
+<<<<<<< HEAD
           // const nextState = state.body
           //   ? { ...state, body: null }
           //   : {
@@ -99,6 +120,8 @@ const CostumePage = (props: any) => {
           //         : null,
           //     };
 
+=======
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
           const nextState = {
             baseCobby: newImgReq("/Character/Cobby.gif"),
             head: state.head ? newImgReq(updatedOutfits.head.gifUrl) : null,
@@ -114,6 +137,7 @@ const CostumePage = (props: any) => {
         updatedOutfits.effect = itemInfo;
 
         setCobby((state: any) => {
+<<<<<<< HEAD
           // const nextState = state.effect
           //   ? { ...state, effect: null }
           //   : {
@@ -123,6 +147,8 @@ const CostumePage = (props: any) => {
           //       effect: newImgReq(updatedOutfits.effect.gifUrl),
           //     };
 
+=======
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
           const nextState = {
             baseCobby: newImgReq("/Character/Cobby.gif"),
             head: state.head ? newImgReq(updatedOutfits.head.gifUrl) : null,
@@ -143,9 +169,13 @@ const CostumePage = (props: any) => {
         effect: updatedOutfits.effect.costumeId,
       };
 
+<<<<<<< HEAD
       patchAvatarInfo(token, data).then((res) => {
         console.log(res.data.content);
       });
+=======
+      patchAvatarInfo(token, data).then((res) => {});
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
 
       return updatedOutfits;
     });
@@ -177,10 +207,15 @@ const CostumePage = (props: any) => {
       cacheImages(Object.values(cobby))
         .then(() => {
           setIsLoading(false);
+<<<<<<< HEAD
           console.log(cobby);
         })
         .catch((err) => {
           console.log("error!");
+=======
+        })
+        .catch((err) => {
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
           setIsLoading(true);
         });
     }, [cobby]);

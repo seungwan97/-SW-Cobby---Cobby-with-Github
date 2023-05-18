@@ -4,10 +4,17 @@ const req = "/api/user";
 
 // 메인페이지 닉네임, 깃허브url 정보 불러오기
 export const getNicknameAndGithubURL = async (userId: string) => {
+<<<<<<< HEAD
   console.log("getNicknameAndGithubURL : " + userId);
   const response = await client.get(`${req}/users/info`, {
     headers: {
       Authorization: userId,
+=======
+  const response = await client.get(`${req}/users/info`, {
+    headers: {
+      Authorization: userId,
+      withCredentials: true
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
     },
   });
 
@@ -19,6 +26,10 @@ export const getStatus = async (userId: string) => {
   const response = await client.get(`${req}/stat`, {
     headers: {
       Authorization: userId,
+<<<<<<< HEAD
+=======
+      withCredentials: true
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
     },
   });
 
@@ -30,6 +41,10 @@ export const getCommitInfo = async (userId: string) => {
   const response = await client.get(`${req}/activityLog/commit`, {
     headers: {
       Authorization: userId,
+<<<<<<< HEAD
+=======
+      withCredentials: true
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
     },
   });
 
@@ -41,8 +56,28 @@ export const getAttendanceInfo = async (userId: string) => {
   const response = await client.get(`${req}/activityLog/attendance`, {
     headers: {
       Authorization: userId,
+<<<<<<< HEAD
+=======
+      withCredentials: true
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
     },
   });
 
   return response;
 };
+<<<<<<< HEAD
+=======
+
+// 메인페이지 연속 출석일수 정보 불러오기
+export const doSignOut = async (token: string) => {
+  const response = await client.get(`${req}/users/signout`, {
+    headers: {
+      Authorization: token,
+      withCredentials: true
+    },
+  });
+
+  return response;
+};
+
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34

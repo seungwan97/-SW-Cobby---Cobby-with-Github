@@ -13,10 +13,39 @@ import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 
 const LoginPage = () => {
   const outfits = {
+<<<<<<< HEAD
     head: "",
     body: "",
     effect: "",
   };
+=======
+    head: {
+      costumeId: 0,
+      name: "empty",
+      category: "head",
+      questId: null,
+      imgUrl: "/empty.png",
+      gifUrl: "/CostumeItems_GIF/empty.gif",
+    },
+    body: {
+      costumeId: 0,
+      name: "empty",
+      category: "body",
+      questId: null,
+      imgUrl: "/empty.png",
+      gifUrl: "/CostumeItems_GIF/empty.gif",
+    },
+    effect: {
+      costumeId: 0,
+      name: "empty",
+      category: "effect",
+      questId: null,
+      imgUrl: "/empty.png",
+      gifUrl: "/CostumeItems_GIF/empty.gif",
+    },
+  };
+
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
   return (
     <style.LoginPageWrapper>
       <style.LoginPageContent>
@@ -28,7 +57,10 @@ const LoginPage = () => {
       </style.LoginPageContent>
       <style.LoginBtnMargin />
       <GithubLoginButton />
+<<<<<<< HEAD
       <BottomNavBar />
+=======
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
     </style.LoginPageWrapper>
   );
 };

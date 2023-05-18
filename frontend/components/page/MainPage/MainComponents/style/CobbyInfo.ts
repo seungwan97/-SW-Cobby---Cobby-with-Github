@@ -42,4 +42,8 @@ export const TextMargin = styled.div`
 
 export const CobbyInfoWrapper = styled.div`
   text-align: center;
+<<<<<<< HEAD
+=======
+  margin : 5%;
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
 `;

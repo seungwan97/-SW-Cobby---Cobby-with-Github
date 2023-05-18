@@ -24,6 +24,10 @@
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.1",
     "hapi-auth-github": "^2.1.2",
+<<<<<<< HEAD
+=======
+    "js-cookie": "^3.0.5",
+>>>>>>> b0bd697a84067e765ab6e03479a065209faf7f34
     "next": "13.3.1",
     "next-cookies": "^2.0.3",
     "react": "^18.2.0",
