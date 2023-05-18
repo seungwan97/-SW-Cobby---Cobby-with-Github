@@ -98,7 +98,6 @@ public class AvatarItemController {
 			.body(new BaseResponseBody<>(201, "created", successMessage));
 	}
 
-	@Hidden
 	@ApiDocumentResponse
 	@Operation(summary = "인벤토리에 새로운 코스튬 열어보기", description = "코스튬의 상태를 새로 획득한 코스튬에서 일반 코스튬 상태로 변경합니다.")
 	@PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
