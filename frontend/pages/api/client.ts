@@ -8,7 +8,7 @@ const port = [15010, 15020, 15030, 15040, 15050];
 // client.defaults.baseURL = `http://localhost:${port[1]}`;
 
 // 로컬 리다이렉트 용 (location.href)
-client.defaults.url = "http://localhost:3000";
+// client.defaults.url = "http://localhost:3000";
 
 // 배포 서버 용
 client.defaults.baseURL = `https://cobby-play.com`;

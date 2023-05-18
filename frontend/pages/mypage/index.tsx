@@ -48,7 +48,16 @@ export default MyFunc;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    const token = context.req.headers.cookie?.replace("Authorization=", "");
+
+    const cookieString: any = context.req.headers.cookie?.split("; ");
+    let result: any = {};
+
+    for (var i = 0; i < cookieString.length; i++) {
+      var cur = cookieString[i].split("=");
+      result[cur[0]] = cur[1];
+    }
+    const token = result["Authorization"];
+
     // 닉네임, 깃허브url
     const res = await getNicknameAndGithubURL(`${token}`);
 

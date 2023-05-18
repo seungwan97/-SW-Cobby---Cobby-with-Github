@@ -7,6 +7,7 @@ export const getAvatarInfo = async (userId: string) => {
   const response = await client.get(`${req}/avatars`, {
     headers: {
       Authorization: `${userId}`,
+      withCredentials: true
     },
   });
 
@@ -20,6 +21,7 @@ export const getInventoryItem = async (token: string, itemType: string) => {
     {
       headers: {
         Authorization: `${token}`,
+        withCredentials: true
       },
     }
   );
@@ -34,6 +36,7 @@ export const getMyCostumes = async (token: string, itemType: string) => {
     {
       headers: {
         Authorization: `${token}`,
+        withCredentials: true
       },
     }
   );
@@ -47,6 +50,7 @@ export const patchAvatarInfo = async (token: string, data: {}) => {
     headers: {
       Authorization: token,
       "Content-Type": "application/json",
+      withCredentials: true
     },
   });
 
@@ -58,6 +62,7 @@ export const getQuests = async (token: string) => {
   const response = await client.get(`${req}/quests/current`, {
     headers: {
       Authorization: token,
+      withCredentials: true
     },
   });
 
@@ -69,6 +74,7 @@ export const getQuestItem = async (token: string, questId: number) => {
   const response = await client.get(`${req}/quests/getItem/${questId}`, {
     headers: {
       Authorization: token,
+      withCredentials: true
     },
   });
 
@@ -77,7 +83,7 @@ export const getQuestItem = async (token: string, questId: number) => {
 
 // 칭호 목록 전체조회
 export const getTitles = async () => {
-  const response = await client.get(`${req}/titles`, {});
+  const response = await client.get(`${req}/titles`, { withCredentials: true });
 
   return response;
 };
@@ -87,6 +93,7 @@ export const getAllItemList = async (category: string, token: string) => {
   const response = await client.get(`${req}/costumes/${category}`, {
     headers: {
       Authorization: token,
+      withCredentials: true
     },
   });
 
@@ -103,6 +110,7 @@ export const patchInventories = async (costumeID: string, token: string) => {
     {
       headers: {
         Authorization: token,
+        withCredentials: true
       },
     }
   );

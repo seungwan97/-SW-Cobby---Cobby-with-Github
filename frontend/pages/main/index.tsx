@@ -3,7 +3,6 @@ import { Fragment, useEffect } from "react";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import MainPage from "@/components/page/MainPage/MainPage";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
-import { getCookie } from "@/util/cookie";
 
 import {
   getNicknameAndGithubURL,
@@ -16,7 +15,7 @@ import { getAvatarInfo } from "../api/main";
 
 import { GetServerSideProps } from "next";
 import { InferGetServerSidePropsType } from "next";
-
+import cookie from "react-cookies";
 //main page
 const MainFunc = ({
   nicknameData,
@@ -30,7 +29,8 @@ const MainFunc = ({
 
   if (error) {
     // 오류 처리 로직
-    alert("페이지에 접근할 수 없습니다. 다시 로그인해주세요");
+    const token = cookie.load("Authorization");
+    alert(error);
     router.push("/");
     return;
   }
@@ -55,8 +55,23 @@ export default MainFunc;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
-    const token = context.req.headers.cookie?.replace("Authorization=", "");
+    // const token = `Bearer-${context.req.headers.cookie?.split("Bearer-")[1].replace("\r\n", "")}`;
+    // const token2 = await cookie.load("Authorization");
 
+
+    const cookieString: any = context.req.headers.cookie?.split("; ");
+    let result: any = {};
+
+    for (var i = 0; i < cookieString.length; i++) {
+      var cur = cookieString[i].split("=");
+      result[cur[0]] = cur[1];
+    }
+    const token = result["Authorization"];
+
+
+    /*
+    SESSIONID=60F0E5EFFE64C8BC0BB1BB97FB663C22; refreshToken=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YzUyMDMzYy01YWUyLTRmODEtYjVlYi03ZDE2ZGJjNmZmMGIiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0NDEzNDA5LCJleHAiOjI1NTUzMjU0MDl9.gKpTIzqBRzQQ6KoZpY_FVZ6Wk1AUkQ9_LxFc4wHDDig; Bearer-eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1YzUyMDMzYy01YWUyLTRmODEtYjVlYi03ZDE2ZGJjNmZmMGIiLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWF0IjoxNjg0NDEzNDA5LCJleHAiOjE2ODUwMTgyMDl9.c6kZgB3P7bhvTJDja1dKe79NKz67emqHKExE7NZz2rc
+    */
     const nicknameRes = await getNicknameAndGithubURL(`${token}`);
     const nicknameData = nicknameRes.data;
 
@@ -82,9 +97,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   } catch (e) {
+
+
     return {
       props: {
-        error: "An error occurred",
+        error: e,
       },
     };
   }

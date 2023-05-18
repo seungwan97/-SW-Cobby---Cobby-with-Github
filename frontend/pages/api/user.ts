@@ -7,6 +7,7 @@ export const getNicknameAndGithubURL = async (userId: string) => {
   const response = await client.get(`${req}/users/info`, {
     headers: {
       Authorization: userId,
+      withCredentials: true
     },
   });
 
@@ -18,6 +19,7 @@ export const getStatus = async (userId: string) => {
   const response = await client.get(`${req}/stat`, {
     headers: {
       Authorization: userId,
+      withCredentials: true
     },
   });
 
@@ -29,6 +31,7 @@ export const getCommitInfo = async (userId: string) => {
   const response = await client.get(`${req}/activityLog/commit`, {
     headers: {
       Authorization: userId,
+      withCredentials: true
     },
   });
 
@@ -40,6 +43,7 @@ export const getAttendanceInfo = async (userId: string) => {
   const response = await client.get(`${req}/activityLog/attendance`, {
     headers: {
       Authorization: userId,
+      withCredentials: true
     },
   });
 
@@ -51,8 +55,10 @@ export const doSignOut = async (token: string) => {
   const response = await client.get(`${req}/users/signout`, {
     headers: {
       Authorization: token,
+      withCredentials: true
     },
   });
 
   return response;
 };
+
