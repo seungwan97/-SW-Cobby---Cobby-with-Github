@@ -19,7 +19,7 @@ const CurrentCommit = (props: Props) => {
         size={23}
         content={`${nicknameData.nickname} visited ${
           attendanceData.relayCnt
-        } time${attendanceData.relayCnt > 1 ? "s" : null} today.`}
+        } time${attendanceData.relayCnt > 1 ? "s" : ""} today.`}
       />
     </style.CommitContainer>
   );

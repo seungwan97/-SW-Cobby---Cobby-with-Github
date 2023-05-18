@@ -23,6 +23,7 @@ interface Props {
   avatarData: {
     level: number;
     exp: number;
+    prevExp: number;
     nextExp: number;
     outfits: {
       head: string;
@@ -43,14 +44,8 @@ const MainPage = (props: Props) => {
   return (
     <Fragment>
       <style.MainPageContent>
-        <CobbyInfo
-          nicknameData={nicknameData}
-          avatarData={avatarData}
-        />
-        <GithubStatus
-          statusData={statusData}
-          commitData={commitData}
-        />
+        <CobbyInfo nicknameData={nicknameData} avatarData={avatarData} />
+        <GithubStatus statusData={statusData} commitData={commitData} />
         <CurrentCommit
           nicknameData={nicknameData}
           attendanceData={attendanceData}

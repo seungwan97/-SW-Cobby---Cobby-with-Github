@@ -10,6 +10,7 @@ interface Props {
   avatarData: {
     level: number;
     exp: number;
+    prevExp: number;
     nextExp: number;
     outfits: {
       head: any;
@@ -24,15 +25,9 @@ const CobbyInfo = (props: Props) => {
 
   return (
     <style.CobbyInfoWrapper>
-      <TextBox
-        size={37}
-        content={`${nicknameData.nickname}'s Cobby`}
-      />
+      <TextBox size={37} content={`${nicknameData.nickname}'s Cobby`} />
       <style.TextMargin />
-      <TextBox
-        size={25}
-        content={`Lv. ${avatarData.level}`}
-      />
+      <TextBox size={25} content={`Lv. ${avatarData.level}`} />
       <style.Margin />
       <Cobby outfits={avatarData.outfits} />
       <ExpBar avatarData={avatarData} />

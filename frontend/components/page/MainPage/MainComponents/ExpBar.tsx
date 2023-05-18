@@ -6,6 +6,7 @@ interface Props {
   avatarData: {
     level: number;
     exp: number;
+    prevExp: number;
     nextExp: number;
     outfits: {
       head: string;

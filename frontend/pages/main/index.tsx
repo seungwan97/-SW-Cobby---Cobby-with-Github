@@ -73,6 +73,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     const avatarRes = await getAvatarInfo(`${token}`);
     const avatarData = avatarRes.data;
+    console.log(avatarData);
 
     return {
       props: {
