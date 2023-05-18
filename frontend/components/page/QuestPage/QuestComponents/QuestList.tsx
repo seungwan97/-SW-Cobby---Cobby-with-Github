@@ -4,6 +4,7 @@ import * as style from "./style/QuestPage";
 import cookie from "react-cookies";
 import { getQuestItem, getQuests } from "@/pages/api/main";
 import TextBox from "@/components/common/TextBox/TextBox";
+import { log } from "console";
 interface Props {
   questData: [
     {
@@ -72,7 +73,23 @@ const QuestList = (props: Props) => {
   const { questData } = props;
   const [arr, setArr] = useState(questData);
   const [data, setData] = useState(false);
+  useEffect(() => {
+    let cnt = 0;
+    for (let i = 0; i < questData.length; i++) {
+      console.log(questData[i].questId);
+      console.log(questData.length);
+
+      if (questData[i].questId === -1) {
+        cnt += 1;
+      }
+    }
+    if (cnt == 4) {
+      setData(true);
+      console.log("퀘스트없음");
+    }
+  }, []);
   const modifyData = async (qId: number) => {
+    setData(false);
     const token = cookie.load("Authorization");
     //아이템수령api쏴주고
     const res = await getQuestItem(token, qId);
@@ -82,12 +99,14 @@ const QuestList = (props: Props) => {
     const questRes = await getQuests(token);
     const questData = questRes.data.content;
     console.log(questData);
+    let cnt = 0;
     for (let i = 0; i < questData.length; i++) {
       if (questData[i].questId === -1) {
         questData.splice(i, 1);
+        cnt += 1;
       }
     }
-    if (questData.length === 0) {
+    if (cnt == 4) {
       setData(true);
     }
     console.log(questData);
@@ -98,10 +117,16 @@ const QuestList = (props: Props) => {
 
   return (
     <style.QuestListWrapper>
-      {arr.map((item, index) => (
-        <QuestItem key={index} questData={item} modifyData={modifyData} />
-      ))}
-      {data && <TextBox size={30} content={"모든 퀘스트를 완료하였습니다!"} />}
+      {!data &&
+        arr.map((item, index) => (
+          <QuestItem key={index} questData={item} modifyData={modifyData} />
+        ))}
+      {data && (
+        <div>
+          <style.Margin />
+          <TextBox size={30} content={"모든 퀘스트를 완료하였습니다!"} />
+        </div>
+      )}
     </style.QuestListWrapper>
   );
 };
