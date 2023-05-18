@@ -42,18 +42,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const questRes = await getQuests(`${token}`);
   const questData = questRes.data.content;
   console.log(questData);
-
-  // const num = questData.length;
-  // for (let i = 0; i < num; i++) {
-  //   if (questData[i].questId === -1) {
-  //     questData.splice(i, 1);
-  //   }
-  // }
-  // console.log(questData);
+  let cnt = 0;
+  const tmpArr = [];
+  for (let i = 0; i < questData.length; i++) {
+    if (questData[i].questId === -1) {
+      cnt += 1;
+      continue;
+    }
+    tmpArr.push(questData[i]);
+  }
+  console.log(tmpArr);
 
   return {
     props: {
-      questData: questData,
+      questData: tmpArr,
     },
   };
   // } catch (e) {
