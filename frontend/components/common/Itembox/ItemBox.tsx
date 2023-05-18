@@ -8,7 +8,7 @@ const ItemBox = (props: any) => {
     const costumeId = props.costumeId.filter(
       (item: any) => item !== undefined
     )[0];
-
+    console.log("costumeId", costumeId);
     if (props.isOpened === false) {
       const token = cookie.load("Authorization");
 
