@@ -14,19 +14,19 @@ const ItemBox = (props: any) => {
   });
 
   const handleItemClick = async () => {
-    const costumeId = props.costumeId.filter(
-      (item: any) => item !== undefined
-    )[0];
+    // const costumeId = props.costumeId.filter(
+    //   (item: any) => item !== undefined
+    // )[0];
 
-    if (props.isOpened === false) {
-      const token = cookie.load("Authorization");
+    // if (props.isOpened === false) {
+    //   const token = cookie.load("Authorization");
 
-      await patchInventories(costumeId, token).then((res) => {
-        if (res.status === 200) {
-          setIsNew(false);
-        }
-      });
-    }
+    //   await patchInventories(costumeId, token).then((res) => {
+    //     if (res.status === 200) {
+    //       setIsNew(false);
+    //     }
+    //   });
+    // }
     props.onItemClick(props.item);
   };
 
@@ -44,9 +44,9 @@ const ItemBox = (props: any) => {
         width={80}
         height={65}
       />
-      {!props.isOpened && props.getto && isNew ? (
+      {/* {!props.isOpened && props.getto && isNew ? (
         <style.isNew>new</style.isNew>
-      ) : null}
+      ) : null} */}
       <style.Filter select={props.getto} />
       <style.LockFilter select={props.getto} />
     </style.ImageWrapper>

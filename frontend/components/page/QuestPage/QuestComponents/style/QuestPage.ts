@@ -5,6 +5,34 @@ import Image from "next/image";
 
 export const QuestPageWrapper = styled.div`
   text-align: center;
+
+  @media (max-height: 1180px) {
+    height: 600px;
+  }
+
+  @media (max-height: 1024px) {
+    height: 350px;
+  }
+
+  @media (max-height: 915px) {
+    height: 430px;
+  }
+
+  @media (max-height: 844px) {
+    height: 330px;
+  }
+
+  @media (max-height: 812px) {
+    height: 330px;
+  }
+
+  @media (max-height: 736px) {
+    height: 250px;
+  }
+
+  @media (max-height: 667px) {
+    height: 250px;
+  }
 `;
 
 export const QuestPageTextWrapper = styled.div`
@@ -25,12 +53,11 @@ export const QuestListWrapper = styled.div`
 
 export const QuestItemWrapper = styled.div`
   text-align: center;
-  width: 70%;
+  width: 85%;
   padding: 5px;
   background-color: ${colors.NavBarCreamColor};
   margin: 10px;
   padding-top: 15px;
-  height: 130px;
 
   @media (min-width: 1300px) {
     width: 100%;
@@ -105,7 +132,7 @@ export const CustomProgressBar = styled(ProgressBar)`
   margin-right: 3%;
 `;
 
-export const CustomImage = styled(Image)<{ width: number; height: number }>`
+export const CustomImage = styled(Image) <{ width: number; height: number }>`
   @media (max-width: 767px) {
     width: ${(props) => props.width * 0.75}px;
     height: ${(props) => props.height * 0.75}px;
