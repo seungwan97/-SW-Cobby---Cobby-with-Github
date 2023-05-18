@@ -38,6 +38,7 @@ public class AvatarGetResponse {
 		this.outfits = outfits;
 		this.costumes = avatar.getCostumes().stream()
 			.map(avatarCostume -> AvatarCostumeGetResponse.builder()
+				.isOpened(avatarCostume.getIsOpened())
 				.costume(avatarCostume.getCostume())
 				.build())
 			.toList();
