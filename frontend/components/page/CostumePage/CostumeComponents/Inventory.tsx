@@ -129,6 +129,10 @@ const Inventory = (props: any) => {
                   if (myItem.costumeId === item.costumeId)
                     return myItem.isOpened;
                 })}
+                costumeId={myHeadItems.map((myItem: any) => {
+                  if (myItem.costumeId === item.costumeId)
+                    return myItem.costumeId;
+                })}
                 item={item}
                 key={index}
                 getto={myHeadItems.some(
@@ -161,6 +165,10 @@ const Inventory = (props: any) => {
                   if (myItem.costumeId === item.costumeId)
                     return myItem.isOpened;
                 })}
+                costumeId={myBodyItems.some((myItem: any) => {
+                  if (myItem.costumeId === item.costumeId)
+                    return myItem.costumeId;
+                })}
                 item={item}
                 key={index}
                 getto={myBodyItems.some(
@@ -192,6 +200,10 @@ const Inventory = (props: any) => {
                 isOpened={myEffectItems.some((myItem: any) => {
                   if (myItem.costumeId === item.costumeId)
                     return myItem.isOpened;
+                })}
+                costumeId={myEffectItems.some((myItem: any) => {
+                  if (myItem.costumeId === item.costumeId)
+                    return myItem.costumeId;
                 })}
                 item={item}
                 key={index}
