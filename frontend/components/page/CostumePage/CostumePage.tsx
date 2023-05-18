@@ -1,12 +1,20 @@
 // 유저별 코스튬 페이지
-import { Fragment, useState, useEffect, useLayoutEffect } from "react";
+import {
+  Fragment,
+  useState,
+  useEffect,
+  useLayoutEffect,
+} from "react";
 import * as page from "@/components/layout/PageWrapper/style/PageWrapper";
 import BottomNavBar from "@/components/layout/BottomNavBar/BottomNavBar";
 import TextBox from "@/components/common/TextBox/TextBox";
 import Inventory from "./CostumeComponents/Inventory";
 import * as style from "./CostumeComponents/style/CostumePage";
 import Cobby from "@/components/common/Cobby/Cobby";
-import { getAvatarInfo, patchAvatarInfo } from "@/pages/api/main";
+import {
+  getAvatarInfo,
+  patchAvatarInfo,
+} from "@/pages/api/main";
 import cookie from "react-cookies";
 
 // CostumePage
@@ -76,7 +84,9 @@ const CostumePage = (props: any) => {
           const nextState = {
             baseCobby: newImgReq("/Character/Cobby.gif"),
             head: newImgReq(updatedOutfits.head.gifUrl),
-            body: state.body ? newImgReq(updatedOutfits.body.gifUrl) : null,
+            body: state.body
+              ? newImgReq(updatedOutfits.body.gifUrl)
+              : null,
             effect: state.effect
               ? newImgReq(updatedOutfits.effect.gifUrl)
               : null,
@@ -101,7 +111,9 @@ const CostumePage = (props: any) => {
 
           const nextState = {
             baseCobby: newImgReq("/Character/Cobby.gif"),
-            head: state.head ? newImgReq(updatedOutfits.head.gifUrl) : null,
+            head: state.head
+              ? newImgReq(updatedOutfits.head.gifUrl)
+              : null,
             body: newImgReq(updatedOutfits.body.gifUrl),
             effect: state.effect
               ? newImgReq(updatedOutfits.effect.gifUrl)
@@ -125,8 +137,12 @@ const CostumePage = (props: any) => {
 
           const nextState = {
             baseCobby: newImgReq("/Character/Cobby.gif"),
-            head: state.head ? newImgReq(updatedOutfits.head.gifUrl) : null,
-            body: state.body ? newImgReq(updatedOutfits.body.gifUrl) : null,
+            head: state.head
+              ? newImgReq(updatedOutfits.head.gifUrl)
+              : null,
+            body: state.body
+              ? newImgReq(updatedOutfits.body.gifUrl)
+              : null,
             effect: newImgReq(updatedOutfits.effect.gifUrl),
           };
 
@@ -201,7 +217,11 @@ const CostumePage = (props: any) => {
           <TextBox size={50} content={"COSTUME"} />
         </style.CostumePageTextWrapper>
         <style.CostumedCobby>
-          <Cobby outfits={outfits} isLoading={isLoading} cobby={cobby} />
+          <Cobby
+            outfits={outfits}
+            isLoading={isLoading}
+            cobby={cobby}
+          />
         </style.CostumedCobby>
         <Inventory
           headItemList={props.HEAD_ITEMS}
