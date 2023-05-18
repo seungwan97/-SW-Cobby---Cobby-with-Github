@@ -24,8 +24,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-@Transactional
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AvatarServiceImpl implements AvatarService {
@@ -40,8 +41,10 @@ public class AvatarServiceImpl implements AvatarService {
 
 	@Override
 	public AvatarGetResponse selectAvatar(String avatarId) throws JsonProcessingException {
+
 		var avatar = avatarRepository.findById(avatarId)
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + avatarId + ")"));
+
 
 		var outfits = getCostumeOutfits(avatarId, avatar.getOutfits());
 
@@ -53,7 +56,6 @@ public class AvatarServiceImpl implements AvatarService {
 			.avatar(avatar)
 			.outfits(outfits)
 			.build();
-
 	}
 
 	private Map<String, CostumeGetResponse> getCostumeOutfits(String avatarId, final String idMapString) throws JsonProcessingException {
@@ -104,9 +106,11 @@ public class AvatarServiceImpl implements AvatarService {
 		return outfits;
 	}
 
+	@Transactional
 	@KafkaListener(topics = "create-new-avatar")
 	public String insertNewAvatar(String kafkaMessage) throws JsonProcessingException {
 
+		log.info("create-new-avatar topic message income ==> " + kafkaMessage);
 		// Map 형태로 kafka 메시지를 파싱
 		Map<String, String> userinfo = objectMapper.readValue(
 			kafkaMessage,
@@ -133,6 +137,8 @@ public class AvatarServiceImpl implements AvatarService {
 
 		newAvatar = addInitialExp(newAvatar, initExp);
 
+		log.info("new avatar created => lv:" + newAvatar.getLevel() + " , exp:" + newAvatar.getExp());
+
 		return avatarRepository.save(newAvatar).getAvatarId();
 	}
 
@@ -147,6 +153,7 @@ public class AvatarServiceImpl implements AvatarService {
 			.build();
 	}
 
+	@Transactional
 	@Override
 	public String updateAvatar(String avatarId, AvatarPatchRequest avatarUpdateInfo) throws JsonProcessingException {
 
@@ -184,6 +191,7 @@ public class AvatarServiceImpl implements AvatarService {
 		return avatarRepository.save(avatar).getAvatarId();
 	}
 
+	@Transactional
 	@KafkaListener(topics = "exp-update")
 	public void updateAvatarExp(String kafkaMessage) throws JsonProcessingException {
 		Map<String, String> activityLog = objectMapper.readValue(
