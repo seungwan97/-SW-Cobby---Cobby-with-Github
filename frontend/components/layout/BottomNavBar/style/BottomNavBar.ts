@@ -6,7 +6,7 @@ export const NavWrapper = styled.div`
   position: fixed;
   display: flex;
   justify-content: space-around;
-  bottom: -1px;
+  bottom: 0;
   background-color: #fafae7;
 `;
 export const TextBox = styled.div<{ size: number }>`
