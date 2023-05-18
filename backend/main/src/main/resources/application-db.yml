@@ -1,0 +1,34 @@
+spring:
+  # MariaDB
+  datasource:
+    url: ENC(O9VQ6R9roHy9W/Tm7clK14GB25aOQuVvflePPmOvApnnxjRDxwOTtWDZ9yjFRBSAsbbTzR8f8VdLtXdLUDc0Lg==)
+    username: ENC(ySBkqn7rc0rzhCnJx1aNtMcQdtGI7IRQ)
+    password: ENC(i7j46L3hTWPdOmMe3uGWug==)
+    driver-class-name: org.mariadb.jdbc.Driver
+  # JPA Properties
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+
+  data:
+    redis:
+      host: ENC(f6OfbDsBS9As9DpyKFdAi4uBOiDc+ECHEFke0oHFneE=)
+      password: ENC(H56OqiI90VFpOIzOv6bdMw==)
+      sentinel:
+        nodes: ENC(f6OfbDsBS9As9DpyKFdAi4uBOiDc+ECHEFke0oHFneE=):26379, ENC(f6OfbDsBS9As9DpyKFdAi4uBOiDc+ECHEFke0oHFneE=):26380, ENC(f6OfbDsBS9As9DpyKFdAi4uBOiDc+ECHEFke0oHFneE=):26381
+        master: ENC(qTyCMgvWnEFD3ctCjhtB6y7iQtQnqJOC)
+
+# okhttp request url to store-service
+request:
+  user: ENC(mVQN90HqIlOYcPRrrTyIc5F2we71Z2dC6SXlfUKVtPEkf9+U7d2TwA==)
+  url:  ENC(6tWQjAFg4JB8CYgfEhkEGGS/31xfQZ8UMUm9WC70YgR0Q7NuTz8Q5UYgdKl7oxvDy+8Uk7Txf2to+ZCLClO1Eg==)
