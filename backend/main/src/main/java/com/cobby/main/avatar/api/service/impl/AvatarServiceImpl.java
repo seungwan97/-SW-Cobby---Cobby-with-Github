@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,8 @@ public class AvatarServiceImpl implements AvatarService {
 
 	private final AvatarCostumeRepository avatarCostumeRepository;
 
+	private final RedisTemplate<String, Integer> redisTemplate;
+
 	@Transactional
 	@Override
 	public AvatarGetResponse selectAvatar(String avatarId) throws JsonProcessingException {
@@ -46,15 +49,11 @@ public class AvatarServiceImpl implements AvatarService {
 		var avatar = avatarRepository.findById(avatarId)
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + avatarId + ")"));
 
-
 		var outfits = getCostumeOutfits(avatarId, avatar.getOutfits());
 
-		var levelTable = levelTableRepository.findTopByNextExpIsLessThanEqualOrderByLevelDesc(avatar.getExp())
-			.orElseThrow(() -> new IllegalArgumentException("레벨 정보가 없습니다. (Level=" + avatar.getLevel() + ")"));
-
 		return AvatarGetResponse.builder()
-			.prevExp(levelTable.getPrevExp())
-			.nextExp(levelTable.getNextExp())
+			.prevExp(getExp(false, avatar.getLevel()))
+			.nextExp(getExp(true, avatar.getLevel()))
 			.avatar(avatar)
 			.outfits(outfits)
 			.build();
@@ -253,5 +252,22 @@ public class AvatarServiceImpl implements AvatarService {
 			.exp(0)
 			.outfits(objectMapper.writeValueAsString(deafaultOutfits))
 			.build();
+	}
+
+	// state == false : prevExp, true : nextExp
+	private Integer getExp(Boolean state, Integer level) {
+		Integer exp;
+
+		String kind = !state ? "prevExp_" : "nextExp_";
+
+		if (Boolean.TRUE.equals(redisTemplate.hasKey(kind + level))) {
+			exp = redisTemplate.opsForValue().get(kind + level);
+		} else {
+			var levelInfo = levelTableRepository.findById(level)
+				.orElseThrow(() -> new IllegalArgumentException("레벨 정보가 없습니다. (Level=" + level + ")"));
+			exp = !state ? levelInfo.getPrevExp() : levelInfo.getNextExp();
+			redisTemplate.opsForValue().set(kind + level, exp);
+		}
+		return exp;
 	}
 }
