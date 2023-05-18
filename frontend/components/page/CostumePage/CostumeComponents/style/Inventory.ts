@@ -5,7 +5,7 @@ export const Inventory = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 60%;
+  height: 120%;
   align-items: center;
 `;
 
@@ -51,36 +51,5 @@ export const InventoryBox = styled.div`
   border-radius: 10px;
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
-  }
-  & > * {
-    width: 100%;
-  }
-
-  @media (max-height: 1180px) {
-    height: 600px;
-  }
-
-  @media (max-height: 1024px) {
-    height: 350px;
-  }
-
-  @media (max-height: 915px) {
-    height: 430px;
-  }
-
-  @media (max-height: 844px) {
-    height: 330px;
-  }
-
-  @media (max-height: 812px) {
-    height: 330px;
-  }
-
-  @media (max-height: 736px) {
-    height: 250px;
-  }
-
-  @media (max-height: 667px) {
-    height: 250px;
   }
 `;
