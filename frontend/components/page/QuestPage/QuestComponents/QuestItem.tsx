@@ -37,7 +37,10 @@ const QuestItem = (props: Props) => {
               borderRadius={"0px"}
               completed={`${questData.progress}`}
             />
-            <TextBox size={20} content={`${questData.progress}%`} />
+            <TextBox
+              size={20}
+              content={`${questData.progress}%`}
+            />
           </style.ProgressWrapper>
           <QuestConfirmButton
             modifyData={modifyData}
