@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -39,21 +40,19 @@ public class AvatarServiceImpl implements AvatarService {
 
 	private final AvatarCostumeRepository avatarCostumeRepository;
 
+	private final RedisTemplate<String, Integer> redisTemplate;
+
 	@Override
 	public AvatarGetResponse selectAvatar(String avatarId) throws JsonProcessingException {
 
 		var avatar = avatarRepository.findById(avatarId)
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + avatarId + ")"));
 
-
 		var outfits = getCostumeOutfits(avatarId, avatar.getOutfits());
 
-		var levelTable = levelTableRepository.findById(avatar.getLevel())
-			.orElseThrow(() -> new IllegalArgumentException("레벨 정보가 없습니다. (Level=" + avatar.getLevel() + ")"));
-
 		return AvatarGetResponse.builder()
-			.prevExp(levelTable.getPrevExp())
-			.nextExp(levelTable.getNextExp())
+			.prevExp(getExp(false, avatar.getLevel()))
+			.nextExp(getExp(true, avatar.getLevel()))
 			.avatar(avatar)
 			.outfits(outfits)
 			.build();
@@ -207,11 +206,8 @@ public class AvatarServiceImpl implements AvatarService {
 		// 활동에 따른 (커밋, 출석) 경험치 보상
 		var expReward = ExpReward.valueOf(activityLog.get("type")).getValue();
 
-		var levelInfo = levelTableRepository.findById(avatar.getLevel())
-			.orElseThrow(NotFoundException::new);
-
 		// 보상에 따라 레벨업에 필요한 경험치량을 채운 경우
-		if(expReward + avatar.getExp() >= levelInfo.getNextExp()) {
+		if(expReward + avatar.getExp() >= getExp(true, avatar.getLevel())) {
 			avatar = avatar.toBuilder()
 				.exp(expReward + avatar.getExp())
 				.level(avatar.getLevel() + 1)
@@ -259,5 +255,22 @@ public class AvatarServiceImpl implements AvatarService {
 			.exp(0)
 			.outfits(objectMapper.writeValueAsString(deafaultOutfits))
 			.build();
+	}
+
+	// state == false : prevExp, true : nextExp
+	private Integer getExp(Boolean state, Integer level) {
+		Integer exp;
+
+		String kind = !state ? "prevExp_" : "nextExp_";
+
+		if (Boolean.TRUE.equals(redisTemplate.hasKey(kind + level))) {
+			exp = redisTemplate.opsForValue().get(kind + level);
+		} else {
+			var levelInfo = levelTableRepository.findById(level)
+				.orElseThrow(() -> new IllegalArgumentException("레벨 정보가 없습니다. (Level=" + level + ")"));
+			exp = !state ? levelInfo.getPrevExp() : levelInfo.getNextExp();
+			redisTemplate.opsForValue().set(kind + level, exp);
+		}
+		return exp;
 	}
 }

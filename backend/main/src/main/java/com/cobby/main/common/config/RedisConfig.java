@@ -36,6 +36,15 @@ public class RedisConfig {
     }
 
     @Bean
+    public RedisTemplate<String, Integer> redisTemplate() {
+        RedisTemplate<String, Integer> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());   // Key: String
+        // redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Integer.class));  // Value: 직렬화에 사용할 Object 사용하기
+        return redisTemplate;
+    }
+
+    @Bean
     public RedisTemplate<String, QuestGetResponse> redisQuestTemplate() {
         RedisTemplate<String, QuestGetResponse> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory());
