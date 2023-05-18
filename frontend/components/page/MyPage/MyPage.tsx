@@ -83,7 +83,7 @@ const MyPage = ({
           <TextBox size={50} content={"MY PAGE"} />
         </style.MyPageTxt>
         <style.Cobby />
-        <GithubBadge setIsCopied={setIsCopied} />
+        <GithubBadge nickname={nickname} setIsCopied={setIsCopied} />
         <CopyAlarm isVisible={isCopied} setIsVisible={setIsCopied} />
         <UserInformation
           nickname={nickname}
