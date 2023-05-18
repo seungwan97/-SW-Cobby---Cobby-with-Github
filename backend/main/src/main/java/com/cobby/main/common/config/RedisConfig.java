@@ -1,5 +1,6 @@
 package com.cobby.main.common.config;
 
+import com.cobby.main.costume.api.dto.response.CostumeGetResponse;
 import com.cobby.main.quest.api.dto.response.QuestGetResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +41,15 @@ public class RedisConfig {
         redisTemplate.setConnectionFactory(redisConnectionFactory());
         redisTemplate.setKeySerializer(new StringRedisSerializer());   // Key: String
         redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(QuestGetResponse.class));  // Value: 직렬화에 사용할 Object 사용하기
+        return redisTemplate;
+    }
+
+    @Bean
+    public RedisTemplate<String, CostumeGetResponse> redisCostumeTemplate() {
+        RedisTemplate<String, CostumeGetResponse> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory());
+        redisTemplate.setKeySerializer(new StringRedisSerializer());   // Key: String
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(CostumeGetResponse.class));  // Value: 직렬화에 사용할 Object 사용하기
         return redisTemplate;
     }
 }

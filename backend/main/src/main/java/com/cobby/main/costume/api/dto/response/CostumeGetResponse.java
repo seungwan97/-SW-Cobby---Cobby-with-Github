@@ -1,15 +1,21 @@
 package com.cobby.main.costume.api.dto.response;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
 import com.cobby.main.costume.db.entity.Costume;
 import com.cobby.main.costume.db.entity.enumtype.CostumeCategory;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CostumeGetResponse {
 
 	private Long costumeId;
