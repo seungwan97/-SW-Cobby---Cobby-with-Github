@@ -20,6 +20,11 @@ interface MyFuncProps {
   myLevel: number;
   cntCostumes: number;
   cntQuests: number;
+  cobbyOutfits: {
+    head: any;
+    effect: any;
+    body: any;
+  };
 }
 
 // MyPage
@@ -29,9 +34,9 @@ const MyPage = ({
   myLevel,
   cntCostumes,
   cntQuests,
+  cobbyOutfits,
 }: MyFuncProps) => {
   // const router = useRouter();
-
   const [isLogout, setIsLogout] = useState(false);
   const [isLeave, setIsLeave] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
@@ -82,9 +87,12 @@ const MyPage = ({
         <style.MyPageTxt>
           <TextBox size={50} content={"MY PAGE"} />
         </style.MyPageTxt>
-        <style.Cobby />
-        <GithubBadge nickname={nickname} setIsCopied={setIsCopied} />
-        <CopyAlarm isVisible={isCopied} setIsVisible={setIsCopied} />
+        <style.Cobby outfits={cobbyOutfits} />
+        <GithubBadge setIsCopied={setIsCopied} />
+        <CopyAlarm
+          isVisible={isCopied}
+          setIsVisible={setIsCopied}
+        />
         <UserInformation
           nickname={nickname}
           githubUrl={githubUrl}

@@ -12,9 +12,9 @@ interface Props {
     exp: number;
     nextExp: number;
     outfits: {
-      head: string;
-      effect: string;
-      body: string;
+      head: any;
+      effect: any;
+      body: any;
     };
   };
 }
