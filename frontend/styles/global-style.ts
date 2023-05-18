@@ -16,7 +16,7 @@ export const GlobalStyle = createGlobalStyle`
     body {
        /* 스크롤바 없에기 */
     -ms-overflow-style: none;
-    height: 100vh;
+    height: 90vh;
     background-color: #fffff8;
     position: absolute;
     top: 50%;
