@@ -39,6 +39,7 @@ public class AvatarServiceImpl implements AvatarService {
 
 	private final AvatarCostumeRepository avatarCostumeRepository;
 
+	@Transactional
 	@Override
 	public AvatarGetResponse selectAvatar(String avatarId) throws JsonProcessingException {
 
@@ -48,7 +49,7 @@ public class AvatarServiceImpl implements AvatarService {
 
 		var outfits = getCostumeOutfits(avatarId, avatar.getOutfits());
 
-		var levelTable = levelTableRepository.findById(avatar.getLevel())
+		var levelTable = levelTableRepository.findTopByNextExpIsLessThanEqualOrderByLevelDesc(avatar.getExp())
 			.orElseThrow(() -> new IllegalArgumentException("레벨 정보가 없습니다. (Level=" + avatar.getLevel() + ")"));
 
 		return AvatarGetResponse.builder()
@@ -207,22 +208,15 @@ public class AvatarServiceImpl implements AvatarService {
 		// 활동에 따른 (커밋, 출석) 경험치 보상
 		var expReward = ExpReward.valueOf(activityLog.get("type")).getValue();
 
-		var levelInfo = levelTableRepository.findById(avatar.getLevel())
+		var updatedExp = avatar.getExp() + expReward;
+		var levelInfo = levelTableRepository.findTopByNextExpIsLessThanEqualOrderByLevelDesc(updatedExp)
 			.orElseThrow(NotFoundException::new);
 
-		// 보상에 따라 레벨업에 필요한 경험치량을 채운 경우
-		if(expReward + avatar.getExp() >= levelInfo.getNextExp()) {
-			avatar = avatar.toBuilder()
-				.exp(expReward + avatar.getExp())
-				.level(avatar.getLevel() + 1)
-				.build();
-		}
-		// 레벨업을 하지 않는 경우 경험치량만 업데이트
-		else {
-			avatar = avatar.toBuilder()
-				.exp(expReward + avatar.getExp())
-				.build();
-		}
+		// 경험치 변동에 따흔 아바타 정보 업데이트
+		avatar = avatar.toBuilder()
+			.exp(updatedExp)
+			.level(levelInfo.getLevel())
+			.build();
 
 		avatarRepository.save(avatar);
 	}
