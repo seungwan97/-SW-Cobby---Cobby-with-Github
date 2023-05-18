@@ -73,21 +73,32 @@ const QuestList = (props: Props) => {
   const { questData } = props;
   const [arr, setArr] = useState(questData);
   const [data, setData] = useState(false);
-  useEffect(() => {
-    let cnt = 0;
-    for (let i = 0; i < questData.length; i++) {
-      console.log(questData[i].questId);
-      console.log(questData.length);
 
-      if (questData[i].questId === -1) {
-        cnt += 1;
-      }
-    }
-    if (cnt == 4) {
-      setData(true);
-      console.log("퀘스트없음");
-    }
+  useEffect(() => {
+    renderData();
   }, []);
+
+  const renderData = async () => {
+    const token = cookie.load("Authorization");
+    const questRes = await getQuests(token);
+    const questData = questRes.data.content;
+    let cnt = 0;
+    let idx = 0;
+    for (let i = 0; i < 4; i++) {
+      if (questData[idx].questId === -1) {
+        questData.splice(idx, 1);
+        cnt += 1;
+        continue;
+      }
+      idx++;
+    }
+    setArr(questData);
+    setData(true);
+    if (cnt === 4) {
+      setData(true);
+    }
+  };
+
   const modifyData = async (qId: number) => {
     setData(false);
     const token = cookie.load("Authorization");
@@ -98,33 +109,33 @@ const QuestList = (props: Props) => {
     //새로운 퀘스트로 갱신됐을 것이니 전체리스트api 다시 쏴주고
     const questRes = await getQuests(token);
     const questData = questRes.data.content;
-    console.log(questData);
     let cnt = 0;
-    for (let i = 0; i < questData.length; i++) {
-      if (questData[i].questId === -1) {
-        questData.splice(i, 1);
+    let idx = 0;
+    for (let i = 0; i < 4; i++) {
+      if (questData[idx].questId === -1) {
+        questData.splice(idx, 1);
         cnt += 1;
+        continue;
       }
+      idx++;
     }
-    if (cnt == 4) {
-      setData(true);
-    }
-    console.log(questData);
 
     //useState 배열에 저장
     setArr(questData);
+    if (cnt === 4) {
+      setData(true);
+    }
   };
 
   return (
     <style.QuestListWrapper>
-      {!data &&
-        arr.map((item, index) => (
-          <QuestItem key={index} questData={item} modifyData={modifyData} />
-        ))}
+      {arr.map((item, index) => (
+        <QuestItem key={index} questData={item} modifyData={modifyData} />
+      ))}
       {data && (
         <div>
           <style.Margin />
-          <TextBox size={30} content={"모든 퀘스트를 완료하였습니다!"} />
+          <TextBox size={30} content={"모든 퀘스트를 완료했습니다!"} />
         </div>
       )}
     </style.QuestListWrapper>
