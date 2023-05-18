@@ -131,12 +131,12 @@ const Inventory = (props: any) => {
             <ItemBox
               item={item}
               key={index}
-              selected={myHeadItems.some(
+              getto={myHeadItems.some(
                 (myItem: any) =>
                   myItem.costumeId === item.costumeId ||
                   item.costumeId === 0
               )}
-              checked={myHead.costumeId === item.costumeId}
+              selected={myHead.costumeId === item.costumeId}
               onItemClick={handleItemClick}
             />
           ))}
@@ -148,12 +148,12 @@ const Inventory = (props: any) => {
             <ItemBox
               item={item}
               key={index}
-              selected={myBodyItems.some(
+              getto={myBodyItems.some(
                 (myItem: any) =>
                   myItem.costumeId === item.costumeId ||
                   item.costumeId === 0
               )}
-              checked={myBody.costumeId === item.costumeId}
+              selected={myBody.costumeId === item.costumeId}
               onItemClick={handleItemClick}
             />
           ))}
@@ -165,12 +165,12 @@ const Inventory = (props: any) => {
             <ItemBox
               item={item}
               key={index}
-              selected={myEffectItems.some(
+              getto={myEffectItems.some(
                 (myItem: any) =>
                   myItem.costumeId === item.costumeId ||
                   item.costumeId === 0
               )}
-              checked={
+              selected={
                 myEffect.costumeId === item.costumeId
               }
               onItemClick={handleItemClick}

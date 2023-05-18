@@ -3,10 +3,7 @@ import { colors } from "@/styles/colors-style";
 import { keyframes } from "@emotion/react";
 import Image from "next/image";
 
-export const ImageWrapper = styled.div<{
-  select: boolean;
-  check: boolean;
-}>`
+export const ImageWrapper = styled.div`
   position: relative;
   border-radius: 10px;
   display: flex;
@@ -23,51 +20,6 @@ export const ImageWrapper = styled.div<{
     cursor: pointer;
     border: 2px solid ${colors.ItemBoxHoveredColor};
     background-color: ${colors.ItemBoxHoveredColor};
-  }
-
-  ${(props) =>
-    !props.select &&
-    css`
-      &:before {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 50% auto;
-      }
-      background-color: #b1b1b1;
-      pointer-events: none;
-    `}
-
-  ${(props) =>
-    props.check &&
-    css`
-      &:before {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: 70% auto;
-      }
-
-      border: 6px solid ${colors.QuestBtnColor};
-      background-color: #ededdb;
-      pointer-events: none;
-      box-shadow: 2px 2px 2px gray;
-    `}
-
-    @media (max-width: 767px) {
-    width: 55px;
-    height: 55px;
-
-    @media (max-height: 667px) {
-      width: 55px;
-      height: 55px;
-    }
   }
 `;
 
