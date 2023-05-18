@@ -41,7 +41,7 @@ export const InventoryBox = styled.div`
   grid-template-columns: repeat(3, auto);
   gap: 15px;
   width: 70%;
-  height: 390px;
+  height: 410px;
   background-color: ${colors.NavBarCreamColor};
   overflow-y: scroll;
   padding: 15px;
