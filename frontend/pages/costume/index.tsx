@@ -9,7 +9,13 @@ import { getAllItemList } from "../api/main";
 
 // Costumepage
 const CostumeFunc = (props: any) => {
-  // const router = useRouter();
+  const router = useRouter();
+
+  if (props.error) {
+    // 오류 처리 로직
+    alert("페이지에 접근할 수 없습니다. 다시 로그인해주세요");
+    router.push("/");
+  }
 
   return (
     <Fragment>
@@ -26,26 +32,34 @@ const CostumeFunc = (props: any) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const token = context.req.headers.cookie?.replace("Authorization=", "");
+  try {
+    const token = context.req.headers.cookie?.replace("Authorization=", "");
 
-  // HEAD 코스튬 목록 불러오기
-  const resHEAD = await getAllItemList("HEAD", `${token}`);
-  // BODY 코스튬 목록 불러오기
-  const resBODY = await getAllItemList("BODY", `${token}`);
-  // // EFFECT 코스튬 목록 불러오기
-  const resEFFECT = await getAllItemList("EFFECT", `${token}`);
+    // HEAD 코스튬 목록 불러오기
+    const resHEAD = await getAllItemList("HEAD", `${token}`);
+    // BODY 코스튬 목록 불러오기
+    const resBODY = await getAllItemList("BODY", `${token}`);
+    // // EFFECT 코스튬 목록 불러오기
+    const resEFFECT = await getAllItemList("EFFECT", `${token}`);
 
-  const HEAD_ITEMS = resHEAD.data.content;
-  const BODY_ITEMS = resBODY.data.content;
-  const EFFECT_ITEMS = resEFFECT.data.content;
+    const HEAD_ITEMS = resHEAD.data.content;
+    const BODY_ITEMS = resBODY.data.content;
+    const EFFECT_ITEMS = resEFFECT.data.content;
 
-  return {
-    props: {
-      HEAD_ITEMS,
-      BODY_ITEMS,
-      EFFECT_ITEMS,
-    },
-  };
+    return {
+      props: {
+        HEAD_ITEMS,
+        BODY_ITEMS,
+        EFFECT_ITEMS,
+      },
+    };
+  } catch (e) {
+    return {
+      props: {
+        error: "An error occurred",
+      },
+    };
+  }
 };
 
 export default CostumePage;

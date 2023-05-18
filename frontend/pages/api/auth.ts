@@ -1,5 +1,4 @@
 import client from "./client";
-
 const req = "/api/auth";
 
 // 액세스 토큰 발급
