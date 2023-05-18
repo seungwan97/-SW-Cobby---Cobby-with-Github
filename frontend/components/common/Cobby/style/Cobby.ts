@@ -22,7 +22,7 @@ export const CobbyHeadItem = styled.img`
   height: 180px;
   left: 50%;
   transform: translate(-50%);
-  z-index: 4;
+  z-index: 10;
 
   @media (max-height: 667px) {
     width: 150px;
@@ -36,7 +36,7 @@ export const CobbyBodyItem = styled.img`
   height: 180px;
   left: 50%;
   transform: translate(-50%);
-  z-index: 3;
+  z-index: 5;
 
   @media (max-height: 667px) {
     width: 150px;

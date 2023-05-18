@@ -28,7 +28,11 @@ const Inventory = (props: any) => {
   const handleItemClick = (itemInfo: {}) => {
     // 클릭한 아이템의 정보를 상위 컴포넌트로 전달
     props.onItemClick(itemInfo);
-    console.log("CostumePage 컴포넌트로 ", itemInfo, " 전달했습니다.");
+    console.log(
+      "CostumePage 컴포넌트로 ",
+      itemInfo,
+      " 전달했습니다."
+    );
   };
 
   const handleTypeClick = (typeName: string) => {
@@ -44,9 +48,9 @@ const Inventory = (props: any) => {
   const [myBodyItems, setMyBodyItems] = useState([]);
   const [myEffectItems, setMyEffectItems] = useState([]);
 
-  const [myHead, setMyHead] = useState({});
-  const [myBody, setMyBody] = useState({});
-  const [myEffect, setMyEffect] = useState({});
+  const [myHead, setMyHead]: any = useState({});
+  const [myBody, setMyBody]: any = useState({});
+  const [myEffect, setMyEffect]: any = useState({});
 
   useEffect(() => {
     const index0 = {
@@ -76,11 +80,20 @@ const Inventory = (props: any) => {
 
     const getMyItems = async () => {
       // 내가 보유한 HEAD 코스튬 목록 불러오기
-      const resMyHEAD = await getMyCostumes(token, "HEAD");
+      const resMyHEAD: any = await getMyCostumes(
+        token,
+        "HEAD"
+      );
       // 내가 보유한 BODY 코스튬 목록 불러오기
-      const resMyBODY = await getMyCostumes(token, "BODY");
+      const resMyBODY: any = await getMyCostumes(
+        token,
+        "BODY"
+      );
       // 내가 보유한 EFFECT 코스튬 목록 불러오기
-      const resMyEFFECT = await getMyCostumes(token, "EFFECT");
+      const resMyEFFECT: any = await getMyCostumes(
+        token,
+        "EFFECT"
+      );
 
       setMyHeadItems(resMyHEAD.data.content);
       setMyBodyItems(resMyBODY.data.content);
@@ -105,7 +118,10 @@ const Inventory = (props: any) => {
             onClick={() => handleTypeClick(type.name)}
             selected={itemType === type.name}
           >
-            <style.InventoryTypeImg src={type.imgSrc} alt={type.name} />
+            <style.InventoryTypeImg
+              src={type.imgSrc}
+              alt={type.name}
+            />
           </style.InventoryType>
         ))}
       </style.InventoryBar>
@@ -117,7 +133,8 @@ const Inventory = (props: any) => {
               key={index}
               selected={myHeadItems.some(
                 (myItem: any) =>
-                  myItem.costumeId === item.costumeId || item.costumeId === 0
+                  myItem.costumeId === item.costumeId ||
+                  item.costumeId === 0
               )}
               checked={myHead.costumeId === item.costumeId}
               onItemClick={handleItemClick}
@@ -133,7 +150,8 @@ const Inventory = (props: any) => {
               key={index}
               selected={myBodyItems.some(
                 (myItem: any) =>
-                  myItem.costumeId === item.costumeId || item.costumeId === 0
+                  myItem.costumeId === item.costumeId ||
+                  item.costumeId === 0
               )}
               checked={myBody.costumeId === item.costumeId}
               onItemClick={handleItemClick}
@@ -149,9 +167,12 @@ const Inventory = (props: any) => {
               key={index}
               selected={myEffectItems.some(
                 (myItem: any) =>
-                  myItem.costumeId === item.costumeId || item.costumeId === 0
+                  myItem.costumeId === item.costumeId ||
+                  item.costumeId === 0
               )}
-              checked={myEffect.costumeId === item.costumeId}
+              checked={
+                myEffect.costumeId === item.costumeId
+              }
               onItemClick={handleItemClick}
             />
           ))}

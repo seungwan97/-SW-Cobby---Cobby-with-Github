@@ -3,7 +3,10 @@ import { colors } from "@/styles/colors-style";
 import { keyframes } from "@emotion/react";
 import Image from "next/image";
 
-export const ImageWrapper = styled.div<{ select: boolean; check: boolean }>`
+export const ImageWrapper = styled.div<{
+  select: boolean;
+  check: boolean;
+}>`
   position: relative;
   border-radius: 10px;
   display: flex;
@@ -46,13 +49,12 @@ export const ImageWrapper = styled.div<{ select: boolean; check: boolean }>`
         position: absolute;
         width: 100%;
         height: 100%;
-        // background-image: url("/checked.png");
         background-position: center;
         background-repeat: no-repeat;
         background-size: 70% auto;
       }
 
-      border: 3px solid #333333;
+      border: 6px solid ${colors.QuestBtnColor};
       background-color: #ededdb;
       pointer-events: none;
       box-shadow: 2px 2px 2px gray;
