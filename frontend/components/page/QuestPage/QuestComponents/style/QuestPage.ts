@@ -116,3 +116,7 @@ export const CustomImage = styled(Image)<{ width: number; height: number }>`
     }
   }
 `;
+
+export const Margin = styled.div`
+  margin-top: 60%;
+`;
