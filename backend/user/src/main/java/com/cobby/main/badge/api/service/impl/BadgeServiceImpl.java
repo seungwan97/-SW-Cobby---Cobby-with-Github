@@ -79,7 +79,7 @@ public class BadgeServiceImpl implements BadgeService {
 			.url(mainUrl + "/avatars/server")
 			.addHeader("userId", findUser.getId());
 		Request request = builder.build();
-		log.info(mainUrl + "/avatars");
+		log.info(mainUrl + "/avatars/server");
 
 		try {
 			Response response = client.newCall(request).execute();
@@ -161,7 +161,7 @@ public class BadgeServiceImpl implements BadgeService {
 			.append("        margin-bottom: 20px;\n")
 			.append("    }\n")
 			.append("    @font-face {\n")
-			.append("        font-fmily: 'Cobby';\n")
+			.append("        font-family: 'Cobby';\n")
 			.append("        src: url('"+ getFont() + "');\n")
 			.append("    }\n")
 			.append("    .line {\n")
@@ -219,7 +219,7 @@ public class BadgeServiceImpl implements BadgeService {
 			.append("    <text class=\"info_line text_info_1\" x=\"270\" y=\"220\" text-anchor=\"left\">\n")
 			.append("      Consecutive Commits : " + getCommitCnt(nickname).getRelayCnt() + "\n")
 			.append("    </text>\n")
-			.append("    <text class=\"info_line text_info_2\" x=\"108\" y=\"60\" text-anchor=\"left\">\n")
+			.append("    <text class=\"info_line text_info_2\" x=\"159\" y=\"60\" text-anchor=\"middle\">\n")
 			.append("      Lv. " + badgeGetResponse.getLevel() + "\n")
 			.append("    </text>\n")
 			.append("	 <text class=\"line\" x=\"77\" y=\"256\" text-anchor=\"left\">\n")
