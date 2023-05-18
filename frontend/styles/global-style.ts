@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
       padding: 0;
       background-color: #333333;
       width: 90vw;
-      height: 90vh;
+      height: 95vh;
     }
     body {
        /* 스크롤바 없에기 */
@@ -32,7 +32,7 @@ export const GlobalStyle = createGlobalStyle`
           padding: 0;
           background-color: white;
           width: 90vw;
-          height: 90vh;
+          height: 95vh;
         }
 
         body {
