@@ -30,50 +30,6 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-<<<<<<< HEAD:backend/main/src/main/java/com/cobby/main/common/authorization/CustomAuthorizationFilter.java
-        log.info("doFilterInternal");
-
-        log.info("ㄴ> request uri = " + request.getRequestURI());
-        
-        if (request.getServletPath().contains("health")
-                || request.getServletPath().contains("swagger")
-                || request.getServletPath().contains("api-docs")
-                || request.getServletPath().contains("main/costumes")
-                || request.getServletPath().contains("api/main/avatars/server")
-                || request.getServletPath().contains("main/titles")
-                || (request.getServletPath().contains("main/quests") 
-                        && !request.getServletPath().contains("getItem")
-                        && !request.getServletPath().contains("current")
-                        && !request.getServletPath().contains("test"))
-                ) {   // 인증없이 건너 뛸 요청 설정
-            filterChain.doFilter(request, response);
-
-        }
-        else {
-
-            String token = request.getHeader("Authorization").substring(7);   // 헤더의 토큰 파싱 (Bearer 제거)
-
-            log.info("Header - (key:Authorization, value:userId) = {}", token);
-            try {
-                String userId = jwtUtil.getUid(token);
-                log.info("획득한 userId = " + userId);
-                addAuthorizationHeaders(request, userId);
-
-                Authentication auth = getAuthentication(userId);
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            } catch (Exception e) {
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-
-                Map<String, Object> body = new LinkedHashMap<>();
-                body.put("code", HttpStatus.UNAUTHORIZED.value());
-                body.put("error", e.getMessage());
-
-                new ObjectMapper().writeValue(response.getOutputStream(), body);
-            }
-
-            filterChain.doFilter(request, response);
-=======
         log.info("필터 진입");
 
         log.info("ㄴ> request uri : " + request.getRequestURI());
@@ -114,7 +70,6 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
 
->>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/java/com/cobby/main/common/authorization/CustomAuthorizationFilter.java
         }
 
     }

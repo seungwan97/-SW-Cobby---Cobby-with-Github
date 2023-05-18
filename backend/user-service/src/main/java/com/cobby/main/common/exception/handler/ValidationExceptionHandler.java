@@ -1,15 +1,11 @@
 package com.cobby.main.common.exception.handler;
 
-<<<<<<< HEAD:backend/main/src/main/java/com/cobby/main/common/exception/handler/ValidationExceptionHandler.java
-import jakarta.validation.ConstraintViolationException;
-=======
 import java.util.Enumeration;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/java/com/cobby/main/common/exception/handler/ValidationExceptionHandler.java
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -22,10 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-<<<<<<< HEAD:backend/main/src/main/java/com/cobby/main/common/exception/handler/ValidationExceptionHandler.java
-=======
 import com.cobby.main.common.mattermost.NotificationManager;
->>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/java/com/cobby/main/common/exception/handler/ValidationExceptionHandler.java
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,16 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
 
-<<<<<<< HEAD:backend/main/src/main/java/com/cobby/main/common/exception/handler/ValidationExceptionHandler.java
-	/**
-	 * @Validated 으로 유효성 검사를 진행한 @RequestParam 이나 @PathVariable 의 Validation Error 를 핸들링하는
-=======
 	@Autowired
 	private NotificationManager notificationManager;
 
 	/**
 	 * &#064;Validated 으로 유효성 검사를 진행한 @RequestParam 이나 @PathVariable 의 Validation Error 를 핸들링하는
->>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/java/com/cobby/main/common/exception/handler/ValidationExceptionHandler.java
 	 * 메소드입니다.
 	 * <p>
 	 * 컨트롤러 중 발생한 위반 사항들에 대해 사전에 정의된 메시지 양식으로 정제하고, 그 결과를 List<String> 형태로 body 에 담아 클라이언트에게 보여줍니다.
@@ -51,12 +39,8 @@ public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
 	 * @return 제약조건 위반안내 메시지, 위반사항의 개수, 상세 메시지가 담긴 ProblemDetail
 	 */
 	@ExceptionHandler(ConstraintViolationException.class)
-<<<<<<< HEAD:backend/main/src/main/java/com/cobby/main/common/exception/handler/ValidationExceptionHandler.java
-	public ProblemDetail handleConstraintViolation(ConstraintViolationException ex) {
-=======
 	public ProblemDetail handleConstraintViolation(ConstraintViolationException ex, HttpServletRequest req) {
 		notificationManager.sendNotification(ex, req.getRequestURI(), getParams(req));
->>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/java/com/cobby/main/common/exception/handler/ValidationExceptionHandler.java
 
 		var violations = ex.getConstraintViolations().stream()
 			.map((x) -> {
@@ -151,8 +135,6 @@ public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return handleExceptionInternal(ex, problemDetail, headers, status, request);
 	}
-<<<<<<< HEAD:backend/main/src/main/java/com/cobby/main/common/exception/handler/ValidationExceptionHandler.java
-=======
 
 	private String getParams(HttpServletRequest req) {
 		StringBuilder params = new StringBuilder();
@@ -164,6 +146,5 @@ public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return params.toString();
 	}
->>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/java/com/cobby/main/common/exception/handler/ValidationExceptionHandler.java
 }
 

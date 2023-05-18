@@ -3,10 +3,7 @@ package com.cobby.main.common.entity;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
-<<<<<<< HEAD:backend/main/src/main/java/com/cobby/main/common/entity/BaseTimeEntity.java
-=======
 import org.springframework.data.annotation.LastModifiedDate;
->>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/java/com/cobby/main/common/entity/BaseTimeEntity.java
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,21 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
-<<<<<<< HEAD:backend/main/src/main/java/com/cobby/main/common/entity/BaseTimeEntity.java
-import lombok.Getter;
-
-@Getter
-@EntityListeners(AuditingEntityListener.class)
-@MappedSuperclass
-public class BaseTimeEntity {
-
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@Column(updatable = false)
-	@CreatedDate
-	private LocalDateTime createdAt;
-
-}
-=======
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -54,4 +36,3 @@ public class BaseTimeEntity extends CreatedTimeEntity {
 			'}';
 	}
 }
->>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/java/com/cobby/main/common/entity/BaseTimeEntity.java

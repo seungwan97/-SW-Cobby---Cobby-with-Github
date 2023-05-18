@@ -18,13 +18,8 @@ public class SwaggerConfig {
 	public OpenAPI openAPI() {
 		Info info = new Info()
 			.version("v1.0.0")
-<<<<<<< HEAD:backend/main/src/main/java/com/cobby/main/common/config/SwaggerConfig.java
-			.title("Cobby Main API")
-			.description("코비 메인 API 설계서입니다")
-=======
 			.title("Cobby User API")
 			.description("코비 유저 API 설계서입니다")
->>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/java/com/cobby/main/common/config/SwaggerConfig.java
 			.termsOfService("http://swagger.io/terms/")
 			.contact(new Contact().name("BHS").url("https://cobby-play.com").email("email@email.com"))
 			.license(new License().name("Apache License Version 2.0").url("http://www.apache.org/licenses/LICENSE-2.0"));;
@@ -43,8 +38,4 @@ public class SwaggerConfig {
 			.addSecurityItem(securityRequirement)
 			.components(components);
 	}
-<<<<<<< HEAD:backend/main/src/main/java/com/cobby/main/common/config/SwaggerConfig.java
 }
-=======
-}
->>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/java/com/cobby/main/common/config/SwaggerConfig.java

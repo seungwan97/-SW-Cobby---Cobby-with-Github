@@ -9,11 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @Hidden
 @RestController
-<<<<<<< HEAD:backend/main/src/main/java/com/cobby/main/common/config/HealthCheckConfig.java
-@RequestMapping("/api/main/health")
-=======
 @RequestMapping("/api/user/health")
->>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/java/com/cobby/main/common/config/HealthCheckConfig.java
 public class HealthCheckConfig {
 
     @GetMapping

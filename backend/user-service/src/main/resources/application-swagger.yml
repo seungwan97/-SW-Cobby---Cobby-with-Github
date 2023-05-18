@@ -1,16 +1,6 @@
 springdoc:
   api-docs:
-<<<<<<< HEAD:backend/main/src/main/resources/application-swagger.yml
-    path: /api/main/api-docs
-  swagger-ui:
-    doc-expansion: none
-    path: /api/main/swagger
-
-server:
-  forward-headers-strategy: framework
-=======
     path: /api/user/api-docs
   swagger-ui:
     doc-expansion: none
     path: /api/user/swagger
->>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/resources/application-swagger.yml

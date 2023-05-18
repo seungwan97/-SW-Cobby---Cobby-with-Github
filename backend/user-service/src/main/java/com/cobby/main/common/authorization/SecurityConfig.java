@@ -43,15 +43,6 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests()
-<<<<<<< HEAD:backend/main/src/main/java/com/cobby/main/common/authorization/SecurityConfig.java
-                .requestMatchers("/api/main/health").permitAll()
-                .requestMatchers("/api/main/swagger-ui/**").permitAll()
-                .requestMatchers("/api/main/api-docs/**").permitAll()
-                .requestMatchers("/api/main/swagger/**").permitAll()
-                .requestMatchers("/api/main/titles/**").permitAll()
-                .requestMatchers("/api/main/costumes/**").permitAll()
-                .requestMatchers("/api/main/avatars/server/**").permitAll()
-=======
                 .requestMatchers("/api/user/health").permitAll()
                 .requestMatchers("/api/user/users").permitAll()
                 .requestMatchers("/api/user/activityLog/*/server").permitAll()
@@ -59,7 +50,6 @@ public class SecurityConfig {
                 .requestMatchers("/api/user/api-docs/**").permitAll()
                 .requestMatchers("/api/user/swagger/**").permitAll()
                 .requestMatchers("/api/user/badge/**").permitAll()
->>>>>>> 5289a1722e99d1d71f86eeba31ce77e8b65da365:backend/user-service/src/main/java/com/cobby/main/common/authorization/SecurityConfig.java
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(customAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
