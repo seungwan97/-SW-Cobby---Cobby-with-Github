@@ -52,6 +52,7 @@ public class AvatarServiceImpl implements AvatarService {
 			.orElseThrow(() -> new IllegalArgumentException("레벨 정보가 없습니다. (Level=" + avatar.getLevel() + ")"));
 
 		return AvatarGetResponse.builder()
+			.prevExp(levelTable.getPrevExp())
 			.nextExp(levelTable.getNextExp())
 			.avatar(avatar)
 			.outfits(outfits)

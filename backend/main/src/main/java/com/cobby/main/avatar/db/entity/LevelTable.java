@@ -24,4 +24,7 @@ public class LevelTable {
 
 	@Column(name = "next_exp", nullable = false)
 	private Integer nextExp;
+
+	@Column(name = "prev_exp", nullable = false)
+	private Integer prevExp;
 }
