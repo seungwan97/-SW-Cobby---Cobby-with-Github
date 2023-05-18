@@ -57,6 +57,7 @@ public class AvatarServiceImpl implements AvatarService {
 		return AvatarGetResponse.builder()
 			.prevExp(levelInfo.getPrevExp())
 			.nextExp(levelInfo.getNextExp())
+			.level(levelInfo.getLevel())
 			.avatar(avatar)
 			.outfits(outfits)
 			.build();
