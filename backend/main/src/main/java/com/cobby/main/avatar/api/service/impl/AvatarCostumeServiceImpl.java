@@ -37,7 +37,7 @@ public class AvatarCostumeServiceImpl implements AvatarCostumeService {
 			.orElseThrow(() -> new IllegalArgumentException("아이템 정보가 없습니다. (type=" +
 				itemInfo.itemType() + ", ID=" + itemInfo.itemId() + ")"));
 
-		avatarCostumeRepository.findByAvatar_AvatarIdAndCostume_CostumeId(avatarId, costume.getCostumeId())
+		avatarCostumeRepository.findAvatarCostumeByAvatar_AvatarIdAndCostume_CostumeId(avatarId, costume.getCostumeId())
 			.ifPresent((x) -> {
 				throw new IllegalArgumentException("이미 보유하고 있는 코스튬입니다. (ID=" + costume.getCostumeId() + ")");});
 
@@ -99,12 +99,10 @@ public class AvatarCostumeServiceImpl implements AvatarCostumeService {
 		var avatar = avatarRepository.findById(userId)
 			.orElseThrow(() -> new IllegalArgumentException("아바타 정보가 없습니다. (ID=" + userId + ")"));
 
-		var avatarCostume = avatarCostumeRepository.findByAvatar_AvatarIdAndCostume_CostumeId(userId, costumeInfo.costumeId())
+		var avatarCostume = avatarCostumeRepository.findAvatarCostumeByAvatar_AvatarIdAndCostume_CostumeId(userId, costumeInfo.costumeId())
 			.orElseThrow(() -> new IllegalArgumentException("코스튬 정보가 없습니다. (ID=" + costumeInfo.costumeId() + ")"));
 
-		avatarCostume = avatarCostume.toBuilder()
-			.isOpened(true)
-			.build();
+		avatarCostume.setOpened(true);
 
 		return avatarCostumeRepository.save(avatarCostume).getCostume().getCostumeId();
 	}

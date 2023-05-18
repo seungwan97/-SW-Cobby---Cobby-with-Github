@@ -44,7 +44,7 @@ public class AvatarCostume extends BaseTimeEntity {
 	private Avatar avatar;
 
 	@NotNull(message = "필수 입력 항목입니다. (costume)")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "costume_id")
 	private Costume costume;
@@ -58,5 +58,9 @@ public class AvatarCostume extends BaseTimeEntity {
 		this.avatar = avatar;
 		this.costume = costume;
 		this.isOpened = isOpened;
+	}
+
+	public void setOpened(Boolean opened) {
+		isOpened = opened;
 	}
 }

@@ -90,7 +90,7 @@ public class AvatarServiceImpl implements AvatarService {
 			}
 			// 코스튬 Id가 0 이상인 경우에는 해당 ID를 가진 코스튬을 넣습니다.
 			else {
-				var costume = avatarCostumeRepository.findByAvatar_AvatarIdAndCostume_CostumeId(avatarId, costumeId)
+				var costume = avatarCostumeRepository.findAvatarCostumeByAvatar_AvatarIdAndCostume_CostumeId(avatarId, costumeId)
 					.orElseThrow(() -> new IllegalArgumentException(
 						"보유하고 있지 않은 코스튬입니다. (category=" + category + ", ID=" + costumeId + ")"))
 					.getCostume();
@@ -178,7 +178,7 @@ public class AvatarServiceImpl implements AvatarService {
 		// 변경하려는 코스튬이 실제로 아바타가 가진 코스튬인지, 또는 빈 값(0)인지 확인
 		outfit.forEach((category, costumeId) -> {
 			if (NO_COSTUME != costumeId)
-				avatarCostumeRepository.findByAvatar_AvatarIdAndCostume_CostumeId(avatarId, costumeId)
+				avatarCostumeRepository.findAvatarCostumeByAvatar_AvatarIdAndCostume_CostumeId(avatarId, costumeId)
 					.orElseThrow(() -> new IllegalArgumentException(
 						"보유하고 있지 않은 코스튬입니다. (category=" + category + ", ID=" + costumeId + ")"));
 		});
