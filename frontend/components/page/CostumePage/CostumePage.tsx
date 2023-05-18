@@ -17,13 +17,19 @@ import {
 } from "@/pages/api/main";
 import cookie from "react-cookies";
 
+interface Props {
+  HEAD_ITEMS: any;
+  BODY_ITEMS: any;
+  EFFECT_ITEMS: any;
+  cobbyOutfits: any;
+}
+
 // CostumePage
-const CostumePage = (props: any) => {
-  const [outfits, setOutfits]: any = useState({
-    head: {},
-    body: {},
-    effect: {},
-  });
+const CostumePage = (props: Props) => {
+  console.log(props);
+  const [outfits, setOutfits]: any = useState(
+    props.cobbyOutfits
+  );
 
   const [cobby, setCobby]: any = useState({
     baseCobby: "/Character/Cobby.gif" + "?" + Date.now(),
@@ -32,27 +38,7 @@ const CostumePage = (props: any) => {
     effect: null,
   });
 
-  // 나의 코비의 outfits 를 불러오기
-  useEffect(() => {
-    const getCobbyOutfits = async () => {
-      const token = cookie.load("Authorization");
-
-      try {
-        const res = await getAvatarInfo(token);
-        const cobbyOutfits = res.data.content.outfits;
-
-        setOutfits(cobbyOutfits);
-      } catch (error) {
-        console.error("My Cobby outfits failed.", error);
-      }
-    };
-
-    getCobbyOutfits();
-  }, []);
-
   const handleInventoryItem = (itemInfo: any) => {
-    console.log("전달받은 itemInfo : ", itemInfo);
-
     // 나의 Cobby 의 outfits 업데이트해주기
     setOutfits((prevOutfits: any) => {
       let updatedOutfits = { ...prevOutfits };
@@ -153,7 +139,6 @@ const CostumePage = (props: any) => {
       cacheImages(Object.values(cobby))
         .then(() => {
           setIsLoading(false);
-          console.log(cobby);
         })
         .catch((err) => {
           console.log("error!");
