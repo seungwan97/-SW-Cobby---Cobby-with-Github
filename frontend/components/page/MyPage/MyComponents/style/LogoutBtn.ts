@@ -10,6 +10,10 @@ export const LogoutBtnWrapper = styled.div`
   padding: 10px;
   width: 85%;
   cursor: pointer;
+
+  @media (max-width: 1300px) {
+    margin-top: 5%;
+  }
 `;
 
 export const LogoutIcon = styled.img`

@@ -31,16 +31,13 @@ export const FullDiv = styled.div`
 `;
 
 export const RangeDiv = styled.div<{
-  level: number;
+  prevExp: number;
   exp: number;
   nextExp: number;
 }>`
   //   display: inline-block;
   width: ${(props) =>
-    (props.nextExp -
-      (props.level * 5 + 20) / props.exp -
-      (props.level * 5 + 20)) *
-    100}%;
+    ((props.exp - props.prevExp) / (props.nextExp - props.prevExp)) * 100}%;
   height: 100%;
   background-color: #333333;
 `;
