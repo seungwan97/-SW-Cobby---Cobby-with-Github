@@ -49,6 +49,13 @@ export const QuestListWrapper = styled.div`
   align-items: center;
   padding: 30px;
   padding-top: 0;
+  overflow-y: scroll;
+  height: 75vh;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 `;
 
 export const QuestItemWrapper = styled.div`
@@ -56,8 +63,8 @@ export const QuestItemWrapper = styled.div`
   width: 85%;
   padding: 5px;
   background-color: ${colors.NavBarCreamColor};
-  margin: 10px;
-  padding-top: 15px;
+  margin: 5px;
+  padding-top: 10px;
 
   @media (min-width: 1300px) {
     width: 100%;
@@ -65,7 +72,7 @@ export const QuestItemWrapper = styled.div`
 `;
 
 export const QuestInfoWrapper = styled.div`
-  margin-top: 15px;
+  margin-top: 10px;
   display: flex;
 `;
 
@@ -132,7 +139,7 @@ export const CustomProgressBar = styled(ProgressBar)`
   margin-right: 3%;
 `;
 
-export const CustomImage = styled(Image) <{ width: number; height: number }>`
+export const CustomImage = styled(Image)<{ width: number; height: number }>`
   @media (max-width: 767px) {
     width: ${(props) => props.width * 0.75}px;
     height: ${(props) => props.height * 0.75}px;
