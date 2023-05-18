@@ -9,8 +9,6 @@ const ItemBox = (props: any) => {
 
   return (
     <style.ImageWrapper
-      select={props.selected}
-      check={props.checked}
       onClick={() => {
         handleItemClick();
       }}
@@ -21,8 +19,8 @@ const ItemBox = (props: any) => {
         width={80}
         height={65}
       />
-      <style.Filter select={props.selected} />
-      <style.LockFilter select={props.selected} />
+      <style.Filter select={props.getto} />
+      <style.LockFilter select={props.getto} />
     </style.ImageWrapper>
   );
 };
