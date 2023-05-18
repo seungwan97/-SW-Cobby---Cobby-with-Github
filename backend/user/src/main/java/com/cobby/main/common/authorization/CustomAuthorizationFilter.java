@@ -34,7 +34,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
         log.info("ㄴ> request uri : " + request.getRequestURI());
         if (request.getServletPath().contains("health")
-                || request.getServletPath().equals("/api/user/users")
+                || (request.getServletPath().equals("/api/user/users")
+                && !request.getServletPath().contains("info"))
                 || request.getServletPath().contains("/api/user/badge")
                 || request.getServletPath().contains("swagger")
                 || request.getServletPath().contains("server")
