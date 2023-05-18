@@ -165,7 +165,7 @@ const Inventory = (props: any) => {
                   if (myItem.costumeId === item.costumeId)
                     return myItem.isOpened;
                 })}
-                costumeId={myBodyItems.some((myItem: any) => {
+                costumeId={myBodyItems.map((myItem: any) => {
                   if (myItem.costumeId === item.costumeId)
                     return myItem.costumeId;
                 })}
@@ -201,7 +201,7 @@ const Inventory = (props: any) => {
                   if (myItem.costumeId === item.costumeId)
                     return myItem.isOpened;
                 })}
-                costumeId={myEffectItems.some((myItem: any) => {
+                costumeId={myEffectItems.map((myItem: any) => {
                   if (myItem.costumeId === item.costumeId)
                     return myItem.costumeId;
                 })}
