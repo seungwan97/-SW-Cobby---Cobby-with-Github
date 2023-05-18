@@ -92,3 +92,20 @@ export const getAllItemList = async (category: string, token: string) => {
 
   return response;
 };
+
+// 카테고리별 코스튬 아이템 전체 목록 조회
+export const patchInventories = async (costumeID: string, token: string) => {
+  const response = await client.patch(
+    `${req}/avatars/inventories`,
+    {
+      costumeId: costumeID,
+    },
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+
+  return response;
+};

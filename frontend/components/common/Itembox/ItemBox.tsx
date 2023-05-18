@@ -1,11 +1,18 @@
 import * as style from "./style/ItemBox";
-import Image from "next/image";
+import { patchInventories } from "@/pages/api/main";
+import cookie from "react-cookies";
 
 // ItemBox
 const ItemBox = (props: any) => {
-  const handleItemClick = () => {
+  const handleItemClick = async () => {
+    const costumeId = props.costumeId.filter(
+      (item: any) => item !== undefined
+    )[0];
+
     if (props.isOpened === false) {
-      // 여기서 서버로 다시 isOpened 바꿔달라고 요청
+      const token = cookie.load("Authorization");
+
+      await patchInventories(costumeId, token);
     }
     props.onItemClick(props.item);
   };
