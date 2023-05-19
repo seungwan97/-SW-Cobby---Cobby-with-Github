@@ -1,9 +1,0 @@
-services:
-  cobby-main:
-    platform: linux/amd64
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: docker.io/duduking/cobby-main:latest
-    ports:
-      - "15030:15030"
