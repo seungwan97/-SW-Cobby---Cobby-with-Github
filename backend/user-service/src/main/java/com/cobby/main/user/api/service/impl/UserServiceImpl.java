@@ -2,6 +2,7 @@ package com.cobby.main.user.api.service.impl;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import org.apache.batik.anim.dom.SAXSVGDocumentFactory;
 import org.apache.batik.util.XMLResourceDescriptor;
@@ -218,6 +219,15 @@ public class UserServiceImpl implements UserService {
 			doc = factory.createDocument(url);
 
 			text = doc.getElementsByTagName("text").item(crawling).getTextContent();
+			StringBuilder result = new StringBuilder();
+			if(text.contains("k")) {
+				StringTokenizer st = new StringTokenizer(text, ",");
+				while (st.hasMoreTokens()) {
+					result.append(st.nextToken());
+				}
+				text = result.substring(0, result.length()-1);
+				text = text + "00";
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
