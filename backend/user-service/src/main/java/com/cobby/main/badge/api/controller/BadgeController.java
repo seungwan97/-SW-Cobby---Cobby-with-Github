@@ -24,9 +24,9 @@ public class BadgeController {
 	private final BadgeService badgeService;
 
 	@GetMapping("{nickname}") // 회원 svg 조회
-	public ResponseEntity<String> getBadge(@PathVariable String nickname, @RequestParam(required = false, defaultValue = "0") int pngNum) {
+	public ResponseEntity<String> getBadge(@PathVariable String nickname, @RequestParam(required = false, defaultValue = "0") int theme) {
 		// username에 해당하는 정보를 이용해 SVG 데이터를 생성한다.
-		String svgData = badgeService.getBadge(nickname, pngNum);
+		String svgData = badgeService.getBadge(nickname, theme);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.valueOf("image/svg+xml"));
