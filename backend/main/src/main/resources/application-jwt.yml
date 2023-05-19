@@ -1,0 +1,4 @@
+jwt:
+  header: Authorization
+  secret: ENC(Oc+80dgjgizjttruyKyevjLMfdIYEG0mfHgQs2byYEM7nwCVizEPeuZ7wR7EYv5IfBkbeknXNr4=)
+  token-validity-in-seconds: ENC(UGr3/yRbyFju8jWRx2h9Vg==)

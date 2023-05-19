@@ -1,0 +1,9 @@
+services:
+  cobby-user:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: docker.io/duduking/cobby-user:latest
+    ports:
+      - "15020:15020"

@@ -1,0 +1,14 @@
+spring:
+  kafka:
+    # kafka-server url
+    bootstrap-servers: ENC(bzE7r6NEmHGFqc6p9k4qfPpzXfTzf8VhgcNx35SYul4gdo92u/kIQJa2zHVccViTeU+zTBVp8yhfgNuLeLPzD7MH8OVdBLSy+QuzV8IdZKJYppH0qvJ12RsYjKq17QPspTOATAjX9OE=)
+
+    # kafka-producer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+kafka-producer:
+  topics:
+    make-avatar: ENC(fLtVvgJLHteduSAHsI/8XInNh/RTp8wABsNrOhWwBpg=)
+    update-exp: ENC(Vs+WZw4AUT4oeMq4rOd81CV4+dZJg+AZ)

@@ -1,0 +1,17 @@
+spring:
+  # MysqlDB
+  datasource:
+    url: ENC(M6v9SH8XkI2rbY2JY98/2Zgx96nzg1rJgypg0ziNlGvSrFiKimGqxkezRCDFqELFiwkyNfo0W/0kxA2uXdBcFg==)
+    username: ENC(qom6FQ+QTknc5H+OkxQpJCFkur21CrAk)
+    password: ENC(mrJeZTLLaK5c95Jy4jI8YA==)
+    driver-class-name: org.mariadb.jdbc.Driver
+  # JPA Properties
+  jpa:
+    hibernate:
+      ddl-auto: none
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+#    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
