@@ -11,6 +11,8 @@ import UserInformation from "./MyComponents/UserInformation";
 import LogoutBtn from "./MyComponents/LogoutBtn";
 import Modal from "@/components/common/Modal/Modal";
 import CopyAlarm from "@/components/common/CopyAlarm/CopyAlarm";
+import cookie from "react-cookies";
+import { doSignOut } from "@/pages/api/user";
 
 interface MyFuncProps {
   nickname: string;
@@ -18,6 +20,11 @@ interface MyFuncProps {
   myLevel: number;
   cntCostumes: number;
   cntQuests: number;
+  cobbyOutfits: {
+    head: any;
+    effect: any;
+    body: any;
+  };
 }
 
 // MyPage
@@ -27,12 +34,14 @@ const MyPage = ({
   myLevel,
   cntCostumes,
   cntQuests,
+  cobbyOutfits,
 }: MyFuncProps) => {
   // const router = useRouter();
-
   const [isLogout, setIsLogout] = useState(false);
   const [isLeave, setIsLeave] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+
+  const router = useRouter();
 
   const setLogout = (val: boolean) => {
     setIsLogout(val);
@@ -40,6 +49,16 @@ const MyPage = ({
 
   const setLeave = () => {
     setIsLeave(true);
+  };
+
+  const doLogout = () => {
+    cookie.remove("Authorization");
+    router.push("/");
+  };
+
+  const doLeave = () => {
+    doSignOut(cookie.load("Authorization"));
+    doLogout();
   };
 
   return (
@@ -51,6 +70,7 @@ const MyPage = ({
           yes={true}
           no={true}
           setStatus={setIsLogout}
+          confirmMethod={doLogout}
         />
       )}
       {isLeave && (
@@ -60,6 +80,7 @@ const MyPage = ({
           yes={true}
           no={true}
           setStatus={setIsLeave}
+          confirmMethod={doLeave}
         />
       )}
       <page.PageWrapper>
@@ -67,7 +88,7 @@ const MyPage = ({
           <TextBox size={50} content={"MY PAGE"} />
         </style.MyPageTxt>
         <style.Cobby />
-        <GithubBadge setIsCopied={setIsCopied} />
+        <GithubBadge nickname={nickname} setIsCopied={setIsCopied} />
         <CopyAlarm isVisible={isCopied} setIsVisible={setIsCopied} />
         <UserInformation
           nickname={nickname}
@@ -77,10 +98,9 @@ const MyPage = ({
           cntQuests={cntQuests}
         />
         <LogoutBtn setLogout={setLogout} />
-        <style.LeaveButton onClick={setLeave}>
+        {/* <style.LeaveButton onClick={setLeave}>
           <TextBox size={20} content={"Leave Our App"} />
-          {/* 이거 LeaveButton에 대해서 반응형 처리 해줘야함. */}
-        </style.LeaveButton>
+        </style.LeaveButton> */}
       </page.PageWrapper>
       <BottomNavBar />
     </Fragment>

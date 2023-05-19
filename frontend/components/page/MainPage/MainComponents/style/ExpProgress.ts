@@ -30,9 +30,14 @@ export const FullDiv = styled.div`
   }
 `;
 
-export const RangeDiv = styled.div<{ level: number; fullLevel: number }>`
+export const RangeDiv = styled.div<{
+  prevExp: number;
+  exp: number;
+  nextExp: number;
+}>`
   //   display: inline-block;
-  width: ${(props) => (props.level / props.fullLevel) * 100}%;
+  width: ${(props) =>
+    ((props.exp - props.prevExp) / (props.nextExp - props.prevExp)) * 100}%;
   height: 100%;
   background-color: #333333;
 `;

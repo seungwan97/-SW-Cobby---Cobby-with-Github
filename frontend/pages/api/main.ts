@@ -7,6 +7,7 @@ export const getAvatarInfo = async (userId: string) => {
   const response = await client.get(`${req}/avatars`, {
     headers: {
       Authorization: `${userId}`,
+      withCredentials: true
     },
   });
 
@@ -14,12 +15,13 @@ export const getAvatarInfo = async (userId: string) => {
 };
 
 // 코비 관련 정보 유형별 조회 (코스튬, 칭호, 도전과제)
-export const getInventoryItem = async (userId: string, itemType: string) => {
+export const getInventoryItem = async (token: string, itemType: string) => {
   const response = await client.get(
     `${req}/avatars/inventories/costumes/${itemType}`,
     {
       headers: {
-        Authorization: `${userId}`,
+        Authorization: `${token}`,
+        withCredentials: true
       },
     }
   );
@@ -28,12 +30,13 @@ export const getInventoryItem = async (userId: string, itemType: string) => {
 };
 
 // 사용자가 가진 코스튬 카테고리별 조회 (HEAD, BODY, EFFECT)
-export const getMyCostumes = async (userId: string, itemType: string) => {
+export const getMyCostumes = async (token: string, itemType: string) => {
   const response = await client.get(
     `${req}/avatars/inventories/costumes/${itemType}`,
     {
       headers: {
-        Authorization: `${userId}`,
+        Authorization: `${token}`,
+        withCredentials: true
       },
     }
   );
@@ -47,6 +50,7 @@ export const patchAvatarInfo = async (token: string, data: {}) => {
     headers: {
       Authorization: token,
       "Content-Type": "application/json",
+      withCredentials: true
     },
   });
 
@@ -58,6 +62,19 @@ export const getQuests = async (token: string) => {
   const response = await client.get(`${req}/quests/current`, {
     headers: {
       Authorization: token,
+      withCredentials: true
+    },
+  });
+
+  return response;
+};
+
+// 도전과제 아이템 수령
+export const getQuestItem = async (token: string, questId: number) => {
+  const response = await client.get(`${req}/quests/getItem/${questId}`, {
+    headers: {
+      Authorization: token,
+      withCredentials: true
     },
   });
 
@@ -66,7 +83,7 @@ export const getQuests = async (token: string) => {
 
 // 칭호 목록 전체조회
 export const getTitles = async () => {
-  const response = await client.get(`${req}/titles`, {});
+  const response = await client.get(`${req}/titles`, { withCredentials: true });
 
   return response;
 };
@@ -76,8 +93,27 @@ export const getAllItemList = async (category: string, token: string) => {
   const response = await client.get(`${req}/costumes/${category}`, {
     headers: {
       Authorization: token,
+      withCredentials: true
     },
   });
+
+  return response;
+};
+
+// 카테고리별 코스튬 아이템 전체 목록 조회
+export const patchInventories = async (costumeID: string, token: string) => {
+  const response = await client.patch(
+    `${req}/avatars/inventories`,
+    {
+      costumeId: costumeID,
+    },
+    {
+      headers: {
+        Authorization: token,
+        withCredentials: true
+      },
+    }
+  );
 
   return response;
 };

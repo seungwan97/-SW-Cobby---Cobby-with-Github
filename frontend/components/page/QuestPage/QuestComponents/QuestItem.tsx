@@ -18,13 +18,15 @@ interface Props {
       gifUrl: string;
     };
   };
+  modifyData: (qId: number) => void;
 }
 const QuestItem = (props: Props) => {
   const { questData } = props;
+  const { modifyData } = props;
   return (
     <style.QuestItemWrapper>
       <TextBox
-        size={18}
+        size={25}
         content={`[${questData.questType}] ${questData.questName} ${questData.questGoal}`}
       />
       <style.QuestInfoWrapper>
@@ -35,9 +37,16 @@ const QuestItem = (props: Props) => {
               borderRadius={"0px"}
               completed={`${questData.progress}`}
             />
-            <TextBox size={20} content={`${questData.progress}%`} />
+            <TextBox
+              size={20}
+              content={`${questData.progress}%`}
+            />
           </style.ProgressWrapper>
-          <QuestConfirmButton progress={parseInt(`${questData.progress}`)} />
+          <QuestConfirmButton
+            modifyData={modifyData}
+            questId={parseInt(`${questData.questId}`)}
+            progress={parseInt(`${questData.progress}`)}
+          />
         </style.ColumContentWrapper>
         <style.ImageWrapper>
           <style.CustomImage

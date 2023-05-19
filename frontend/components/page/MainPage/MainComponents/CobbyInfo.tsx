@@ -10,17 +10,19 @@ interface Props {
   avatarData: {
     level: number;
     exp: number;
+    prevExp: number;
     nextExp: number;
     outfits: {
-      head: string;
-      effect: string;
-      body: string;
+      head: any;
+      effect: any;
+      body: any;
     };
   };
 }
 const CobbyInfo = (props: Props) => {
   const { nicknameData } = props;
   const { avatarData } = props;
+
   return (
     <style.CobbyInfoWrapper>
       <TextBox size={37} content={`${nicknameData.nickname}'s Cobby`} />

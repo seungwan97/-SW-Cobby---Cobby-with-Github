@@ -4,10 +4,10 @@ const req = "/api/user";
 
 // 메인페이지 닉네임, 깃허브url 정보 불러오기
 export const getNicknameAndGithubURL = async (userId: string) => {
-  console.log("getNicknameAndGithubURL : " + userId);
   const response = await client.get(`${req}/users/info`, {
     headers: {
       Authorization: userId,
+      withCredentials: true
     },
   });
 
@@ -19,6 +19,7 @@ export const getStatus = async (userId: string) => {
   const response = await client.get(`${req}/stat`, {
     headers: {
       Authorization: userId,
+      withCredentials: true
     },
   });
 
@@ -30,6 +31,7 @@ export const getCommitInfo = async (userId: string) => {
   const response = await client.get(`${req}/activityLog/commit`, {
     headers: {
       Authorization: userId,
+      withCredentials: true
     },
   });
 
@@ -41,8 +43,22 @@ export const getAttendanceInfo = async (userId: string) => {
   const response = await client.get(`${req}/activityLog/attendance`, {
     headers: {
       Authorization: userId,
+      withCredentials: true
     },
   });
 
   return response;
 };
+
+// 메인페이지 연속 출석일수 정보 불러오기
+export const doSignOut = async (token: string) => {
+  const response = await client.get(`${req}/users/signout`, {
+    headers: {
+      Authorization: token,
+      withCredentials: true
+    },
+  });
+
+  return response;
+};
+

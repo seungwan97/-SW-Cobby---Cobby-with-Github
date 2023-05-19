@@ -1,25 +1,40 @@
 import * as style from "./style/ItemBox";
-import Image from "next/image";
+import { patchInventories } from "@/pages/api/main";
+import { useEffect, useState } from "react";
+import cookie from "react-cookies";
 
 // ItemBox
 const ItemBox = (props: any) => {
-  const handleItemClick = () => {
-    console.log(
-      "Inventory 컴포넌트로 ",
-      props.item,
-      " 전달했습니다."
-    );
+  const [isNew, setIsNew] = useState(true);
+
+  useEffect(() => {
+    if (props.getto) {
+      setIsNew(false);
+    }
+  });
+
+  const handleItemClick = async () => {
+    // const costumeId = props.costumeId.filter(
+    //   (item: any) => item !== undefined
+    // )[0];
+
+    // if (props.isOpened === false) {
+    //   const token = cookie.load("Authorization");
+
+    //   await patchInventories(costumeId, token).then((res) => {
+    //     if (res.status === 200) {
+    //       setIsNew(false);
+    //     }
+    //   });
+    // }
     props.onItemClick(props.item);
   };
 
   return (
     <style.ImageWrapper
-      selected={props.selected}
-      checked={props.checked}
+      select={props.selected}
+      getto={props.getto}
       onClick={() => {
-        console.log(
-          "ItemBox 컴포넌트에서 아이템을 클릭했습니다."
-        );
         handleItemClick();
       }}
     >
@@ -29,6 +44,11 @@ const ItemBox = (props: any) => {
         width={80}
         height={65}
       />
+      {/* {!props.isOpened && props.getto && isNew ? (
+        <style.isNew>new</style.isNew>
+      ) : null} */}
+      <style.Filter select={props.getto} />
+      <style.LockFilter select={props.getto} />
     </style.ImageWrapper>
   );
 };

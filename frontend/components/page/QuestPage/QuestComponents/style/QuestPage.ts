@@ -5,6 +5,34 @@ import Image from "next/image";
 
 export const QuestPageWrapper = styled.div`
   text-align: center;
+
+  @media (max-height: 1180px) {
+    height: 600px;
+  }
+
+  @media (max-height: 1024px) {
+    height: 350px;
+  }
+
+  @media (max-height: 915px) {
+    height: 430px;
+  }
+
+  @media (max-height: 844px) {
+    height: 330px;
+  }
+
+  @media (max-height: 812px) {
+    height: 330px;
+  }
+
+  @media (max-height: 736px) {
+    height: 250px;
+  }
+
+  @media (max-height: 667px) {
+    height: 250px;
+  }
 `;
 
 export const QuestPageTextWrapper = styled.div`
@@ -21,14 +49,22 @@ export const QuestListWrapper = styled.div`
   align-items: center;
   padding: 30px;
   padding-top: 0;
+  overflow-y: scroll;
+  height: 75vh;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+  }
 `;
 
 export const QuestItemWrapper = styled.div`
   text-align: center;
-  width: 90%;
+  width: 85%;
   padding: 5px;
   background-color: ${colors.NavBarCreamColor};
-  margin: 10px;
+  margin: 5px;
+  padding-top: 10px;
 
   @media (min-width: 1300px) {
     width: 100%;
@@ -36,7 +72,7 @@ export const QuestItemWrapper = styled.div`
 `;
 
 export const QuestInfoWrapper = styled.div`
-  margin-top: 15px;
+  margin-top: 10px;
   display: flex;
 `;
 
@@ -51,7 +87,7 @@ export const ColumContentWrapper = styled.div`
 export const ProgressWrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 70%;
+  width: 80%;
 `;
 
 export const ImageWrapper = styled.div`
@@ -62,7 +98,9 @@ export const ImageWrapper = styled.div`
   width: auto;
   height: auto;
   padding: 7px;
-  margin: auto 0;
+  float: left;
+  margin-right: 3%;
+  margin-bottom: 3%;
   justify-content: center;
   align-items: center;
 `;
@@ -71,17 +109,34 @@ export const ConfirmButtonWrapper = styled.div`
   width: 100%;
 `;
 
-export const ConfirmButton = styled.button<{ color: string }>`
+export const ConfirmButton = styled.button<{
+  color: string;
+  cursor: string;
+  width: number;
+  height: number;
+  transition: string;
+  x: number;
+}>`
   display: inline-block;
-  width: 70%;
+  width: 80%;
   height: 35px;
   border: none;
+  margin-bottom: 3%;
   background-color: ${(props) => props.color};
+  :hover {
+    cursor: ${(props) => props.cursor};
+    width: ${(props) => props.width + props.x}%;
+    height: ${(props) => props.height + props.x}px;
+    transition: ${(props) => props.transition}s;
+  }
+  :active {
+    background-color: #f2f2f2;
+  }
 `;
 
 export const CustomProgressBar = styled(ProgressBar)`
   flex-grow: 2;
-  margin-right: 20px;
+  margin-right: 3%;
 `;
 
 export const CustomImage = styled(Image)<{ width: number; height: number }>`
@@ -94,4 +149,8 @@ export const CustomImage = styled(Image)<{ width: number; height: number }>`
       height: ${(props) => props.height * 0.5}px;
     }
   }
+`;
+
+export const Margin = styled.div`
+  margin-top: 60%;
 `;

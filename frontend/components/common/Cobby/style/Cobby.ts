@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const CobbyWrapper = styled.div`
   position: relative;
+  border: none;
 `;
 
 export const Cobby = styled.img`
@@ -9,6 +10,7 @@ export const Cobby = styled.img`
   width: 180px;
   height: 180px;
   z-index: 2;
+  border: none;
 
   @media (max-height: 667px) {
     width: 150px;
@@ -22,7 +24,8 @@ export const CobbyHeadItem = styled.img`
   height: 180px;
   left: 50%;
   transform: translate(-50%);
-  z-index: 4;
+  z-index: 10;
+  border: none;
 
   @media (max-height: 667px) {
     width: 150px;
@@ -36,7 +39,8 @@ export const CobbyBodyItem = styled.img`
   height: 180px;
   left: 50%;
   transform: translate(-50%);
-  z-index: 3;
+  z-index: 5;
+  border: none;
 
   @media (max-height: 667px) {
     width: 150px;
@@ -51,6 +55,7 @@ export const CobbyEffectItem = styled.img`
   left: 50%;
   transform: translate(-50%);
   z-index: -1;
+  border: none;
 
   @media (max-height: 667px) {
     width: 150px;
