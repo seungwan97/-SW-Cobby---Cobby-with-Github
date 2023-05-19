@@ -1,0 +1,6 @@
+springdoc:
+  api-docs:
+    path: /api/user/api-docs
+  swagger-ui:
+    doc-expansion: none
+    path: /api/user/swagger

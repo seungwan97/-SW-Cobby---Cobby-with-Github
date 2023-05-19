@@ -1,0 +1,9 @@
+services:
+  cobby-auth:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: docker.io/duduking/cobby-auth:latest
+    ports:
+      - "15010:15010"

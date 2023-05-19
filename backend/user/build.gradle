@@ -1,0 +1,69 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.6'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'com.cobby'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    all*.exclude group: 'commons-logging', module: 'commons-logging'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok'
+
+    implementation 'io.github.ricall.junit5-wiremock:junit5-wiremock:2.0.0'
+    implementation 'com.github.tomakehurst:wiremock:2.27.2'
+    implementation 'org.springframework.boot:spring-boot-starter-web' // mvc
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-validation' // validation
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5' // Jasypt
+    implementation 'com.google.code.gson:gson:2.8.5' // gson
+    implementation 'com.google.guava:guava:31.1-jre' // guava
+    implementation 'org.apache.xmlgraphics:batik-all:1.14' // basik
+    implementation 'com.squareup.okhttp3:okhttp' // okhttp3
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4' // swagger
+    implementation 'org.json:json:20200518'
+    implementation 'org.springframework.kafka:spring-kafka' // kafka
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'//s3 05-25 추가
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client' // mariadb
+
+    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'io.github.ricall.junit5-wiremock:junit5-wiremock:2.0.0'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'io.rest-assured:rest-assured:5.2.1' // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+    implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '4.0.0'
+
+    // jwt
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    systemProperty "jasypt.encryptor.password", System.getProperties().get("jasypt.encryptor.password")
+}
