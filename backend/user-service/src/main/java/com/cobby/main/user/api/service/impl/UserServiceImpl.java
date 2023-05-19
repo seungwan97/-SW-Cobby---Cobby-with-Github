@@ -221,7 +221,7 @@ public class UserServiceImpl implements UserService {
 			text = doc.getElementsByTagName("text").item(crawling).getTextContent();
 			StringBuilder result = new StringBuilder();
 			if(text.contains("k")) {
-				StringTokenizer st = new StringTokenizer(text, ",");
+				StringTokenizer st = new StringTokenizer(text, ".");
 				while (st.hasMoreTokens()) {
 					result.append(st.nextToken());
 				}
