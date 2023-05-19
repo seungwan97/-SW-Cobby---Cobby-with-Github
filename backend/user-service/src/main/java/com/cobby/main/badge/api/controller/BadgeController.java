@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cobby.main.badge.api.service.BadgeService;
@@ -23,9 +24,9 @@ public class BadgeController {
 	private final BadgeService badgeService;
 
 	@GetMapping("{nickname}") // 회원 svg 조회
-	public ResponseEntity<String> getBadge(@PathVariable String nickname) {
+	public ResponseEntity<String> getBadge(@PathVariable String nickname, @RequestParam(required = false, defaultValue = "0") int pngNum) {
 		// username에 해당하는 정보를 이용해 SVG 데이터를 생성한다.
-		String svgData = badgeService.getBadge(nickname);
+		String svgData = badgeService.getBadge(nickname, pngNum);
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.valueOf("image/svg+xml"));
