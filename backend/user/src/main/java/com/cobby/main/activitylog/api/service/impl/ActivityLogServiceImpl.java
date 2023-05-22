@@ -115,32 +115,36 @@ public class ActivityLogServiceImpl implements ActivityLogService {
 		return userRepository.findByNickname(name).orElseThrow(NotFoundException::new);
 	}
 
-	// 사용자의 활동 타입 별 마지막 로그 하나를 조회합니다.
-	private ActivityLog findLastActivityLogByType(User user, ActivityType type) {
-		return activityLogRepository.findLastByType(user.getId(), type)
-			.orElseThrow(NotFoundException::new);
-	}
-
 	// 사용자의 활동 타입 별 업데이트된 로그를 생성합니다.
 	private ActivityLog saveActivityLog(User user, ActivityType type) {
-		// 해당 사용자의 해당 type 마지막 ActivityLog 를 조회
-		var lastLog = findLastActivityLogByType(user, type);
 
-		// 마지막 로그의 수정 시간을 기반으로 relayCnt 업데이트
-		var recentRelayCnt = lastLog.getRelayCnt();
-		var currentRelayCnt = updateRelayCnt(lastLog.getCreatedAt(), lastLog.getRelayCnt());
+		ActivityLog newLog;
+		var relayCnt = 1L;
+		boolean isRelayCntChanged = false;
+
+		// 해당 사용자의 해당 type 마지막 ActivityLog 를 조회
+		var lastLog = activityLogRepository.findLastByType(user.getId(), type);
+
+		// 로그가 존재한다면 마지막 로그의 수정 시간을 기반으로 relayCnt 업데이트
+		if(lastLog.isPresent()) {
+
+			relayCnt = updateRelayCnt(lastLog.get().getCreatedAt(), lastLog.get().getRelayCnt());
+
+			if(relayCnt != lastLog.get().getRelayCnt())
+				isRelayCntChanged = true;
+		}
 
 		// 새로운 ActivityLog 를 DB에 저장
-		var newLog = activityLogRepository.save(
+		newLog = activityLogRepository.save(
 			ActivityLog.builder()
 				.user(user)
 				.activityType(type)
-				.relayCnt(currentRelayCnt)
+				.relayCnt(relayCnt)
 				.build()
 		);
 
-		// relayCnt에 변화가 있었다면 main-service 에 메시지를 보냄
-		if (!currentRelayCnt.equals(recentRelayCnt)) {
+		// relayCnt 에 변화가 있었다면 main-service 에 kafka 메시지를 보냄
+		if (isRelayCntChanged) {
 			sendActivityLog(newLog);
 		}
 
