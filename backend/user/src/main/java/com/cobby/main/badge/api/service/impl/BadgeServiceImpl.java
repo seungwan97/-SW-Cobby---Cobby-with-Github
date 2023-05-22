@@ -40,8 +40,8 @@ public class BadgeServiceImpl implements BadgeService {
 	 	이렇게 요청하면 들어오기에 들어오는 정보는 nickname밖에 없다!
 	 */
 	@Override
-	public String getBadge(String nickname) {
-		String svgContent = getSvg(nickname);
+	public String getBadge(String nickname, int pngValue) {
+		String svgContent = getSvg(nickname, pngValue);
 
 		return svgContent;
 	}
@@ -62,6 +62,16 @@ public class BadgeServiceImpl implements BadgeService {
 
 	private String getCharacterPng(){
 		var character = amazonS3Client.getObjectAsString(bucketName, "character/cobbyPng.txt");
+		return character.toString();
+	}
+
+
+	private String getCharacterPng(int pngValue){
+		if (pngValue == 0) {
+			var character = amazonS3Client.getObjectAsString(bucketName, "character/cobbyPng.txt");
+			return character.toString();
+		}
+		var character = amazonS3Client.getObjectAsString(bucketName, "character/cobbyPng" + pngValue + ".txt");
 		return character.toString();
 	}
 
@@ -131,16 +141,44 @@ public class BadgeServiceImpl implements BadgeService {
 		return findUser.getId();
 	}
 
-	public String getSvg(String nickname){
+	public String getSvg(String nickname, int pngValue){
 		BadgeGetResponse badgeGetResponse = getAvatar(nickname);
 		String body = "";
 		String effect = "";
 		String head = "";
-		
+
 		if(!badgeGetResponse.getEffect().isEmpty()) effect = getCustome(badgeGetResponse.getEffect());
 		if(!badgeGetResponse.getBody().isEmpty()) body = getCustome(badgeGetResponse.getBody());
 		if(!badgeGetResponse.getHead().isEmpty()) head = getCustome(badgeGetResponse.getHead());
-		
+
+		String png = getCharacterPng(pngValue);
+		String fillUpValue = "", fillDownValue = "";
+
+		switch (pngValue){
+			case 0:
+				png = getCharacterPng();
+				fillUpValue = "#ffffff";
+				fillDownValue = "#FEEBB6";
+				break;
+			case 1:
+				fillUpValue = "#777777";
+				fillDownValue = "#5A5A5A";
+				break;
+			case 2:
+				fillUpValue = "#A584C0";
+				fillDownValue = "#ffffff";
+				break;
+			case 3:
+				fillUpValue = "#FEEBB6";
+				fillDownValue = "#ffffff";
+				break;
+			case 4:
+				fillUpValue = "#000000";
+				fillDownValue = "#000000";
+				break;
+			default:
+		}
+
 		StringBuilder svg = new StringBuilder();
 		svg.append("<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"600\" height=\"285\">\n")
 			.append("<a xlink:href=\"https://cobby-play.com\">\n")
@@ -157,7 +195,7 @@ public class BadgeServiceImpl implements BadgeService {
 			.append("        font-family: 'Cobby', sans-serif;\n")
 			.append("        font-size: 20px;\n")
 			.append("        font-weight: bolder;\n")
-			.append("        fill: #ffffff;\n")
+			.append("        fill: ").append(fillUpValue).append(";\n")
 			.append("        margin-bottom: 20px;\n")
 			.append("    }\n")
 			.append("    @font-face {\n")
@@ -168,12 +206,12 @@ public class BadgeServiceImpl implements BadgeService {
 			.append("        letter-spacing: 1px;\n")
 			.append("        font-family: 'Cobby';\n")
 			.append("        font-size: 11px;\n")
-			.append("        fill: #FFFFF8;\n")
+			.append("        fill:  ").append(fillUpValue).append(";\n")
 			.append("    }\n")
 			.append("    .text_info {\n")
 			.append("        letter-spacing: 2px;\n")
 			.append("        font-size: 35px;\n")
-			.append("        fill: #FEEBB6;\n")
+			.append("        fill:  ").append(fillDownValue).append(";\n")
 			.append("    }\n")
 			.append("    .text_info_0 {\n")
 			.append("        letter-spacing: 2px;\n")
@@ -186,11 +224,11 @@ public class BadgeServiceImpl implements BadgeService {
 			.append("    .text_info_2 {\n")
 			.append("        letter-spacing: 2px;\n")
 			.append("        font-size: 35px;\n")
-			.append("        fill: #FEEBB6;\n")
+			.append("        fill: ").append(fillDownValue).append(";\n")
 			.append("    }\n")
 			.append("</style>\n")
 			.append("<rect class=\"card\" x=\"0\" y=\"0\" />\n")
-			.append("<image href=\"data:image/png;base64," + getCharacterPng() + "\" x=\"0\" y=\"0\" alt=\"cobby\" />\n")
+			.append("<image href=\"data:image/png;base64," + png + "\" x=\"0\" y=\"0\" alt=\"cobby\" />\n")
 			.append("<image class='cobby' x=\"93\" y=\"91\" width=\"300px\" alt=\"effect\">")
 			.append("<animate attributeName=\"href\" from=\"data:image/gif;base64," + effect + "\" to=\"data:image/gif;base64," + effect + "\" begin=\"0s\" dur=\"0s\" fill=\"freeze\" />")
 			.append("</image>")
